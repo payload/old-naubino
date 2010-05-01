@@ -3,6 +3,7 @@ package
 	import flash.display.*;
 	import flash.events.*;
 	import flash.utils.*;
+	import flash.geom.*;
 	
 	import mx.collections.*;
 	import mx.core.*;
@@ -31,6 +32,13 @@ package
 				throw new Error( "Only one Singleton instance should be instantiated" ); 
 				
 			backBuffer = new BitmapData(Application.application.width, Application.application.height, false);
+
+			//var foo : Sprite = new Sprite();
+			//foo.graphics.beginFill(0xff5599bb);
+			//foo.graphics.drawCircle(40, 40, 40);
+			//var goo : GameObject = new GameObject();
+			//goo.startupGameObject(new GraphicsResource(foo), new Point(10, 10));
+			//addBaseObject(goo);
 		}
 		
 		public function startup():void
