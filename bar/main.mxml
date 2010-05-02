@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 	xmlns:mx="http://www.adobe.com/2006/mxml" -->
 <mx:Application 
-	xmlns:mx="http://www.adobe.com/2006/mxml" 
+    xmlns:mx="file:///opt/adobe-flex-sdk/frameworks/mxml-2009-manifest.xml"
 	layout="absolute"
 	width="480" 
 	height="384"
