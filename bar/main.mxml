@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 	xmlns:mx="http://www.adobe.com/2006/mxml" -->
+<mx:Application 
+    xmlns:mx="file:///opt/adobe-flex-sdk/frameworks/mxml-2009-manifest.xml"
+	layout="absolute"
+	width="480" 
+	height="384"
+	frameRate="100"
+	creationComplete="creationComplete()"
+	enterFrame="enterFrame(event)"
+	click="click(event)"
+    mouseDown="mouseDown(event)"
+    mouseUp="mouseUp(event)"
+    mouseMove="mouseMove(event)">
+	
+	<mx:Canvas x="0" y="0" width="100%" height="100%" id="myCanvas"/>
+	
+	<mx:Script source="main.as" />
+	
+</mx:Application>
