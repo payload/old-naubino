@@ -17,13 +17,6 @@ public class Joint {
 		return length;
 	}
 
-	public void setTaily() {
-		if (a.isActive)
-			taily = b;
-		else
-			taily = a;
-	}
-
 	public Ball opp(Ball b2) {
 		if (a == b2)
 			return b;

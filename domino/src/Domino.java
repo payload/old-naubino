@@ -1,6 +1,7 @@
 import java.awt.event.KeyEvent;
-
+import processing.*;
 import processing.core.PApplet;
+
 
 public class Domino extends PApplet {
 
@@ -23,7 +24,7 @@ public class Domino extends PApplet {
 		size(resolutionX, resolutionY);
 		smooth();
 		background(backgroundColor);
-		frameRate(50);
+		frameRate(5);
 
 		stroke(255);
 		strokeWeight(1);
@@ -43,7 +44,8 @@ public class Domino extends PApplet {
 			}
 		}
 		if (mouseButton == RIGHT) {
-			game.createPair(mouseX, mouseY);
+			game.createTriple(mouseX, mouseY);
+			//game.createPair(mouseX, mouseY);
 		}
 	}
 
@@ -58,7 +60,7 @@ public class Domino extends PApplet {
 
 	public void mouseReleased() {
 		if (game.active != null)
-			game.active.resetJoint();
+			game.active.resetJoints();
 	}
 
 	public void keyPressed() {
@@ -78,6 +80,7 @@ public class Domino extends PApplet {
 		background(backgroundColor);
 		strokeWeight(1);
 		ellipse(center.x, center.y, game.getFieldSize(), game.getFieldSize());
+		game.refresh();
 		drawJoints();
 		drawBalls();
 	}

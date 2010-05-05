@@ -9,31 +9,33 @@ public class Game {
 	private List<Joint> joints;
 	private float fieldSize;
 	public Ball active;
-	private float ballsize = 35;
+	private float ballsize = 30;
 
-//	/*
-//	 * TODO Paare automatisch generieren
-//	 * TODO Driften von Paaren
-//	 * TODO Zylensuche 
-//	 * TODO auf Graph abbilden -> zB um unnoetige Joints zu entfernen
-//	 * TODO State fuer Pairs {drifting, resting} TODO MVC Model fehlt noch
-//	 */
+	 /*
+	 * TODO Paare automatisch generieren
+	 * TODO Driften von Paaren
+	 * TODO Zylensuche
+	 * TODO auf Graph abbilden -> zB um unnoetige Joints zu entfernen
+	 * TODO State fuer Pairs {drifting, resting} TODO MVC Model fehlt noch
+	 */
 
 	private Game() {
 		balls = new ArrayList<Ball>();
 		joints = new ArrayList<Joint>();
 		setFieldSize(320f);
-		//createPair(300, 200);
-		/*
-		 * createBall(balls.get(1).getX() - 40, balls.get(1).getY() + 40);
-		 * join(balls.get(1), balls.get(2));
-		 */
+
 	}
 
 	public static Game instance() {
 		return instance;
 	}
 
+	public void refresh(){
+		/* TODO refresh wird die Position von sich selbst bewegenden Objekten aktuallisieren
+		 * im prinzip main loop der Spiellogik*/
+
+	}
+	
 	public void setFieldSize(float fieldSize) {
 		this.fieldSize = fieldSize;
 	}
@@ -65,12 +67,22 @@ public class Game {
 		join(createBall(x - 20, y - 20), createBall(x + 20, y + 20));
 	}
 
+	public void createTriple(float x, float y) {
+		Ball a = createBall(x + 20, y - 20);
+		Ball b = createBall(x - 20, y - 20);
+		Ball c = createBall(x, y + 20);
+		join(a, b);
+		join(b, c);
+		//join(c, a);
+	}
+
 	private void join(Ball a, Ball b) {
 		Joint joint = new Joint(a, b);
 		a.addJoint(joint);
 		b.addJoint(joint);
 		joints.add(joint);
 	}
+
 
 	private Color randomColor() {
 		List<Color> list = new ArrayList<Color>();
@@ -95,8 +107,6 @@ public class Game {
 		for (Ball b : balls) {
 			if (b.isHit(new Coordinate(x, y))) {
 				this.active = b;
-				b.isActive = true;
-				b.getJoint().setTaily();
 				return b;
 			}
 		}
@@ -113,89 +123,54 @@ public class Game {
 
 	public Ball checkForCollisions(Ball active) {
 		for (Ball b : balls) {
-			float distance = (float) Math.sqrt(Math.pow(b.getX() - active.getX(), 2)
+			float distance = (float) Math.sqrt(Math.pow(b.getX()
+					- active.getX(), 2)
 					+ Math.pow(b.getY() - active.getY(), 2));
 
 			/* TODO Collisionen mit sich selbst schoener vermeiden */
-			if (distance > 0 && distance <= ballsize && b.color.name == active.color.name) {
+			if (distance > 0 && distance <= ballsize
+					&& b.color.name == active.color.name) {
 				return b;
 			}
 		}
 		return null;
 	}
 
-	public void resetActive() {
-		active.resetJoint();
-		active = null;
-	}
-
+	/* deletes all balls */
 	public void resetBalls() {
 		balls = new ArrayList<Ball>();
 	}
 
+	/* deletes all joints */
 	public void resetJoints() {
 		joints = new ArrayList<Joint>();
 	}
 
-	// public void removeBall(Ball b) {
-	// for (Joint j : b.joints) {
-	// this.joints.remove(j);
-	// }
-	// }
-	// public void zyklenTest() {
-	// for (Ball b : balls) {
-	// zyklenTest(b, null);
-	// }
-	// }
-	//
-	// public void zyklenTest(Ball b, Ball p) {
-	// switch (b.besuch) {
-	// case blue:
-	// b.besuch = zyklusfarbe.green;
-	// zyklenTest(b.getJoint().opp(b), b);
-	// b.besuch = zyklusfarbe.black;
-	// break;
-	// case green:
-	// if (b.getJoint().opp(b) == p)
-	// b.besuch = zyklusfarbe.black; // trivialer Fall
-	// else
-	// // nichttrivialer Fall
-	// removeBall(b);
-	// break;
-	// case black:
-	// ;
-	// break;
-	// }
-	// }
+	/* deletes orphaned joints */
+	public void cleanUpJoints() {
+		for (Joint j : joints) {
+			if (j.a == null || j.b == null)
+				joints.remove(j);
+		}
+	}
+
+	
 
 	/* anstaendige Move funktion einfuegen */
 	public void dragActive(float x, float y) {
+		
+		active = clickedBall(x, y);
 		if (active != null) {
-
-			Ball taily = active.getJoint().taily;
-			float length = active.getJoint().getLength();
-
-			active.setX(x);
-			active.setY(y);
-
+			active.move(x, y);
 			Ball collidor = checkForCollisions(active);
 
 			if (collidor != null) {
-				 joints.remove(active.getJoint());
-				 balls.remove(active);
-				//removeBall(active);
-				join(taily, collidor);
-				// System.out.println("collision with " + active.color.name +
-				// " Balls:"+ balls.size()+ " Joints:"+ joints.size());
+				active.resetJoints();
+				balls.remove(active);
+				// removeBall(active);
+				// join(taily, collidor);
 			}
-
-			float dx = x - taily.getX();
-			float dy = y - taily.getY();
-			float angle = (float) Math.atan2(dy, dx);
-
-			taily.setX(x - ((float) Math.cos(angle) * length));
-			taily.setY(y - ((float) Math.sin(angle) * length));
-
 		}
 	}
+
 }
