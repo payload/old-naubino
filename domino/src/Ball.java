@@ -57,6 +57,7 @@ public class Ball extends dragable {
 	}
 
 	public void move(float x, float y) {
+		unMoved = false;
 
 		setX(x);
 		setY(y);
@@ -69,11 +70,12 @@ public class Ball extends dragable {
 
 		for (Joint j : joints) {
 			taily = j.opp(this);
+//			System.out.println(taily.color.name);
 			if (taily.unMoved) {
 				taily.unMoved = false;
 				if (color.name.compareTo("purple") == 0)
-					System.out.println(color.name + "\t" + getX() + "-"
-							+ getY() + " moving");
+//					System.out.println(color.name + "\t" + getX() + "-"
+//							+ getY() + " moving");
 
 				dx = x - taily.getX();
 				dy = y - taily.getY();
