@@ -1,7 +1,7 @@
 
 public abstract class dragable {
-	Coordinate position;
+	Coord position;
 	
-	public abstract boolean isHit(Coordinate c);
+	public abstract boolean isHit(Coord c);
 
 }

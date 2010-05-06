@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ball extends dragable {
-	private Coordinate position;
+	private Coord position;
 	public float radius;
 	public Color color;
 	public zyklusfarbe besuch = zyklusfarbe.blue;
@@ -11,7 +11,7 @@ public class Ball extends dragable {
 	private List<Joint> joints;
 
 	public Ball(float x, float y, float size) {
-		position = new Coordinate(x, y);
+		position = new Coord(x, y);
 		radius = size;
 		color = new Color(255, 0, 0);
 		joints = new ArrayList<Joint>();
@@ -50,7 +50,7 @@ public class Ball extends dragable {
 		joints = new ArrayList<Joint>();
 	}
 
-	public boolean isHit(Coordinate c) {
+	public boolean isHit(Coord c) {
 		float distance = (float) Math.sqrt(Math.pow((c.x - position.x), 2)
 				+ Math.pow((c.y - position.y), 2));
 		return (distance <= radius / 2);
@@ -69,7 +69,7 @@ public class Ball extends dragable {
 		Ball taily;
 
 		for (Joint j : joints) {
-			taily = j.opp(this);
+			taily = j.opp(this);	
 //			System.out.println(taily.color.name);
 			if (taily.unMoved) {
 				taily.unMoved = false;

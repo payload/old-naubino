@@ -36,6 +36,10 @@ public class Game {
 
 	}
 	
+	public void physik(){
+		
+	}
+	
 	public void setFieldSize(float fieldSize) {
 		this.fieldSize = fieldSize;
 	}
@@ -83,17 +87,19 @@ public class Game {
 		joints.add(joint);
 	}
 
-
+	/* gibt eine zufällige Farbe aus dem OUTPUT farbschema zurück */
 	private Color randomColor() {
 		List<Color> list = new ArrayList<Color>();
-		Color red = new Color(255, 100, 100, "red");
-		Color green = new Color(100, 255, 100, "green");
-		Color blue = new Color(100, 100, 255, "blue");
-		Color purple = new Color(255, 100, 255, "purple");
-		Color yellow = new Color(255, 255, 100, "yellow");
+		Color red = new Color(229, 53, 23, "red");
+		Color green = new Color(151, 190, 13, "green");
+		Color pink = new Color(226, 0, 122, "pink");
+		Color blue = new Color(0, 139, 208, "blue");
+		Color purple = new Color(100, 31, 128, "purple");
+		Color yellow = new Color(255, 204, 0, "yellow");
 
 		list.add(red);
 		list.add(green);
+		list.add(pink);
 		list.add(blue);
 		list.add(purple);
 		list.add(yellow);
@@ -105,7 +111,7 @@ public class Game {
 
 	public Ball clickedBall(float x, float y) {
 		for (Ball b : balls) {
-			if (b.isHit(new Coordinate(x, y))) {
+			if (b.isHit(new Coord(x, y))) {
 				this.active = b;
 				return b;
 			}
@@ -115,7 +121,7 @@ public class Game {
 
 	public void checkForHits(float x, float y) {
 		for (Ball b : balls) {
-			if (b.isHit(new Coordinate(x, y))) {
+			if (b.isHit(new Coord(x, y))) {
 				b.color = new Color(0, 0, 255);
 			}
 		}
@@ -153,8 +159,6 @@ public class Game {
 				joints.remove(j);
 		}
 	}
-
-	
 
 	/* anstaendige Move funktion einfuegen */
 	public void dragActive(float x, float y) {

@@ -11,12 +11,13 @@ public class Domino extends PApplet {
 
 	private int resolutionX = 600;
 	private int resolutionY = 400;
-	private int backgroundColor = color(0, 0, 0);
-	private Coordinate center = center();
+	private int lineColor = color(0, 0, 0);
+	private int backgroundColor = color(255, 255, 255);
+	private Coord center = center();
 	private Game game = Game.instance();
 
-	private Coordinate center() {
-		return new Coordinate(resolutionX / 2, resolutionY / 2);
+	private Coord center() {
+		return new Coord(resolutionX / 2, resolutionY / 2);
 	}
 
 	/* setupt des fensters */
@@ -27,7 +28,7 @@ public class Domino extends PApplet {
 		frameRate(5);
 
 		stroke(255);
-		strokeWeight(1);
+		strokeWeight(2);
 	}
 
 	private boolean isInWindow() {
@@ -78,7 +79,8 @@ public class Domino extends PApplet {
 	public void draw() {
 		noFill();
 		background(backgroundColor);
-		strokeWeight(1);
+		stroke(lineColor);
+		strokeWeight(2);
 		ellipse(center.x, center.y, game.getFieldSize(), game.getFieldSize());
 		game.refresh();
 		drawJoints();
@@ -92,6 +94,7 @@ public class Domino extends PApplet {
 	}
 
 	private void drawBall(Ball b) {
+		noStroke();
 		fill(b.color.r, b.color.g, b.color.b);
 		ellipse(b.getX(), b.getY(), b.getR(), b.getR());
 	}
