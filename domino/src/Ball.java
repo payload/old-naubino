@@ -73,7 +73,7 @@ public class Ball extends dragable {
 //			System.out.println(taily.color.name);
 			if (taily.unMoved) {
 				taily.unMoved = false;
-				if (color.name.compareTo("purple") == 0)
+//				if (color.name.compareTo("purple") == 0)
 //					System.out.println(color.name + "\t" + getX() + "-"
 //							+ getY() + " moving");
 
