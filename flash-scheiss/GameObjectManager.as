@@ -24,7 +24,12 @@
 		
 		public function startup() : void {
 			addFlakes(5);
-			drawAllObjects();
+		}
+		
+		public function update() : void {
+			backBuffer.fillRect(new Rectangle(0, 0, width, height), 0xFF000000);
+			objects.forEach(updateObject);
+			objects.forEach(drawObject);
 		}
 
 		private function addFlakes(n : int) {
@@ -34,12 +39,18 @@
 		}
 
 		private function addFlake() : void {
-			var flake : Flake = new Flake(Math.random() * width, Math.random() * height, Math.random() * 0xFFFFFFFF );
+			var rand = function() : Number { return Math.random(); };
+			var x : Number = rand() * width;
+			var y : Number = rand() * height;
+			var color : int = rand() * 0xFFFFFFFF;
+			var sx : Number = rand() * 10;
+			var sy : Number = rand() * 10;
+			var flake : Flake = new Flake(x, y, sx, sy, color);
 			objects.push(flake);
 		}
 
-		private function drawAllObjects() : void {
-			objects.forEach(drawObject);
+		private function updateObject(object:*, index:int, arr:Array) : void {
+			object.update(0.2);
 		}
 		
 		private function drawObject(object:*, index:int, arr:Array): void{
