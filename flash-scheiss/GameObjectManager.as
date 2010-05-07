@@ -33,13 +33,15 @@
 
 		private function addFlake() : void {
 			var flake : Flake = new Flake();
-			objects.add(flake);
+			objects.push(flake);
 		}
 
 		private function drawAllObjects() : void {
-			for (var object : Flake in objects) {
-				backBuffer.draw(object);
-			}
+			objects.forEach(drawObject);
+		}
+		
+		private function drawObject(object:*, index:int, arr:Array): void{
+			backBuffer.draw(object);
 		}
 	}
 }
