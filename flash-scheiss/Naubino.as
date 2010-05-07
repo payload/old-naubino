@@ -9,6 +9,8 @@
 		}
 		
 		public function enterFrame(event:Event) : void {
+			GameObjectManager.Instance.update();
+			
 			graphics.clear();
 			graphics.beginBitmapFill(
 				GameObjectManager.Instance.backBuffer, 
