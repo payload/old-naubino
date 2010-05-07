@@ -6,6 +6,8 @@
 		
 		private static var instance : GameObjectManager;
 		private var objects : Array;
+		private var width : int = 600;
+		private var height : int = 400;
 		public var backBuffer : BitmapData;
 
 		public static function get Instance() : GameObjectManager {
@@ -16,7 +18,7 @@
 		}
 		
 		public function GameObjectManager(){
-			backBuffer = new BitmapData(600, 400, false, 0xFF000000);
+			backBuffer = new BitmapData(width, height, false, 0xFF000000);
 			objects = new Array();
 		}
 		
@@ -32,7 +34,7 @@
 		}
 
 		private function addFlake() : void {
-			var flake : Flake = new Flake();
+			var flake : Flake = new Flake(Math.random() * width, Math.random() * height, Math.random() * 0xFFFFFFFF );
 			objects.push(flake);
 		}
 
@@ -41,7 +43,9 @@
 		}
 		
 		private function drawObject(object:*, index:int, arr:Array): void{
-			backBuffer.draw(object);
+			var matrix : Matrix = new Matrix();
+			matrix.translate(object.x, object.y);
+			backBuffer.draw(object, matrix);
 		}
 	}
 }
