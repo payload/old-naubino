@@ -1,4 +1,8 @@
-inhbonrnil
-
-jetzt schreib ich mal kurz was mit vim hinten dran
-scheisse ist das hier voll
+0.  kreis zeichnen
+1.  liste an objekten, die alle gezeichnet werden
+1.5 zufällige farben
+2.  bewegte objekte
+3.  bewegte objekte, die mit rand kollidieren
+4.  objekte erstellen und löschen
+5.  kollision
+6.  joints
