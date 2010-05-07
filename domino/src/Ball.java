@@ -5,8 +5,6 @@ public class Ball extends dragable {
 	private Coord position;
 	public float radius;
 	public Color color;
-	public zyklusfarbe besuch = zyklusfarbe.blue;
-	public boolean unMoved;
 
 	private List<Joint> joints;
 
@@ -15,7 +13,6 @@ public class Ball extends dragable {
 		radius = size;
 		color = new Color(255, 0, 0);
 		joints = new ArrayList<Joint>();
-		unMoved = true;
 	}
 
 	public float getX() {
@@ -57,7 +54,6 @@ public class Ball extends dragable {
 	}
 
 	public void move(float x, float y) {
-		unMoved = false;
 
 		setX(x);
 		setY(y);
@@ -68,27 +64,5 @@ public class Ball extends dragable {
 		float dy;
 		Ball taily;
 
-		for (Joint j : joints) {
-			taily = j.opp(this);	
-//			System.out.println(taily.color.name);
-			if (taily.unMoved) {
-				taily.unMoved = false;
-//				if (color.name.compareTo("purple") == 0)
-//					System.out.println(color.name + "\t" + getX() + "-"
-//							+ getY() + " moving");
-
-				dx = x - taily.getX();
-				dy = y - taily.getY();
-				float angle = (float) Math.atan2(dy, dx);
-				float length = j.getLength();
-
-				tailyX = x - ((float) Math.cos(angle) * length);
-				tailyY = y - ((float) Math.sin(angle) * length);
-
-				taily.move(tailyX, tailyY);
-				// taily.unMoved = true;
-			}
-			unMoved = true;
-		}
 	}
 }

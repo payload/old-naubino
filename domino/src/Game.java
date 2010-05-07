@@ -11,19 +11,10 @@ public class Game {
 	public Ball active;
 	private float ballsize = 30;
 
-	 /*
-	 * TODO Paare automatisch generieren
-	 * TODO Driften von Paaren
-	 * TODO Zylensuche
-	 * TODO auf Graph abbilden -> zB um unnoetige Joints zu entfernen
-	 * TODO State fuer Pairs {drifting, resting} TODO MVC Model fehlt noch
-	 */
-
 	private Game() {
 		balls = new ArrayList<Ball>();
 		joints = new ArrayList<Joint>();
 		setFieldSize(320f);
-
 	}
 
 	public static Game instance() {
@@ -33,7 +24,6 @@ public class Game {
 	public void refresh(){
 		/* TODO refresh wird die Position von sich selbst bewegenden Objekten aktuallisieren
 		 * im prinzip main loop der Spiellogik*/
-
 	}
 	
 	public void physik(){
