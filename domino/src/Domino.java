@@ -1,7 +1,7 @@
 import java.awt.event.KeyEvent;
 import processing.*;
 import processing.core.PApplet;
-
+import processing.core.PFont;
 
 public class Domino extends PApplet {
 
@@ -9,15 +9,19 @@ public class Domino extends PApplet {
 	 * @param args
 	 */
 
-	private int resolutionX = 600;
-	private int resolutionY = 400;
+	private int frameRate = 50;
+	private Game game = Game.instance();
+	private int resolutionX = game.width;
+	private int resolutionY = game.height;
 	private int lineColor = color(0, 0, 0);
 	private int backgroundColor = color(255, 255, 255);
 	private Coord center = center();
-	private Game game = Game.instance();
+	private Ball draggedBall;
+
+	private PFont myFont;
 
 	private Coord center() {
-		return new Coord(resolutionX / 2, resolutionY / 2);
+		return game.getCenter();
 	}
 
 	/* setupt des fensters */
@@ -25,10 +29,13 @@ public class Domino extends PApplet {
 		size(resolutionX, resolutionY);
 		smooth();
 		background(backgroundColor);
-		frameRate(5);
+		frameRate(frameRate);
 
 		stroke(255);
 		strokeWeight(2);
+
+		myFont = createFont("FFScala", 12);
+
 	}
 
 	private boolean isInWindow() {
@@ -38,28 +45,25 @@ public class Domino extends PApplet {
 	/* Steuerung */
 
 	public void mousePressed() {
-		if (mouseButton == LEFT) {
-			Ball b = game.clickedBall(mouseX, mouseY);
-			if (b != null) {
-				game.dragActive(mouseX, mouseY);
-			}
-		}
+
 		if (mouseButton == RIGHT) {
-			game.createTriple(mouseX, mouseY);
-			//game.createPair(mouseX, mouseY);
+			// game.createTriple(mouseX, mouseY);
+			game.createPair(mouseX, mouseY);
 		}
 	}
 
 	public void mouseDragged() {
+		/* TODO do not drag a ball without clicking on it*/
 		if (mouseButton == LEFT) {
-			Ball b = game.clickedBall(mouseX, mouseY);
-			if (b != null) {
+			if (game.active != null) {
 				game.dragActive(mouseX, mouseY);
-			}
+			} else
+				game.active = game.clickedBall(mouseX, mouseY);
 		}
 	}
 
 	public void mouseReleased() {
+		game.active = null;
 		if (game.active != null)
 			game.active.resetJoints();
 	}
@@ -81,8 +85,13 @@ public class Domino extends PApplet {
 		background(backgroundColor);
 		stroke(lineColor);
 		strokeWeight(2);
-		ellipse(center.x, center.y, game.getFieldSize(), game.getFieldSize());
-		game.refresh();
+
+		textFont(myFont);
+		text(game.getNumberOfJoints(), 10, 40);
+
+		ellipse(center.getX(), center.getY(), game.getFieldSize(), game
+				.getFieldSize());
+		ellipse(center.getX(), center.getY(), 3, 3);
 		drawJoints();
 		drawBalls();
 	}
@@ -90,13 +99,22 @@ public class Domino extends PApplet {
 	private void drawBalls() {
 		for (Ball b : game.getBalls()) {
 			drawBall(b);
+			drawDirection(b);
 		}
+	}
+
+	private void drawDirection(Ball b) {
+		stroke(lineColor);
+		strokeWeight(1);
+		line(b.position.getX(), b.position.getY(), b.position.getX()
+				+ (float) b.speed.getX(), b.position.getY()
+				+ (float) b.speed.getY());
 	}
 
 	private void drawBall(Ball b) {
 		noStroke();
 		fill(b.color.r, b.color.g, b.color.b);
-		ellipse(b.getX(), b.getY(), b.getR(), b.getR());
+		ellipse(b.getX(), b.getY(), b.getR()/2, b.getR()/2);
 	}
 
 	private void drawJoints() {
@@ -114,7 +132,7 @@ public class Domino extends PApplet {
 	 */
 
 	static public void main(String args[]) {
-		PApplet.main(new String[] { "--bgcolor=#000000", "Domino" });
+		PApplet.main(new String[] { "--bgcolor=#ffffff", "Domino" });
 	}
 
 }

@@ -1,6 +1,12 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game {
 
@@ -9,27 +15,77 @@ public class Game {
 	private List<Joint> joints;
 	private float fieldSize;
 	public Ball active;
-	private float ballsize = 30;
+	public int width = 600;
+	public int height = 400;
+	private float ballsize = 60;
+	private int refreshInterval = 50;
+
+	public Coord getCenter() {
+		return new Coord(width / 2, height / 2);
+	}
+
+	public int getNumberOfJoints() {
+		return joints.size();
+	}
+
+	private Timer timer;
+	private TimerTask task = new TimerTask() {
+		public void run() {
+			try {
+				refresh();
+				// TODO occasionally throws ConcurrentModificationException
+			} catch (ConcurrentModificationException e) {
+				balls = new ArrayList<Ball>();
+				joints = new ArrayList<Joint>();
+				System.out.println("how did I handle that ?!");
+			}
+		}
+
+	};
 
 	private Game() {
 		balls = new ArrayList<Ball>();
 		joints = new ArrayList<Joint>();
 		setFieldSize(320f);
+		timer = new Timer();
+		timer.schedule(task, 0, refreshInterval);
 	}
 
 	public static Game instance() {
 		return instance;
 	}
 
-	public void refresh(){
-		/* TODO refresh wird die Position von sich selbst bewegenden Objekten aktuallisieren
-		 * im prinzip main loop der Spiellogik*/
+	public void refresh() {
+		physik();
 	}
-	
-	public void physik(){
-		
+
+	public void physik() {
+		for (Ball b : balls) {
+			/* gravitate towards center */// TODO change b.force to general
+			// gravitation
+//			b.acceleration = new rVektor(b.position, getCenter(), 5 / b
+//					.distanceTo(getCenter()).getLength());
+
+			List<Ball> templist = balls;
+			for (Ball o : templist) {
+				float dx = o.getX() - b.getX();
+				float dy = o.getY() - b.getY();
+				double distance = Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2));
+				float sonstwas;
+				 if (o != b && distance <= 30){
+					 o.acceleration.add(new rVektor(o.position, b.position, 5));
+				 }
+				// b.acceleration.add(o.distanceTo(b));
+			}
+
+			/* change speed */
+			b.speed.add(b.acceleration);
+			/* actually move */
+			b.position = b.position.add(b.speed);
+			b.acceleration = new rVektor();
+		}
 	}
-	
+
 	public void setFieldSize(float fieldSize) {
 		this.fieldSize = fieldSize;
 	}
@@ -67,7 +123,7 @@ public class Game {
 		Ball c = createBall(x, y + 20);
 		join(a, b);
 		join(b, c);
-		//join(c, a);
+		// join(c, a);
 	}
 
 	private void join(Ball a, Ball b) {
@@ -152,18 +208,17 @@ public class Game {
 
 	/* anstaendige Move funktion einfuegen */
 	public void dragActive(float x, float y) {
-		
-		active = clickedBall(x, y);
+
 		if (active != null) {
 			active.move(x, y);
 			Ball collidor = checkForCollisions(active);
 
-			if (collidor != null) {
-				active.resetJoints();
-				balls.remove(active);
-				// removeBall(active);
-				// join(taily, collidor);
-			}
+			// if (collidor != null) {
+			// active.resetJoints();
+			// balls.remove(active);
+			// removeBall(active);
+			// join(taily, collidor);
+			// }
 		}
 	}
 
