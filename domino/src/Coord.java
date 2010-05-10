@@ -24,9 +24,6 @@ public class Coord {
 		this.setY(y);
 	}
 
-	Coord() {
-	}
-
 	public void left(float diff) {
 		this.setX(this.getX() - diff);
 	}
@@ -37,11 +34,6 @@ public class Coord {
 
 	public void up(float diff) {
 		this.setY(this.getY() - diff);
-	}
-
-	public Coord add(Vektor v) {
-		Vektor link = new Vektor(this, v.getAngle(), v.getLength());
-		return link.b;
 	}
 
 	public Coord add(rVektor v) {

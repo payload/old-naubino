@@ -24,7 +24,7 @@ public class Domino extends PApplet {
 		return game.getCenter();
 	}
 
-	/* setupt des fensters */
+	/* setup des fensters */
 	public void setup() {
 		size(resolutionX, resolutionY);
 		smooth();
@@ -38,22 +38,16 @@ public class Domino extends PApplet {
 
 	}
 
-	private boolean isInWindow() {
-		return (mouseX > 0 && mouseX <= resolutionX && mouseY > 0 && mouseY <= resolutionY);
-	}
-
 	/* Steuerung */
-
 	public void mousePressed() {
-
 		if (mouseButton == RIGHT) {
-			// game.createTriple(mouseX, mouseY);
-			game.createPair(mouseX, mouseY);
+			game.createTriple(mouseX, mouseY);
+			// game.createPair(mouseX, mouseY);
 		}
 	}
 
 	public void mouseDragged() {
-		/* TODO do not drag a ball without clicking on it*/
+		/* TODO do not drag a ball without clicking on it */
 		if (mouseButton == LEFT) {
 			if (game.active != null) {
 				game.dragActive(mouseX, mouseY);
@@ -89,32 +83,31 @@ public class Domino extends PApplet {
 		textFont(myFont);
 		text(game.getNumberOfJoints(), 10, 40);
 
-		ellipse(center.getX(), center.getY(), game.getFieldSize(), game
-				.getFieldSize());
-		ellipse(center.getX(), center.getY(), 3, 3);
-//		drawJoints();
+		/* spielfeld */
+		ellipse(center.getX(), center.getY(), game.getFieldSize(), game.getFieldSize());
+		// ellipse(center.getX(), center.getY(), 3, 3);
+		drawJoints();
 		drawBalls();
-	}
-
-	private void drawBalls() {
-		for (Ball b : game.getBalls()) {
-			drawBall(b);
-			drawDirection(b);
-		}
 	}
 
 	private void drawDirection(Ball b) {
 		stroke(lineColor);
 		strokeWeight(1);
-		line(b.position.getX(), b.position.getY(), b.position.getX()
-				+ (float) b.speed.getX(), b.position.getY()
+		line(b.position.getX(), b.position.getY(), b.position.getX() + (float) b.speed.getX(), b.position.getY()
 				+ (float) b.speed.getY());
+	}
+
+	private void drawBalls() {
+		for (Ball b : game.getBalls()) {
+			drawBall(b);
+			// drawDirection(b);
+		}
 	}
 
 	private void drawBall(Ball b) {
 		noStroke();
 		fill(b.color.r, b.color.g, b.color.b);
-		ellipse(b.getX(), b.getY(), b.getR()/2, b.getR()/2);
+		ellipse(b.getX(), b.getY(), b.getR() * 2, b.getR() * 2);
 	}
 
 	private void drawJoints() {
@@ -124,6 +117,7 @@ public class Domino extends PApplet {
 	}
 
 	private void drawJoint(Joint j) {
+		// strokeWeight((float) (1 / (j.getStretch() * 0.005)));
 		line(j.a.getX(), j.a.getY(), j.b.getX(), j.b.getY());
 	}
 

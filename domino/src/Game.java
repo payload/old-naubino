@@ -14,7 +14,7 @@ public class Game {
 	public Ball active;
 	public int width = 600;
 	public int height = 400;
-	private float ballsize = 60;
+	private float ballsize = 15;
 	private int refreshInterval = 50;
 
 	public Coord getCenter() {
@@ -58,37 +58,41 @@ public class Game {
 
 	public void physik() {
 		for (Ball b : balls) {
-			// gravitation
-<<<<<<< HEAD
-			b.acceleration = new rVektor(b.position, getCenter(), 5 / b	.distanceTo(getCenter()).getLength());
-=======
-			b.acceleration.add(new rVektor(b.position, getCenter(), 5 / b
-					.distanceTo(getCenter()).getLength()));
->>>>>>> fe6dcca122445794d1ca07fb31a7f6e9293033e3
+			// ordinary gravitation
+			// b.acceleration.add(new rVektor(b.position, getCenter(), 4 /
+			// b.distanceTo(getCenter()).getLength()));
 
+			// indirect gravity
+			b.acceleration.add(new rVektor(b.position, getCenter(),
+					b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2));
+
+			/* repulse other balls */
 			List<Ball> templist = balls;
-			for (Ball o : templist) {
-				float dx = o.getX() - b.getX();
-				float dy = o.getY() - b.getY();
-<<<<<<< HEAD
-				double distance = Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2));
-				float sonstwas;
-				 if (o != b && distance <= 30){
-					 o.acceleration.add(new rVektor(o.position, b.position, distance));
-				 }
-=======
-				double distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-				if (o != b && distance <= 35) {
-					o.acceleration.sub(new rVektor(o.position, b.position, 1.3));
+			for (Ball other : templist) {
+				if (other != b && other.distanceTo(b).getLength() <= b.radius + 5) {
+					other.acceleration.sub(new rVektor(b.acceleration, 1));
 				}
->>>>>>> fe6dcca122445794d1ca07fb31a7f6e9293033e3
-				// b.acceleration.add(o.distanceTo(b));
 			}
+			/* attract */
+			for (Joint j : b.getJoints()) {
+				Ball other = j.opp(b);
+				rVektor jVektor = b.distanceTo(other);
+				if (jVektor.getLength() > 70) {
+					double dx = b.getX() - (Math.cos(jVektor.getAngle()) * 70);
+					double dy = b.getY() - (Math.sin(jVektor.getAngle()) * 70);
+					other.move((float)dx, (float)dy);
+//					other.acceleration.add(new rVektor(b.acceleration, 1));
+				}
+			}
+		}
 
+		for (Ball b : balls) {
 			/* change speed */
 			b.speed.add(b.acceleration);
 			/* actually move */
 			b.position = b.position.add(b.speed);
+			/* friction */
+			b.speed.setLength(b.speed.getLength() * 0.97);
 			b.acceleration = new rVektor();
 		}
 	}
@@ -182,13 +186,11 @@ public class Game {
 
 	public Ball checkForCollisions(Ball active) {
 		for (Ball b : balls) {
-			float distance = (float) Math.sqrt(Math.pow(b.getX()
-					- active.getX(), 2)
+			float distance = (float) Math.sqrt(Math.pow(b.getX() - active.getX(), 2)
 					+ Math.pow(b.getY() - active.getY(), 2));
 
 			/* TODO Collisionen mit sich selbst schoener vermeiden */
-			if (distance > 0 && distance <= ballsize
-					&& b.color.name == active.color.name) {
+			if (distance > 0 && distance <= ballsize && b.color.name == active.color.name) {
 				return b;
 			}
 		}
@@ -213,19 +215,15 @@ public class Game {
 		}
 	}
 
-	/* anstaendige Move funktion einfuegen */
 	public void dragActive(float x, float y) {
 
 		if (active != null) {
 			active.move(x, y);
 			Ball collidor = checkForCollisions(active);
 
-			// if (collidor != null) {
-			// active.resetJoints();
-			// balls.remove(active);
-			// removeBall(active);
-			// join(taily, collidor);
-			// }
+			if (collidor != null) {
+				/* TODO Join matching colors */
+			}
 		}
 	}
 

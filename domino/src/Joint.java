@@ -10,6 +10,10 @@ public class Joint {
 		b = b2;
 		length = 50;
 	}
+	
+	public double getStretch() {
+		return a.distanceTo(b).getLength();
+	}
 
 	public float getLength() {
 		float length = (float) Math.sqrt((a.getX() - b.getX()) * (a.getX() - b.getX())

@@ -5,10 +5,8 @@
 public class rVektor {
 	private double x;
 	private double y;
-	
-	/*only for caching*/
-	private double length;
-	private double angle;
+
+	/* this used to be simple - now it just has tones of constructors */
 
 	public void setX(double x) {
 		this.x = x;
@@ -27,20 +25,17 @@ public class rVektor {
 	}
 
 	public double getLength() {
-		length = Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
-		return length;
+		return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 	}
 
 	public void setLength(double l) {
-		length = l;
 		x = Math.cos(this.getAngle()) * l;
 		y = Math.sin(this.getAngle()) * l;
 	}
 
 	public double getAngle() {
-		angle = Math.atan2(y, x);
-		return angle;
-		
+		return Math.atan2(y, x);
+
 	}
 
 	public void setAngle(double a) {
@@ -58,19 +53,25 @@ public class rVektor {
 		this.y = this.y - v.getY();
 	}
 
-	public void multiply(double n){
+	public void multiply(double n) {
 		x = Math.cos(this.getAngle()) * getLength() * n;
 		y = Math.sin(this.getAngle()) * getLength() * n;
 	}
-	
-	public rVektor dump(){
+
+	public rVektor dump() {
 		return new rVektor(this.x, this.x);
 	}
 
 	public rVektor(Coord a, Coord b, double l) {
-		double angle = Math.atan2((b.getY()-a.getY()),(b.getX()-a.getX()));
+		double angle = Math.atan2((b.getY() - a.getY()), (b.getX() - a.getX()));
 		x = Math.cos(angle) * l;
 		y = Math.sin(angle) * l;
+		setLength(l);
+	}
+
+	public rVektor(rVektor v, double l) {
+		setX(v.getX());
+		setY(v.getY());
 		setLength(l);
 	}
 
@@ -79,15 +80,16 @@ public class rVektor {
 		setY(b.getY() - a.getY());
 	}
 
-	public rVektor(float l, float a) {
-		x = Math.cos(a * l);
-		y = Math.sin(a * l);
-	}
-	public rVektor(double nx, double ny){
+	// public rVektor(float l, float a) {
+	// x = Math.cos(a * l);
+	// y = Math.sin(a * l);
+	// }
+	public rVektor(double nx, double ny) {
 		x = nx;
 		y = ny;
 	}
-	public rVektor(){
+
+	public rVektor() {
 		x = 0;
 		y = 0;
 	}
