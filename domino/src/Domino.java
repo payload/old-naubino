@@ -92,7 +92,7 @@ public class Domino extends PApplet {
 		ellipse(center.getX(), center.getY(), game.getFieldSize(), game
 				.getFieldSize());
 		ellipse(center.getX(), center.getY(), 3, 3);
-		drawJoints();
+//		drawJoints();
 		drawBalls();
 	}
 

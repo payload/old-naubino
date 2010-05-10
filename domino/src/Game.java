@@ -1,9 +1,6 @@
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -63,18 +60,17 @@ public class Game {
 		for (Ball b : balls) {
 			/* gravitate towards center */// TODO change b.force to general
 			// gravitation
-			b.acceleration = new rVektor(b.position, getCenter(), 5 / b
-					.distanceTo(getCenter()).getLength());
+			b.acceleration.add(new rVektor(b.position, getCenter(), 5 / b
+					.distanceTo(getCenter()).getLength()));
 
 			List<Ball> templist = balls;
 			for (Ball o : templist) {
 				float dx = o.getX() - b.getX();
 				float dy = o.getY() - b.getY();
-				double distance = Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2));
-				float sonstwas;
-				 if (o != b && distance <= 30){
-					 o.acceleration.add(new rVektor(o.position, b.position, 5));
-				 }
+				double distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+				if (o != b && distance <= 35) {
+					o.acceleration.sub(new rVektor(o.position, b.position, 1.3));
+				}
 				// b.acceleration.add(o.distanceTo(b));
 			}
 
