@@ -61,10 +61,8 @@ public class Game {
 
 	public void physik() {
 		for (Ball b : balls) {
-			/* gravitate towards center */// TODO change b.force to general
 			// gravitation
-			b.acceleration = new rVektor(b.position, getCenter(), 5 / b
-					.distanceTo(getCenter()).getLength());
+			b.acceleration = new rVektor(b.position, getCenter(), 5 / b	.distanceTo(getCenter()).getLength());
 
 			List<Ball> templist = balls;
 			for (Ball o : templist) {
@@ -73,7 +71,7 @@ public class Game {
 				double distance = Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2));
 				float sonstwas;
 				 if (o != b && distance <= 30){
-					 o.acceleration.add(new rVektor(o.position, b.position, 5));
+					 o.acceleration.add(new rVektor(o.position, b.position, distance));
 				 }
 				// b.acceleration.add(o.distanceTo(b));
 			}

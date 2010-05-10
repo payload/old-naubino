@@ -9,7 +9,7 @@ public class Domino extends PApplet {
 	 * @param args
 	 */
 
-	private int frameRate = 50;
+	private int frameRate = 70;
 	private Game game = Game.instance();
 	private int resolutionX = game.width;
 	private int resolutionY = game.height;
