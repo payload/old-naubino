@@ -1,7 +1,7 @@
 public class Joint {
 	public Ball a;
 	public Ball b;
-	public Ball taily;
+//	public Ball taily;
 
 	private float length;
 

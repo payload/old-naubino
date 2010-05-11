@@ -19,7 +19,11 @@ public class Ball extends dragable {
 		joints = new ArrayList<Joint>();
 	}
 
-	private Game game = Game.instance();
+//	private Game game = Game.instance();
+	
+	public void accelerate(rVektor v){
+		acceleration.add(v);
+	}
 
 	public float getX() {
 		return position.getX();
@@ -71,6 +75,10 @@ public class Ball extends dragable {
 		joints = new ArrayList<Joint>();
 	}
 
+	public void move(rVektor v){
+		speed = v;
+	}
+	
 	public void move(float x, float y) {
 		speed = new rVektor(position, new Coord(x, y));
 	}

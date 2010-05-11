@@ -59,31 +59,33 @@ public class Game {
 	public void physik() {
 		for (Ball b : balls) {
 			// ordinary gravitation
-			// b.acceleration.add(new rVektor(b.position, getCenter(), 4 /
-			// b.distanceTo(getCenter()).getLength()));
+//			 b.acceleration.add(new rVektor(b.position, getCenter(), 4 /
+//			 b.distanceTo(getCenter()).getLength()));
 
 			// indirect gravity
-			b.acceleration.add(new rVektor(b.position, getCenter(),
+			b.accelerate(new rVektor(b.position, getCenter(),
 					b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2));
 
 			/* repulse other balls */
 			List<Ball> templist = balls;
 			for (Ball other : templist) {
-				if (other != b && other.distanceTo(b).getLength() <= b.radius + 5) {
-					other.acceleration.sub(new rVektor(b.acceleration, 1));
+				rVektor oVektor = other.distanceTo(b);
+				if (other != b && oVektor.getLength() <= b.radius + 5) {
+//					other.accelerate(new rVektor(b.acceleration, 1.5));
+					other.move(new rVektor(b.speed, -5));
 				}
 			}
-			/* attract */
-			for (Joint j : b.getJoints()) {
-				Ball other = j.opp(b);
-				rVektor jVektor = b.distanceTo(other);
-				if (jVektor.getLength() > 70) {
-					double dx = b.getX() - (Math.cos(jVektor.getAngle()) * 70);
-					double dy = b.getY() - (Math.sin(jVektor.getAngle()) * 70);
-					other.move((float)dx, (float)dy);
-//					other.acceleration.add(new rVektor(b.acceleration, 1));
-				}
-			}
+//			/* attract */
+//			for (Joint j : b.getJoints()) {
+//				Ball other = j.opp(b);
+//				rVektor jVektor = b.distanceTo(other);
+//				if (jVektor.getLength() > 70) {
+//					double dx = b.getX() - (Math.cos(jVektor.getAngle()) * 70);
+//					double dy = b.getY() - (Math.sin(jVektor.getAngle()) * 70);
+//					other.move((float)dx, (float)dy);
+////					other.acceleration.add(new rVektor(b.acceleration, 1));
+//				}
+//			}
 		}
 
 		for (Ball b : balls) {
@@ -92,7 +94,7 @@ public class Game {
 			/* actually move */
 			b.position = b.position.add(b.speed);
 			/* friction */
-			b.speed.setLength(b.speed.getLength() * 0.97);
+			b.speed.setLength(b.speed.getLength() * 0.98);
 			b.acceleration = new rVektor();
 		}
 	}

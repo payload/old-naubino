@@ -41,8 +41,8 @@ public class Domino extends PApplet {
 	/* Steuerung */
 	public void mousePressed() {
 		if (mouseButton == RIGHT) {
-			game.createTriple(mouseX, mouseY);
-			// game.createPair(mouseX, mouseY);
+			// game.createTriple(mouseX, mouseY);
+			game.createPair(mouseX, mouseY);
 		}
 	}
 
@@ -84,7 +84,8 @@ public class Domino extends PApplet {
 		text(game.getNumberOfJoints(), 10, 40);
 
 		/* spielfeld */
-		ellipse(center.getX(), center.getY(), game.getFieldSize(), game.getFieldSize());
+		ellipse(center.getX(), center.getY(), game.getFieldSize(), game
+				.getFieldSize());
 		// ellipse(center.getX(), center.getY(), 3, 3);
 		drawJoints();
 		drawBalls();
@@ -93,7 +94,8 @@ public class Domino extends PApplet {
 	private void drawDirection(Ball b) {
 		stroke(lineColor);
 		strokeWeight(1);
-		line(b.position.getX(), b.position.getY(), b.position.getX() + (float) b.speed.getX(), b.position.getY()
+		line(b.position.getX(), b.position.getY(), b.position.getX()
+				+ (float) b.speed.getX(), b.position.getY()
 				+ (float) b.speed.getY());
 	}
 
