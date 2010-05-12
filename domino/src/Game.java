@@ -102,7 +102,7 @@ public class Game {
 		for (Ball b : balls) {
 			b.acceleration = new Vektor();
 			// gravity(b);
-			//indirectGravity(b);
+			indirectGravity(b);
 			//repulseOtherBalls(b);
 		}
 		

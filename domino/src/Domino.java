@@ -18,6 +18,7 @@ public class Domino extends PApplet {
 	private int lineColor = color(0, 0, 0);
 	private int backgroundColor = color(255, 255, 255);
 	private Vektor center = center();
+	private boolean enableDrawDirection = false;
 
 	private PFont myFont;
 
@@ -96,7 +97,7 @@ public class Domino extends PApplet {
 	private void drawBalls() {
 		for (Ball b : game.getBalls()) {
 			drawBall(b);
-			drawDirection(b);
+			if (enableDrawDirection) drawDirection(b);
 		}
 	}
 
