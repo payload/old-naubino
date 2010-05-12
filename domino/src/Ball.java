@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ball extends dragable {
-	private Coord position;
+	public Coord position;
 	public float radius;
 	public Color color;
 
@@ -10,29 +10,57 @@ public class Ball extends dragable {
 
 	public Ball(float x, float y, float size) {
 		position = new Coord(x, y);
+		speed = new rVektor();
+		acceleration = new rVektor();
 		radius = size;
+		//mass = size;
+		force = 1.5f;
 		color = new Color(255, 0, 0);
 		joints = new ArrayList<Joint>();
 	}
 
+//	private Game game = Game.instance();
+	
+	public void accelerate(rVektor v){
+		acceleration.add(v);
+	}
+
 	public float getX() {
-		return position.x;
+		return position.getX();
 	}
 
 	public float getY() {
-		return position.y;
+		return position.getY();
 	}
 
 	public void setX(float x) {
-		position.x = x;
+		position.setX(x);
 	}
 
 	public void setY(float y) {
-		position.y = y;
+		position.setY(y);
 	}
 
 	public float getR() {
 		return radius;
+	}
+
+	public boolean isHit(Coord c) {
+		double distance = distanceTo(c).getLength();
+		return (distance <= radius);
+	}
+
+	public boolean touches(dragable o) {
+		double distance = distanceTo(o).getLength();
+		return (distance <= (radius));
+	}
+
+	public rVektor distanceTo(Ball d) {
+		return new rVektor(d.position, position);
+	}
+
+	public rVektor distanceTo(Coord o) {
+		return new rVektor(o, position);
 	}
 
 	public void addJoint(Joint joint) {
@@ -47,22 +75,11 @@ public class Ball extends dragable {
 		joints = new ArrayList<Joint>();
 	}
 
-	public boolean isHit(Coord c) {
-		float distance = (float) Math.sqrt(Math.pow((c.x - position.x), 2)
-				+ Math.pow((c.y - position.y), 2));
-		return (distance <= radius / 2);
+	public void move(rVektor v){
+		speed = v;
 	}
-
+	
 	public void move(float x, float y) {
-
-		setX(x);
-		setY(y);
-
-		float tailyX;
-		float tailyY;
-		float dx;
-		float dy;
-		Ball taily;
-
+		speed = new rVektor(position, new Coord(x, y));
 	}
 }

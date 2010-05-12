@@ -1,6 +1,9 @@
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game {
 
@@ -9,27 +12,93 @@ public class Game {
 	private List<Joint> joints;
 	private float fieldSize;
 	public Ball active;
-	private float ballsize = 30;
+	public int width = 600;
+	public int height = 400;
+	private float ballsize = 15;
+	private int refreshInterval = 50;
+
+	public Coord getCenter() {
+		return new Coord(width / 2, height / 2);
+	}
+
+	public int getNumberOfJoints() {
+		return joints.size();
+	}
+
+	private Timer timer;
+	private TimerTask task = new TimerTask() {
+		public void run() {
+			try {
+				refresh();
+				// TODO occasionally throws ConcurrentModificationException
+			} catch (ConcurrentModificationException e) {
+				balls = new ArrayList<Ball>();
+				joints = new ArrayList<Joint>();
+				System.out.println("how did I handle that ?!");
+			}
+		}
+
+	};
 
 	private Game() {
 		balls = new ArrayList<Ball>();
 		joints = new ArrayList<Joint>();
 		setFieldSize(320f);
+		timer = new Timer();
+		timer.schedule(task, 0, refreshInterval);
 	}
 
 	public static Game instance() {
 		return instance;
 	}
 
-	public void refresh(){
-		/* TODO refresh wird die Position von sich selbst bewegenden Objekten aktuallisieren
-		 * im prinzip main loop der Spiellogik*/
+	public void refresh() {
+		physik();
 	}
-	
-	public void physik(){
-		
+
+	public void physik() {
+		for (Ball b : balls) {
+			// ordinary gravitation
+//			 b.acceleration.add(new rVektor(b.position, getCenter(), 4 /
+//			 b.distanceTo(getCenter()).getLength()));
+
+			// indirect gravity
+			b.accelerate(new rVektor(b.position, getCenter(),
+					b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2));
+
+			/* repulse other balls */
+			List<Ball> templist = balls;
+			for (Ball other : templist) {
+				rVektor oVektor = other.distanceTo(b);
+				if (other != b && oVektor.getLength() <= b.radius + 5) {
+//					other.accelerate(new rVektor(b.acceleration, 1.5));
+					other.move(new rVektor(b.speed, -5));
+				}
+			}
+//			/* attract */
+//			for (Joint j : b.getJoints()) {
+//				Ball other = j.opp(b);
+//				rVektor jVektor = b.distanceTo(other);
+//				if (jVektor.getLength() > 70) {
+//					double dx = b.getX() - (Math.cos(jVektor.getAngle()) * 70);
+//					double dy = b.getY() - (Math.sin(jVektor.getAngle()) * 70);
+//					other.move((float)dx, (float)dy);
+////					other.acceleration.add(new rVektor(b.acceleration, 1));
+//				}
+//			}
+		}
+
+		for (Ball b : balls) {
+			/* change speed */
+			b.speed.add(b.acceleration);
+			/* actually move */
+			b.position = b.position.add(b.speed);
+			/* friction */
+			b.speed.setLength(b.speed.getLength() * 0.98);
+			b.acceleration = new rVektor();
+		}
 	}
-	
+
 	public void setFieldSize(float fieldSize) {
 		this.fieldSize = fieldSize;
 	}
@@ -67,7 +136,7 @@ public class Game {
 		Ball c = createBall(x, y + 20);
 		join(a, b);
 		join(b, c);
-		//join(c, a);
+		// join(c, a);
 	}
 
 	private void join(Ball a, Ball b) {
@@ -119,13 +188,11 @@ public class Game {
 
 	public Ball checkForCollisions(Ball active) {
 		for (Ball b : balls) {
-			float distance = (float) Math.sqrt(Math.pow(b.getX()
-					- active.getX(), 2)
+			float distance = (float) Math.sqrt(Math.pow(b.getX() - active.getX(), 2)
 					+ Math.pow(b.getY() - active.getY(), 2));
 
 			/* TODO Collisionen mit sich selbst schoener vermeiden */
-			if (distance > 0 && distance <= ballsize
-					&& b.color.name == active.color.name) {
+			if (distance > 0 && distance <= ballsize && b.color.name == active.color.name) {
 				return b;
 			}
 		}
@@ -150,19 +217,14 @@ public class Game {
 		}
 	}
 
-	/* anstaendige Move funktion einfuegen */
 	public void dragActive(float x, float y) {
-		
-		active = clickedBall(x, y);
+
 		if (active != null) {
 			active.move(x, y);
 			Ball collidor = checkForCollisions(active);
 
 			if (collidor != null) {
-				active.resetJoints();
-				balls.remove(active);
-				// removeBall(active);
-				// join(taily, collidor);
+				/* TODO Join matching colors */
 			}
 		}
 	}

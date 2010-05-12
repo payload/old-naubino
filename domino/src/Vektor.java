@@ -1,56 +1,76 @@
-import java.lang.Math.*;
 
 public class Vektor {
-	Coord a;
-	Coord b = new Coord();
-	float angle;
-	float length;
+	public Coord a;
+	public Coord b = new Coord();
+	private float angle;
+	private float length;
+
+	public void setAngle(float angle) {
+		this.angle = angle;
+	}
+
+	public float getAngle() {
+		return angle;
+	}
+
+	public void setLength(float length) {
+		this.length = length;
+	}
+
+	public float getLength() {
+		return length;
+	}
 
 	Vektor(Coord a, float angle, float length) {
 		this.a = a;
-		this.angle = angle;
-		this.length = length;
+		this.setAngle(angle);
+		this.setLength(length);
 
-		this.b.x = (float) (this.a.x + Math.cos(this.angle) * this.length);
-		this.b.y = (float) (this.a.y + Math.sin(this.angle) * this.length);
+		this.b.setX((float) (this.a.getX() + Math.cos(this.getAngle()) * this.getLength()));
+		this.b.setY((float) (this.a.getY() + Math.sin(this.getAngle()) * this.getLength()));
 	}
 
 	public Vektor(Coord na, Coord nb) {
 		this.a = na;
 		this.b = nb;
-		this.length = (float) Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y)
-				* (a.y - b.y));
+		this.setLength((float) Math.sqrt((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY())
+				* (a.getY() - b.getY())));
 
-		this.angle = (float) Math.atan2((nb.y - na.y), (nb.x - na.x));
+		this.setAngle((float) Math.atan2((nb.getY() - na.getY()), (nb.getX() - na.getX())));
+	}
+
+	public Vektor(Coord na, Coord nb, float l) {
+		this.a = na;
+		this.setLength(l);
+		this.setAngle((float) Math.atan2((nb.getY() - na.getY()), (nb.getX() - na.getX())));
+		this.b.setX((float) (this.a.getX() + Math.cos(this.getAngle()) * this.getLength()));
+		this.b.setY((float) (this.a.getY() + Math.sin(this.getAngle()) * this.getLength()));
 	}
 
 	public Vektor dump() {
-		return new Vektor(this.a.dump(), angle, length);
+		return new Vektor(this.a.dump(), getAngle(), getLength());
 	}
 
 	public Vektor scoot(float len) {
 		Coord sa = new Coord();
-		sa.x = (float) (this.a.x + Math.cos(this.angle) * len);
-		sa.y = (float) (this.a.y + Math.sin(this.angle) * len);
+		sa.setX((float) (this.a.getX() + Math.cos(this.getAngle()) * len));
+		sa.setY((float) (this.a.getY() + Math.sin(this.getAngle()) * len));
 
-		return new Vektor(sa, this.angle, this.length);
+		return new Vektor(sa, this.getAngle(), this.getLength());
 
 	}
 	
 	public void rotate(float ang) {
-		this.angle += ang;
+		this.setAngle(this.getAngle() + ang);
 	}
 	
 	public Vektor add(Vektor other) {
-		return new Vektor(this.a,other.b);
+		Vektor link = new Vektor(this.b,other.getAngle(),other.length);
+		return new Vektor(this.a,link.b);
 	}
-	
-	public Vektor add(Coord other) {
-		return new Vektor(this.a, other);
-	}
-	
+		
 	public Vektor append(Vektor other) {
-		return new Vektor(this.b,other.angle,other.length);
+		return new Vektor(this.b,other.getAngle(),other.getLength());
 	}
 	
 	public Vektor append() {
@@ -58,23 +78,23 @@ public class Vektor {
 	}
 
 	public float getX() {
-		return (float)this.a.x;		
+		return (float)this.a.getX();		
 	}
 	
 	public float getY() {
-		return (float)this.a.y;		
+		return (float)this.a.getY() ;		
 	}
 	
 	public String toString() {		
 		return "[" 
-		+ this.a.x	 +","
-		+ this.a.y   + "] : "
-		+ this.angle + "->" 
-		+ this.length;
+		+ this.a.getX()	 +","
+		+ this.a.getY()   + "] : "
+		+ this.getAngle() + "->" 
+		+ this.getLength();
 	}
 
 	Vektor cut(float len) {
-		Vektor cv = new Vektor(this.a, this.angle, this.length * len);
+		Vektor cv = new Vektor(this.a, this.getAngle(), this.getLength() * len);
 		return cv;
 	}
 

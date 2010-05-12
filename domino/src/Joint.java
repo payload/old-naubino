@@ -1,7 +1,7 @@
 public class Joint {
 	public Ball a;
 	public Ball b;
-	public Ball taily;
+//	public Ball taily;
 
 	private float length;
 
@@ -9,6 +9,10 @@ public class Joint {
 		a = b1;
 		b = b2;
 		length = 50;
+	}
+	
+	public double getStretch() {
+		return a.distanceTo(b).getLength();
 	}
 
 	public float getLength() {
