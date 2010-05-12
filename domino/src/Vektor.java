@@ -37,9 +37,10 @@ public class Vektor {
 
 	}
 
-	public void setAngle(double a) {
+	public Vektor setAngle(double a) {
 		x = Math.cos(a) * this.getLength();
 		y = Math.sin(a) * this.getLength();
+		return this;
 	}
 
 	public Vektor add(Vektor v) {
@@ -91,5 +92,9 @@ public class Vektor {
 	public Vektor() {
 		x = 0;
 		y = 0;
+	}
+	
+	public static Vektor polar(double angle, double length) {
+		return new Vektor(length, 0).setAngle(angle);
 	}
 }

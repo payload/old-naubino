@@ -43,10 +43,10 @@ public class Domino extends PApplet {
 	public void mousePressed() {
 		Vektor v = new Vektor(mouseX, mouseY);
 		if (mouseButton == LEFT) {
-			game.mouseDownLeft(v);
+			game.mousePressedLeft(v);
 		} else
 		if (mouseButton == RIGHT) {
-			game.mouseDownRight(v);
+			game.mousePressedRight(v);
 		}
 	}
 

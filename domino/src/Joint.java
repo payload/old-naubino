@@ -1,26 +1,38 @@
 public class Joint {
+	
 	public Ball a;
 	public Ball b;
+	
+	private double length;
+	private double strength;
 
-	public Joint(Ball b1, Ball b2) {
+	public Joint(Ball b1, Ball b2, double length, double strength) {
 		a = b1;
 		b = b2;
-	}
-	
-	public double getStretch() {
-		return a.distanceTo(b).getLength();
+		this.length = length;
+		this.setStrength(strength);
 	}
 
-	public float getLength() {
-		float length = (float) Math.sqrt((a.getX() - b.getX()) * (a.getX() - b.getX())
-				+ Math.pow(a.getY() - b.getY(), 2));
+	public Ball opposite(Ball b) {
+		if (a == b)
+			return this.b;
+		else
+			return a;
+	}
+
+	public void setLength(double length) {
+		this.length = length;
+	}
+
+	public double getLength() {
 		return length;
 	}
 
-	public Ball opp(Ball b2) {
-		if (a == b2)
-			return b;
-		else
-			return a;
+	public void setStrength(double strength) {
+		this.strength = strength;
+	}
+
+	public double getStrength() {
+		return strength;
 	}
 }

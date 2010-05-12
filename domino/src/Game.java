@@ -11,9 +11,13 @@ public class Game {
 	private List<Ball> balls;
 	private List<Joint> joints;
 	private float fieldSize;
+	private double jointLength = 40;
+	private double jointStrength = 0.001;
+	
 	public Ball active;
 	public int width = 600;
 	public int height = 400;
+	
 	private float ballsize = 15;
 	private int refreshInterval = 50;
 
@@ -83,6 +87,16 @@ public class Game {
 		}
 	}
 	
+	private void swingBalls(Joint j) {
+		Vektor real_diff = j.a.position.sub(j.b.position);
+		double angle = real_diff.getAngle();
+		Vektor wish_diff = Vektor.polar(angle, j.getLength());
+		Vektor force     = wish_diff.sub(real_diff);
+		force = force.mul(j.getStrength());
+		j.a.accelerate(force);
+		j.b.accelerate(force.mul(-1));
+	}
+	
 	public void physik() {
 		for (Ball b : balls) {
 			b.acceleration = new Vektor();
@@ -90,10 +104,14 @@ public class Game {
 			indirectGravity(b);
 			//repulseOtherBalls(b);
 		}
+		
+		for (Joint j : joints) {
+			swingBalls(j);
+		}
 
 		for (Ball b : balls) {
 			b.speed = b.speed.add(b.acceleration);
-			b.speed.setLength(b.speed.getLength() * 0.98); // TODO multiply
+			b.speed = b.speed.mul(0.98); // friction
 			b.position = b.position.add(b.speed);
 		}
 	}
@@ -126,21 +144,16 @@ public class Game {
 	}
 
 	public void createPair(Vektor v) {
-		Vektor pair_size = new Vektor(20, 20);
-		join(createBall(v.sub(pair_size)), createBall(v.add(pair_size)));
-	}
-
-	public void createTriple(float x, float y) {
-		Ball a = createBall(new Vektor(x + 20, y - 20));
-		Ball b = createBall(new Vektor(x - 20, y - 20));
-		Ball c = createBall(new Vektor(x, y + 20));
-		join(a, b);
-		join(b, c);
-		// join(c, a);
+		Vektor bla = new Vektor(1, 0).mul(jointLength);
+		Vektor pos1 = v.add(bla);
+		Vektor pos2 = bla.sub(v);
+		Ball ball1 = createBall(pos1);
+		Ball ball2 = createBall(pos2);
+		join(ball1, ball2);
 	}
 
 	private void join(Ball a, Ball b) {
-		Joint joint = new Joint(a, b);
+		Joint joint = new Joint(a, b, jointLength, jointStrength);
 		a.addJoint(joint);
 		b.addJoint(joint);
 		joints.add(joint);
@@ -168,16 +181,16 @@ public class Game {
 		return list.get(rand.nextInt(list.size()));
 	}
 
-	public void mouseDownLeft(Vektor v) {
+	public void mousePressedLeft(Vektor v) {
 		Ball b = collidingBall(v);
 		if (b != null) active = b;
 	}
 	
-	public void mouseDownRight(Vektor v) {
+	public void mousePressedRight(Vektor v) {
 		createPair(v);
 	}
 	
-	public void mouseUpLeft(Vektor v) {
+	public void mouseReleasedLeft(Vektor v) {
 		active = null;
 	}
 	
