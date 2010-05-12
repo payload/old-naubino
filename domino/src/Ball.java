@@ -2,16 +2,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ball extends dragable {
-	public Coord position;
-	public float radius;
+	public Vektor position;
+	public double radius;
 	public Color color;
 
 	private List<Joint> joints;
 
-	public Ball(float x, float y, float size) {
-		position = new Coord(x, y);
-		speed = new rVektor();
-		acceleration = new rVektor();
+	public Ball(double x, double y, double size) {
+		position = new Vektor(x, y);
+		speed = new Vektor();
+		acceleration = new Vektor();
 		radius = size;
 		//mass = size;
 		force = 1.5f;
@@ -21,31 +21,31 @@ public class Ball extends dragable {
 
 //	private Game game = Game.instance();
 	
-	public void accelerate(rVektor v){
+	public void accelerate(Vektor v){
 		acceleration.add(v);
 	}
 
-	public float getX() {
+	public double getX() {
 		return position.getX();
 	}
 
-	public float getY() {
+	public double getY() {
 		return position.getY();
 	}
 
-	public void setX(float x) {
+	public void setX(double x) {
 		position.setX(x);
 	}
 
-	public void setY(float y) {
+	public void setY(double y) {
 		position.setY(y);
 	}
 
-	public float getR() {
+	public double getR() {
 		return radius;
 	}
 
-	public boolean isHit(Coord c) {
+	public boolean isHit(Vektor c) {
 		double distance = distanceTo(c).getLength();
 		return (distance <= radius);
 	}
@@ -55,14 +55,14 @@ public class Ball extends dragable {
 		return (distance <= (radius));
 	}
 
-	public rVektor distanceTo(Ball d) {
-		return new rVektor(d.position, position);
+	public Vektor distanceTo(dragable d){
+		return position.sub(d.position);
 	}
-
-	public rVektor distanceTo(Coord o) {
-		return new rVektor(o, position);
+	
+	public Vektor distanceTo(Vektor o){
+		return position.sub(o);
 	}
-
+	
 	public void addJoint(Joint joint) {
 		joints.add(joint);
 	}
@@ -75,11 +75,8 @@ public class Ball extends dragable {
 		joints = new ArrayList<Joint>();
 	}
 
-	public void move(rVektor v){
+	public void move(Vektor v){
 		speed = v;
 	}
-	
-	public void move(float x, float y) {
-		speed = new rVektor(position, new Coord(x, y));
-	}
+
 }

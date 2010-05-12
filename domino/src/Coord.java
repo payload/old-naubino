@@ -36,7 +36,7 @@ public class Coord {
 		this.setY(this.getY() - diff);
 	}
 
-	public Coord add(rVektor v) {
+	public Coord add(Vektor v) {
 		return new Coord(this.getX() + (float) v.getX(), this.getY() + (float) v.getY());
 	}
 
