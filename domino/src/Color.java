@@ -17,4 +17,8 @@ public class Color {
 		b = blue;
 		name = n;
 	}
+	
+	public boolean equals(Color other) {
+		return this.name.equals(other.name);
+	}
 }

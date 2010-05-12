@@ -1,15 +1,11 @@
 import java.awt.event.KeyEvent;
+import java.util.Collection;
+
 import processing.core.*;
 
 public class Domino extends PApplet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7338935826674782250L;
-	/**
-	 * @param args
-	 */
 
 	private int frameRate = 70;
 	private Game game = Game.instance();
@@ -95,9 +91,12 @@ public class Domino extends PApplet {
 	}
 
 	private void drawBalls() {
-		for (Ball b : game.getBalls()) {
-			drawBall(b);
-			if (enableDrawDirection) drawDirection(b);
+		Collection<Ball> balls = game.getBalls();
+		synchronized (balls) {
+			for (Ball b : balls) {
+				drawBall(b);
+				if (enableDrawDirection) drawDirection(b);
+			}
 		}
 	}
 
@@ -108,8 +107,10 @@ public class Domino extends PApplet {
 	}
 
 	private void drawJoints() {
-		for (Joint j : game.getJoints()) {
-			drawJoint(j);
+		Collection<Joint> joints = game.getJoints();
+		synchronized (joints) {
+			for (Joint j : joints)
+				drawJoint(j);
 		}
 	}
 

@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -33,21 +33,15 @@ public class Game {
 	private Timer timer;
 	private TimerTask task = new TimerTask() {
 		public void run() {
-			try {
-				refresh();
-				// TODO occasionally throws ConcurrentModificationException
-			} catch (ConcurrentModificationException e) {
-				balls = new ArrayList<Ball>();
-				joints = new ArrayList<Joint>();
-				System.out.println("how did I handle that ?!");
-			}
+			refresh();
 		}
-
 	};
 
 	private Game() {
 		balls = new ArrayList<Ball>();
+		balls = Collections.synchronizedList(balls);
 		joints = new ArrayList<Joint>();
+		joints = Collections.synchronizedList(joints);
 		setFieldSize(320f);
 		timer = new Timer();
 		timer.schedule(task, 0, refreshInterval);
@@ -88,11 +82,17 @@ public class Game {
 	}
 	
 	private void collide(Collision c) {
+		if (c.a.color.equals(c.b.color))
+			join(c.a, c.b);
 		Vektor diff2 = c.diff.mul(0.05);
-		//c.a.position = diff2.sub(c.a.position);
-		//c.b.position = diff2.add(c.b.position);
 		c.a.accelerate(diff2.mul(-1));
 		c.b.accelerate(diff2);
+	}
+	
+	private void moveBall(Ball b) {
+		b.speed = b.speed.add(b.acceleration);
+		b.speed = b.speed.mul(0.98); // friction
+		b.position = b.position.add(b.speed);
 	}
 	
 	public void physik() {
@@ -101,33 +101,25 @@ public class Game {
 		if (balls_count > 1) {
 			for (int i = 0; i < balls_count-1; i++) {
 				for (int j = i+1; j < balls_count; j++) {
+				
 					Collision collision = Collision.test(balls.get(i), balls.get(j));
 					if (collision != null)
 						collisions.add(collision);
 				}
 			}
 		}
-		
 		for (Ball b : balls) {
 			b.acceleration = new Vektor();
 			// gravity(b);
 			indirectGravity(b);
 			//repulseOtherBalls(b);
 		}
-		
-		for (Collision c : collisions) {
+		for (Collision c : collisions)
 			collide(c);
-		}
-		
-		for (Joint j : joints) {
+		for (Joint j : joints)
 			swingBalls(j);
-		}
-
-		for (Ball b : balls) {
-			b.speed = b.speed.add(b.acceleration);
-			b.speed = b.speed.mul(0.98); // friction
-			b.position = b.position.add(b.speed);
-		}
+		for (Ball b : balls)
+			moveBall(b);
 	}
 
 	public void setFieldSize(float fieldSize) {
