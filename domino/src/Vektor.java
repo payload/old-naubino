@@ -1,105 +1,86 @@
-
+/* relativer Vektor
+ * ja ich habe es eingesehen
+ * schön Simple ist er*/
+// TODO casting entfernen
 public class Vektor {
-	public Coord a;
-	public Coord b = new Coord();
-	private float angle;
-	private float length;
+	private double x;
+	private double y;
 
-	public void setAngle(float angle) {
-		this.angle = angle;
+	/* this used to be simple - now it just has tones of constructors */
+
+	public void setX(double x) {
+		this.x = x;
 	}
 
-	public float getAngle() {
-		return angle;
+	public double getX() {
+		return x;
 	}
 
-	public void setLength(float length) {
-		this.length = length;
+	public void setY(double y) {
+		this.y = y;
 	}
 
-	public float getLength() {
-		return length;
+	public double getY() {
+		return y;
 	}
 
-	Vektor(Coord a, float angle, float length) {
-		this.a = a;
-		this.setAngle(angle);
-		this.setLength(length);
-
-		this.b.setX((float) (this.a.getX() + Math.cos(this.getAngle()) * this.getLength()));
-		this.b.setY((float) (this.a.getY() + Math.sin(this.getAngle()) * this.getLength()));
+	public double getLength() {
+		return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 	}
 
-	public Vektor(Coord na, Coord nb) {
-		this.a = na;
-		this.b = nb;
-		this.setLength((float) Math.sqrt((a.getX() - b.getX()) * (a.getX() - b.getX()) + (a.getY() - b.getY())
-				* (a.getY() - b.getY())));
-
-		this.setAngle((float) Math.atan2((nb.getY() - na.getY()), (nb.getX() - na.getX())));
+	public void setLength(double l) {
+		x = Math.cos(this.getAngle()) * l;
+		y = Math.sin(this.getAngle()) * l;
 	}
 
-	public Vektor(Coord na, Coord nb, float l) {
-		this.a = na;
-		this.setLength(l);
-		this.setAngle((float) Math.atan2((nb.getY() - na.getY()), (nb.getX() - na.getX())));
-		this.b.setX((float) (this.a.getX() + Math.cos(this.getAngle()) * this.getLength()));
-		this.b.setY((float) (this.a.getY() + Math.sin(this.getAngle()) * this.getLength()));
+	public double getAngle() {
+		return Math.atan2(y, x);
+
 	}
+
+	public void setAngle(double a) {
+		x = Math.cos(a) * this.getLength();
+		y = Math.sin(a) * this.getLength();
+	}
+
+	public Vektor add(Vektor v) {
+		return new Vektor(x + v.getX(), y + v.getY());
+	}
+
+	public Vektor sub(Vektor v) {
+		return new Vektor(this.x - v.getX(), this.y - v.getY());
+	}
+
+//	public void multiply(double n) {
+//		x = Math.cos(this.getAngle()) * getLength() * n;
+//		y = Math.sin(this.getAngle()) * getLength() * n;
+//	}
 
 	public Vektor dump() {
-		return new Vektor(this.a.dump(), getAngle(), getLength());
+		return new Vektor(this.x, this.x);
 	}
 
-	public Vektor scoot(float len) {
-		Coord sa = new Coord();
-		sa.setX((float) (this.a.getX() + Math.cos(this.getAngle()) * len));
-		sa.setY((float) (this.a.getY() + Math.sin(this.getAngle()) * len));
-
-		return new Vektor(sa, this.getAngle(), this.getLength());
-
-	}
-	
-	public void rotate(float ang) {
-		this.setAngle(this.getAngle() + ang);
-	}
-	
-	public Vektor add(Vektor other) {
-		Vektor link = new Vektor(this.b,other.getAngle(),other.length);
-		return new Vektor(this.a,link.b);
-	}
-		
-	public Vektor append(Vektor other) {
-		return new Vektor(this.b,other.getAngle(),other.getLength());
-	}
-	
-	public Vektor append() {
-		return append(this);
+	public Vektor(Vektor a, Vektor b, double l) {
+		double angle = Math.atan2((b.getY() - a.getY()), (b.getX() - a.getX()));
+		x = Math.cos(angle) * l;
+		y = Math.sin(angle) * l;
+		setLength(l);
 	}
 
-	public float getX() {
-		return (float)this.a.getX();		
-	}
-	
-	public float getY() {
-		return (float)this.a.getY() ;		
-	}
-	
-	public String toString() {		
-		return "[" 
-		+ this.a.getX()	 +","
-		+ this.a.getY()   + "] : "
-		+ this.getAngle() + "->" 
-		+ this.getLength();
+	public Vektor(Vektor v, double l) {
+		setX(v.getX());
+		setY(v.getY());
+		setLength(l);
 	}
 
-	Vektor cut(float len) {
-		Vektor cv = new Vektor(this.a, this.getAngle(), this.getLength() * len);
-		return cv;
+
+	public Vektor(double nx, double ny) {
+		x = nx;
+		y = ny;
 	}
 
-	/*void draw() {
-		line(a.x, a.y, b.x, b.y);
-	}*/
-
+	public Vektor() {
+		x = 0;
+		y = 0;
+	}
 }

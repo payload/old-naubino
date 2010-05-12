@@ -17,8 +17,8 @@ public class Game {
 	private float ballsize = 15;
 	private int refreshInterval = 50;
 
-	public Coord getCenter() {
-		return new Coord(width / 2, height / 2);
+	public Vektor getCenter() {
+		return new Vektor(width / 2, height / 2);
 	}
 
 	public int getNumberOfJoints() {
@@ -63,18 +63,18 @@ public class Game {
 //			 b.distanceTo(getCenter()).getLength()));
 
 			// indirect gravity
-			b.accelerate(new rVektor(b.position, getCenter(),
+			b.accelerate(new Vektor(b.position, getCenter(),
 					b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2));
 
 			/* repulse other balls */
-			List<Ball> templist = balls;
-			for (Ball other : templist) {
-				rVektor oVektor = other.distanceTo(b);
-				if (other != b && oVektor.getLength() <= b.radius + 5) {
-//					other.accelerate(new rVektor(b.acceleration, 1.5));
-					other.move(new rVektor(b.speed, -5));
-				}
-			}
+//			List<Ball> templist = balls;
+//			for (Ball other : templist) {
+//				Vektor oVektor = other.distanceTo(b);
+//				if (other != b && oVektor.getLength() <= b.radius + 5) {
+////					other.accelerate(new rVektor(b.acceleration, 1.5));
+//					other.move(new Vektor(b.speed, -5));
+//				}
+//			}
 //			/* attract */
 //			for (Joint j : b.getJoints()) {
 //				Ball other = j.opp(b);
@@ -95,7 +95,6 @@ public class Game {
 			b.position = b.position.add(b.speed);
 			/* friction */
 			b.speed.setLength(b.speed.getLength() * 0.98);
-			b.acceleration = new rVektor();
 		}
 	}
 
@@ -170,7 +169,7 @@ public class Game {
 
 	public Ball clickedBall(float x, float y) {
 		for (Ball b : balls) {
-			if (b.isHit(new Coord(x, y))) {
+			if (b.isHit(new Vektor(x, y))) {
 				this.active = b;
 				return b;
 			}
@@ -180,7 +179,7 @@ public class Game {
 
 	public void checkForHits(float x, float y) {
 		for (Ball b : balls) {
-			if (b.isHit(new Coord(x, y))) {
+			if (b.isHit(new Vektor(x, y))) {
 				b.color = new Color(0, 0, 255);
 			}
 		}
@@ -220,7 +219,7 @@ public class Game {
 	public void dragActive(float x, float y) {
 
 		if (active != null) {
-			active.move(x, y);
+			active.move(new Vektor(x, y));
 			Ball collidor = checkForCollisions(active);
 
 			if (collidor != null) {

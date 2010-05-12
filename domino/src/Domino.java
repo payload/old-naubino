@@ -1,10 +1,12 @@
 import java.awt.event.KeyEvent;
-import processing.*;
-import processing.core.PApplet;
-import processing.core.PFont;
+import processing.core.*;
 
 public class Domino extends PApplet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7338935826674782250L;
 	/**
 	 * @param args
 	 */
@@ -15,12 +17,11 @@ public class Domino extends PApplet {
 	private int resolutionY = game.height;
 	private int lineColor = color(0, 0, 0);
 	private int backgroundColor = color(255, 255, 255);
-	private Coord center = center();
-	private Ball draggedBall;
+	private Vektor center = center();
 
 	private PFont myFont;
 
-	private Coord center() {
+	private Vektor center() {
 		return game.getCenter();
 	}
 
@@ -84,8 +85,8 @@ public class Domino extends PApplet {
 		text(game.getNumberOfJoints(), 10, 40);
 
 		/* spielfeld */
-		ellipse(center.getX(), center.getY(), game.getFieldSize(), game
-				.getFieldSize());
+		ellipse((float) center.getX(), (float) center.getY(), (float) game
+				.getFieldSize(), (float) game.getFieldSize());
 		// ellipse(center.getX(), center.getY(), 3, 3);
 		drawJoints();
 		drawBalls();
@@ -94,22 +95,22 @@ public class Domino extends PApplet {
 	private void drawDirection(Ball b) {
 		stroke(lineColor);
 		strokeWeight(1);
-		line(b.position.getX(), b.position.getY(), b.position.getX()
-				+ (float) b.speed.getX(), b.position.getY()
+		line((float)b.position.getX(), (float)b.position.getY(), (float)b.position.getX()
+				+ (float) b.speed.getX(), (float)b.position.getY()
 				+ (float) b.speed.getY());
 	}
 
 	private void drawBalls() {
 		for (Ball b : game.getBalls()) {
 			drawBall(b);
-			// drawDirection(b);
+			drawDirection(b);
 		}
 	}
 
 	private void drawBall(Ball b) {
 		noStroke();
 		fill(b.color.r, b.color.g, b.color.b);
-		ellipse(b.getX(), b.getY(), b.getR() * 2, b.getR() * 2);
+		ellipse((float)b.getX(), (float)b.getY(), (float)b.getR() * 2, (float)b.getR() * 2);
 	}
 
 	private void drawJoints() {
@@ -120,7 +121,7 @@ public class Domino extends PApplet {
 
 	private void drawJoint(Joint j) {
 		// strokeWeight((float) (1 / (j.getStretch() * 0.005)));
-		line(j.a.getX(), j.a.getY(), j.b.getX(), j.b.getY());
+		line((float)j.a.getX(), (float)j.a.getY(),(float)j.b.getX(), (float)j.b.getY());
 	}
 
 	/*
