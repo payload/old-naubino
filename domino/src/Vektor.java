@@ -1,7 +1,6 @@
 /* relativer Vektor
  * ja ich habe es eingesehen
- * schön Simple ist er*/
-// TODO casting entfernen
+ * schön simpel ist er*/
 public class Vektor {
 	private double x;
 	private double y;
