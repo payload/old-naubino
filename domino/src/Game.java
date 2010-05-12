@@ -12,7 +12,7 @@ public class Game {
 	private List<Joint> joints;
 	private float fieldSize;
 	private double jointLength = 40;
-	private double jointStrength = 0.001;
+	private double jointStrength = 0.1;
 	
 	public Ball active;
 	public int width = 600;
@@ -88,11 +88,12 @@ public class Game {
 	}
 	
 	private void swingBalls(Joint j) {
-		Vektor real_diff = j.a.position.sub(j.b.position);
-		double angle = real_diff.getAngle();
-		Vektor wish_diff = Vektor.polar(angle, j.getLength());
-		Vektor force     = wish_diff.sub(real_diff);
-		force = force.mul(j.getStrength());
+		Vektor real_diff   = j.a.position.sub(j.b.position);
+		double real_length = real_diff.getLength();
+		double wish_length = j.getLength(); 
+		Vektor wish_diff   = Vektor.polar(real_diff.getAngle(), wish_length);
+		Vektor force       = wish_diff.sub(real_diff);
+		force = force.mul((real_length / wish_length) * j.getStrength());
 		j.a.accelerate(force);
 		j.b.accelerate(force.mul(-1));
 	}
@@ -101,7 +102,7 @@ public class Game {
 		for (Ball b : balls) {
 			b.acceleration = new Vektor();
 			// gravity(b);
-			indirectGravity(b);
+			//indirectGravity(b);
 			//repulseOtherBalls(b);
 		}
 		
@@ -144,7 +145,7 @@ public class Game {
 	}
 
 	public void createPair(Vektor v) {
-		Vektor bla = new Vektor(1, 0).mul(jointLength);
+		Vektor bla = new Vektor(1, 0).mul(jointLength / 2 + 1);
 		Vektor pos1 = v.add(bla);
 		Vektor pos2 = bla.sub(v);
 		Ball ball1 = createBall(pos1);
