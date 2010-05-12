@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -75,18 +76,6 @@ public class Game {
 		b.accelerate(difference);
 	}
 	
-	@SuppressWarnings("unused")
-	private void repulseOtherBalls(Ball b) {
-		List<Ball> templist = balls;
-		for (Ball other : templist) {
-			Vektor oVektor = other.distanceTo(b);
-			if (other != b && oVektor.getLength() <= b.radius + 5) {
-				//other.accelerate(new Vektor(b.acceleration, 1.5));
-				other.move(new Vektor(b.speed, -5));
-			}
-		}
-	}
-	
 	private void swingBalls(Joint j) {
 		Vektor real_diff   = j.a.position.sub(j.b.position);
 		double real_length = real_diff.getLength();
@@ -98,12 +87,36 @@ public class Game {
 		j.b.accelerate(force.mul(-1));
 	}
 	
+	private void collide(Collision c) {
+		Vektor diff2 = c.diff.mul(0.05);
+		//c.a.position = diff2.sub(c.a.position);
+		//c.b.position = diff2.add(c.b.position);
+		c.a.accelerate(diff2.mul(-1));
+		c.b.accelerate(diff2);
+	}
+	
 	public void physik() {
+		List<Collision> collisions = new LinkedList<Collision>();
+		int balls_count = balls.size();
+		if (balls_count > 1) {
+			for (int i = 0; i < balls_count-1; i++) {
+				for (int j = i+1; j < balls_count; j++) {
+					Collision collision = Collision.test(balls.get(i), balls.get(j));
+					if (collision != null)
+						collisions.add(collision);
+				}
+			}
+		}
+		
 		for (Ball b : balls) {
 			b.acceleration = new Vektor();
 			// gravity(b);
 			indirectGravity(b);
 			//repulseOtherBalls(b);
+		}
+		
+		for (Collision c : collisions) {
+			collide(c);
 		}
 		
 		for (Joint j : joints) {
