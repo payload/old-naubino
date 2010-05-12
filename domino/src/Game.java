@@ -63,8 +63,12 @@ public class Game {
 	}
 	
 	private void indirectGravity(Ball b) {
-		b.accelerate(new Vektor(b.position, getCenter(),
-			b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2));
+		//Vektor v = new Vektor(b.position, getCenter(),
+		//		b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2);
+		Vektor difference = b.position.sub(getCenter());
+		double length = difference.getLength();
+		difference.setLength(length * 0.0001 + 0.2);
+		b.accelerate(difference);
 	}
 	
 	@SuppressWarnings("unused")
@@ -81,6 +85,7 @@ public class Game {
 	
 	public void physik() {
 		for (Ball b : balls) {
+			b.acceleration = new Vektor();
 			// gravity(b);
 			indirectGravity(b);
 			//repulseOtherBalls(b);
@@ -88,8 +93,8 @@ public class Game {
 
 		for (Ball b : balls) {
 			b.speed = b.speed.add(b.acceleration);
-			b.position = b.position.add(b.speed);
 			b.speed.setLength(b.speed.getLength() * 0.98); // TODO multiply
+			b.position = b.position.add(b.speed);
 		}
 	}
 

@@ -20,7 +20,7 @@ public class Ball {
 	}
 
 	public void accelerate(Vektor v){
-		acceleration.add(v);
+		acceleration = acceleration.add(v);
 	}
 
 	public double getX() {

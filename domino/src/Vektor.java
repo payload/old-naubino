@@ -47,13 +47,23 @@ public class Vektor {
 	}
 
 	public Vektor sub(Vektor v) {
-		return new Vektor(this.x - v.getX(), this.y - v.getY());
+		return new Vektor(v.getX() - x, v.getY() - y);
 	}
 
-//	public void multiply(double n) {
-//		x = Math.cos(this.getAngle()) * getLength() * n;
-//		y = Math.sin(this.getAngle()) * getLength() * n;
-//	}
+	public Vektor mul(double n) {
+		double angle  = getAngle();
+		double length = getLength();
+		double x = Math.cos(angle) * length * n;
+		double y = Math.sin(angle) * length * n;
+		return new Vektor(x, y);
+	}
+	
+	public Vektor norm() {
+		double angle  = getAngle();
+		double x = Math.cos(angle);
+		double y = Math.sin(angle);
+		return new Vektor(x, y);
+	}
 
 	public Vektor dump() {
 		return new Vektor(this.x, this.x);
