@@ -14,6 +14,7 @@ public class Game {
 	private float fieldSize;
 	private double jointLength = 40;
 	private double jointStrength = 0.1;
+	private Vektor pointer;
 	
 	public Ball active;
 	public int width = 600;
@@ -26,6 +27,10 @@ public class Game {
 		return new Vektor(width / 2, height / 2);
 	}
 
+	public void setPointer(Vektor pointer) {
+		this.pointer = pointer;
+	}
+	
 	public int getNumberOfJoints() {
 		return joints.size();
 	}
@@ -45,6 +50,7 @@ public class Game {
 		setFieldSize(320f);
 		timer = new Timer();
 		timer.schedule(task, 0, refreshInterval);
+		pointer = getCenter();
 	}
 
 	public static Game instance() {
@@ -95,6 +101,10 @@ public class Game {
 		b.position = b.position.add(b.speed);
 	}
 	
+	private void moveActiveBall() {
+		active.accelerate(active.position.sub(pointer));
+	}
+	
 	public void physik() {
 		List<Collision> collisions = new LinkedList<Collision>();
 		int balls_count = balls.size();
@@ -108,6 +118,7 @@ public class Game {
 				}
 			}
 		}
+		if (active != null) moveActiveBall();
 		for (Ball b : balls) {
 			b.acceleration = new Vektor();
 			// gravity(b);
@@ -243,19 +254,6 @@ public class Game {
 		for (Joint j : joints) {
 			if (j.a == null || j.b == null)
 				joints.remove(j);
-		}
-	}
-
-	public void dragActive(float x, float y) {
-		if (active != null) {
-			//active.move(new Vektor(x, y));
-			Vektor pointer = new Vektor(x, y);
-			active.position = active.position.sub(pointer); 
-			
-			Ball collidor = checkForCollisions(active);
-			if (collidor != null) {
-				/* TODO Join matching colors */
-			}
 		}
 	}
 
