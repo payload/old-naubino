@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ball extends dragable {
+public class Ball {
 	public Vektor position;
+	public Vektor speed;
+	public Vektor acceleration;
 	public double radius;
 	public Color color;
 
@@ -10,11 +12,9 @@ public class Ball extends dragable {
 
 	public Ball(Vektor position, double radius) {
 		this.position = position;
+		this.radius = radius;
 		speed = new Vektor();
 		acceleration = new Vektor();
-		this.radius = radius;
-		//mass = size;
-		force = 1.5f;
 		color = new Color(255, 0, 0);
 		joints = new ArrayList<Joint>();
 	}
@@ -48,12 +48,12 @@ public class Ball extends dragable {
 		return (distance <= radius);
 	}
 
-	public boolean touches(dragable o) {
+	public boolean touches(Ball o) {
 		double distance = distanceTo(o).getLength();
 		return (distance <= (radius));
 	}
 
-	public Vektor distanceTo(dragable d){
+	public Vektor distanceTo(Ball d){
 		return position.sub(d.position);
 	}
 	
