@@ -1,14 +1,10 @@
 public class Joint {
 	public Ball a;
 	public Ball b;
-//	public Ball taily;
-
-	private float length;
 
 	public Joint(Ball b1, Ball b2) {
 		a = b1;
 		b = b2;
-		length = 50;
 	}
 	
 	public double getStretch() {

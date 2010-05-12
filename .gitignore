@@ -2,7 +2,7 @@
 *cache
 *autosave
 *swf
-\#*\#.metadata
 system_catalog.xml
 .metadata*
-.classpath
+
+*.class
