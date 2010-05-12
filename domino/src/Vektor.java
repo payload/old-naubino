@@ -95,6 +95,8 @@ public class Vektor {
 	}
 	
 	public static Vektor polar(double angle, double length) {
-		return new Vektor(length, 0).setAngle(angle);
+		double x = Math.cos(angle) * length;
+		double y = Math.sin(angle) * length;
+		return new Vektor(x, y);
 	}
 }
