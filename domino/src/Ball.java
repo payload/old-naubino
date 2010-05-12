@@ -8,19 +8,17 @@ public class Ball extends dragable {
 
 	private List<Joint> joints;
 
-	public Ball(double x, double y, double size) {
-		position = new Vektor(x, y);
+	public Ball(Vektor position, double radius) {
+		this.position = position;
 		speed = new Vektor();
 		acceleration = new Vektor();
-		radius = size;
+		this.radius = radius;
 		//mass = size;
 		force = 1.5f;
 		color = new Color(255, 0, 0);
 		joints = new ArrayList<Joint>();
 	}
 
-//	private Game game = Game.instance();
-	
 	public void accelerate(Vektor v){
 		acceleration.add(v);
 	}

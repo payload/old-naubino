@@ -41,19 +41,12 @@ public class Domino extends PApplet {
 
 	/* Steuerung */
 	public void mousePressed() {
-		if (mouseButton == RIGHT) {
-			// game.createTriple(mouseX, mouseY);
-			game.createPair(mouseX, mouseY);
-		}
-	}
-
-	public void mouseDragged() {
-		/* TODO do not drag a ball without clicking on it */
+		Vektor v = new Vektor(mouseX, mouseY);
 		if (mouseButton == LEFT) {
-			if (game.active != null) {
-				game.dragActive(mouseX, mouseY);
-			} else
-				game.active = game.clickedBall(mouseX, mouseY);
+			game.mouseDownLeft(v);
+		} else
+		if (mouseButton == RIGHT) {
+			game.mouseDownRight(v);
 		}
 	}
 

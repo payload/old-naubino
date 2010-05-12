@@ -113,21 +113,22 @@ public class Game {
 		return balls.get(index);
 	}
 
-	private Ball createBall(float x, float y) {
-		Ball ball = new Ball(x, y, ballsize);
+	private Ball createBall(Vektor v) {
+		Ball ball = new Ball(v, ballsize);
 		ball.color = randomColor();
 		balls.add(ball);
 		return ball;
 	}
 
-	public void createPair(float x, float y) {
-		join(createBall(x - 20, y - 20), createBall(x + 20, y + 20));
+	public void createPair(Vektor v) {
+		Vektor pair_size = new Vektor(20, 20);
+		join(createBall(v.sub(pair_size)), createBall(v.add(pair_size)));
 	}
 
 	public void createTriple(float x, float y) {
-		Ball a = createBall(x + 20, y - 20);
-		Ball b = createBall(x - 20, y - 20);
-		Ball c = createBall(x, y + 20);
+		Ball a = createBall(new Vektor(x + 20, y - 20));
+		Ball b = createBall(new Vektor(x - 20, y - 20));
+		Ball c = createBall(new Vektor(x, y + 20));
 		join(a, b);
 		join(b, c);
 		// join(c, a);
@@ -162,13 +163,23 @@ public class Game {
 		return list.get(rand.nextInt(list.size()));
 	}
 
-	public Ball clickedBall(float x, float y) {
-		Vektor pointer = new Vektor(x, y);
-		for (Ball b : balls) {
-			if (b.isHit(pointer)) {
-				return b;
-			}
-		}
+	public void mouseDownLeft(Vektor v) {
+		Ball b = collidingBall(v);
+		if (b != null) active = b;
+	}
+	
+	public void mouseDownRight(Vektor v) {
+		createPair(v);
+	}
+	
+	public void mouseUpLeft(Vektor v) {
+		active = null;
+	}
+	
+	private Ball collidingBall(Vektor v) {
+		for (Ball b : balls)
+			if (b.isHit(v))
+				return b; // TODO more than one ball is clicked?
 		return null;
 	}
 
