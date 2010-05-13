@@ -52,18 +52,22 @@ public class Domino extends PApplet {
 	}
 
 	public void mouseReleased() {
-		game.active = null;
-		if (game.active != null)
-			game.active.resetJoints();
+		Vektor v = new Vektor(mouseX, mouseY);
+		if (mouseButton == LEFT) {
+			game.mouseReleasedLeft(v);
+		} else
+		if (mouseButton == RIGHT) {
+			game.mouseReleasedRight(v);
+		}
 	}
-
+	
+	// TODO key bindings in an extra class
 	public void keyPressed() {
 		if (keyCode == ESC) {
 			exit();
 		}
 		if (keyCode == KeyEvent.VK_SPACE) {
-			game.resetBalls();
-			game.resetJoints();
+			game.restart();
 		}
 	}
 
@@ -96,12 +100,10 @@ public class Domino extends PApplet {
 
 	private void drawBalls() {
 		Collection<Ball> balls = game.getBalls();
-		//synchronized (balls) {
-			for (Ball b : balls) {
-				drawBall(b);
-				if (enableDrawDirection) drawDirection(b);
-			}
-		//}
+		for (Ball b : balls) {
+			drawBall(b);
+			if (enableDrawDirection) drawDirection(b);
+		}
 	}
 
 	private void drawBall(Ball b) {
@@ -113,10 +115,8 @@ public class Domino extends PApplet {
 
 	private void drawJoints() {
 		Collection<Joint> joints = game.getJoints();
-		//synchronized (joints) {
-			for (Joint j : joints)
-				drawJoint(j);
-		//}
+		for (Joint j : joints)
+			drawJoint(j);
 	}
 
 	private void drawJoint(Joint j) {
