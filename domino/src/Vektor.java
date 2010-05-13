@@ -99,4 +99,18 @@ public class Vektor {
 		double y = Math.sin(angle) * length;
 		return new Vektor(x, y);
 	}
+	
+	public boolean equals(Object other) {
+		if (other instanceof Vektor)
+			return equals((Vektor)other);
+		return super.equals(other);
+	}
+	
+	public boolean equals(Vektor other) {
+		return x == other.x && y == other.y;
+	}
+	
+	public String toString() {
+		return "{"+ x +", "+ y +"}";
+	}
 }
