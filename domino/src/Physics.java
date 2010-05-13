@@ -40,8 +40,10 @@ class Physics {
 		/*
 		 * farben vergleichen TODO besseres Joinen von Balls
 		 */
-		// if (c.a.color.equals(c.b.color))
-		// game.join(c.a, c.b);
+		if ((game.active == c.a || game.active == c.b)
+		&& !c.a.isJointWith(c.b)
+		&& c.a.color.equals(c.b.color))
+			game.replaceBall(c.a, c.b);
 		Vektor diff2 = c.diff.mul(0.05);
 		c.a.accelerate(diff2.mul(-1));
 		c.b.accelerate(diff2);
@@ -57,8 +59,8 @@ class Physics {
 	}
 
 	private void moveActiveBall() {
-		 game.active.position = game.getPointer();
-		 game.active.accelerate(game.active.position.sub(game.getPointer()));
+		game.active.position = game.getPointer();
+		game.active.accelerate(game.active.position.sub(game.getPointer()));
 	}
 
 	public void physik() {

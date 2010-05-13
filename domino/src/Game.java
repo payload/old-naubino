@@ -85,7 +85,16 @@ public class Game {
 	 * ersetzt einen gleichfarbigen ball im spiel und kuemmert sich um alle
 	 * Joints
 	 */
-	private void replaceBall(Ball a, Ball b) {
+	public void replaceBall(Ball a, Ball b) {
+		for(Joint j : a.getJoints()) {
+			System.out.println(j);
+			if(!b.getJoints().contains(j)) {
+				join(b, j.opposite(a));
+				joints.remove(j);
+			}
+		}
+		
+		balls.remove(a);
 	}
 
 	private Ball collidingBall(Vektor v) {

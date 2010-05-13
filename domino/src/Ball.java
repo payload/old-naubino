@@ -65,6 +65,15 @@ public class Ball {
 		joints.add(joint);
 	}
 
+	/* checks if Ball b is directly joint with this*/
+	public boolean isJointWith(Ball b) {
+		for(Joint j : joints) {
+			if(j.opposite(this) == b)
+				return true;
+		}
+		return false;
+	}
+	
 	public List<Joint> getJoints() {
 		return joints;
 	}
