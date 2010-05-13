@@ -83,19 +83,24 @@ public class Game {
 	public void replaceBall(Ball a, Ball b) {
 
 		if (!a.isJointWith(b)) {
-			for (Joint j : a.getJoints()) {
-				if (!b.getJoints().contains(j)) {
-					join(b, j.opposite(a));
+			for (Joint j : b.getJoints()) {
+				if (!a.getJoints().contains(j)) {
+					join(a, j.opposite(b));
 					joints.remove(j);
 				} else {
-					b.getJoints().remove(j);
+					a.getJoints().remove(j);
 				}
 			}
-			balls.remove(a);
-			active = null;
+			balls.remove(b);
 		}
 		/* remove joints that link nowhere */
 		for (Joint j : joints) {
+			/* delete obsolete */
+			for (Joint k : joints) {
+				if(j != k && j.equals(k))
+					joints.remove(j);
+			}
+			/* delete one-balled joints  */
 			if (!balls.contains(j.a) || !balls.contains(j.b))
 				joints.remove(j);
 		}

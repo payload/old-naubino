@@ -1,4 +1,4 @@
-public class Joint {
+public class Joint{
 	
 	public Ball a;
 	public Ball b;
@@ -35,4 +35,13 @@ public class Joint {
 	public double getStrength() {
 		return strength;
 	}
+
+
+	public boolean equals(Joint o) {
+		if(this.a == o.a && this.b == o.b) return true;
+		if(this.a == o.b && this.b == o.a) return true;
+		return false;
+	}
+
+	
 }
