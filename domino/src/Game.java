@@ -55,8 +55,6 @@ public class Game {
 
 	public void refresh() {
 		physics.physik();
-		if (active != null)
-			active.move(pointer);
 	}
 
 	private Ball createBall(Vektor v) {

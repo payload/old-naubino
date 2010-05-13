@@ -73,15 +73,4 @@ public class Ball {
 		joints = new ArrayList<Joint>();
 	}
 
-	public void move(Vektor v){
-		position = v;
-//		Vektor real_diff   = v.sub(position);
-//		double real_length = real_diff.getLength();
-//		double wish_length = 0; 
-//		Vektor wish_diff   = Vektor.polar(real_diff.getAngle(), wish_length);
-//		Vektor force       = wish_diff.sub(real_diff);
-//		force = force.mul((real_length / wish_length) * 1);
-//		accelerate(force);
-	}
-
 }
