@@ -57,8 +57,8 @@ class Physics {
 	}
 
 	private void moveActiveBall() {
-		 game.active.accelerate(game.active.position.sub(game.getPointer()));
 		 game.active.position = game.getPointer();
+		 game.active.accelerate(game.active.position.sub(game.getPointer()));
 	}
 
 	public void physik() {

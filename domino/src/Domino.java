@@ -38,6 +38,7 @@ public class Domino extends PApplet {
 
 	/* Steuerung */
 	public void mousePressed() {
+		game.setPointer(new Vektor(mouseX, mouseY));
 		Vektor v = new Vektor(mouseX, mouseY);
 		if (mouseButton == LEFT) {
 			game.mousePressedLeft(v);
