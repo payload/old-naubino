@@ -11,20 +11,17 @@ class Physics {
 
 	@SuppressWarnings("unused")
 	private void gravity(Ball b) {
-		b.acceleration.add(new Vektor(b.position, game.getCenter(), 4 / b.distanceTo(game.getCenter()).getLength()));
+		b.accelerate(new Vektor(b.position, game.getCenter(), 9 / game.getCenter().sub(b.position).getLength()));
 	}
 
 	private void indirectGravity(Ball b) {
-		// Vektor v = new Vektor(b.position, getCenter(),
-		// b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2);
 		Vektor difference = b.position.sub(game.getCenter());
 		double length = difference.getLength();
 		difference.setLength(length * 0.0001 + 0.2);
 		b.accelerate(difference);
 	}
 
-	/* Federkraefte zwischen gejointen Baellen */
-	private void swingBalls(Joint j) {
+	private void jointSpring(Joint j) {
 		Vektor real_diff = j.a.position.sub(j.b.position);
 		double real_length = real_diff.getLength();
 		double wish_length = j.getLength();
@@ -35,11 +32,7 @@ class Physics {
 		j.b.accelerate(force.mul(-1));
 	}
 
-	/* Kollisions behandlung */
 	private void collide(Collision c) {
-		/*
-		 * farben vergleichen TODO besseres Joinen von Balls
-		 */
 		if ((c.a == game.active || c.b == game.active) && c.a.color.equals(c.b.color))
 			game.replaceBall(c.a, c.b);
 		Vektor diff2 = c.diff.mul(0.05);
@@ -82,13 +75,12 @@ class Physics {
 			b.acceleration = new Vektor();
 			// gravity(b);
 			indirectGravity(b);
-			// repulseOtherBalls(b);
 			friction(b);
 		}
 		for (Collision c : collisions)
 			collide(c);
 		for (Joint j : game.joints)
-			swingBalls(j);
+			jointSpring(j);
 		for (Ball b : game.balls)
 			moveBall(b);
 	}

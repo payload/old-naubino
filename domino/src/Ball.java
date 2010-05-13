@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class Ball {
 	public Vektor position;
@@ -7,8 +7,9 @@ public class Ball {
 	public Vektor acceleration;
 	public double radius;
 	public Color color;
-
 	private List<Joint> joints;
+	public int cycleNumber = 0;
+	public int cycleCheck = 0;
 
 	public Ball(Vektor position, double radius) {
 		this.position = position;
@@ -19,10 +20,63 @@ public class Ball {
 		joints = new ArrayList<Joint>();
 	}
 
+	/* position and movement below here */
+	
 	public void accelerate(Vektor v){
 		acceleration = acceleration.add(v);
 	}
 
+	public boolean isHit(Vektor v) {
+		double distance = v.sub(position).getLength();
+		return (distance <= radius);
+	}
+
+	public Vektor distanceTo(Vektor v){
+		return position.sub(v);
+	}
+	
+	/* joint stuff below here*/
+	
+	public void addJoint(Joint joint) {
+		joints.add(joint);
+	}
+
+	public void removeJoint(Joint joint) {
+		joints.remove(joint);
+	}
+	
+	public boolean isJointWith(Ball b) {
+		for(Joint j : joints) {
+			if(j.opposite(this) == b)
+				return true;
+		}
+		return false;
+	}
+
+	public List<Joint> jointsWith(Ball b){
+		List<Joint> withB = new CopyOnWriteArrayList<Joint>();
+		for(Joint j : joints) {
+			if(j.a == b || j.b == b)
+				withB.add(j);
+		}
+		
+		return withB;
+	}
+	
+	public void resetJoints() {
+		joints = new ArrayList<Joint>();
+	}
+
+	public List<Ball> jointBalls(){
+		List<Ball> list = new CopyOnWriteArrayList<Ball>();
+		for(Joint j : this.joints) {
+			list.add(j.opposite(this));
+		}
+		return list;
+	}
+	
+	/* getter/setter below here */
+	
 	public double getX() {
 		return position.getX();
 	}
@@ -42,44 +96,10 @@ public class Ball {
 	public double getR() {
 		return radius;
 	}
-
-	public boolean isHit(Vektor c) {
-		double distance = distanceTo(c).getLength();
-		return (distance <= radius);
-	}
-
-	public boolean touches(Ball o) {
-		double distance = distanceTo(o).getLength();
-		return (distance <= (radius));
-	}
-
-	public Vektor distanceTo(Ball d){
-		return position.sub(d.position);
-	}
 	
-	public Vektor distanceTo(Vektor o){
-		return position.sub(o);
-	}
-	
-	public void addJoint(Joint joint) {
-		joints.add(joint);
-	}
-
-	/* checks if Ball b is directly joint with this*/
-	public boolean isJointWith(Ball b) {
-		for(Joint j : joints) {
-			if(j.opposite(this) == b)
-				return true;
-		}
-		return false;
-	}
 	
 	public List<Joint> getJoints() {
 		return joints;
-	}
-
-	public void resetJoints() {
-		joints = new ArrayList<Joint>();
 	}
 
 }

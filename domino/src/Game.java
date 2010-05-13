@@ -19,6 +19,7 @@ public class Game {
 	public int height = 400;
 	private float ballsize = 15;
 	private int refreshInterval = 50;
+	private int progress;
 
 	private Timer calcTimer;
 	private TimerTask calculate = new TimerTask() {
@@ -26,12 +27,10 @@ public class Game {
 			refresh();
 		}
 	};
-	private Timer generateTimer;
-	private TimerTask generatePairs = new TimerTask(){
-		public void run() {
-			randomPair();
-		}
-	};
+
+	// private Timer generateTimer;
+	// private TimerTask generatePairs = new TimerTask(){public void run()
+	// {randomPair();} };
 
 	private Game() {
 		balls = new CopyOnWriteArrayList<Ball>();
@@ -41,9 +40,9 @@ public class Game {
 
 		calcTimer = new Timer();
 		calcTimer.schedule(calculate, 0, refreshInterval);
-		generateTimer = new Timer();
-//		generateTimer.schedule(generatePairs, 1000, 6*1000);
-		
+		// generateTimer = new Timer();
+		// generateTimer.schedule(generatePairs, 1000, 6*1000);
+
 	}
 
 	private static Random rand = new Random();
@@ -56,6 +55,7 @@ public class Game {
 
 	public void refresh() {
 		physics.physik();
+		cycleTest();
 	}
 
 	public void restart() {
@@ -93,6 +93,39 @@ public class Game {
 		createPair(randPos);
 	}
 
+	public void cycleTest() {
+		for (Ball b : balls) {
+			b.cycleNumber = 0;
+			b.cycleCheck = 0;
+		}
+		progress = 1;
+		for (Ball b : balls) {
+			if (b.cycleNumber == 0) {
+				cycleTest(b, null);
+			}
+		}
+	}
+
+	public void cycleTest(Ball v, Ball pre) {
+		v.cycleNumber = progress;
+		progress++;
+		v.cycleCheck = 1;
+
+		List<Ball> post = v.jointBalls();
+		if (pre != null)
+			post.remove(pre);
+		post.remove(v);
+
+		for (Ball w : post) {
+			if (w.cycleNumber == 0)
+				cycleTest(w, v);
+			if (w.cycleCheck == 1){
+				/* handle cycle */
+			}
+		}
+		v.cycleCheck = 2;
+	}
+
 	/* balls below here */
 
 	private Ball createBall(Vektor v) {
@@ -109,40 +142,38 @@ public class Game {
 		Vektor pos2 = pair.sub(v);
 		Ball ball1 = createBall(pos1);
 		Ball ball2 = createBall(pos2);
-		join(ball1, ball2);
+		joints.add(join(ball1, ball2));
 	}
 
-	protected void join(Ball a, Ball b) {
+	protected Joint join(Ball a, Ball b) {
 		Joint joint = new Joint(a, b, jointLength, jointStrength);
 		a.addJoint(joint);
 		b.addJoint(joint);
-		joints.add(joint);
+		return joint;
 	}
 
+	private void unJoin(Ball a, Ball b) {
+		//a.jointsWith(b)
+		
+	}
+	
 	public void replaceBall(Ball a, Ball b) {
 
 		if (!a.isJointWith(b)) {
-			for (Joint j : b.getJoints()) {
-				if (!a.getJoints().contains(j)) {
-					join(a, j.opposite(b));
-					joints.remove(j);
-				} else {
-					a.getJoints().remove(j);
+			for (Ball jb : b.jointBalls()) {
+				if (!a.isJointWith(jb)) {
+					joints.add(join(a, jb));
+					for (Joint j : jb.jointsWith(b))
+						jb.removeJoint(j);
 				}
 			}
+
+			for (Joint j : b.getJoints()) {
+				joints.remove(j);
+			}
+
 			balls.remove(b);
 			active = null;
-		}
-		/* remove joints that link nowhere */
-		for (Joint j : joints) {
-			/* delete obsolete */
-			for (Joint k : joints) {
-				if (j != k && j.equals(k))
-					joints.remove(j);
-			}
-			/* delete one-balled joints */
-			if (!balls.contains(j.a) || !balls.contains(j.b))
-				joints.remove(j);
 		}
 	}
 
@@ -157,8 +188,11 @@ public class Game {
 
 	public void mousePressedLeft(Vektor v) {
 		Ball b = collidingBall(v);
-		if (b != null)
+		if (b != null) {
 			active = b;
+			for (Ball jb : active.jointBalls()) {
+			}
+		}
 	}
 
 	public void mousePressedRight(Vektor v) {
