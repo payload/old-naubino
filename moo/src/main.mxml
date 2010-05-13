@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute"
+	width="480" 
+	height="384"
+	frameRate="100"
+	creationComplete="creationComplete()"
+	enterFrame="enterFrame(event)"
+	click="click(event)"
+    mouseDown="mouseDown(event)"
+    mouseUp="mouseUp(event)"
+    mouseMove="mouseMove(event)"
+	currentState="MainMenu">
+	
+	<mx:states>
+		<mx:State 
+			name="Game"			
+			enterState="enterGame(event)"
+        	exitState="exitGame(event)">
+		</mx:State>
+		<mx:State 
+			name="LevelEnd">
+			<mx:AddChild relativeTo="{myCanvas}" position="lastChild">
+				<mx:Button x="380" y="344" label="Continue" id="btnContinue" click="btnContinueClicked(event)" width="90" height="30"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{myCanvas}" position="lastChild">
+				<mx:Label x="10" y="10" text="Congratulations, you finished the level."/>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="MainMenu">
+			<mx:AddChild relativeTo="{myCanvas}" position="lastChild">
+				<mx:Button x="381" y="344" label="Start" id="btnStart" click="startGameClicked(event)" width="90" height="30"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{myCanvas}" position="lastChild">
+				<mx:Image x="10" y="49" source="@Embed('../media/mainmenu.png')"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{myCanvas}" position="lastChild">
+				<mx:Label x="10" y="10" text="Flex Fighters" fontSize="20" fontWeight="bold"/>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+	
+	<mx:Canvas x="0" y="0" width="100%" height="100%" id="myCanvas"/>
+	
+	<mx:Script>
+	<![CDATA[  
+	
+		protected var inGame:Boolean = false;
+		protected var currentLevel:int = 1;
+	
+		public function creationComplete():void
+	    {
+			LevelDefinitions.Instance.startup();												
+	    }
+	    
+	    public function enterFrame(event:Event):void
+	    {
+	    	if (inGame)
+	    	{
+	    		GameObjectManager.Instance.enterFrame();
+	    		
+	    		myCanvas.graphics.clear();
+	    		myCanvas.graphics.beginBitmapFill(GameObjectManager.Instance.backBuffer, null, false, false);
+	    		myCanvas.graphics.drawRect(0, 0, this.width, this.height);
+	    		myCanvas.graphics.endFill();
+	    	}	
+	    }
+	    
+	    private function click(event:MouseEvent):void
+	    {
+	    	GameObjectManager.Instance.click(event);
+	    }
+	    
+	    private function mouseDown(event:MouseEvent):void
+		{
+			GameObjectManager.Instance.mouseDown(event);
+	    }
+	    
+	    private function mouseUp(event:MouseEvent):void
+		{
+			GameObjectManager.Instance.mouseUp(event);
+	    }
+	    
+	    private function mouseMove(event:MouseEvent):void
+		{
+			GameObjectManager.Instance.mouseMove(event);
+	    }
+	    
+	    protected function startGameClicked(event:Event):void
+		{
+			currentState = "Game"
+		}  	  
+	    
+	   	protected function enterGame(event:Event):void
+		{
+			Mouse.hide();
+			GameObjectManager.Instance.startup();
+			Level.Instance.startup(currentLevel);
+			inGame = true;
+	    }
+	    
+	    protected function exitGame(event:Event):void
+		{
+			Mouse.show();
+			Level.Instance.shutdown();
+			GameObjectManager.Instance.shutdown();
+			inGame = false;
+		}  
+		
+		protected function btnContinueClicked(event:Event):void
+		{
+			currentLevel = LevelDefinitions.Instance.getNextLevelID(currentLevel);
+			if (currentLevel == 0)
+			{
+				currentLevel = 1;
+				currentState = "MainMenu";
+			}
+			else
+			{
+				currentState = "Game"
+			}
+	    }
+	]]>
+    </mx:Script>
+	
+</mx:Application>

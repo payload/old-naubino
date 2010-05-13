@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Game {
 
@@ -43,10 +44,10 @@ public class Game {
 	};
 
 	private Game() {
-		balls = new ArrayList<Ball>();
-		balls = Collections.synchronizedList(balls);
-		joints = new ArrayList<Joint>();
-		joints = Collections.synchronizedList(joints);
+		balls = new CopyOnWriteArrayList<Ball>();
+		//balls = Collections.synchronizedList(balls);
+		joints = new CopyOnWriteArrayList<Joint>();
+		//joints = Collections.synchronizedList(joints);
 		setFieldSize(320f);
 		timer = new Timer();
 		timer.schedule(task, 0, refreshInterval);
@@ -111,7 +112,7 @@ public class Game {
 	
 	public void physik() {
 		List<Collision> collisions = new LinkedList<Collision>();
-		collisions = Collections.synchronizedList(collisions);
+		//collisions = Collections.synchronizedList(collisions);
 		int balls_count = balls.size();
 		if (balls_count > 1) {
 			for (int i = 0; i < balls_count-1; i++) {

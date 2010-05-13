@@ -96,12 +96,12 @@ public class Domino extends PApplet {
 
 	private void drawBalls() {
 		Collection<Ball> balls = game.getBalls();
-		synchronized (balls) {
+		//synchronized (balls) {
 			for (Ball b : balls) {
 				drawBall(b);
 				if (enableDrawDirection) drawDirection(b);
 			}
-		}
+		//}
 	}
 
 	private void drawBall(Ball b) {
@@ -113,10 +113,10 @@ public class Domino extends PApplet {
 
 	private void drawJoints() {
 		Collection<Joint> joints = game.getJoints();
-		synchronized (joints) {
+		//synchronized (joints) {
 			for (Joint j : joints)
 				drawJoint(j);
-		}
+		//}
 	}
 
 	private void drawJoint(Joint j) {
