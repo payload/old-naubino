@@ -37,7 +37,7 @@ public class Domino extends PApplet {
 	}
 
 	/* Steuerung */
-	
+
 	public void mousePressed() {
 		game.setPointer(new Vektor(mouseX, mouseY));
 		Vektor v = new Vektor(mouseX, mouseY);
@@ -69,7 +69,7 @@ public class Domino extends PApplet {
 		if (keyCode == ENTER) {
 			game.randomPair();
 		}
-		if(keyCode == CONTROL) {
+		if (keyCode == CONTROL) {
 			game.cycleTest();
 		}
 		if (keyCode == KeyEvent.VK_SPACE) {

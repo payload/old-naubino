@@ -65,21 +65,18 @@ public class Game {
 
 	public void randomPair() {
 		Vektor randPos;
-
+		// TODO randomPair() generiert keine "unten rechts" Baelle
 		double xMargin = height / 2 - fieldSize / 2;
 		double yMargin = width / 2 - fieldSize / 2;
 		switch (rand.nextInt(3)) {
 		case 0:
 			randPos = new Vektor(rand.nextDouble() * xMargin, rand.nextDouble() * yMargin);
-			System.out.println("oben links");
 			break;
 		case 1:
 			randPos = new Vektor(width - rand.nextDouble() * xMargin, rand.nextDouble() * yMargin);
-			System.out.println("oben rechts");
 			break;
 		case 2:
 			randPos = new Vektor(rand.nextDouble() * xMargin, height - rand.nextDouble() * yMargin);
-			System.out.println("unten links");
 			break;
 		case 3:
 			randPos = new Vektor(width - rand.nextDouble() * xMargin, height - rand.nextDouble() * yMargin);
@@ -119,11 +116,38 @@ public class Game {
 		for (Ball w : post) {
 			if (w.cycleNumber == 0)
 				cycleTest(w, v);
-			if (w.cycleCheck == 1){
+			if (w.cycleCheck == 1) {
 				/* handle cycle */
+				unJoin(v, w);
+				path(v,w);
+				/* delete all balls on the shorts way from v to w */
 			}
 		}
 		v.cycleCheck = 2;
+	}
+
+	public void path(Ball a, Ball b) {
+		List<Ball> todo = new CopyOnWriteArrayList<Ball>();
+		for (Ball jp : a.jointBalls()) {
+			if(jp == b) {
+				remove(a);
+				remove(b);
+			}
+				
+			todo.add(jp);
+		}
+		for(Ball t : todo) {
+			for(Ball jp : t.jointBalls()) {
+				if(jp == b) {
+					remove(b);
+					path(a, t);
+					return;
+				}
+				else if(!todo.contains(jp)) {
+					todo.add(jp);
+				}
+			}
+		}
 	}
 
 	/* balls below here */
@@ -153,12 +177,18 @@ public class Game {
 	}
 
 	private void unJoin(Ball a, Ball b) {
-		//a.jointsWith(b)
-		
+		for (Joint j : a.jointsWith(b)) {
+			joints.remove(j);
+			a.removeJoint(j);
+			b.removeJoint(j);
+		}
 	}
-	
-	public void replaceBall(Ball a, Ball b) {
 
+	public void replaceBall(Ball a, Ball b) {
+		/*
+		 * TODO joining with a single Ball should not delete a Ball (single
+		 * balls may occure after eliminating a cycle )
+		 */
 		if (!a.isJointWith(b)) {
 			for (Ball jb : b.jointBalls()) {
 				if (!a.isJointWith(jb)) {
@@ -167,12 +197,7 @@ public class Game {
 						jb.removeJoint(j);
 				}
 			}
-
-			for (Joint j : b.getJoints()) {
-				joints.remove(j);
-			}
-
-			balls.remove(b);
+			remove(b);
 			active = null;
 		}
 	}
@@ -184,9 +209,16 @@ public class Game {
 		return null;
 	}
 
+	private void remove(Ball b) {
+		for (Joint j : b.getJoints()) {
+			joints.remove(j);
+		}
+		balls.remove(b);
+	}
+	
 	/* mouseinteraction below here */
 
-	public void mousePressedLeft(Vektor v) {
+ 	public void mousePressedLeft(Vektor v) {
 		Ball b = collidingBall(v);
 		if (b != null) {
 			active = b;
