@@ -70,6 +70,7 @@ public class Domino extends PApplet {
 		}
 		if (keyCode == KeyEvent.VK_CONTROL) {
 			game.balls.remove(game.active);
+			game.balls.add(game.active);
 		}
 		if (keyCode == KeyEvent.VK_SPACE) {
 			game.restart();

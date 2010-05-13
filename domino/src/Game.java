@@ -87,7 +87,6 @@ public class Game {
 	 */
 	public void replaceBall(Ball a, Ball b) {
 		if (!a.isJointWith(b)) {
-
 			for (Joint j : a.getJoints()) {
 				if (!b.getJoints().contains(j)) {
 					join(b, j.opposite(a));
@@ -97,6 +96,11 @@ public class Game {
 				}
 			}
 			balls.remove(a);
+		}
+		/* remove joints that link nowhere */
+		for (Joint j : joints) {
+			if(!balls.contains(j.a) || !balls.contains(j.b))
+				joints.remove(j);
 		}
 	}
 
