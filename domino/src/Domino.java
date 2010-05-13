@@ -66,6 +66,9 @@ public class Domino extends PApplet {
 		if (keyCode == ESC) {
 			exit();
 		}
+		if (keyCode == ENTER) {
+			game.randomPair();
+		}
 		if (keyCode == KeyEvent.VK_SPACE) {
 			/* just for testing */
 			game.restart();

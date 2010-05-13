@@ -11,7 +11,7 @@ public class Game {
 	public Ball active;
 
 	/* game settings and magic numbers below here */
-	
+
 	private double fieldSize = 320;
 	private double jointLength = 40;
 	private double jointStrength = 0.1;
@@ -20,10 +20,16 @@ public class Game {
 	private float ballsize = 15;
 	private int refreshInterval = 50;
 
-	private Timer timer;
-	private TimerTask task = new TimerTask() {
+	private Timer calcTimer;
+	private TimerTask calculate = new TimerTask() {
 		public void run() {
 			refresh();
+		}
+	};
+	private Timer generateTimer;
+	private TimerTask generatePairs = new TimerTask(){
+		public void run() {
+			randomPair();
 		}
 	};
 
@@ -33,8 +39,11 @@ public class Game {
 		pointer = getCenter();
 		physics = new Physics(this);
 
-		timer = new Timer();
-		timer.schedule(task, 0, refreshInterval);
+		calcTimer = new Timer();
+		calcTimer.schedule(calculate, 0, refreshInterval);
+		generateTimer = new Timer();
+//		generateTimer.schedule(generatePairs, 1000, 6*1000);
+		
 	}
 
 	private static Random rand = new Random();
@@ -52,6 +61,36 @@ public class Game {
 	public void restart() {
 		balls.clear();
 		joints.clear();
+	}
+
+	public void randomPair() {
+		Vektor randPos;
+
+		double xMargin = height / 2 - fieldSize / 2;
+		double yMargin = width / 2 - fieldSize / 2;
+		switch (rand.nextInt(3)) {
+		case 0:
+			randPos = new Vektor(rand.nextDouble() * xMargin, rand.nextDouble() * yMargin);
+			System.out.println("oben links");
+			break;
+		case 1:
+			randPos = new Vektor(width - rand.nextDouble() * xMargin, rand.nextDouble() * yMargin);
+			System.out.println("oben rechts");
+			break;
+		case 2:
+			randPos = new Vektor(rand.nextDouble() * xMargin, height - rand.nextDouble() * yMargin);
+			System.out.println("unten links");
+			break;
+		case 3:
+			randPos = new Vektor(width - rand.nextDouble() * xMargin, height - rand.nextDouble() * yMargin);
+			System.out.println("unten rechts");
+			break;
+		default:
+			randPos = new Vektor(width - rand.nextDouble() * xMargin, height - rand.nextDouble() * yMargin);
+			System.out.println("unten rechts");
+			break;
+		}
+		createPair(randPos);
 	}
 
 	/* balls below here */
@@ -92,15 +131,16 @@ public class Game {
 				}
 			}
 			balls.remove(b);
+			active = null;
 		}
 		/* remove joints that link nowhere */
 		for (Joint j : joints) {
 			/* delete obsolete */
 			for (Joint k : joints) {
-				if(j != k && j.equals(k))
+				if (j != k && j.equals(k))
 					joints.remove(j);
 			}
-			/* delete one-balled joints  */
+			/* delete one-balled joints */
 			if (!balls.contains(j.a) || !balls.contains(j.b))
 				joints.remove(j);
 		}
