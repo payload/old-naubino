@@ -40,9 +40,7 @@ class Physics {
 		/*
 		 * farben vergleichen TODO besseres Joinen von Balls
 		 */
-		if ((game.active == c.a || game.active == c.b)
-		&& !c.a.isJointWith(c.b)
-		&& c.a.color.equals(c.b.color))
+		if ((game.active == c.a || game.active == c.b) && c.a.color.equals(c.b.color))
 			game.replaceBall(c.a, c.b);
 		Vektor diff2 = c.diff.mul(0.05);
 		c.a.accelerate(diff2.mul(-1));

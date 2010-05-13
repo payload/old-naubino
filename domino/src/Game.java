@@ -86,15 +86,18 @@ public class Game {
 	 * Joints
 	 */
 	public void replaceBall(Ball a, Ball b) {
-		for(Joint j : a.getJoints()) {
-			System.out.println(j);
-			if(!b.getJoints().contains(j)) {
-				join(b, j.opposite(a));
-				joints.remove(j);
+		if (!a.isJointWith(b)) {
+
+			for (Joint j : a.getJoints()) {
+				if (!b.getJoints().contains(j)) {
+					join(b, j.opposite(a));
+					joints.remove(j);
+				} else {
+					b.getJoints().remove(j);
+				}
 			}
+			balls.remove(a);
 		}
-		
-		balls.remove(a);
 	}
 
 	private Ball collidingBall(Vektor v) {
