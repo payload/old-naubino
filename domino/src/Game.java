@@ -11,11 +11,11 @@ public class Game {
 	private double jointStrength = 0.1;
 	private Vektor pointer;
 	private Physics physics;
-	
+
 	public Ball active;
 	public int width = 600;
 	public int height = 400;
-	
+
 	private float ballsize = 15;
 	private int refreshInterval = 50;
 
@@ -26,7 +26,7 @@ public class Game {
 	public void setPointer(Vektor pointer) {
 		this.pointer = pointer;
 	}
-	
+
 	public int getNumberOfJoints() {
 		return joints.size();
 	}
@@ -44,7 +44,7 @@ public class Game {
 		setFieldSize(320);
 		pointer = getCenter();
 		physics = new Physics(this);
-		
+
 		timer = new Timer();
 		timer.schedule(task, 0, refreshInterval);
 	}
@@ -55,6 +55,8 @@ public class Game {
 
 	public void refresh() {
 		physics.physik();
+		if (active != null)
+			active.move(pointer);
 	}
 
 	private Ball createBall(Vektor v) {
@@ -81,10 +83,13 @@ public class Game {
 		joints.add(joint);
 	}
 
-	/* ersetzt einen gleichfarbigen ball im spiel und kuemmert sich um alle Joints*/
+	/*
+	 * ersetzt einen gleichfarbigen ball im spiel und kuemmert sich um alle
+	 * Joints
+	 */
 	private void replaceBall(Ball a, Ball b) {
 	}
-	
+
 	private Ball collidingBall(Vektor v) {
 		for (Ball b : balls)
 			if (b.isHit(v))
@@ -96,23 +101,24 @@ public class Game {
 		balls.clear();
 		joints.clear();
 	}
-	
+
 	public void mousePressedLeft(Vektor v) {
 		Ball b = collidingBall(v);
-		if (b != null) active = b;
+		if (b != null)
+			active = b;
 	}
-	
+
 	public void mousePressedRight(Vektor v) {
 		createPair(v);
 	}
-	
+
 	public void mouseReleasedLeft(Vektor v) {
 		active = null;
 	}
-	
+
 	public void mouseReleasedRight(Vektor v) {
 	}
-	
+
 	public List<Ball> getBalls() {
 		return balls;
 	}
@@ -128,7 +134,7 @@ public class Game {
 	public double getFieldSize() {
 		return fieldSize;
 	}
-	
+
 	protected Vektor getPointer() {
 		return pointer;
 	}

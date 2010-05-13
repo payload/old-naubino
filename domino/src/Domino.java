@@ -47,7 +47,8 @@ public class Domino extends PApplet {
 		}
 	}
 	
-	public void mouseMove() {
+	/* tritt nicht ein*/
+	public void mouseDragged() {
 		game.setPointer(new Vektor(mouseX, mouseY));
 	}
 
