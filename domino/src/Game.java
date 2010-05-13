@@ -4,12 +4,13 @@ import java.util.concurrent.*;
 public class Game {
 
 	private static final Game instance = new Game();
-	private List<Ball> balls;
-	private List<Joint> joints;
-	private float fieldSize;
+	protected List<Ball> balls;
+	protected List<Joint> joints;
+	private double fieldSize;
 	private double jointLength = 40;
 	private double jointStrength = 0.1;
 	private Vektor pointer;
+	private Physics physics;
 	
 	public Ball active;
 	public int width = 600;
@@ -39,13 +40,13 @@ public class Game {
 
 	private Game() {
 		balls = new CopyOnWriteArrayList<Ball>();
-//		balls = Collections.synchronizedList(balls);
 		joints = new CopyOnWriteArrayList<Joint>();
-//		joints = Collections.synchronizedList(joints);
-		setFieldSize(320f);
+		setFieldSize(320);
+		pointer = getCenter();
+		physics = new Physics(this);
+		
 		timer = new Timer();
 		timer.schedule(task, 0, refreshInterval);
-		pointer = getCenter();
 	}
 
 	public static Game instance() {
@@ -142,17 +143,6 @@ public class Game {
 		this.fieldSize = fieldSize;
 	}
 
-	public float getFieldSize() {
-		return fieldSize;
-	}
-
-	public List<Ball> getBalls() {
-		return balls;
-	}
-
-	public List<Joint> getJoints() {
-		return joints;
-	}
 
 	public Ball getBall(int index) {
 		return balls.get(index);
@@ -165,7 +155,7 @@ public class Game {
 		return ball;
 	}
 
-	public void createPair(Vektor v) {
+	private void createPair(Vektor v) {
 		Vektor bla = new Vektor(1, 0).mul(jointLength / 2 + 1);
 		Vektor pos1 = v.add(bla);
 		Vektor pos2 = bla.sub(v);
@@ -175,7 +165,7 @@ public class Game {
 	}
 
 	/* nur benutzen wenn zwei neue Baelle gejoint werden */
-	private void join(Ball a, Ball b) {
+	protected void join(Ball a, Ball b) {
 		Joint joint = new Joint(a, b, jointLength, jointStrength);
 		a.addJoint(joint);
 		b.addJoint(joint);
@@ -184,9 +174,20 @@ public class Game {
 
 	/* ersetzt einen gleichfarbigen ball im spiel und kuemmert sich um alle Joints*/
 	private void replaceBall(Ball a, Ball b) {
-		
+}
+	
+	private Ball collidingBall(Vektor v) {
+		for (Ball b : balls)
+			if (b.isHit(v))
+				return b; // TODO more than one ball is clicked?
+		return null;
 	}
 
+	public void restart() {
+		balls.clear();
+		joints.clear();
+	}
+	
 	public void mousePressedLeft(Vektor v) {
 		Ball b = collidingBall(v);
 		if (b != null) active = b;
@@ -200,50 +201,26 @@ public class Game {
 		active = null;
 	}
 	
-	private Ball collidingBall(Vektor v) {
-		for (Ball b : balls)
-			if (b.isHit(v))
-				return b; // TODO more than one ball is clicked?
-		return null;
+	public void mouseReleasedRight(Vektor v) {
+	}
+	
+	public List<Ball> getBalls() {
+		return balls;
 	}
 
-	public void checkForHits(float x, float y) {
-		for (Ball b : balls) {
-			if (b.isHit(new Vektor(x, y))) {
-				b.color = new Color(0, 0, 255);
-			}
-		}
+	public List<Joint> getJoints() {
+		return joints;
 	}
 
-	public Ball checkForCollisions(Ball active) {
-		for (Ball b : balls) {
-			float distance = (float) Math.sqrt(Math.pow(b.getX() - active.getX(), 2)
-					+ Math.pow(b.getY() - active.getY(), 2));
-
-			/* TODO Collisionen mit sich selbst schoener vermeiden */
-			if (distance > 0 && distance <= ballsize && b.color.name == active.color.name) {
-				return b;
-			}
-		}
-		return null;
+	private void setFieldSize(double fieldSize) {
+		this.fieldSize = fieldSize;
 	}
 
-	/* deletes all balls */
-	public void resetBalls() {
-		balls = new ArrayList<Ball>();
+	public double getFieldSize() {
+		return fieldSize;
 	}
-
-	/* deletes all joints */
-	public void resetJoints() {
-		joints = new ArrayList<Joint>();
+	
+	protected Vektor getPointer() {
+		return pointer;
 	}
-
-	/* deletes orphaned joints */
-	public void cleanUpJoints() {
-		for (Joint j : joints) {
-			if (j.a == null || j.b == null)
-				joints.remove(j);
-		}
-	}
-
 }
