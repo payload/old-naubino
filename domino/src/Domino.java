@@ -42,13 +42,11 @@ public class Domino extends PApplet {
 		Vektor v = new Vektor(mouseX, mouseY);
 		if (mouseButton == LEFT) {
 			game.mousePressedLeft(v);
-		} else
-		if (mouseButton == RIGHT) {
+		} else if (mouseButton == RIGHT) {
 			game.mousePressedRight(v);
 		}
 	}
-	
-	/* tritt nicht ein*/
+
 	public void mouseDragged() {
 		game.setPointer(new Vektor(mouseX, mouseY));
 	}
@@ -57,22 +55,23 @@ public class Domino extends PApplet {
 		Vektor v = new Vektor(mouseX, mouseY);
 		if (mouseButton == LEFT) {
 			game.mouseReleasedLeft(v);
-		} else
-		if (mouseButton == RIGHT) {
+		} else if (mouseButton == RIGHT) {
 			game.mouseReleasedRight(v);
 		}
 	}
-	
+
 	// TODO key bindings in an extra class
 	public void keyPressed() {
 		if (keyCode == ESC) {
 			exit();
 		}
 		if (keyCode == KeyEvent.VK_CONTROL) {
+			/* just for testing */
 			game.balls.remove(game.active);
 			game.balls.add(game.active);
 		}
 		if (keyCode == KeyEvent.VK_SPACE) {
+			/* just for testing */
 			game.restart();
 		}
 	}
@@ -89,8 +88,7 @@ public class Domino extends PApplet {
 		text(game.getNumberOfJoints(), 10, 40);
 
 		/* spielfeld */
-		ellipse((float) center.getX(), (float) center.getY(), (float) game
-				.getFieldSize(), (float) game.getFieldSize());
+		ellipse((float) center.getX(), (float) center.getY(), (float) game.getFieldSize(), (float) game.getFieldSize());
 		// ellipse(center.getX(), center.getY(), 3, 3);
 		drawJoints();
 		drawBalls();
@@ -99,24 +97,26 @@ public class Domino extends PApplet {
 	private void drawDirection(Ball b) {
 		stroke(lineColor);
 		strokeWeight(1);
-		line((float)b.position.getX(), (float)b.position.getY(), (float)b.position.getX()
-				+ (float) b.speed.getX(), (float)b.position.getY()
-				+ (float) b.speed.getY());
+		line((float) b.position.getX(), (float) b.position.getY(), (float) b.position.getX() + (float) b.speed.getX(),
+				(float) b.position.getY() + (float) b.speed.getY());
 	}
 
 	private void drawBalls() {
 		Collection<Ball> balls = game.getBalls();
 		for (Ball b : balls) {
 			drawBall(b);
-			if (enableDrawDirection) drawDirection(b);
+			if (enableDrawDirection)
+				drawDirection(b);
 		}
 	}
 
 	private void drawBall(Ball b) {
-		if (game.active == b) this.stroke(1);
-		else noStroke();
+		if (game.active == b)
+			this.stroke(1);
+		else
+			noStroke();
 		fill(b.color.r, b.color.g, b.color.b);
-		ellipse((float)b.getX(), (float)b.getY(), (float)b.getR() * 2, (float)b.getR() * 2);
+		ellipse((float) b.getX(), (float) b.getY(), (float) b.getR() * 2, (float) b.getR() * 2);
 	}
 
 	private void drawJoints() {
@@ -127,7 +127,7 @@ public class Domino extends PApplet {
 
 	private void drawJoint(Joint j) {
 		// strokeWeight((float) (1 / (j.getStretch() * 0.005)));
-		line((float)j.a.getX(), (float)j.a.getY(),(float)j.b.getX(), (float)j.b.getY());
+		line((float) j.a.getX(), (float) j.a.getY(), (float) j.b.getX(), (float) j.b.getY());
 	}
 
 	/*
