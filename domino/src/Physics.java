@@ -57,15 +57,8 @@ class Physics {
 	}
 
 	private void moveActiveBall() {
-		// game.active.accelerate(game.active.position.sub(game.getPointer()));
-		// game.active.position = game.getPointer();
-		Vektor real_diff   = game.getPointer().sub(game.active.position);
-		double real_length = real_diff.getLength();
-		double wish_length = 10; 
-		Vektor wish_diff   = Vektor.polar(real_diff.getAngle(), wish_length);
-		Vektor force       = wish_diff.sub(real_diff);
-		force = force.mul((real_length / wish_length) * 1);
-		game.active.accelerate(force);
+		 game.active.accelerate(game.active.position.sub(game.getPointer()));
+		 game.active.position = game.getPointer();
 	}
 
 	public void physik() {
