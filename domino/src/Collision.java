@@ -13,6 +13,7 @@ public class Collision {
 		this.overlap = overlap;
 	}
 	
+	/* Kollisions Test*/
 	public static Collision test(Ball ball1, Ball ball2) {
 		Vektor diff = ball1.position.sub(ball2.position);
 		double overlap = ball1.radius + ball2.radius - diff.getLength();

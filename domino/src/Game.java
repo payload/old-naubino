@@ -76,6 +76,7 @@ public class Game {
 		b.accelerate(difference);
 	}
 	
+	/* Federkraefte zwischen gejointen Baellen */
 	private void swingBalls(Joint j) {
 		Vektor real_diff   = j.a.position.sub(j.b.position);
 		double real_length = real_diff.getLength();
@@ -87,7 +88,10 @@ public class Game {
 		j.b.accelerate(force.mul(-1));
 	}
 	
+	/* Kollisions behandlung */
 	private void collide(Collision c) {
+		/* farben vergleichen
+		 * TODO besseres Joinen von Balls*/
 		if (c.a.color.equals(c.b.color))
 			join(c.a, c.b);
 		Vektor diff2 = c.diff.mul(0.05);
@@ -107,6 +111,7 @@ public class Game {
 	
 	public void physik() {
 		List<Collision> collisions = new LinkedList<Collision>();
+		collisions = Collections.synchronizedList(collisions);
 		int balls_count = balls.size();
 		if (balls_count > 1) {
 			for (int i = 0; i < balls_count-1; i++) {
@@ -119,6 +124,7 @@ public class Game {
 			}
 		}
 		if (active != null) moveActiveBall();
+		
 		for (Ball b : balls) {
 			b.acceleration = new Vektor();
 			// gravity(b);
