@@ -102,8 +102,11 @@ public class Game {
 	
 	private void moveBall(Ball b) {
 		b.speed = b.speed.add(b.acceleration);
-		b.speed = b.speed.mul(0.98); // friction
 		b.position = b.position.add(b.speed);
+	}
+	
+	private void friction(Ball b) {
+		b.accelerate(b.speed.mul(-0.2));
 	}
 	
 	private void moveActiveBall() {
@@ -131,6 +134,7 @@ public class Game {
 			// gravity(b);
 			indirectGravity(b);
 			//repulseOtherBalls(b);
+			friction(b);
 		}
 		for (Collision c : collisions)
 			collide(c);
