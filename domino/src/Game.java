@@ -160,7 +160,7 @@ public class Game {
 
 	private Ball createBall(Vektor v) {
 		Ball ball = new Ball(v, ballsize);
-		ball.color = randomColor();
+		ball.color = Color.random();
 		balls.add(ball);
 		return ball;
 	}
@@ -181,27 +181,7 @@ public class Game {
 		joints.add(joint);
 	}
 
-	/* gibt eine zufällige Farbe aus dem OUTPUT farbschema zurück */
-	private Color randomColor() {
-		List<Color> list = new ArrayList<Color>();
-		Color red = new Color(229, 53, 23, "red");
-		Color green = new Color(151, 190, 13, "green");
-		Color pink = new Color(226, 0, 122, "pink");
-		Color blue = new Color(0, 139, 208, "blue");
-		Color purple = new Color(100, 31, 128, "purple");
-		Color yellow = new Color(255, 204, 0, "yellow");
-
-		list.add(red);
-		list.add(green);
-		list.add(pink);
-		list.add(blue);
-		list.add(purple);
-		list.add(yellow);
-
-		Random rand = new Random();
-
-		return list.get(rand.nextInt(list.size()));
-	}
+	
 
 	public void mousePressedLeft(Vektor v) {
 		Ball b = collidingBall(v);
