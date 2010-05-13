@@ -17,7 +17,7 @@ class Physics {
 	private void indirectGravity(Ball b) {
 		Vektor difference = b.position.sub(game.getCenter());
 		double length = difference.getLength();
-		difference.setLength(length * 0.0001 + 0.2);
+		difference.setLength(length * 0.0001 + 0.4);
 		b.accelerate(difference);
 	}
 

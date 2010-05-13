@@ -28,9 +28,12 @@ public class Game {
 		}
 	};
 
-	// private Timer generateTimer;
-	// private TimerTask generatePairs = new TimerTask(){public void run()
-	// {randomPair();} };
+	private Timer generateTimer;
+	private TimerTask generatePairs = new TimerTask() {
+		public void run() {
+			randomPair();
+		}
+	};
 
 	private Game() {
 		balls = new CopyOnWriteArrayList<Ball>();
@@ -40,8 +43,8 @@ public class Game {
 
 		calcTimer = new Timer();
 		calcTimer.schedule(calculate, 0, refreshInterval);
-		// generateTimer = new Timer();
-		// generateTimer.schedule(generatePairs, 1000, 6*1000);
+		 generateTimer = new Timer();
+		 generateTimer.schedule(generatePairs, 1000, 3*1000);
 
 	}
 
