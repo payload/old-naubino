@@ -39,9 +39,9 @@ public class Game {
 
 	private Game() {
 		balls = new CopyOnWriteArrayList<Ball>();
-		//balls = Collections.synchronizedList(balls);
+//		balls = Collections.synchronizedList(balls);
 		joints = new CopyOnWriteArrayList<Joint>();
-		//joints = Collections.synchronizedList(joints);
+//		joints = Collections.synchronizedList(joints);
 		setFieldSize(320f);
 		timer = new Timer();
 		timer.schedule(task, 0, refreshInterval);
@@ -87,8 +87,8 @@ public class Game {
 	private void collide(Collision c) {
 		/* farben vergleichen
 		 * TODO besseres Joinen von Balls*/
-		if (c.a.color.equals(c.b.color))
-			join(c.a, c.b);
+//		if (c.a.color.equals(c.b.color))
+//			join(c.a, c.b);
 		Vektor diff2 = c.diff.mul(0.05);
 		c.a.accelerate(diff2.mul(-1));
 		c.b.accelerate(diff2);
@@ -109,7 +109,7 @@ public class Game {
 	
 	public void physik() {
 		List<Collision> collisions = new LinkedList<Collision>();
-		//collisions = Collections.synchronizedList(collisions);
+		collisions = Collections.synchronizedList(collisions);
 		int balls_count = balls.size();
 		if (balls_count > 1) {
 			for (int i = 0; i < balls_count-1; i++) {
@@ -174,6 +174,7 @@ public class Game {
 		join(ball1, ball2);
 	}
 
+	/* nur benutzen wenn zwei neue Baelle gejoint werden */
 	private void join(Ball a, Ball b) {
 		Joint joint = new Joint(a, b, jointLength, jointStrength);
 		a.addJoint(joint);
@@ -181,7 +182,10 @@ public class Game {
 		joints.add(joint);
 	}
 
-	
+	/* ersetzt einen gleichfarbigen ball im spiel und kuemmert sich um alle Joints*/
+	private void replaceBall(Ball a, Ball b) {
+		
+	}
 
 	public void mousePressedLeft(Vektor v) {
 		Ball b = collidingBall(v);
