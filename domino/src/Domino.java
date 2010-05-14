@@ -15,7 +15,7 @@ public class Domino extends PApplet {
 	private int backgroundColor = color(255, 255, 255);
 	private Vektor center = center();
 	private boolean enableDrawDirection = false;
-	private boolean enableDrawNumber = false;
+	private boolean enableDrawNumber = true;
 
 	private PFont myFont;
 
@@ -116,10 +116,15 @@ public class Domino extends PApplet {
 		else
 			noStroke();
 		fill(b.color.r, b.color.g, b.color.b);
+		
 		ellipse((float) b.getX(), (float) b.getY(), (float) b.getR() * 2, (float) b.getR() * 2);
-		fill(0);
-		if (enableDrawNumber)
-			text(b.cycleNumber, (float) b.getX(), (float) b.getY());
+		
+		if (enableDrawNumber) {
+			fill(0);
+			if(b.color.name.compareTo("black") == 0)
+				fill(255);
+			text(b.getJoints().size(), (float) b.getX(), (float) b.getY());
+		}
 	}
 
 	private void drawJoints() {

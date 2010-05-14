@@ -19,7 +19,7 @@ public class Game {
 	public int height = 400;
 	private float ballsize = 15;
 	private int refreshInterval = 50;
-	private int progress;
+	private int ctprogress;
 
 	private Timer calcTimer;
 	private TimerTask calculate = new TimerTask() {
@@ -43,8 +43,8 @@ public class Game {
 
 		calcTimer = new Timer();
 		calcTimer.schedule(calculate, 0, refreshInterval);
-		 generateTimer = new Timer();
-		 generateTimer.schedule(generatePairs, 1000, 3*1000);
+		generateTimer = new Timer();
+		// generateTimer.schedule(generatePairs, 1000, 4 * 1000);
 
 	}
 
@@ -95,21 +95,21 @@ public class Game {
 
 	public void cycleTest() {
 		for (Ball b : balls) {
-			b.cycleNumber = 0;
-			b.cycleCheck = 0;
+			b.ctNumber = 0;
+			b.ctCheck = 0;
 		}
-		progress = 1;
+		ctprogress = 1;
 		for (Ball b : balls) {
-			if (b.cycleNumber == 0) {
+			if (b.ctNumber == 0) {
 				cycleTest(b, null);
 			}
 		}
 	}
 
 	public void cycleTest(Ball v, Ball pre) {
-		v.cycleNumber = progress;
-		progress++;
-		v.cycleCheck = 1;
+		v.ctNumber = ctprogress;
+		ctprogress++;
+		v.ctCheck = 1;
 
 		List<Ball> post = v.jointBalls();
 		if (pre != null)
@@ -117,36 +117,41 @@ public class Game {
 		post.remove(v);
 
 		for (Ball w : post) {
-			if (w.cycleNumber == 0)
+			if (w.ctNumber == 0)
 				cycleTest(w, v);
-			if (w.cycleCheck == 1) {
+			if (w.ctCheck == 1) {
 				/* handle cycle */
+				for (Ball b : balls) {
+					if (b.ctCheck == 1) {
+						/* TODO sometimes removes too many balls */
+						// b.color = new Color(0, 0, 0, "black");
+						removeBall(b);
+					}
+				}
+				// path(v, w);
 				unJoin(v, w);
-				path(v,w);
-				/* delete all balls on the shorts way from v to w */
 			}
 		}
-		v.cycleCheck = 2;
+		v.ctCheck = 2;
 	}
 
 	public void path(Ball a, Ball b) {
 		List<Ball> todo = new CopyOnWriteArrayList<Ball>();
 		for (Ball jp : a.jointBalls()) {
-			if(jp == b) {
-				remove(a);
-				remove(b);
+			if (jp == b) {
+				removeBall(a);
+				removeBall(b);
 			}
-				
+
 			todo.add(jp);
 		}
-		for(Ball t : todo) {
-			for(Ball jp : t.jointBalls()) {
-				if(jp == b) {
-					remove(b);
+		for (Ball t : todo) {
+			for (Ball jp : t.jointBalls()) {
+				if (jp == b) {
+					removeBall(b);
 					path(a, t);
 					return;
-				}
-				else if(!todo.contains(jp)) {
+				} else if (!todo.contains(jp)) {
 					todo.add(jp);
 				}
 			}
@@ -190,17 +195,15 @@ public class Game {
 	public void replaceBall(Ball a, Ball b) {
 		/*
 		 * TODO joining with a single Ball should not delete a Ball (single
-		 * balls may occure after eliminating a cycle )
+		 * balls may occure after eliminating a cycle ) 
 		 */
-		if (!a.isJointWith(b)) {
-			for (Ball jb : b.jointBalls()) {
-				if (!a.isJointWith(jb)) {
+		if (!a.isJointWith(b)) { // a haengt nicht an b
+			for (Ball jb : b.jointBalls()) { // alle anhaenger an b
+				if (!a.isJointWith(jb)) { // anhaenger haengt nicht bereits an a
 					joints.add(join(a, jb));
-					for (Joint j : jb.jointsWith(b))
-						jb.removeJoint(j);
 				}
 			}
-			remove(b);
+			removeBall(b);
 			active = null;
 		}
 	}
@@ -212,21 +215,20 @@ public class Game {
 		return null;
 	}
 
-	private void remove(Ball b) {
-		for (Joint j : b.getJoints()) {
-			joints.remove(j);
+	private void removeBall(Ball b) {
+		joints.removeAll(b.getJoints());
+		for(Ball jp: b.jointBalls()) {
+			jp.getJoints().removeAll(jp.jointsWith(b));
 		}
 		balls.remove(b);
 	}
-	
+
 	/* mouseinteraction below here */
 
- 	public void mousePressedLeft(Vektor v) {
+	public void mousePressedLeft(Vektor v) {
 		Ball b = collidingBall(v);
 		if (b != null) {
 			active = b;
-			for (Ball jb : active.jointBalls()) {
-			}
 		}
 	}
 

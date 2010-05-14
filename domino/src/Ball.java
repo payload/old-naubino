@@ -8,8 +8,8 @@ public class Ball {
 	public double radius;
 	public Color color;
 	private List<Joint> joints;
-	public int cycleNumber = 0;
-	public int cycleCheck = 0;
+	public int ctNumber = 0;
+	public int ctCheck = 0;
 
 	public Ball(Vektor position, double radius) {
 		this.position = position;
