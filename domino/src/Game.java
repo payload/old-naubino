@@ -17,8 +17,9 @@ public class Game {
 	public int height = 400;
 	private float ballsize = 15;
 	private int refreshInterval = 50;
-	
-	private Spammer spammer = new Spammer();
+
+	private Random rand = new Random();
+	private Spammer spammer = new Spammer(this);
 	private CycleTest cycleTest = new CycleTest(this);
 
 	private Timer calcTimer;
@@ -51,8 +52,6 @@ public class Game {
 
 	}
 
-	private static Random rand = new Random();
-
 	public static Game instance() {
 		return instance;
 	}
@@ -66,35 +65,6 @@ public class Game {
 	public void restart() {
 		balls.clear();
 		joints.clear();
-	}
-
-	private class Spammer {
-		public void randomPair() {
-			Vektor randPos;
-			// TODO randomPair() generiert keine "unten rechts" Baelle
-			double xMargin = height / 2 - fieldSize / 2;
-			double yMargin = width / 2 - fieldSize / 2;
-			switch (rand.nextInt(3)) {
-			case 0:
-				randPos = new Vektor(rand.nextDouble() * xMargin, rand.nextDouble() * yMargin);
-				break;
-			case 1:
-				randPos = new Vektor(width - rand.nextDouble() * xMargin, rand.nextDouble() * yMargin);
-				break;
-			case 2:
-				randPos = new Vektor(rand.nextDouble() * xMargin, height - rand.nextDouble() * yMargin);
-				break;
-			case 3:
-				randPos = new Vektor(width - rand.nextDouble() * xMargin, height - rand.nextDouble() * yMargin);
-				System.out.println("unten rechts");
-				break;
-			default:
-				randPos = new Vektor(width - rand.nextDouble() * xMargin, height - rand.nextDouble() * yMargin);
-				System.out.println("unten rechts");
-				break;
-			}
-			createPair(randPos);
-		}
 	}
 	
 	public void path(Ball a, Ball b) {
@@ -129,7 +99,7 @@ public class Game {
 		return ball;
 	}
 
-	private void createPair(Vektor v) {
+	protected void createPair(Vektor v) {
 		Vektor pair = new Vektor(1, 0).mul(Joint.defaultLength * 0.6);
 		pair.setAngle(rand.nextDouble() * Math.PI * 2);
 		Vektor pos1 = v.add(pair);
