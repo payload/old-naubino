@@ -1,4 +1,4 @@
-public class Joint {
+public class Joint{
 	
 	public Ball a;
 	public Ball b;
@@ -8,8 +8,14 @@ public class Joint {
 	private double lowerLimit;
 	private double upperLimit;
 	
+	public static final double defaultLength = 40;
+	public static final double defaultStrength = 0.1;
+	public static final double defaultLowerLimit = 5;
+	public static final double defaultUpperLimit = 80;
+	
 	public Joint(Ball a, Ball b) {
-		this(a, b, 40, 0.1, 5, 80);
+		this(a, b, defaultLength, defaultStrength, 
+			defaultLowerLimit, defaultUpperLimit);
 	}
 
 	public Joint(Ball b1, Ball b2, double length, double strength, double lowerLimit, double upperLimit) {
@@ -55,4 +61,13 @@ public class Joint {
 	public double getStrength() {
 		return strength;
 	}
+
+
+	public boolean equals(Joint o) {
+		if(this.a == o.a && this.b == o.b) return true;
+		if(this.a == o.b && this.b == o.a) return true;
+		return false;
+	}
+
+	
 }

@@ -39,4 +39,7 @@ public class Color {
 		}
 		return colors.get(rand.nextInt(colors.size()));
 	}
+	public String toString() {
+		return name;
+	}
 }
