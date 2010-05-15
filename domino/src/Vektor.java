@@ -48,7 +48,7 @@ public class Vektor {
 	}
 
 	public Vektor sub(Vektor v) {
-		return new Vektor(v.getX() - x, v.getY() - y);
+		return new Vektor(x - v.getX(), y - v.getY());
 	}
 
 	public Vektor mul(double n) {

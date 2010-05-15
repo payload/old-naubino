@@ -13,8 +13,6 @@ public class Game {
 	/* game settings and magic numbers below here */
 
 	private double fieldSize = 320;
-	private double jointLength = 40;
-	private double jointStrength = 0.1;
 	public int width = 600;
 	public int height = 400;
 	private float ballsize = 15;
@@ -55,7 +53,6 @@ public class Game {
 	}
 
 	/* game logic below here */
-
 	public void refresh() {
 		physics.physik();
 		cycleTest();
@@ -168,17 +165,18 @@ public class Game {
 	}
 
 	private void createPair(Vektor v) {
-		Vektor pair = new Vektor(1, 0).mul(jointLength / 2 + 1);
-		pair.setAngle(rand.nextDouble() * Math.PI);
+		Vektor pair = new Vektor(1, 0).mul(Joint.defaultLength * 0.6);
+		pair.setAngle(rand.nextDouble() * Math.PI * 2);
 		Vektor pos1 = v.add(pair);
-		Vektor pos2 = pair.sub(v);
+		Vektor pos2 = v.sub(pair);
 		Ball ball1 = createBall(pos1);
 		Ball ball2 = createBall(pos2);
 		joints.add(join(ball1, ball2));
 	}
 
+	/* nur benutzen wenn zwei neue Baelle gejoint werden */
 	protected Joint join(Ball a, Ball b) {
-		Joint joint = new Joint(a, b, jointLength, jointStrength);
+		Joint joint = new Joint(a, b);
 		a.addJoint(joint);
 		b.addJoint(joint);
 		return joint;
@@ -224,7 +222,10 @@ public class Game {
 	}
 
 	/* mouseinteraction below here */
-
+	public void mouseMoved(Vektor v) {
+		setPointer(v);
+	}
+	
 	public void mousePressedLeft(Vektor v) {
 		Ball b = collidingBall(v);
 		if (b != null) {
@@ -244,7 +245,6 @@ public class Game {
 	}
 
 	/* getter/setter below here */
-
 	public List<Ball> getBalls() {
 		return balls;
 	}

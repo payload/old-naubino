@@ -21,7 +21,7 @@ public class Ball {
 	}
 
 	/* position and movement below here */
-
+	
 	public void accelerate(Vektor v) {
 		acceleration = acceleration.add(v);
 	}
@@ -76,7 +76,7 @@ public class Ball {
 	}
 
 	/* getter/setter below here */
-
+	
 	public double getX() {
 		return position.getX();
 	}

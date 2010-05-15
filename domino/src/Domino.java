@@ -49,8 +49,12 @@ public class Domino extends PApplet {
 		}
 	}
 
+	public void mouseMoved() {
+		game.mouseMoved(new Vektor(mouseX, mouseY));
+	}
+	
 	public void mouseDragged() {
-		game.setPointer(new Vektor(mouseX, mouseY));
+		game.mouseMoved(new Vektor(mouseX, mouseY));
 	}
 
 	public void mouseReleased() {
@@ -92,6 +96,12 @@ public class Domino extends PApplet {
 		// ellipse(center.getX(), center.getY(), 3, 3);
 		drawJoints();
 		drawBalls();
+		drawPointer();
+	}
+	
+	private void drawPointer() {
+		Vektor v = game.getPointer();
+		ellipse((float)v.getX(), (float)v.getY(), 5, 5);
 	}
 
 	private void drawDirection(Ball b) {

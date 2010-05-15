@@ -13,21 +13,12 @@ class Physics {
 	}
 
 	private void indirectGravity(Ball b) {
-		Vektor difference = b.position.sub(game.getCenter());
+		//Vektor v = new Vektor(b.position, getCenter(),
+		//		b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2);
+		Vektor difference = game.getCenter().sub(b.position);
 		double length = difference.getLength();
 		difference.setLength(length * 0.0001 + 0.3);
 		b.accelerate(difference);
-	}
-
-	private void jointSpring(Joint j) {
-		Vektor real_diff = j.a.position.sub(j.b.position);
-		double real_length = real_diff.getLength();
-		double wish_length = j.getLength();
-		Vektor wish_diff = Vektor.polar(real_diff.getAngle(), wish_length);
-		Vektor force = wish_diff.sub(real_diff);
-		force = force.mul((real_length / wish_length) * j.getStrength());
-		j.a.accelerate(force);
-		j.b.accelerate(force.mul(-1));
 	}
 
 	private void collide(Collision c) {
@@ -48,8 +39,8 @@ class Physics {
 	}
 
 	private void moveActiveBall() {
-		game.active.position = game.getPointer();
-		game.active.accelerate(game.active.position.sub(game.getPointer()));
+		Vektor accel = game.getPointer().sub(game.active.position);
+		game.active.accelerate(accel.mul(0.2));
 	}
 
 	public void physik() {
@@ -66,18 +57,16 @@ class Physics {
 				}
 			}
 		}
-		if (game.active != null)
-			moveActiveBall();
-
 		for (Ball b : game.balls) {
 			b.acceleration = new Vektor();
 			indirectGravity(b);
 			friction(b);
 		}
+		if (game.active != null) moveActiveBall();
 		for (Collision c : collisions)
 			collide(c);
 		for (Joint j : game.joints)
-			jointSpring(j);
+			j.swingBalls();
 		for (Ball b : game.balls)
 			moveBall(b);
 	}
