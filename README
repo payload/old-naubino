@@ -1,8 +1,3 @@
-0.  kreis zeichnen
-1.  liste an objekten, die alle gezeichnet werden
-1.5 zufällige farben
-2.  bewegte objekte
-3.  bewegte objekte, die mit rand kollidieren
-4.  objekte erstellen und löschen
-5.  kollision
-6.  joints
+== TODO ==
+=== gilbert ===
+* draggin as a "behaviour" which can be add to a ball

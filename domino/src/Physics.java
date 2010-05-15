@@ -24,18 +24,6 @@ class Physics {
 		b.accelerate(difference);
 	}
 	
-	/* Federkraefte zwischen gejointen Baellen */
-	private void swingBalls(Joint j) {
-		Vektor real_diff   = j.b.position.sub(j.a.position);
-		double real_length = real_diff.getLength();
-		double wish_length = j.getLength(); 
-		Vektor wish_diff   = Vektor.polar(real_diff.getAngle(), wish_length);
-		Vektor force       = wish_diff.sub(real_diff);
-		force = force.mul((real_length / wish_length) * j.getStrength());
-		j.a.accelerate(force.mul(-1));
-		j.b.accelerate(force);
-	}
-	
 	/* Kollisions behandlung */
 	private void collide(Collision c) {
 		/* farben vergleichen
@@ -87,7 +75,7 @@ class Physics {
 		for (Collision c : collisions)
 			collide(c);
 		for (Joint j : game.joints)
-			swingBalls(j);
+			j.swingBalls();
 		for (Ball b : game.balls)
 			moveBall(b);
 	}

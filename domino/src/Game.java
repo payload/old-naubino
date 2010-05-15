@@ -7,8 +7,6 @@ public class Game {
 	protected List<Ball> balls;
 	protected List<Joint> joints;
 	private double fieldSize;
-	private double jointLength = 40;
-	private double jointStrength = 0.1;
 	private Vektor pointer;
 	private Physics physics;
 	
@@ -75,7 +73,7 @@ public class Game {
 
 	/* nur benutzen wenn zwei neue Baelle gejoint werden */
 	protected void join(Ball a, Ball b) {
-		Joint joint = new Joint(a, b, jointLength, jointStrength);
+		Joint joint = new Joint(a, b);
 		a.addJoint(joint);
 		b.addJoint(joint);
 		joints.add(joint);
