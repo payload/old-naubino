@@ -67,7 +67,7 @@ public class Game {
 	private void createPair(Vektor v) {
 		Vektor bla = new Vektor(1, 0).mul(jointLength / 2 + 1);
 		Vektor pos1 = v.add(bla);
-		Vektor pos2 = bla.sub(v);
+		Vektor pos2 = v.sub(bla);
 		Ball ball1 = createBall(pos1);
 		Ball ball2 = createBall(pos2);
 		join(ball1, ball2);
@@ -83,6 +83,7 @@ public class Game {
 
 	/* ersetzt einen gleichfarbigen ball im spiel und kuemmert sich um alle Joints*/
 	private void replaceBall(Ball a, Ball b) {
+		
 	}
 	
 	private Ball collidingBall(Vektor v) {

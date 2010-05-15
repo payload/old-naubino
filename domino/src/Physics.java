@@ -18,7 +18,7 @@ class Physics {
 	private void indirectGravity(Ball b) {
 		//Vektor v = new Vektor(b.position, getCenter(),
 		//		b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2);
-		Vektor difference = b.position.sub(game.getCenter());
+		Vektor difference = game.getCenter().sub(b.position);
 		double length = difference.getLength();
 		difference.setLength(length * 0.0001 + 0.2);
 		b.accelerate(difference);
@@ -26,14 +26,14 @@ class Physics {
 	
 	/* Federkraefte zwischen gejointen Baellen */
 	private void swingBalls(Joint j) {
-		Vektor real_diff   = j.a.position.sub(j.b.position);
+		Vektor real_diff   = j.b.position.sub(j.a.position);
 		double real_length = real_diff.getLength();
 		double wish_length = j.getLength(); 
 		Vektor wish_diff   = Vektor.polar(real_diff.getAngle(), wish_length);
 		Vektor force       = wish_diff.sub(real_diff);
 		force = force.mul((real_length / wish_length) * j.getStrength());
-		j.a.accelerate(force);
-		j.b.accelerate(force.mul(-1));
+		j.a.accelerate(force.mul(-1));
+		j.b.accelerate(force);
 	}
 	
 	/* Kollisions behandlung */
@@ -57,7 +57,7 @@ class Physics {
 	}
 	
 	private void moveActiveBall() {
-		game.active.accelerate(game.active.position.sub(game.getPointer()));
+		game.active.accelerate(game.getPointer().sub(game.active.position));
 	}
 	
 	public void physik() {

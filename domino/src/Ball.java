@@ -53,12 +53,12 @@ public class Ball {
 		return (distance <= (radius));
 	}
 
-	public Vektor distanceTo(Ball d){
-		return position.sub(d.position);
+	public Vektor distanceTo(Ball b){
+		return b.position.sub(position);
 	}
 	
-	public Vektor distanceTo(Vektor o){
-		return position.sub(o);
+	public Vektor distanceTo(Vektor v){
+		return v.sub(position);
 	}
 	
 	public void addJoint(Joint joint) {

@@ -48,7 +48,7 @@ public class Vektor {
 	}
 
 	public Vektor sub(Vektor v) {
-		return new Vektor(v.getX() - x, v.getY() - y);
+		return new Vektor(x - v.getX(), y - v.getY());
 	}
 
 	public Vektor mul(double n) {
@@ -98,5 +98,19 @@ public class Vektor {
 		double x = Math.cos(angle) * length;
 		double y = Math.sin(angle) * length;
 		return new Vektor(x, y);
+	}
+	
+	public boolean equals(Object other) {
+		if (other instanceof Vektor)
+			return equals((Vektor)other);
+		return super.equals(other);
+	}
+	
+	public boolean equals(Vektor other) {
+		return x == other.x && y == other.y;
+	}
+	
+	public String toString() {
+		return "{"+ x +", "+ y +"}";
 	}
 }
