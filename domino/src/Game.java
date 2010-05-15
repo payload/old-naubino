@@ -17,10 +17,9 @@ public class Game {
 	public int height = 400;
 	private float ballsize = 15;
 	private int refreshInterval = 50;
-	private int ctprogress;
 	
 	private Spammer spammer = new Spammer();
-	private CycleTest cycleTest = new CycleTest();
+	private CycleTest cycleTest = new CycleTest(this);
 
 	private Timer calcTimer;
 	private TimerTask calculate = new TimerTask() {
@@ -98,52 +97,6 @@ public class Game {
 		}
 	}
 	
-
-	private class CycleTest {
-		
-		public void cycleTest() {
-			for (Ball b : balls) {
-				b.ctNumber = 0;
-				b.ctCheck = 0;
-			}
-			ctprogress = 1;
-			for (Ball b : balls) {
-				if (b.ctNumber == 0) {
-					cycleTest(b, null);
-				}
-			}
-		}
-
-		public void cycleTest(Ball v, Ball pre) {
-			v.ctNumber = ctprogress;
-			ctprogress++;
-			v.ctCheck = 1;
-
-			List<Ball> post = v.jointBalls();
-			if (pre != null)
-				post.remove(pre);
-			post.remove(v);
-
-			for (Ball w : post) {
-				if (w.ctNumber == 0)
-					cycleTest(w, v);
-				if (w.ctCheck == 1) {
-					/* handle cycle */
-					for (Ball b : balls) {
-						if (b.ctCheck == 1) {
-							/* TODO sometimes removes too many balls */
-							// b.color = new Color(0, 0, 0, "black");
-							removeBall(b);
-						}
-					}
-					// path(v, w);
-					unJoin(v, w);
-				}
-			}
-			v.ctCheck = 2;
-		}
-	}
-	
 	public void path(Ball a, Ball b) {
 		List<Ball> todo = new CopyOnWriteArrayList<Ball>();
 		for (Ball jp : a.jointBalls()) {
@@ -194,7 +147,7 @@ public class Game {
 		return joint;
 	}
 
-	private void unJoin(Ball a, Ball b) {
+	protected void unJoin(Ball a, Ball b) {
 		for (Joint j : a.jointsWith(b)) {
 			joints.remove(j);
 			a.removeJoint(j);
@@ -225,7 +178,7 @@ public class Game {
 		return null;
 	}
 
-	private void removeBall(Ball b) {
+	protected void removeBall(Ball b) {
 		joints.removeAll(b.getJoints());
 		for(Ball jp: b.jointBalls()) {
 			jp.getJoints().removeAll(jp.jointsWith(b));

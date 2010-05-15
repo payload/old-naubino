@@ -1,0 +1,53 @@
+import java.util.List;
+
+class CycleTest {
+	
+	private Game game;
+	private int ctprogress;
+	
+	public CycleTest(Game game) {
+		this.game = game;
+	}
+	
+	public void cycleTest() {
+		for (Ball b : game.balls) {
+			b.ctNumber = 0;
+			b.ctCheck = 0;
+		}
+		ctprogress = 1;
+		for (Ball b : game.balls) {
+			if (b.ctNumber == 0) {
+				cycleTest(b, null);
+			}
+		}
+	}
+
+	public void cycleTest(Ball v, Ball pre) {
+		v.ctNumber = ctprogress;
+		ctprogress++;
+		v.ctCheck = 1;
+
+		List<Ball> post = v.jointBalls();
+		if (pre != null)
+			post.remove(pre);
+		post.remove(v);
+
+		for (Ball w : post) {
+			if (w.ctNumber == 0)
+				cycleTest(w, v);
+			if (w.ctCheck == 1) {
+				/* handle cycle */
+		for (Ball b : game.balls) {
+			if (b.ctCheck == 1) {
+				/* TODO sometimes removes too many game.balls */
+				// b.color = new Color(0, 0, 0, "black");
+				game.removeBall(b);
+			}
+		}
+		// path(v, w);
+				game.unJoin(v, w);
+			}
+		}
+		v.ctCheck = 2;
+	}
+}
