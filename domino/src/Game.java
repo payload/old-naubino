@@ -166,7 +166,7 @@ public class Game {
 
 	private void createPair(Vektor v) {
 		Vektor pair = new Vektor(1, 0).mul(Joint.defaultLength * 1.5);
-		pair.setAngle(rand.nextDouble() * Math.PI);
+		pair.setAngle(rand.nextDouble() * Math.PI * 2);
 		Vektor pos1 = v.add(pair);
 		Vektor pos2 = v.sub(pair);
 		Ball ball1 = createBall(pos1);
