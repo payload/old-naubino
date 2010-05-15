@@ -23,7 +23,7 @@ public class Game {
 		return new Vektor(width / 2, height / 2);
 	}
 
-	public void setPointer(Vektor pointer) {
+	private void setPointer(Vektor pointer) {
 		this.pointer = pointer;
 	}
 	
@@ -96,6 +96,10 @@ public class Game {
 	public void restart() {
 		balls.clear();
 		joints.clear();
+	}
+	
+	public void mouseMoved(Vektor v) {
+		setPointer(v);
 	}
 	
 	public void mousePressedLeft(Vektor v) {

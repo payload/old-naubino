@@ -57,7 +57,8 @@ class Physics {
 	}
 	
 	private void moveActiveBall() {
-		game.active.accelerate(game.getPointer().sub(game.active.position));
+		Vektor accel = game.getPointer().sub(game.active.position);
+		game.active.accelerate(accel.mul(0.2));
 	}
 	
 	public void physik() {
@@ -75,8 +76,6 @@ class Physics {
 				}
 			}
 		}
-		if (game.active != null) moveActiveBall();
-		
 		for (Ball b : game.balls) {
 			b.acceleration = new Vektor();
 			// gravity(b);
@@ -84,6 +83,7 @@ class Physics {
 			//repulseOtherBalls(b);
 			friction(b);
 		}
+		if (game.active != null) moveActiveBall();
 		for (Collision c : collisions)
 			collide(c);
 		for (Joint j : game.joints)
