@@ -27,11 +27,6 @@ public class Vektor {
 		return Math.sqrt(x*x + y*y);
 	}
 
-	public void setLength(double l) {
-		x = Math.cos(this.getAngle()) * l;
-		y = Math.sin(this.getAngle()) * l;
-	}
-
 	public double getAngle() {
 		return Math.atan2(y, x);
 
@@ -69,20 +64,6 @@ public class Vektor {
 	public Vektor dump() {
 		return new Vektor(this.x, this.x);
 	}
-
-	public Vektor(Vektor a, Vektor b, double l) {
-		double angle = Math.atan2((b.getY() - a.getY()), (b.getX() - a.getX()));
-		x = Math.cos(angle) * l;
-		y = Math.sin(angle) * l;
-		setLength(l);
-	}
-
-	public Vektor(Vektor v, double l) {
-		setX(v.getX());
-		setY(v.getY());
-		setLength(l);
-	}
-
 
 	public Vektor(double nx, double ny) {
 		x = nx;
