@@ -2,14 +2,14 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 class CycleTest {
-	
+
 	private Game game;
 	private int ctprogress;
-	
+
 	public CycleTest(Game game) {
 		this.game = game;
 	}
-	
+
 	public void cycleTest() {
 		for (Ball b : game.balls) {
 			b.ctNumber = 0;
@@ -38,19 +38,28 @@ class CycleTest {
 				cycleTest(w, v);
 			if (w.ctCheck == 1) {
 				/* handle cycle */
-		for (Ball b : game.balls) {
-			if (b.ctCheck == 1) {
-				/* TODO sometimes removes too many game.balls */
-				// b.color = new Color(0, 0, 0, "black");
-				game.removeBall(b);
-			}
-		}
-		// path(v, w);
+				for (Ball b : game.balls) {
+					if (b.ctCheck == 1) {
+						/* TODO sometimes removes too many game.balls */
+						b.color = new Color(0, 0, 0, "black");
+						// game.removeBall(b);
+					}
+				}
+				// path(v, w);
 				game.unJoin(v, w);
 			}
 		}
 		v.ctCheck = 2;
 	}
+	
+	public void removeBlack() {
+		for(Ball b: game.getBalls()) {
+			if(b.color.equals("black")){
+				game.removeBall(b);
+			}
+		}
+	}
+
 	public void path(Ball a, Ball b) {
 		List<Ball> todo = new CopyOnWriteArrayList<Ball>();
 		for (Ball jp : a.jointBalls()) {

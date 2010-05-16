@@ -5,7 +5,7 @@ class Physics {
 
 	// TODO gravity is stronger  | then -... why?
 	private Game game;
-	private double friction = 0.3;
+	private double friction = 0.6;
 	private double pushOff = 0.08;
 
 	public Physics(Game game) {

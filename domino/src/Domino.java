@@ -15,7 +15,7 @@ public class Domino extends PApplet {
 	private int backgroundColor = color(255, 255, 255);
 	private Vektor center = center();
 	private boolean enableDrawDirection = false;
-	private boolean enableDrawNumber = true;
+	private boolean enableDrawNumber = false;
 
 	private PFont myFont;
 
@@ -75,6 +75,8 @@ public class Domino extends PApplet {
 		if (keyCode == KeyEvent.VK_SPACE)
 			/* just for testing */
 			game.keyPressed(1);
+		if (keyCode == CONTROL)
+			game.keyPressed(2);
 	}
 
 	/* Zeichenvorgang */
@@ -93,7 +95,7 @@ public class Domino extends PApplet {
 		// ellipse(center.getX(), center.getY(), 3, 3);
 		drawJoints();
 		drawBalls();
-		drawPointer();
+//		drawPointer();
 	}
 	
 	private void drawPointer() {

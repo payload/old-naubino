@@ -22,6 +22,9 @@ public class Color {
 	
 	public boolean equals(Color other) {
 		return this.name.equals(other.name);
+	}	
+	public boolean equals(String other) {
+		return this.name.equals(other);
 	}
 	
 	/* gibt eine zufällige Farbe aus dem OUTPUT farbschema zurück */
@@ -30,12 +33,12 @@ public class Color {
 	public static Color random() {
 		if (colors == null) {
 			colors = new ArrayList<Color>();
-			colors.add(new Color(229, 53, 23, "red"));
+//			colors.add(new Color(229, 53, 23, "red"));
 			colors.add(new Color(151, 190, 13, "green"));
 			colors.add(new Color(226, 0, 122, "pink"));
 			colors.add(new Color(0, 139, 208, "blue"));
 			colors.add(new Color(100, 31, 128, "purple"));
-			colors.add(new Color(255, 204, 0, "yellow"));
+//			colors.add(new Color(255, 204, 0, "yellow"));
 		}
 		return colors.get(rand.nextInt(colors.size()));
 	}

@@ -68,29 +68,6 @@ public class Game {
 		joints.clear();
 	}
 	
-	public void path(Ball a, Ball b) {
-		List<Ball> todo = new CopyOnWriteArrayList<Ball>();
-		for (Ball jp : a.jointBalls()) {
-			if (jp == b) {
-				removeBall(a);
-				removeBall(b);
-			}
-
-			todo.add(jp);
-		}
-		for (Ball t : todo) {
-			for (Ball jp : t.jointBalls()) {
-				if (jp == b) {
-					removeBall(b);
-					path(a, t);
-					return;
-				} else if (!todo.contains(jp)) {
-					todo.add(jp);
-				}
-			}
-		}
-	}
-
 	/* balls below here */
 
 	private Ball createBall(Vektor v) {
@@ -166,6 +143,8 @@ public class Game {
 			case 1:
 				restart();
 				break;
+			case 2:
+				cycleTest.removeBlack();
 		}
 	}
 	
