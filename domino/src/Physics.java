@@ -3,15 +3,13 @@ import java.util.List;
 
 class Physics {
 
+	// TODO gravity is stronger  | then -... why?
 	private Game game;
+	private double friction = 0.3;
+	private double pushOff = 0.08;
 
 	public Physics(Game game) {
 		this.game = game;
-	}
-
-	@SuppressWarnings("unused")
-	private void gravity(Ball b) {
-		b.accelerate(new Vektor(b.position, game.getCenter(), 9 / game.getCenter().sub(b.position).getLength()));
 	}
 
 	private void indirectGravity(Ball b) {
@@ -19,14 +17,14 @@ class Physics {
 		//		b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2);
 		Vektor difference = game.getCenter().sub(b.position);
 		double length = difference.getLength();
-		difference.setLength(length * 0.0001 + 0.4);
+		difference.setLength(length * 0.0001 + 0.3);
 		b.accelerate(difference);
 	}
 
 	private void collide(Collision c) {
 		if ((c.a == game.active || c.b == game.active) && c.a.color.equals(c.b.color))
 			game.replaceBall(c.a, c.b);
-		Vektor diff2 = c.diff.mul(0.05);
+		Vektor diff2 = c.diff.mul(pushOff);
 		c.a.accelerate(diff2.mul(-1));
 		c.b.accelerate(diff2);
 	}
@@ -37,7 +35,7 @@ class Physics {
 	}
 
 	private void friction(Ball b) {
-		b.accelerate(b.speed.mul(-0.2));
+		b.accelerate(b.speed.mul(-friction));
 	}
 
 	private void moveActiveBall() {
@@ -61,7 +59,6 @@ class Physics {
 		}
 		for (Ball b : game.balls) {
 			b.acceleration = new Vektor();
-			// gravity(b);
 			indirectGravity(b);
 			friction(b);
 		}

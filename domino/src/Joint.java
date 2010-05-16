@@ -61,6 +61,17 @@ public class Joint{
 		b.accelerate(force_vektor.mul(-1));
 	}
 
+	public void spring() {
+		Vektor real_diff = this.a.position.sub(this.b.position);
+		double real_length = real_diff.getLength();
+		double wish_length = this.getLength();
+		Vektor wish_diff = Vektor.polar(real_diff.getAngle(), wish_length);
+		Vektor force = wish_diff.sub(real_diff);
+		force = force.mul((real_length / wish_length) * this.getStrength());
+		this.a.accelerate(force);
+		this.b.accelerate(force.mul(-1));
+	}
+	
 	public Ball opposite(Ball b) {
 		if (a == b)
 			return this.b;
