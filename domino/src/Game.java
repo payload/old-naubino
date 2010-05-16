@@ -42,7 +42,7 @@ public class Game {
 		calcTimer = new Timer();
 		calcTimer.schedule(calculate, 0, refreshInterval);
 		generateTimer = new Timer();
-		// generateTimer.schedule(generatePairs, 1000, 4 * 1000);
+		 generateTimer.schedule(generatePairs, 1000, 4 * 1000);
 
 	}
 
