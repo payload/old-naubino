@@ -3,7 +3,6 @@ import java.util.List;
 
 class Physics {
 
-	// TODO gravity is stronger  | then -... why?
 	private Game game;
 	private double friction = 0.6;
 	private double pushOff = 0.08;
@@ -16,8 +15,8 @@ class Physics {
 		//Vektor v = new Vektor(b.position, getCenter(),
 		//		b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2);
 		Vektor difference = game.getCenter().sub(b.position);
-		double length = difference.getLength();
-		difference.setLength(length * 0.0001 + 0.3);
+		difference = difference.mul(0.0001);
+		difference = difference.add(difference.norm().mul(0.3));
 		b.accelerate(difference);
 	}
 
