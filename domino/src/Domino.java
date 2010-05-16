@@ -15,7 +15,7 @@ public class Domino extends PApplet {
 	private int backgroundColor = color(255, 255, 255);
 	private Vektor center = center();
 	private boolean enableDrawDirection = false;
-	private boolean enableDrawNumber = false;
+	private boolean enableDrawNumber = true;
 
 	private PFont myFont;
 

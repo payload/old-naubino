@@ -23,7 +23,7 @@ class Physics {
 
 	private void collide(Collision c) {
 		if ((c.a == game.active || c.b == game.active) && c.a.color.equals(c.b.color))
-			game.replaceBall(c.a, c.b);
+			game.attachBall(c.a, c.b);
 		Vektor diff2 = c.diff.mul(pushOff);
 		c.a.accelerate(diff2.mul(-1));
 		c.b.accelerate(diff2);

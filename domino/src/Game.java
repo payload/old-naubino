@@ -67,7 +67,7 @@ public class Game {
 		balls.clear();
 		joints.clear();
 	}
-	
+
 	/* balls below here */
 
 	private Ball createBall(Vektor v) {
@@ -103,20 +103,22 @@ public class Game {
 		}
 	}
 
-	public void replaceBall(Ball a, Ball b) {
-		/*
-		 * TODO joining with a single Ball should not delete a Ball (single
-		 * balls may occure after eliminating a cycle ) 
-		 */
-		if (!a.isJointWith(b)) { // a haengt nicht an b
-			for (Ball jb : b.jointBalls()) { // alle anhaenger an b
-				if (!a.isJointWith(jb)) { // anhaenger haengt nicht bereits an a
-					joints.add(join(a, jb));
+	public void attachBall(Ball a, Ball b) {
+
+		if (a.getJoints().size() > 0 && b.getJoints().size() > 0) {
+			if (!a.isJointWith(b)) { // a haengt nicht an b
+				for (Ball jb : b.jointBalls()) { // alle anhaenger an b
+					if (!a.isJointWith(jb)) { // anhaenger haengt nicht bereits
+												// an a
+						joints.add(join(a, jb));
+					}
 				}
+				removeBall(b);
+				active = null;
 			}
-			removeBall(b);
-			active = null;
 		}
+		else
+			joints.add(join(a,b));
 	}
 
 	private Ball collidingBall(Vektor v) {
@@ -128,7 +130,7 @@ public class Game {
 
 	protected void removeBall(Ball b) {
 		joints.removeAll(b.getJoints());
-		for(Ball jp: b.jointBalls()) {
+		for (Ball jp : b.jointBalls()) {
 			jp.getJoints().removeAll(jp.jointsWith(b));
 		}
 		balls.remove(b);
@@ -137,21 +139,21 @@ public class Game {
 	/* interaction below here */
 	public void keyPressed(int key) {
 		switch (key) {
-			case 0:
-				spammer.randomPair();
-				break;
-			case 1:
-				restart();
-				break;
-			case 2:
-				cycleTest.removeBlack();
+		case 0:
+			spammer.randomPair();
+			break;
+		case 1:
+			restart();
+			break;
+		case 2:
+			cycleTest.removeBlack();
 		}
 	}
-	
+
 	public void mouseMoved(Vektor v) {
 		setPointer(v);
 	}
-	
+
 	public void mousePressedLeft(Vektor v) {
 		Ball b = collidingBall(v);
 		if (b != null) {
