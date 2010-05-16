@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 class CycleTest {
 	
@@ -50,4 +51,27 @@ class CycleTest {
 		}
 		v.ctCheck = 2;
 	}
+	public void path(Ball a, Ball b) {
+		List<Ball> todo = new CopyOnWriteArrayList<Ball>();
+		for (Ball jp : a.jointBalls()) {
+			if (jp == b) {
+				game.removeBall(a);
+				game.removeBall(b);
+			}
+
+			todo.add(jp);
+		}
+		for (Ball t : todo) {
+			for (Ball jp : t.jointBalls()) {
+				if (jp == b) {
+					game.removeBall(b);
+					path(a, t);
+					return;
+				} else if (!todo.contains(jp)) {
+					todo.add(jp);
+				}
+			}
+		}
+	}
+
 }
