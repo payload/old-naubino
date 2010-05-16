@@ -6,9 +6,9 @@ public class Ball {
 	public Vektor speed;
 	public Vektor acceleration;
 	public double radius;
-	public Color color;
+	public Color color; // TODO: should be in another class
 	private List<Joint> joints;
-	public int ctNumber = 0;
+	public int ctNumber = 0; // TODO: should be in another class
 	public int ctCheck = 0;
 
 	public Ball(Vektor position, double radius) {
