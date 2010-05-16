@@ -66,7 +66,7 @@ class Physics {
 		for (Collision c : collisions)
 			collide(c);
 		for (Joint j : game.joints)
-			j.swingBalls();
+			j.spring();
 		for (Ball b : game.balls)
 			moveBall(b);
 	}

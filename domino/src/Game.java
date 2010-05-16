@@ -17,7 +17,10 @@ public class Game {
 	public int height = 400;
 	private float ballsize = 15;
 	private int refreshInterval = 50;
-	private int ctprogress;
+
+	private Random rand = new Random();
+	private Spammer spammer = new Spammer(this);
+	private CycleTest cycleTest = new CycleTest(this);
 
 	private Timer calcTimer;
 	private TimerTask calculate = new TimerTask() {
@@ -26,10 +29,11 @@ public class Game {
 		}
 	};
 
+	private boolean useGenerateTimer = false;
 	private Timer generateTimer;
 	private TimerTask generatePairs = new TimerTask() {
 		public void run() {
-			randomPair();
+			spammer.randomPair();
 		}
 	};
 
@@ -41,12 +45,13 @@ public class Game {
 
 		calcTimer = new Timer();
 		calcTimer.schedule(calculate, 0, refreshInterval);
-		generateTimer = new Timer();
-		 generateTimer.schedule(generatePairs, 1000, 4 * 1000);
+
+		if (useGenerateTimer) {
+			generateTimer = new Timer();
+			generateTimer.schedule(generatePairs, 1000, 4 * 1000);
+		}
 
 	}
-
-	private static Random rand = new Random();
 
 	public static Game instance() {
 		return instance;
@@ -55,83 +60,14 @@ public class Game {
 	/* game logic below here */
 	public void refresh() {
 		physics.physik();
-		cycleTest();
+		cycleTest.cycleTest();
 	}
 
 	public void restart() {
 		balls.clear();
 		joints.clear();
 	}
-
-	public void randomPair() {
-		Vektor randPos;
-		// TODO randomPair() generiert keine "unten rechts" Baelle
-		double xMargin = height / 2 - fieldSize / 2;
-		double yMargin = width / 2 - fieldSize / 2;
-		switch (rand.nextInt(3)) {
-		case 0:
-			randPos = new Vektor(rand.nextDouble() * xMargin, rand.nextDouble() * yMargin);
-			break;
-		case 1:
-			randPos = new Vektor(width - rand.nextDouble() * xMargin, rand.nextDouble() * yMargin);
-			break;
-		case 2:
-			randPos = new Vektor(rand.nextDouble() * xMargin, height - rand.nextDouble() * yMargin);
-			break;
-		case 3:
-			randPos = new Vektor(width - rand.nextDouble() * xMargin, height - rand.nextDouble() * yMargin);
-			System.out.println("unten rechts");
-			break;
-		default:
-			randPos = new Vektor(width - rand.nextDouble() * xMargin, height - rand.nextDouble() * yMargin);
-			System.out.println("unten rechts");
-			break;
-		}
-		createPair(randPos);
-	}
-
-	public void cycleTest() {
-		for (Ball b : balls) {
-			b.ctNumber = 0;
-			b.ctCheck = 0;
-		}
-		ctprogress = 1;
-		for (Ball b : balls) {
-			if (b.ctNumber == 0) {
-				cycleTest(b, null);
-			}
-		}
-	}
-
-	public void cycleTest(Ball v, Ball pre) {
-		v.ctNumber = ctprogress;
-		ctprogress++;
-		v.ctCheck = 1;
-
-		List<Ball> post = v.jointBalls();
-		if (pre != null)
-			post.remove(pre);
-		post.remove(v);
-
-		for (Ball w : post) {
-			if (w.ctNumber == 0)
-				cycleTest(w, v);
-			if (w.ctCheck == 1) {
-				/* handle cycle */
-				for (Ball b : balls) {
-					if (b.ctCheck == 1) {
-						/* TODO sometimes removes too many balls */
-						// b.color = new Color(0, 0, 0, "black");
-						removeBall(b);
-					}
-				}
-				// path(v, w);
-				unJoin(v, w);
-			}
-		}
-		v.ctCheck = 2;
-	}
-
+	
 	public void path(Ball a, Ball b) {
 		List<Ball> todo = new CopyOnWriteArrayList<Ball>();
 		for (Ball jp : a.jointBalls()) {
@@ -164,7 +100,7 @@ public class Game {
 		return ball;
 	}
 
-	private void createPair(Vektor v) {
+	protected void createPair(Vektor v) {
 		Vektor pair = new Vektor(1, 0).mul(Joint.defaultLength * 0.6);
 		pair.setAngle(rand.nextDouble() * Math.PI * 2);
 		Vektor pos1 = v.add(pair);
@@ -182,7 +118,7 @@ public class Game {
 		return joint;
 	}
 
-	private void unJoin(Ball a, Ball b) {
+	protected void unJoin(Ball a, Ball b) {
 		for (Joint j : a.jointsWith(b)) {
 			joints.remove(j);
 			a.removeJoint(j);
@@ -213,7 +149,7 @@ public class Game {
 		return null;
 	}
 
-	private void removeBall(Ball b) {
+	protected void removeBall(Ball b) {
 		joints.removeAll(b.getJoints());
 		for(Ball jp: b.jointBalls()) {
 			jp.getJoints().removeAll(jp.jointsWith(b));
@@ -221,7 +157,18 @@ public class Game {
 		balls.remove(b);
 	}
 
-	/* mouseinteraction below here */
+	/* interaction below here */
+	public void keyPressed(int key) {
+		switch (key) {
+			case 0:
+				spammer.randomPair();
+				break;
+			case 1:
+				restart();
+				break;
+		}
+	}
+	
 	public void mouseMoved(Vektor v) {
 		setPointer(v);
 	}

@@ -68,16 +68,13 @@ public class Domino extends PApplet {
 
 	// TODO key bindings in an extra class
 	public void keyPressed() {
-		if (keyCode == ESC) {
+		if (keyCode == ESC)
 			exit();
-		}
-		if (keyCode == ENTER) {
-			game.randomPair();
-		}
-		if (keyCode == KeyEvent.VK_SPACE) {
+		if (keyCode == ENTER)
+			game.keyPressed(0);
+		if (keyCode == KeyEvent.VK_SPACE)
 			/* just for testing */
-			game.restart();
-		}
+			game.keyPressed(1);
 	}
 
 	/* Zeichenvorgang */
