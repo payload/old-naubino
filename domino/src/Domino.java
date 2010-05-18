@@ -129,10 +129,7 @@ public class Domino extends PApplet {
 		ellipse((float) b.getX(), (float) b.getY(), (float) b.getR() * 2, (float) b.getR() * 2);
 		
 		if (enableDrawNumber) {
-			fill(0);
-			if(b.color.name.compareTo("black") == 0)
-				fill(255);
-			text(game.getBalls().indexOf(b)+" "+b.ctCheck, (float) b.getX()-4, (float) b.getY()+4);
+//			text(b.ctNumber+" "+b.ctCheck, (float) b.getX()-4, (float) b.getY()+4);
 		}
 	}
 
