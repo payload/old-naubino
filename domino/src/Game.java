@@ -84,6 +84,7 @@ public class Game {
 		Vektor pos2 = v.sub(pair);
 		Ball ball1 = createBall(pos1);
 		Ball ball2 = createBall(pos2);
+		// if (balls.size() % 4 == 0)
 		joints.add(join(ball1, ball2));
 	}
 
@@ -104,23 +105,30 @@ public class Game {
 	}
 
 	public void attachBalls(Collision c) {
-		if ((c.a == active || c.b == active) && c.a.color.equals(c.b.color)) {
-			Ball a = c.a; Ball b = c.b;
+		Ball a = c.a;
+		Ball b = c.b;
+		if ((a == active || b == active)) {
 			if (a.getJoints().size() > 0 && b.getJoints().size() > 0) {
-				if (!a.isJointWith(b)) { // a haengt nicht an b
-					for (Ball jb : b.jointBalls()) { // alle anhaenger an b
-						if (!a.isJointWith(jb)) { // anhaenger haengt nicht
-													// bereits
-							// an a
-							joints.add(join(a, jb));
-						}
-					}
-					removeBall(b);
-					active = null;
+				if (a.equals(b)) {
+					replaceBall(a, b);
 				}
-			} else
+			} else {
 				joints.add(join(a, b));
+			}
 		}
+	}
+
+	private void replaceBall(Ball a, Ball b) {
+		if (!a.isJointWith(b)) {
+			for (Ball jb : b.jointBalls()) {
+				if (!a.isJointWith(jb)) {
+					joints.add(join(a, jb));
+				}
+			}
+			removeBall(b);
+			active = null;
+		}
+
 	}
 
 	private Ball collidingBall(Vektor v) {
