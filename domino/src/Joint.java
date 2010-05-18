@@ -10,7 +10,7 @@ public class Joint{
 	private double friction;
 	
 	public static final double defaultLength = 40;
-	public static final double defaultStrength = .2;
+	public static final double defaultStrength = .3;
 	public static final double defaultLowerLimit = 5;
 	public static final double defaultUpperLimit = 80;
 	
@@ -26,6 +26,7 @@ public class Joint{
 		this.strength = strength;
 		this.lowerLimit = lowerLimit;
 		this.upperLimit = upperLimit;
+		this.friction = 0.1;
 	}
 	
 	private void hardRestrict(Vektor diff, double limit) {
@@ -81,7 +82,7 @@ public class Joint{
 		if(r != 0)
 			force = force.add(springVector.norm().mul(-(r-defaultLength)*defaultStrength));
 		
-		force = force.add(a.speed.sub(b.speed).mul(-defaultStrength));
+		force = force.add(a.speed.sub(b.speed).mul(-friction));
 		a.accelerate(force);
 		b.accelerate(force.mul(-1));
 	}

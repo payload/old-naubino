@@ -4,8 +4,9 @@ import java.util.List;
 class Physics {
 
 	private Game game;
-	private double friction = 0.5;
+	private double friction = 0.3;
 	private double pushOff = 0.08;
+	private double gravity = 0.3;
 
 	public Physics(Game game) {
 		this.game = game;
@@ -16,7 +17,7 @@ class Physics {
 		// b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2);
 		Vektor difference = game.getCenter().sub(b.position);
 		difference = difference.mul(0.0001);
-		difference = difference.add(difference.norm().mul(0.3));
+		difference = difference.add(difference.norm().mul(gravity));
 		b.accelerate(difference);
 	}
 
@@ -65,7 +66,7 @@ class Physics {
 		for (Collision c : collisions)
 			collide(c);
 		for (Joint j : game.joints)
-			j.swingBalls();
+			j.spring();
 		for (Ball b : game.balls)
 			moveBall(b);
 	}
