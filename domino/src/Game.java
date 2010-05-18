@@ -66,32 +66,6 @@ public class Game {
 		balls.clear();
 		joints.clear();
 
-		testGraph();
-	}
-
-	public void testGraph() {
-		Ball a = new Ball(pointer, ballsize);
-		Ball b = new Ball(pointer.sub(Vektor.polar(Math.PI / 2, 50)), ballsize);
-		Ball c = new Ball(pointer.sub(Vektor.polar(Math.PI, 50)), ballsize);
-		Ball d = new Ball(pointer.sub(Vektor.polar(Math.PI * 1.5, 50)), ballsize);
-		Ball e = new Ball(pointer.sub(Vektor.polar(Math.PI * 2, 50)), ballsize);
-
-		balls.add(a);
-		a.color = Color.blue;
-		balls.add(b);
-		b.color = Color.green;
-		balls.add(c);
-		c.color = Color.red;
-		balls.add(d);
-		d.color = Color.blue;
-		balls.add(e);
-		e.color = Color.green;
-
-		joints.add(join(a, b));
-		joints.add(join(b, c));
-		joints.add(join(c, d));
-		joints.add(join(d, e));
-
 	}
 
 	/* balls below here */
