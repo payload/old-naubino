@@ -37,9 +37,7 @@ class CycleTest {
 			if (w.ctNumber == 0)
 				cycleTest(w, v);
 			if (w.ctCheck == 1) {
-//				game.unJoin(v, w);
-				bfsRemove(v, w);
-//				dfsRemove();
+				dfsRemove(v, w);
 			}
 		}
 		v.ctCheck = 2;
@@ -53,11 +51,11 @@ class CycleTest {
 		}
 	}
 
-	private void dfsRemove() {
+	private void dfsRemove(Ball v, Ball w) {
 		for(Ball b: game.balls) {
-			if(b.ctCheck == 1)
-				b.color = Color.black;
-//				game.removeBall(b);
+			if(b.ctNumber >= w.ctNumber && b.ctCheck == 1)
+//				b.color = Color.black;
+				game.removeBall(b);
 		}
 	}
 	
