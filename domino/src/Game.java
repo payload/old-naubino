@@ -129,24 +129,24 @@ public class Game {
 		}
 	}
 
-	public void attachBall(Ball a, Ball b) {
-		/*
-		 * TODO joining with a single Ball should not delete a Ball (single
-		 * balls may occure after eliminating a cycle )
-		 */
-		if (a.getJoints().size() > 0 && b.getJoints().size() > 0) {
-			if (!a.isJointWith(b)) { // a haengt nicht an b
-				for (Ball jb : b.jointBalls()) { // alle anhaenger an b
-					if (!a.isJointWith(jb)) { // anhaenger haengt nicht bereits
-						// an a
-						joints.add(join(a, jb));
+	public void attachBalls(Collision c) {
+		if ((c.a == active || c.b == active) && c.a.color.equals(c.b.color)) {
+			Ball a = c.a; Ball b = c.b;
+			if (a.getJoints().size() > 0 && b.getJoints().size() > 0) {
+				if (!a.isJointWith(b)) { // a haengt nicht an b
+					for (Ball jb : b.jointBalls()) { // alle anhaenger an b
+						if (!a.isJointWith(jb)) { // anhaenger haengt nicht
+													// bereits
+							// an a
+							joints.add(join(a, jb));
+						}
 					}
+					removeBall(b);
+					active = null;
 				}
-				removeBall(b);
-				active = null;
-			}
-		} else
-			joints.add(join(a, b));
+			} else
+				joints.add(join(a, b));
+		}
 	}
 
 	private Ball collidingBall(Vektor v) {

@@ -4,7 +4,7 @@ import java.util.List;
 class Physics {
 
 	private Game game;
-	private double friction = 0.6;
+	private double friction = 0.5;
 	private double pushOff = 0.08;
 
 	public Physics(Game game) {
@@ -12,8 +12,8 @@ class Physics {
 	}
 
 	private void indirectGravity(Ball b) {
-		//Vektor v = new Vektor(b.position, getCenter(),
-		//		b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2);
+		// Vektor v = new Vektor(b.position, getCenter(),
+		// b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2);
 		Vektor difference = game.getCenter().sub(b.position);
 		difference = difference.mul(0.0001);
 		difference = difference.add(difference.norm().mul(0.3));
@@ -21,8 +21,8 @@ class Physics {
 	}
 
 	private void collide(Collision c) {
-		if ((c.a == game.active || c.b == game.active) && c.a.color.equals(c.b.color))
-			game.attachBall(c.a, c.b);
+		game.attachBalls(c);
+
 		Vektor diff2 = c.diff.mul(pushOff);
 		c.a.accelerate(diff2.mul(-1));
 		c.b.accelerate(diff2);
@@ -44,7 +44,6 @@ class Physics {
 
 	public void physik() {
 		List<Collision> collisions = new LinkedList<Collision>();
-		// collisions = Collections.synchronizedList(collisions);
 		int balls_count = game.balls.size();
 		if (balls_count > 1) {
 			for (int i = 0; i < balls_count - 1; i++) {
@@ -58,10 +57,11 @@ class Physics {
 		}
 		for (Ball b : game.balls) {
 			b.acceleration = new Vektor();
-//			indirectGravity(b);
+			indirectGravity(b);
 			friction(b);
 		}
-		if (game.active != null) moveActiveBall();
+		if (game.active != null)
+			moveActiveBall();
 		for (Collision c : collisions)
 			collide(c);
 		for (Joint j : game.joints)
