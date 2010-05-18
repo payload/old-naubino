@@ -37,44 +37,44 @@ class CycleTest {
 			if (w.ctNumber == 0)
 				cycleTest(w, v);
 			if (w.ctCheck == 1) {
-				/* handle cycle */
-				for (Ball b : game.balls) {
-					if (b.ctCheck == 1) {
-						/* TODO sometimes removes too many game.balls */
-						b.color = new Color(0, 0, 0, "black");
-						// game.removeBall(b);
-					}
-				}
-				// path(v, w);
-				game.unJoin(v, w);
+//				game.unJoin(v, w);
+				bfsRemove(v, w);
+//				dfsRemove();
 			}
 		}
 		v.ctCheck = 2;
 	}
-	
+
 	public void removeBlack() {
-		for(Ball b: game.getBalls()) {
-			if(b.color.equals("black")){
+		for (Ball b : game.getBalls()) {
+			if (b.color.equals("black")) {
 				game.removeBall(b);
 			}
 		}
 	}
 
-	public void path(Ball a, Ball b) {
+	private void dfsRemove() {
+		for(Ball b: game.balls) {
+			if(b.ctCheck == 1)
+				b.color = Color.black;
+//				game.removeBall(b);
+		}
+	}
+	
+	public void bfsRemove(Ball a, Ball b) {
 		List<Ball> todo = new CopyOnWriteArrayList<Ball>();
 		for (Ball jp : a.jointBalls()) {
 			if (jp == b) {
 				game.removeBall(a);
 				game.removeBall(b);
-			}
-
-			todo.add(jp);
+			} else
+				todo.add(jp);
 		}
 		for (Ball t : todo) {
 			for (Ball jp : t.jointBalls()) {
 				if (jp == b) {
 					game.removeBall(b);
-					path(a, t);
+					bfsRemove(a, t);
 					return;
 				} else if (!todo.contains(jp)) {
 					todo.add(jp);

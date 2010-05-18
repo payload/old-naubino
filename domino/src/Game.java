@@ -50,7 +50,6 @@ public class Game {
 			generateTimer = new Timer();
 			generateTimer.schedule(generatePairs, 1000, 4 * 1000);
 		}
-
 	}
 
 	public static Game instance() {
@@ -66,13 +65,40 @@ public class Game {
 	public void restart() {
 		balls.clear();
 		joints.clear();
+
+		testGraph();
+	}
+
+	public void testGraph() {
+		Ball a = new Ball(pointer, ballsize);
+		Ball b = new Ball(pointer.sub(Vektor.polar(Math.PI / 2, 50)), ballsize);
+		Ball c = new Ball(pointer.sub(Vektor.polar(Math.PI, 50)), ballsize);
+		Ball d = new Ball(pointer.sub(Vektor.polar(Math.PI * 1.5, 50)), ballsize);
+		Ball e = new Ball(pointer.sub(Vektor.polar(Math.PI * 2, 50)), ballsize);
+
+		balls.add(a);
+		a.color = Color.blue;
+		balls.add(b);
+		b.color = Color.green;
+		balls.add(c);
+		c.color = Color.red;
+		balls.add(d);
+		d.color = Color.blue;
+		balls.add(e);
+		e.color = Color.green;
+
+		joints.add(join(a, b));
+		joints.add(join(b, c));
+		joints.add(join(c, d));
+		joints.add(join(d, e));
+
 	}
 
 	/* balls below here */
 
 	private Ball createBall(Vektor v) {
 		Ball ball = new Ball(v, ballsize);
-		ball.color = Color.random();
+		// ball.color = Color.random();
 		balls.add(ball);
 		return ball;
 	}
@@ -104,21 +130,23 @@ public class Game {
 	}
 
 	public void attachBall(Ball a, Ball b) {
-
+		/*
+		 * TODO joining with a single Ball should not delete a Ball (single
+		 * balls may occure after eliminating a cycle )
+		 */
 		if (a.getJoints().size() > 0 && b.getJoints().size() > 0) {
 			if (!a.isJointWith(b)) { // a haengt nicht an b
 				for (Ball jb : b.jointBalls()) { // alle anhaenger an b
 					if (!a.isJointWith(jb)) { // anhaenger haengt nicht bereits
-												// an a
+						// an a
 						joints.add(join(a, jb));
 					}
 				}
 				removeBall(b);
 				active = null;
 			}
-		}
-		else
-			joints.add(join(a,b));
+		} else
+			joints.add(join(a, b));
 	}
 
 	private Ball collidingBall(Vektor v) {

@@ -132,7 +132,7 @@ public class Domino extends PApplet {
 			fill(0);
 			if(b.color.name.compareTo("black") == 0)
 				fill(255);
-			text(b.getJoints().size(), (float) b.getX(), (float) b.getY());
+			text(game.getBalls().indexOf(b)+" "+b.ctCheck, (float) b.getX()-4, (float) b.getY()+4);
 		}
 	}
 

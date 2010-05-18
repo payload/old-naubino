@@ -58,7 +58,7 @@ class Physics {
 		}
 		for (Ball b : game.balls) {
 			b.acceleration = new Vektor();
-			indirectGravity(b);
+//			indirectGravity(b);
 			friction(b);
 		}
 		if (game.active != null) moveActiveBall();

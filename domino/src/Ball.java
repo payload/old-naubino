@@ -16,7 +16,7 @@ public class Ball {
 		this.radius = radius;
 		speed = new Vektor();
 		acceleration = new Vektor();
-		color = new Color(255, 0, 0);
+		color = Color.random();
 		joints = new ArrayList<Joint>();
 	}
 

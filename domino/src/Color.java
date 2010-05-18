@@ -51,7 +51,7 @@ public class Color {
 	public static Color blue = new Color(0, 139, 208, "blue");
 	public static Color purple = new Color(100, 31, 128, "purple");
 	public static Color yellow = new Color(255, 204, 0, "yellow");
-	public static Color black = new Color(255, 204, 0, "black");
+	public static Color black = new Color(0, 0, 0, "black");
 
 	public String toString() {
 		return name;
