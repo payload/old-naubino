@@ -75,6 +75,10 @@ public class Ball {
 		return list;
 	}
 
+	public boolean equals(Ball b) {
+		return this.color.equals(b.color);
+	}
+	
 	/* getter/setter below here */
 	
 	public double getX() {
