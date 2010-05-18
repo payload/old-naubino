@@ -7,9 +7,10 @@ public class Joint{
 	private double strength;
 	private double lowerLimit;
 	private double upperLimit;
+	private double friction;
 	
 	public static final double defaultLength = 40;
-	public static final double defaultStrength = 1;
+	public static final double defaultStrength = .2;
 	public static final double defaultLowerLimit = 5;
 	public static final double defaultUpperLimit = 80;
 	
@@ -61,7 +62,7 @@ public class Joint{
 		b.accelerate(force_vektor.mul(-1));
 	}
 
-	public void spring() {
+	public void swingBallsOld() {
 		Vektor real_diff = this.a.position.sub(this.b.position);
 		double real_length = real_diff.getLength();
 		double wish_length = this.getLength();
@@ -70,6 +71,19 @@ public class Joint{
 		force = force.mul((real_length / wish_length) * this.getStrength());
 		this.a.accelerate(force);
 		this.b.accelerate(force.mul(-1));
+	}
+
+	public void spring() {
+		Vektor springVector = a.position.sub(b.position);
+		Vektor force = new Vektor();
+		
+		double r = springVector.getLength();
+		if(r != 0)
+			force = force.add(springVector.norm().mul(-(r-defaultLength)*defaultStrength));
+		
+		force = force.add(a.speed.sub(b.speed).mul(-defaultStrength));
+		a.accelerate(force);
+		b.accelerate(force.mul(-1));
 	}
 	
 	public Ball opposite(Ball b) {
@@ -94,7 +108,6 @@ public class Joint{
 	public double getStrength() {
 		return strength;
 	}
-
 
 	public boolean equals(Joint o) {
 		if(this.a == o.a && this.b == o.b) return true;
