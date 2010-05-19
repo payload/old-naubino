@@ -6,6 +6,7 @@ public class Ball {
 	public Vektor speed;
 	public Vektor acceleration;
 	public double radius;
+	public double mass = 1;
 	public Color color; // TODO: should be in another class
 	private List<Joint> joints;
 	public int ctNumber = 0; // TODO: should be in another class
