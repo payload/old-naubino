@@ -115,17 +115,16 @@ public class Game {
 				joints.add(join(a, b));
 			}
 		}
-		
-		List<List<Ball>> cycles = CycleTest.cycleTest(balls);
-		for (List<Ball> cycle : cycles)
-			killCycle(cycle);
+		handleCycles();
 	}
 	
-	private void killCycle(List<Ball> cycle) {
-		for (Ball b : cycle) {
-			removeBall(b);
-		}
+	private void handleCycles() {
+		List<List<Ball>> cycles = CycleTest.cycleTest(balls);
+		for (List<Ball> cycle : cycles)
+			for (Ball b : cycle)
+				removeBall(b);
 	}
+	
 
 	private void replaceBall(Ball a, Ball b) {
 		boolean shareJointBall = false;
@@ -155,9 +154,8 @@ public class Game {
 	protected void removeBall(Ball b) {
 		joints.removeAll(b.getJoints());
 		for (Ball jp : b.jointBalls()) {
-			jp.getJoints().removeAll(jp.jointsWith(b));
+			jp.getJoints().removeAll(jp.jointsWith(b));	
 		}
-		balls.remove(b);
 	}
 
 	/* interaction below here */
