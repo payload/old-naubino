@@ -22,7 +22,6 @@ public class Game {
 
 	private Random rand = new Random();
 	private Spammer spammer = new Spammer(this);
-	private CycleTest cycleTest = new CycleTest(this);
 
 	private Timer calcTimer;
 	private TimerTask calculate = new TimerTask() {
@@ -116,7 +115,16 @@ public class Game {
 				joints.add(join(a, b));
 			}
 		}
-		cycleTest.cycleTest();
+		
+		List<List<Ball>> cycles = CycleTest.cycleTest(balls);
+		for (List<Ball> cycle : cycles)
+			killCycle(cycle);
+	}
+	
+	private void killCycle(List<Ball> cycle) {
+		for (Ball b : cycle) {
+			removeBall(b);
+		}
 	}
 
 	private void replaceBall(Ball a, Ball b) {
@@ -162,7 +170,7 @@ public class Game {
 			restart();
 			break;
 		case 2:
-			cycleTest.removeBlack();
+			//
 		case 3:
 			enablePhysics = !enablePhysics;
 		case 4:

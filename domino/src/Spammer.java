@@ -14,6 +14,7 @@ class Spammer {
 	}
 
 	public void randomPair() {
+		// TODO create pair just outside of visible frame
 		double field_size = game.getFieldSize();
 		Vektor v = Vektor.polar(randomAngle(), (field_size));
 		v = game.getCenter().add(v);

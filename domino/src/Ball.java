@@ -9,8 +9,6 @@ public class Ball {
 	public double mass = 1;
 	public Color color; // TODO: should be in another class
 	private List<Joint> joints;
-	public int ctNumber = 0; // TODO: should be in another class
-	public int ctCheck = 0;
 
 	public Ball(Vektor position, double radius) {
 		this.position = position;

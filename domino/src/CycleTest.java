@@ -1,84 +1,79 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
 
 class CycleTest {
 
-	private Game game;
 	private int ctprogress;
+	private Map<Ball, Vertex> vertices;
 
-	public CycleTest(Game game) {
-		this.game = game;
+	private class Vertex {
+		public Ball ball;
+		public int check = 0;
+		public int number = 0;
+
+		public Vertex(Ball b) {
+			ball = b;
+		}
 	}
 
-	public void cycleTest() {
-		for (Ball b : game.balls) {
-			b.ctNumber = 0;
-			b.ctCheck = 0;
-		}
+	public CycleTest(List<Ball> balls) {
+		vertices = new HashMap<Ball, Vertex>(balls.size());
+		for (Ball b : balls)
+			vertices.put(b, new Vertex(b));
+	}
+
+	public static List<List<Ball>> cycleTest(List<Ball> balls) {
+		return new CycleTest(balls).cycleTest();
+	}
+
+	private List<List<Ball>> cycleTest() {
+		List<List<Ball>> cycles = new LinkedList<List<Ball>>();
 		ctprogress = 1;
-		for (Ball b : game.balls) {
-			if (b.ctNumber == 0) {
-				cycleTest(b, null);
-			}
-		}
+		for (Vertex v : vertices.values())
+			if (v.number == 0)
+				cycles.addAll(cycleTest(v, null));
+		return cycles;
 	}
 
-	public void cycleTest(Ball v, Ball pre) {
-		v.ctNumber = ctprogress;
+	private List<List<Ball>> cycleTest(Vertex v, Vertex pre) {
+		List<List<Ball>> l = new LinkedList<List<Ball>>();
+		
+		v.number = ctprogress;
 		ctprogress++;
-		v.ctCheck = 1;
+		v.check = 1;
 
-		List<Ball> post = v.jointBalls();
+		List<Vertex> post = getVertices(v.ball.jointBalls());
 		if (pre != null)
 			post.remove(pre);
 		post.remove(v);
 
-		for (Ball w : post) {
-			if (w.ctNumber == 0)
-				cycleTest(w, v);
-			if (w.ctCheck == 1) {
-				dfsRemove(v, w);
-			}
+		for (Vertex w : post) {
+			if (w.number == 0)
+				l.addAll(cycleTest(w, v));
+			if (w.check == 1)
+				l.add(cycleList(v, w));
 		}
-		v.ctCheck = 2;
+		v.check = 2;
+		
+		return l;
 	}
 
-	public void removeBlack() {
-		for (Ball b : game.getBalls()) {
-			if (b.color.equals("black")) {
-				game.removeBall(b);
-			}
-		}
-	}
-
-	private void dfsRemove(Ball v, Ball w) {
-		for(Ball b: game.balls) {
-			if(b.ctNumber >= w.ctNumber && b.ctCheck == 1)
-//				b.color = Color.black;
-				game.removeBall(b);
-		}
+	private List<Ball> cycleList(Vertex v, Vertex w) {
+		List<Ball> cycle = new LinkedList<Ball>();
+		for (Vertex vertex : vertices.values())
+			if (vertex.number >= w.number && vertex.check == 1)
+				cycle.add(vertex.ball);
+		return cycle;
 	}
 	
-	public void bfsRemove(Ball a, Ball b) {
-		List<Ball> todo = new CopyOnWriteArrayList<Ball>();
-		for (Ball jp : a.jointBalls()) {
-			if (jp == b) {
-				game.removeBall(a);
-				game.removeBall(b);
-			} else
-				todo.add(jp);
-		}
-		for (Ball t : todo) {
-			for (Ball jp : t.jointBalls()) {
-				if (jp == b) {
-					game.removeBall(b);
-					bfsRemove(a, t);
-					return;
-				} else if (!todo.contains(jp)) {
-					todo.add(jp);
-				}
-			}
-		}
+	private List<Vertex> getVertices(List<Ball> balls) {
+		List<Vertex> r = new ArrayList<Vertex>(balls.size());
+		for (Ball b : balls)
+			r.add(vertices.get(b));
+		return r;
 	}
 
 }
