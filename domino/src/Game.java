@@ -117,14 +117,6 @@ public class Game {
 		}
 		handleCycles();
 	}
-	
-	private void handleCycles() {
-		List<List<Ball>> cycles = CycleTest.cycleTest(balls);
-		for (List<Ball> cycle : cycles)
-			for (Ball b : cycle)
-				removeBall(b);
-	}
-	
 
 	private void replaceBall(Ball a, Ball b) {
 		boolean shareJointBall = false;
@@ -144,6 +136,13 @@ public class Game {
 
 	}
 
+	private void handleCycles() {
+		List<List<Ball>> cycles = CycleTest.cycleTest(balls);
+		for (List<Ball> cycle : cycles)
+			for (Ball b : cycle)
+				removeBall(b);
+	}
+
 	private Ball collidingBall(Vektor v) {
 		for (Ball b : balls)
 			if (b.isHit(v))
@@ -154,8 +153,9 @@ public class Game {
 	protected void removeBall(Ball b) {
 		joints.removeAll(b.getJoints());
 		for (Ball jp : b.jointBalls()) {
-			jp.getJoints().removeAll(jp.jointsWith(b));	
+			jp.getJoints().removeAll(jp.jointsWith(b));
 		}
+		balls.remove(b);
 	}
 
 	/* interaction below here */
