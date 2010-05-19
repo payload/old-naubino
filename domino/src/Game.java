@@ -120,7 +120,12 @@ public class Game {
 	}
 
 	private void replaceBall(Ball a, Ball b) {
-		if (!a.isJointWith(b)) {
+		boolean shareJointBall = false;
+		for (Ball jp : a.jointBalls()) {
+			if (jp.isJointWith(b))
+				shareJointBall = true;
+		}
+		if (!shareJointBall && !a.isJointWith(b)) {
 			for (Ball jb : b.jointBalls()) {
 				if (!a.isJointWith(jb)) {
 					joints.add(join(a, jb));
