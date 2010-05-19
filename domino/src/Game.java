@@ -59,7 +59,6 @@ public class Game {
 	/* game logic below here */
 	public void refresh() {
 		physics.physik();
-		cycleTest.cycleTest();
 	}
 
 	public void restart() {
@@ -116,6 +115,7 @@ public class Game {
 				joints.add(join(a, b));
 			}
 		}
+		cycleTest.cycleTest();
 	}
 
 	private void replaceBall(Ball a, Ball b) {
