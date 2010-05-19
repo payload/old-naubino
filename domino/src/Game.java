@@ -9,6 +9,8 @@ public class Game {
 	private Vektor pointer;
 	private Physics physics;
 	public Ball active;
+	private boolean enablePhysics = true;
+	public boolean useGenerateTimer = false;
 
 	/* game settings and magic numbers below here */
 
@@ -29,11 +31,11 @@ public class Game {
 		}
 	};
 
-	private boolean useGenerateTimer = false;
 	private Timer generateTimer;
 	private TimerTask generatePairs = new TimerTask() {
 		public void run() {
-			spammer.randomPair();
+			if (useGenerateTimer)
+				spammer.randomPair();
 		}
 	};
 
@@ -46,10 +48,8 @@ public class Game {
 		calcTimer = new Timer();
 		calcTimer.schedule(calculate, 0, refreshInterval);
 
-		if (useGenerateTimer) {
-			generateTimer = new Timer();
-			generateTimer.schedule(generatePairs, 1000, 4 * 1000);
-		}
+		generateTimer = new Timer();
+		generateTimer.schedule(generatePairs, 1000, 3 * 1000);
 	}
 
 	public static Game instance() {
@@ -58,7 +58,8 @@ public class Game {
 
 	/* game logic below here */
 	public void refresh() {
-		physics.physik();
+		if (enablePhysics)
+			physics.physik();
 	}
 
 	public void restart() {
@@ -157,6 +158,10 @@ public class Game {
 			break;
 		case 2:
 			cycleTest.removeBlack();
+		case 3:
+			enablePhysics = !enablePhysics;
+		case 4:
+			useGenerateTimer = !useGenerateTimer;
 		}
 	}
 

@@ -5,27 +5,20 @@ public class Joint{
 	
 	private double length;
 	private double strength;
-	private double lowerLimit;
-	private double upperLimit;
 	private double friction;
 	
 	public static final double defaultLength = 40;
 	public static final double defaultStrength = .3;
-	public static final double defaultLowerLimit = 5;
-	public static final double defaultUpperLimit = 80;
 	
 	public Joint(Ball a, Ball b) {
-		this(a, b, defaultLength, defaultStrength, 
-			defaultLowerLimit, defaultUpperLimit);
+		this(a, b, defaultLength, defaultStrength);
 	}
 
-	public Joint(Ball b1, Ball b2, double length, double strength, double lowerLimit, double upperLimit) {
+	public Joint(Ball b1, Ball b2, double length, double strength) {
 		a = b1;
 		b = b2;
 		this.length = length;
 		this.strength = strength;
-		this.lowerLimit = lowerLimit;
-		this.upperLimit = upperLimit;
 		this.friction = 0.1;
 	}
 

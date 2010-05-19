@@ -52,7 +52,7 @@ public class Domino extends PApplet {
 	public void mouseMoved() {
 		game.mouseMoved(new Vektor(mouseX, mouseY));
 	}
-	
+
 	public void mouseDragged() {
 		game.mouseMoved(new Vektor(mouseX, mouseY));
 	}
@@ -77,6 +77,10 @@ public class Domino extends PApplet {
 			game.keyPressed(1);
 		if (keyCode == CONTROL)
 			game.keyPressed(2);
+		if (keyCode == KeyEvent.VK_Q)
+			game.keyPressed(3);
+		if (keyCode == KeyEvent.VK_W)
+			game.keyPressed(4);
 	}
 
 	/* Zeichenvorgang */
@@ -87,20 +91,25 @@ public class Domino extends PApplet {
 		stroke(lineColor);
 		strokeWeight(2);
 
-		textFont(myFont);
-		text(game.getNumberOfJoints(), 10, 40);
-
 		/* spielfeld */
 		ellipse((float) center.getX(), (float) center.getY(), (float) game.getFieldSize(), (float) game.getFieldSize());
 		// ellipse(center.getX(), center.getY(), 3, 3);
 		drawJoints();
 		drawBalls();
-//		drawPointer();
+		// drawPointer();
+
+		fill(0);
+		textFont(myFont);
+		if (game.useGenerateTimer)
+			text("Timer an", 10, 20);
+		else
+			text("Timer aus", 10, 20);
+		text(game.getNumberOfJoints(), 10, 40);
 	}
-	
+
 	private void drawPointer() {
 		Vektor v = game.getPointer();
-		ellipse((float)v.getX(), (float)v.getY(), 5, 5);
+		ellipse((float) v.getX(), (float) v.getY(), 5, 5);
 	}
 
 	private void drawDirection(Ball b) {
@@ -125,11 +134,12 @@ public class Domino extends PApplet {
 		else
 			noStroke();
 		fill(b.color.r, b.color.g, b.color.b);
-		
+
 		ellipse((float) b.getX(), (float) b.getY(), (float) b.getR() * 2, (float) b.getR() * 2);
-		
+
 		if (enableDrawNumber) {
-//			text(b.ctNumber+" "+b.ctCheck, (float) b.getX()-4, (float) b.getY()+4);
+			// text(b.ctNumber+" "+b.ctCheck, (float) b.getX()-4, (float)
+			// b.getY()+4);
 		}
 	}
 

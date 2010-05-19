@@ -19,9 +19,4 @@ class Spammer {
 		v = game.getCenter().add(v);
 		game.createPair(v);
 	}
-
-	public void randomPairs() {
-		for (int i = 0; i < 100; i++)
-			randomPair();
-	}
 }
