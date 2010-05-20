@@ -142,6 +142,12 @@ public class Domino extends PApplet {
 
 		textAlign(LEFT);
 		text(game.getAntiPoints(), 50, 62);
+		
+		textAlign(RIGHT);
+		text("Joints ", 50, 76);
+
+		textAlign(LEFT);
+		text(game.getNumberOfJoints(), 50, 76);
 
 		fill(180);
 		text(
