@@ -105,6 +105,9 @@ public class Domino extends PApplet {
 		else
 			text("Timer aus", 10, 20);
 		text(game.getNumberOfJoints(), 10, 40);
+		
+		fill(180);
+		text("(q)=physik an/aus (w)=timer an/aus (enter)=paar erzeugen (space)=alles löschen", 5, game.height-5);
 	}
 
 	private void drawPointer() {
@@ -129,13 +132,14 @@ public class Domino extends PApplet {
 	}
 
 	private void drawBall(Ball b) {
+		strokeWeight(2);
 		if (game.active == b)
 			this.stroke(1);
 		else
 			noStroke();
 		fill(b.color.r, b.color.g, b.color.b);
 
-		ellipse((float) b.getX(), (float) b.getY(), (float) b.getR() * 2, (float) b.getR() * 2);
+		ellipse((float) b.getX(), (float) b.getY(), (float) b.visibleRadius * 2, (float) b.visibleRadius * 2);
 
 		if (enableDrawNumber) {
 			// text(b.ctNumber+" "+b.ctCheck, (float) b.getX()-4, (float)
@@ -144,6 +148,8 @@ public class Domino extends PApplet {
 	}
 
 	private void drawJoints() {
+		strokeWeight(4);
+		stroke(0);
 		Collection<Joint> joints = game.getJoints();
 		for (Joint j : joints)
 			drawJoint(j);

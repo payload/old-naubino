@@ -5,14 +5,16 @@ public class Ball {
 	public Vektor position;
 	public Vektor speed;
 	public Vektor acceleration;
-	public double radius;
+	public double physicalRadius;
+	public double visibleRadius;
 	public double mass = 1;
 	public Color color; // TODO: should be in another class
 	private List<Joint> joints;
 
 	public Ball(Vektor position, double radius) {
 		this.position = position;
-		this.radius = radius;
+		this.physicalRadius = radius;
+		this.visibleRadius = radius-4;
 		speed = new Vektor();
 		acceleration = new Vektor();
 		color = Color.random();
@@ -27,7 +29,7 @@ public class Ball {
 
 	public boolean isHit(Vektor v) {
 		double distance = v.sub(position).getLength();
-		return (distance <= radius);
+		return (distance <= physicalRadius);
 	}
 
 	public Vektor distanceTo(Vektor v) {
@@ -94,10 +96,6 @@ public class Ball {
 
 	public void setY(double y) {
 		position.setY(y);
-	}
-
-	public double getR() {
-		return radius;
 	}
 
 	public List<Joint> getJoints() {
