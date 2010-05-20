@@ -7,7 +7,7 @@ public class Domino extends PApplet {
 
 	private static final long serialVersionUID = 7338935826674782250L;
 
-	private int frameRate = 70;
+	private int frameRate = 40;
 	private Game game = Game.instance();
 	private int resolutionX = game.width;
 	private int resolutionY = game.height;

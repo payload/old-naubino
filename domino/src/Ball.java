@@ -14,7 +14,7 @@ public class Ball {
 	public Ball(Vektor position, double radius) {
 		this.position = position;
 		this.physicalRadius = radius;
-		this.visibleRadius = radius-4;
+		this.visibleRadius = radius-2;
 		speed = new Vektor();
 		acceleration = new Vektor();
 		color = Color.random();

@@ -106,7 +106,7 @@ public class Game {
 	public void attachBalls(Collision c) {
 		Ball a = c.a;
 		Ball b = c.b;
-		if ((a == active || b == active)) {
+		if ((a == active || b == active) && c.overlap > 4) {
 			if (a.getJoints().size() > 0 && b.getJoints().size() > 0) {
 				if (a.equals(b)) {
 					replaceBall(a, b);
