@@ -171,8 +171,10 @@ public class Game {
 			//
 		case 3:
 			enablePhysics = !enablePhysics;
+			break;
 		case 4:
 			useGenerateTimer = !useGenerateTimer;
+			break;
 		}
 	}
 
