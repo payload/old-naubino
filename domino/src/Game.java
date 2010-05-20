@@ -9,8 +9,11 @@ public class Game {
 	private Vektor pointer;
 	private Physics physics;
 	public Ball active;
-	private boolean enablePhysics = true;
+	public boolean enablePhysics = true;
 	public boolean useGenerateTimer = false;
+
+	private int points = 0;
+	private int antipoints = 0;
 
 	/* game settings and magic numbers below here */
 
@@ -59,12 +62,29 @@ public class Game {
 	public void refresh() {
 		if (enablePhysics)
 			physics.physik();
+		antipoints = countingJoints();
+		if (antipoints > 30) {
+			restart();
+			useGenerateTimer = false;
+		}
 	}
 
 	public void restart() {
 		balls.clear();
 		joints.clear();
 
+	}
+
+	private int countingJoints() {
+		int count = 0;
+		double fieldRadius = fieldSize / 2;
+		for (Joint j : joints) {
+			double adistance = j.a.position.sub(getCenter()).getLength();
+			double bdistance = j.b.position.sub(getCenter()).getLength();
+			if (adistance < fieldRadius || bdistance < fieldRadius)
+				count++;
+		}
+		return count;
 	}
 
 	/* balls below here */
@@ -110,12 +130,12 @@ public class Game {
 			if (a.getJoints().size() > 0 && b.getJoints().size() > 0) {
 				if (a.equals(b)) {
 					replaceBall(a, b);
+					handleCycles();
 				}
 			} else {
 				joints.add(join(a, b));
 			}
 		}
-		handleCycles();
 	}
 
 	private void replaceBall(Ball a, Ball b) {
@@ -139,8 +159,10 @@ public class Game {
 	private void handleCycles() {
 		List<List<Ball>> cycles = CycleTest.cycleTest(balls);
 		for (List<Ball> cycle : cycles)
-			for (Ball b : cycle)
+			for (Ball b : cycle) {
 				removeBall(b);
+				incPoints();
+			}
 	}
 
 	private Ball collidingBall(Vektor v) {
@@ -227,5 +249,17 @@ public class Game {
 
 	public void setPointer(Vektor pointer) {
 		this.pointer = pointer;
+	}
+
+	public void incPoints() {
+		this.points++;
+	}
+
+	public int getPoints() {
+		return points;
+	}
+
+	public int getAntiPoints() {
+		return antipoints;
 	}
 }

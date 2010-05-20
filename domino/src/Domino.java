@@ -92,22 +92,61 @@ public class Domino extends PApplet {
 		strokeWeight(2);
 
 		/* spielfeld */
-		ellipse((float) center.getX(), (float) center.getY(), (float) game.getFieldSize(), (float) game.getFieldSize());
+		ellipse((float) center.getX(), (float) center.getY(), (float) game
+				.getFieldSize(), (float) game.getFieldSize());
 		// ellipse(center.getX(), center.getY(), 3, 3);
 		drawJoints();
 		drawBalls();
 		// drawPointer();
+		drawText();
+	}
+
+	private void drawText() {
+		textFont(myFont);
 
 		fill(0);
-		textFont(myFont);
-		if (game.useGenerateTimer)
-			text("Timer an", 10, 20);
-		else
-			text("Timer aus", 10, 20);
-		text(game.getNumberOfJoints(), 10, 40);
+		textAlign(RIGHT);
 		
+		text("Physik", 50, 20);
+		textAlign(LEFT);
+		if (game.enablePhysics) {
+			fill(0,200,0);
+			text(" an", 50, 20);
+		} else{
+			fill(200,0,0);
+			text(" aus", 50, 20);
+		}
+
+		fill(0);
+		textAlign(RIGHT);
+		
+		text("Timer", 50, 34);
+		textAlign(LEFT);
+		if (game.useGenerateTimer) {
+			fill(0,200,0);
+			text(" an", 50, 34);
+		} else{
+			fill(200,0,0);
+			text(" aus", 50, 34);
+		}
+
+		fill(0);
+		textAlign(RIGHT);
+		text("Points ", 50, 48);
+
+		textAlign(LEFT);
+		text(game.getPoints(), 50, 48);
+		
+		textAlign(RIGHT);
+		text("Field ", 50, 62);
+
+		textAlign(LEFT);
+		text(game.getAntiPoints(), 50, 62);
+
 		fill(180);
-		text("(q)=physik an/aus (w)=timer an/aus (enter)=paar erzeugen (space)=alles löschen", 5, game.height-5);
+		text(
+				"(q)=physik an/aus (w)=timer an/aus (enter)=paar erzeugen (space)=alles löschen",
+				5, game.height - 5);
 	}
 
 	private void drawPointer() {
@@ -118,7 +157,8 @@ public class Domino extends PApplet {
 	private void drawDirection(Ball b) {
 		stroke(lineColor);
 		strokeWeight(1);
-		line((float) b.position.getX(), (float) b.position.getY(), (float) b.position.getX() + (float) b.speed.getX(),
+		line((float) b.position.getX(), (float) b.position.getY(),
+				(float) b.position.getX() + (float) b.speed.getX(),
 				(float) b.position.getY() + (float) b.speed.getY());
 	}
 
@@ -139,7 +179,8 @@ public class Domino extends PApplet {
 			noStroke();
 		fill(b.color.r, b.color.g, b.color.b);
 
-		ellipse((float) b.getX(), (float) b.getY(), (float) b.visibleRadius * 2, (float) b.visibleRadius * 2);
+		ellipse((float) b.getX(), (float) b.getY(),
+				(float) b.visibleRadius * 2, (float) b.visibleRadius * 2);
 
 		if (enableDrawNumber) {
 			// text(b.ctNumber+" "+b.ctCheck, (float) b.getX()-4, (float)
@@ -157,7 +198,8 @@ public class Domino extends PApplet {
 
 	private void drawJoint(Joint j) {
 		// strokeWeight((float) (1 / (j.getStretch() * 0.005)));
-		line((float) j.a.getX(), (float) j.a.getY(), (float) j.b.getX(), (float) j.b.getY());
+		line((float) j.a.getX(), (float) j.a.getY(), (float) j.b.getX(),
+				(float) j.b.getY());
 	}
 
 	/*
