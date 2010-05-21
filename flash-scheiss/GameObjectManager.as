@@ -45,7 +45,7 @@
 			var color : int = rand() * 0xFFFFFFFF;
 			var sx : Number = rand() * 10;
 			var sy : Number = rand() * 10;
-			var flake : Flake = new Flake(x, y, sx, sy, color);
+			var flake : Ball = new Ball(new Vektor(x, y), 20);
 			objects.push(flake);
 		}
 
