@@ -1,5 +1,6 @@
 ﻿package 
 {
+
 	public class Game
 	{
 		var width : Number;
@@ -10,19 +11,7 @@
 		var joints : Array;
 		var pointer : Vektor;
 		var active : Ball;
-
-		private var ballsize:Number = 15;
-		private var refreshInterval:Number = 50;
-		private var spammer:Spammer;
-
-		//private Physics physics TODO Physics auskommentieren;
-		var enablePhysics:Boolean = true;
-		var useGenerateTimer:Boolean  = false;
-
-		private var points:Number = 0;
-		private var antipoints:Number = 0;
-
-	
+		
 		function initFields() {
 			width = 600;
 			height = 400;
@@ -31,45 +20,63 @@
 			balls = [];
 			joints = [];
 			pointer = center;
-			spammer   = new Spammer(this);
 		}
 		
 		function Game() {
 			initFields();
-			//createPair();
+			createPair();
 		}
 		
-		function createBall(v:Vektor) {
+		function createBall() {
 			var r = 20;
-			var b : Ball = new Ball(v, r);
+			var pos = center;
+			var b : Ball = new Ball(pos, r);
 			b.color = Color.random();
 			balls.push(b);
 		}
 		
 		// balls below here
 
-		protected function createPair(v:Vektor) {
-			var pair:Vektor = Vektor.polar(Math.random() * Math.PI * 2, Joint.defaultLength * 0.6);
-			var pos1:Vektor = v.add(pair);
-			var pos2:Vektor = v.sub(pair);
-			var ball2:Ball = createBall(pos2);
-			var ball1:Ball = createBall(pos1);
-			if (balls.size() % 4 == 0)
-				joints.add(join(ball1, ball2));
-		}
+	protected void createPair(Vektor v) {
+		Vektor pair = new Vektor(1, 0).mul(Joint.defaultLength * 0.6);
+		pair.setAngle(rand.nextDouble() * Math.PI * 2);
+		Vektor pos1 = v.add(pair);
+		Vektor pos2 = v.sub(pair);
+		Ball ball1 = createBall(pos1);
+		Ball ball2 = createBall(pos2);
+		 if (balls.size() % 4 == 0)
+		joints.add(join(ball1, ball2));
+	}
 
-		/* nur benutzen wenn zwei neue Baelle gejoint werden */
-		protected function join(a:Ball, b:Ball):Joint {
-			var joint:Joint  = new Joint(a, b);
-			a.addJoint(joint);
-			b.addJoint(joint);
-			return joint;
-		}
+	/* nur benutzen wenn zwei neue Baelle gejoint werden */
+	protected Joint join(Ball a, Ball b) {
+		Joint joint = new Joint(a, b);
+		a.addJoint(joint);
+		b.addJoint(joint);
+		return joint;
+	}
+	}
 	
 
-	/* game settings and magic numbers below here */
-
-
+	//private Physics physics;
+	//public Ball active;
+	//public boolean enablePhysics = true;
+	//public boolean useGenerateTimer = false;
+//
+	//private int points = 0;
+	//private int antipoints = 0;
+//
+	///* game settings and magic numbers below here */
+//
+	//private double fieldSize = 320;
+	//public int width = 600;
+	//public int height = 400;
+	//private float ballsize = 15;
+	//private int refreshInterval = 50;
+//
+	//private Random rand = new Random();
+	//private Spammer spammer = new Spammer(this);
+//
 	//private Timer calcTimer;
 	//private TimerTask calculate = new TimerTask() {
 		//public void run() {
@@ -85,59 +92,64 @@
 		//}
 	//};
 //
-//	private Game() {
+	//private Game() {
 		//balls = new CopyOnWriteArrayList<Ball>();
 		//joints = new CopyOnWriteArrayList<Joint>();
 		//pointer = getCenter();
 		//physics = new Physics(this);
-
+//
 		//calcTimer = new Timer();
 		//calcTimer.schedule(calculate, 0, refreshInterval);
-
+//
 		//generateTimer = new Timer();
 		//generateTimer.schedule(generatePairs, 1000, 3 * 1000);
 	//}
-	
-	/* game logic below here */
-	public function refresh() {
-		if (enablePhysics)
-			physics.physik();
-		antipoints = countingJoints();
-		if (antipoints > 30) {
-			restart();
-			useGenerateTimer = false;
-		}
-	}
+//
+	//public static Game instance() {
+		//return instance;
+	//}
+//
+	///* game logic below here */
+	//public void refresh() {
+		//if (enablePhysics)
+			//physics.physik();
+		//antipoints = countingJoints();
+		//if (antipoints > 30) {
+			//restart();
+			//useGenerateTimer = false;
+		//}
+	//}
+//
+	//public void restart() {
+		//balls.clear();
+		//joints.clear();
+//
+	//}
+//
+	//private int countingJoints() {
+		//int count = 0;
+		//double fieldRadius = fieldSize / 2;
+		//for (Joint j : joints) {
+			//double adistance = j.a.position.sub(getCenter()).getLength();
+			//double bdistance = j.b.position.sub(getCenter()).getLength();
+			//if (adistance < fieldRadius || bdistance < fieldRadius)
+				//count++;
+		//}
+		//return count;
+	//}
+//
+	///* balls below here */
+//
 
-	public function restart() {
-		balls.clear();
-		joints.clear();
-
-	}
-
-	private function countingJoints():Number {
-		var count:Number = 0;
-		var fieldRadius:Number = fieldSize / 2;
-		var forfunc = function (j:Joint, i, _){
-			adistance:Number = j.a.position.sub(getCenter()).getLength();
-			bdistance:Number = j.b.position.sub(getCenter()).getLength();
-			if (adistance < fieldRadius || bdistance < fieldRadius)
-				count++;
-		}
-		joints.forEach(forfunc);
-		return count;
-	}
-
-	/* balls below here */
-	protected function unJoin(a:Ball, b:Ball) {
-		var forfunc = function (j:Joint, i, _){
-			joints.remove(j);
-			a.removeJoint(j);
-			b.removeJoint(j);
-		}
-		a.jointsWith(b).forEach(forfunc);
-	}
-
+//
+	//protected void unJoin(Ball a, Ball b) {
+		//for (Joint j : a.jointsWith(b)) {
+			//joints.remove(j);
+			//a.removeJoint(j);
+			//b.removeJoint(j);
+		//}
+	//}
+//
 	//public void attachBalls(Collision c) {
 		//Ball a = c.a;
 		//Ball b = c.b;
@@ -279,6 +291,5 @@
 	//}
 //}
 
-	}
 	
 }
