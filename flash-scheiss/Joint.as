@@ -9,7 +9,7 @@
 		var strength : Number;
 		var friction : Number;
 		
-		const defaultLength : Number = 40;
+		static const defaultLength : Number = 40;
 		const defaultStrength : Number = 0.3;
 		const defaultFriction : Number = 0.3;
 		

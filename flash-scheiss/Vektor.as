@@ -1,4 +1,5 @@
 ﻿package {
+	import fl.controls.NumericStepper;
 	public class Vektor {
 		
 		private var _x:Number;
@@ -30,7 +31,7 @@
 		public function get angle():Number {
 			return Math.atan2(y, x);
 		}
-
+		
 		public function add(v:Vektor):Vektor {
 			return new Vektor(x + v.x, y + v.y);
 		}
