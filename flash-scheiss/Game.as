@@ -2,14 +2,13 @@
 {
 	public class Game
 	{
-		var width : Number;
-		var height : Number;
-		var center : Vektor;
-		var fieldSize : Number;
-		var balls : Array;
-		var joints : Array;
-		var pointer : Vektor;
-		var active : Ball;
+		public var width : Number;
+		public var height : Number;
+		public var fieldSize : Number;
+		public var balls : Array;
+		public var joints : Array;
+		public var pointer : Vektor;
+		public var active : Ball;
 
 		private var ballsize:Number = 15;
 		private var refreshInterval:Number = 50;
@@ -26,7 +25,6 @@
 		function initFields() {
 			width = 600;
 			height = 400;
-			center = new Vektor(width / 2, height / 2);
 			fieldSize = 160;
 			balls = [];
 			joints = [];
@@ -48,7 +46,7 @@
 		
 		// balls below here
 
-		protected function createPair(v:Vektor) {
+		public function createPair(v:Vektor) {
 			var pair:Vektor = Vektor.polar(Math.random() * Math.PI * 2, Joint.defaultLength * 0.6);
 			var pos1:Vektor = v.add(pair);
 			var pos2:Vektor = v.sub(pair);
@@ -59,7 +57,7 @@
 		}
 
 		/* nur benutzen wenn zwei neue Baelle gejoint werden */
-		protected function join(a:Ball, b:Ball):Joint {
+		public function join(a:Ball, b:Ball):Joint {
 			var joint:Joint  = new Joint(a, b);
 			a.addJoint(joint);
 			b.addJoint(joint);
@@ -116,11 +114,13 @@
 	}
 
 	private function countingJoints():Number {
+		var adistance:Number;
+		var bdistance:Number;
 		var count:Number = 0;
 		var fieldRadius:Number = fieldSize / 2;
-		var forfunc = function (j:Joint, i, _){
-			adistance:Number = j.a.position.sub(getCenter()).getLength();
-			bdistance:Number = j.b.position.sub(getCenter()).getLength();
+		var forfunc = function (j:Joint, i, _) {
+			adistance = j.a.position.sub(center).length;
+			bdistance = j.b.position.sub(center).length;
 			if (adistance < fieldRadius || bdistance < fieldRadius)
 				count++;
 		}
@@ -129,7 +129,7 @@
 	}
 
 	/* balls below here */
-	protected function unJoin(a:Ball, b:Ball) {
+	protected function unJoin(a:Ball, b:Ball):void {
 		var forfunc = function (j:Joint, i, _){
 			joints.remove(j);
 			a.removeJoint(j);
@@ -138,63 +138,71 @@
 		a.jointsWith(b).forEach(forfunc);
 	}
 
-	//public void attachBalls(Collision c) {
-		//Ball a = c.a;
-		//Ball b = c.b;
-		//if ((a == active || b == active) && c.overlap > 4) {
-			//if (a.getJoints().size() > 0 && b.getJoints().size() > 0) {
-				//if (a.equals(b)) {
-					//replaceBall(a, b);
-					//handleCycles();
-				//}
-			//} else {
-				//joints.add(join(a, b));
-			//}
-		//}
-	//}
-//
-	//private void replaceBall(Ball a, Ball b) {
-		//boolean shareJointBall = false;
-		//for (Ball jp : a.jointBalls()) {
-			//if (jp.isJointWith(b))
-				//shareJointBall = true;
-		//}
-		//if (!shareJointBall && !a.isJointWith(b)) {
-			//for (Ball jb : b.jointBalls()) {
-				//if (!a.isJointWith(jb)) {
-					//joints.add(join(a, jb));
-				//}
-			//}
-			//removeBall(b);
-			//active = null;
-		//}
-//
-	//}
-//
-	//private void handleCycles() {
-		//List<List<Ball>> cycles = CycleTest.cycleTest(balls);
-		//for (List<Ball> cycle : cycles)
-			//for (Ball b : cycle) {
-				//removeBall(b);
-				//incPoints();
-			//}
-	//}
-//
+	public function attachBalls(c:Collision):void {
+		var a:Ball = c.a;
+		var b:Ball = c.b;
+		if ((a == active || b == active) && c.overlap > 4) {
+			if (a.joints.size() > 0 && b.joints.size() > 0) {
+				if (a.match(b)) {
+					replaceBall(a, b);
+					handleCycles();
+				}
+			} else {
+				joints.add(join(a, b));
+			}
+		}
+	}
+
+	private function replaceBall(a:Ball, b:Ball) {
+		var shareJointBall:Boolean = false;
+		var forfunc = function (jp:Ball, i, _) {
+			if (jp.isJointWith(b))
+				shareJointBall = true;
+		}
+		a.jointBalls().forEach(forfunc);
+		
+		if (!shareJointBall && !a.isJointWith(b)) {
+			var forfunc2 = function (jb:Ball, i, _) {
+				if (!a.isJointWith(jb)) {
+					joints.add(join(a, jb));
+				}
+			}
+			b.jointBalls().forEach(forfunc2);
+			removeBall(b);
+			active = null;
+		}
+	}
+
+	private function handleCycles():void {
+		var b:Ball;
+		var cycle:Array;
+		var cycles:Array = CycleTest.cycleTest(balls);
+		for (var i = 0; i < cycles.length; i++) {
+			cycle = cycles[i];
+			for (var j = 0; j > cycle.length; j++) {
+				b = cycle[j];
+				removeBall(b);
+				incPoints();
+			}
+		}
+	}
+
 	//private Ball collidingBall(Vektor v) {
 		//for (Ball b : balls)
 			//if (b.isHit(v))
 				//return b; // TODO more than one ball is clicked?
 		//return null;
 	//}
-//
-	//protected void removeBall(Ball b) {
-		//joints.removeAll(b.getJoints());
-		//for (Ball jp : b.jointBalls()) {
-			//jp.getJoints().removeAll(jp.jointsWith(b));
-		//}
-		//balls.remove(b);
-	//}
-//
+
+	private function removeBall(b:Ball):void {
+		joints.removeAll(b.joints);
+		for (var i = 0; i < b.jointBalls.length; i++) {
+			var jp:Ball;
+			jp.joints.removeAll(jp.jointsWith(b));
+		}
+		balls.remove(b);
+	}
+
 	///* interaction below here */
 	//public void keyPressed(int key) {
 		//switch (key) {
@@ -253,23 +261,25 @@
 	//public int getNumberOfJoints() {
 		//return joints.size();
 	//}
-//
+
+	public function get center():Vektor {
+		return new Vektor(width / 2, height / 2);
+	}
+	
 	//protected Vektor getPointer() {
 		//return pointer;
 	//}
 //
-	//public Vektor getCenter() {
-		//return new Vektor(width / 2, height / 2);
-	//}
+
 //
 	//public void setPointer(Vektor pointer) {
 		//this.pointer = pointer;
 	//}
-//
-	//public void incPoints() {
-		//this.points++;
-	//}
-//
+
+	public function incPoints():void {
+		points++;
+	}
+
 	//public int getPoints() {
 		//return points;
 	//}

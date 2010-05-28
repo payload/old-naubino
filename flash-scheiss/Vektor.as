@@ -12,7 +12,7 @@
 			return _y;
 		}
 
-		public function length():Number {
+		public function get length():Number {
 			return Math.sqrt(x*x + y*y);
 		}
 
@@ -27,9 +27,8 @@
 			_y = y;
 		}
 
-		public function angle():Number {
+		public function get angle():Number {
 			return Math.atan2(y, x);
-
 		}
 
 		public function add(v:Vektor):Vektor {
@@ -44,6 +43,10 @@
 			var x = this.x * n;
 			var y = this.y * n;
 			return new Vektor(x, y);
+		}
+		
+		public function get norm() : Vektor {
+			return Vektor.polar(angle, 1);
 		}
 	}
 }

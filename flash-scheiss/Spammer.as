@@ -13,11 +13,11 @@ package
 			return Math.random() * Math.PI * 2;
 		}
 
-		public function randomPair() {
+		public function randomPair():void {
 			// TODO create pair just outside of visible frame
-			field_size:Number = game.getFieldSize();
-			v:Vektor = Vektor.polar(randomAngle(), (field_size));
-			v = game.getCenter().add(v);
+			var field_size:Number = game.fieldSize;
+			var v:Vektor = Vektor.polar(randomAngle(), (field_size));
+			v = game.center.add(v);
 			game.createPair(v);
 		}
 	}

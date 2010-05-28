@@ -7,7 +7,7 @@
 		public var physicalRadius : Number;
 		public var visibleRadius : Number;
 		public var mass : Number;
-		public var color : uint; // TODO: should be in another class
+		public var color : Color;
 		private var _joints : Array;
 
 		public function get joints() : Array {
@@ -25,8 +25,8 @@
 			this.mass = 1;
 			speed = new Vektor();
 			acceleration = new Vektor();
-			//color = Color.random();
-			color = 0xFF0000;
+			color = Color.random();
+			//color = 0xFF0000;
 			_joints = [];
 		}
 		
@@ -37,7 +37,7 @@
 		}
 
 		public function isHit(v:Vektor) : Boolean {
-			var distance = v.sub(position).length();
+			var distance = v.sub(position).length;
 			return distance <= physicalRadius;
 		}
 
@@ -89,7 +89,9 @@
 			return list;
 		}
 
-		// TODO equals -> color == color
+		public function match(o:Ball):Boolean {
+			return color == o.color;
+		}
 	}
 }
 	

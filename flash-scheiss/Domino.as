@@ -22,8 +22,8 @@
 			
 			resolutionX = game.width;
 			resolutionY = game.height;
-			lineColor = new Color(0, 0, 0);
-			backgroundColor = new Color(1, 1, 1);
+			lineColor = new Color(0, 0, 0, "black");
+			backgroundColor = new Color(1, 1, 1, "white");
 			//center = getCenter();
 			enableDrawDirection = false;
 			enableDrawNumber = true;
