@@ -18,20 +18,21 @@
 		
 		private function initFields() {
 			frameRate = 40;
-			game = Game.Instance();
+			//game = Game.Instance();
+			
 			resolutionX = game.width;
 			resolutionY = game.height;
 			lineColor = new Color(0, 0, 0);
 			backgroundColor = new Color(1, 1, 1);
-			center = getCenter();
+			//center = getCenter();
 			enableDrawDirection = false;
 			enableDrawNumber = true;
-			myFont = createFont("FFScala", 12);
+			//myFont = createFont("FFScala", 12);
 		}
 
-		private function getCenter() : Vektor {
-			return game.getCenter();
-		}
+		//private function getCenter() : Vektor {
+			//return game.getCenter();
+		//}
 
 		private function setup() {
 			/*

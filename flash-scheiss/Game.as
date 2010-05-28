@@ -15,7 +15,7 @@
 		private var refreshInterval:Number = 50;
 		private var spammer:Spammer;
 
-		//private Physics physics TODO Physics auskommentieren;
+		private var physics : Physics;
 		var enablePhysics:Boolean = true;
 		var useGenerateTimer:Boolean  = false;
 

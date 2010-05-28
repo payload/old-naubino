@@ -50,18 +50,22 @@ class Physics {
 	
 	function physik(){
 
-		for (b : Ball : game.balls) {
-			b.acceleration = new Vektor();
+		for (b : Ball in game.balls) {
+			var v : Vektor = b.acceleration;
 			indirectGravity(b);
 			friction(b);
 		}
+		
 		if (game.active != null)
 			moveActiveBall();
+			
 		for(int i = 0; i < 3; i++)
 			collision();
-		for (Joint j : game.joints)
+			
+		for (j: Joint in game.joints)
 			j.spring();
-		for (Ball b : game.balls)
+			
+		for (b : Ball in game.balls)
 			moveBall(b);
 	}
 }
