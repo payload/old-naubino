@@ -1,42 +1,50 @@
 ﻿package 
 {
-	import flash.display.*;
-	import flash.events.*;
 	import fl.motion.Color;
 	import flash.text.Font;
 	
-	public class Domino extends Sprite
+	public class Domino
 	{
 		private var frameRate : int;
 		private var game : Game;
 		private var resolutionX : int;
 		private var resolutionY : int;
-		private var lineColor : uint;
-		private var backgroundColor : uint;
+		private var lineColor : Color;
+		private var backgroundColor : Color;
+		private var center : Vektor;
 		private var enableDrawDirection : Boolean;
 		private var enableDrawNumber : Boolean;
 		private var myFont : Font;
 		
 		private function initFields() {
 			frameRate = 40;
-			game = new Game();
+			game = Game.Instance();
 			resolutionX = game.width;
 			resolutionY = game.height;
-			lineColor = 0x000000;
-			backgroundColor = 0xFFFFFF;
+			lineColor = new Color(0, 0, 0);
+			backgroundColor = new Color(1, 1, 1);
+			center = getCenter();
 			enableDrawDirection = false;
 			enableDrawNumber = true;
-			//myFont = createFont("FFScala", 12);
+			myFont = createFont("FFScala", 12);
 		}
 
-		public function setup() {
-			initFields();
-			stage.frameRate = frameRate;
-			addEventListener(Event.ENTER_FRAME, this.enterFrame);
+		private function getCenter() : Vektor {
+			return game.getCenter();
 		}
-		
-		function enterFrame(event:Event) {
-			draw();
+
+		private function setup() {
+			/*
+			size(resolutionX, resolutionY);
+			smooth();
+			background(backgroundColor);
+			frameRate(frameRate);
+			
+			stroke(255);
+			strokeWeight(2);
+			*/
+			initFields();
+			// TODO addEventListener
 		}
 
 		/* user control */
@@ -87,16 +95,21 @@
 		/* drawing */
 
 		private function draw() {
-			graphics.clear();
-			graphics.beginFill(backgroundColor);
-			graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
-			graphics.lineStyle(2, lineColor);
-			graphics.drawCircle(game.center.x, game.center.y, game.fieldSize);
-			graphics.endFill();
+			/*
+			noFill();
+			background(backgroundColor);
+			stroke(lineColor);
+			strokeWeight(2);
 
+			// spielfeld
+			ellipse((float) center.getX(), (float) center.getY(), (float) game
+					.getFieldSize(), (float) game.getFieldSize());
+			// ellipse(center.getX(), center.getY(), 3, 3);
 			drawJoints();
 			drawBalls();
+			// drawPointer();
 			drawText();
+			*/
 		}
 
 		private function drawText() {
@@ -173,30 +186,50 @@
 		}
 
 		private function drawBalls() {
-			game.balls.forEach(drawBall);
+			/*
+			Collection<Ball> balls = game.getBalls();
+			for (Ball b : balls) {
+				drawBall(b);
+				if (enableDrawDirection)
+					drawDirection(b);
+			}
+			*/
 		}
 
-		private function drawBall(b:Ball, i, _) {
-			graphics.lineStyle(lineColor);
+		private function drawBall(/*Ball b*/) {
+			/*
+			strokeWeight(2);
 			if (game.active == b)
-				graphics.lineStyle(2, 0);
-			graphics.beginFill(b.color);
-			graphics.drawCircle(b.position.x, b.position.y, b.visibleRadius);
-			graphics.endFill();
+				this.stroke(1);
+			else
+				noStroke();
+			fill(b.color.r, b.color.g, b.color.b);
+
+			ellipse((float) b.getX(), (float) b.getY(),
+					(float) b.visibleRadius * 2, (float) b.visibleRadius * 2);
+
+			if (enableDrawNumber) {
+				// text(b.ctNumber+" "+b.ctCheck, (float) b.getX()-4, (float)
+				// b.getY()+4);
+			}*/
 		}
 
 		private function drawJoints() {
-			graphics.lineStyle(4, lineColor);
-			game.joints.forEach(drawJoint);
+			/*
+			strokeWeight(4);
+			stroke(0);
+			Collection<Joint> joints = game.getJoints();
+			for (Joint j : joints)
+				drawJoint(j);
+			*/
 		}
 
-		private function drawJoint(j:Joint, i, _) {
-			var x1 = j.a.position.x;
-			var y1 = j.a.position.y;
-			var x2 = j.b.position.x;
-			var y2 = j.b.position.y;
-			graphics.moveTo(x1, y1);
-			graphics.lineTo(x2, y2);
+		private function drawJoint(/*Joint j*/) {
+			/*
+			// strokeWeight((float) (1 / (j.getStretch() * 0.005)));
+			line((float) j.a.getX(), (float) j.a.getY(), (float) j.b.getX(),
+					(float) j.b.getY());
+			*/
 		}
 	}
 }
