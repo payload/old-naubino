@@ -1,5 +1,6 @@
 ﻿package 
 {
+	import flash.display.JointStyle;
 	public class Game
 	{
 		public var width : Number;
@@ -34,7 +35,7 @@
 		}
 		
 		function testSituation() {
-			createPair(center.add(new Vektor(100,100)));
+			createPair(center.add(new Vektor(100, 100)));
 		}
 		
 		function Game() {
@@ -147,13 +148,13 @@
 		var a:Ball = c.a;
 		var b:Ball = c.b;
 		if ((a == active || b == active) && c.overlap > 4) {
-			if (a.joints.size() > 0 && b.joints.size() > 0) {
+			if (a.joints.length > 0 && b.joints.length > 0) {
 				if (a.match(b)) {
 					replaceBall(a, b);
 					handleCycles();
 				}
 			} else {
-				joints.add(join(a, b));
+				joints.push(join(a, b));
 			}
 		}
 	}
@@ -169,7 +170,7 @@
 		if (!shareJointBall && !a.isJointWith(b)) {
 			var forfunc2 = function (jb:Ball, i, _) {
 				if (!a.isJointWith(jb)) {
-					joints.add(join(a, jb));
+					joints.push(join(a, jb));
 				}
 			}
 			b.jointBalls().forEach(forfunc2);
@@ -201,13 +202,21 @@
 		return null;
 	}
 
-	private function removeBall(b:Ball):void {
-		joints.removeAll(b.joints);
-		for (var i = 0; i < b.jointBalls.length; i++) {
-			var jp:Ball;
-			jp.joints.removeAll(jp.jointsWith(b));
+	private function removeAll(a:Array, b:Array):void {
+		for (var i = 0; i < b.length; i++) {
+			var j:Joint = b[i];
+			a.splice(a.indexOf(j),1);
 		}
-		balls.remove(b);
+	}
+	
+	private function removeBall(b:Ball):void {
+		removeAll(joints, b.joints);
+		var jointballs = b.jointBalls();
+		for (var i = 0; i < jointballs.length; i++) {
+			var jp:Ball = jointballs[i];
+			removeAll(jp.joints, jp.jointsWith(b));
+		}
+		balls.splice(balls.indexOf(b), 1);
 	}
 
 	///* interaction below here */

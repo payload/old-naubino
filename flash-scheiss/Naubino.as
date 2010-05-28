@@ -37,6 +37,7 @@
 			addEventListener(MouseEvent.MOUSE_DOWN, mousePressed);
 			addEventListener(MouseEvent.MOUSE_UP, mouseReleased);
 			addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved);
+			addEventListener(MouseEvent.ROLL_OUT, mouseReleased);
 		}
 		
 		private function enterFrame(e:Event):void {
@@ -50,10 +51,11 @@
 			var v:Vektor = new Vektor(e.stageX, e.stageY);
 			game.pointer = v;
 
-			if (e.buttonDown)
+			if (!e.altKey)
 				game.pointerPressedLeft(v); //left
 			else
 				game.pointerPressedRight(v);//other than left :P
+			
 		}
 
 		private function mouseMoved(e:MouseEvent) {
@@ -62,11 +64,7 @@
 
 		private function mouseReleased(e:MouseEvent) {
 			var v:Vektor = new Vektor(e.stageX, e.stageY);
-			if (e.buttonDown)
 				game.pointerReleasedLeft(v);
-			else 
-				game.pointerReleasedRight(v);
-			
 		}
 
 		// TODO key bindings in an extra class
@@ -113,9 +111,14 @@
 		}
 
 		private function drawField():void {
+			var bgs:Sprite = new Sprite();
 			var fs:Sprite = new Sprite();
+			bgs.graphics.beginFill(colorToUInt(backgroundColor));
+			bgs.graphics.drawRect(0, 0, game.width, game.height);
+			bgs.graphics.endFill();
 			fs.graphics.lineStyle(3,colorToUInt(lineColor));
 			fs.graphics.drawCircle(game.center.x, game.center.y, game.fieldSize);
+			addChild(bgs);
 			addChild(fs);
 		}
 		

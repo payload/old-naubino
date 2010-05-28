@@ -58,11 +58,11 @@
 
 		public function isJointWith(b:Ball) : Boolean {
 			var result = false;
-			var func = function (j:Joint, i, _) {
+			for (var i = 0; i < joints.length; i++) {
+				var j:Joint = joints[i];
 				if (j.opposite(this) == b)
 					result = true;
-			};
-			joints.forEach(func);
+				}
 			return result;
 		}
 		
@@ -82,10 +82,10 @@
 
 		public function jointBalls() : Array {
 			var list = [];
-			var func = function (j:Joint, i, _) {
-				list.add(j.opposite(this));
+			for (var i = 0; i < joints.length; i++) {
+				var j:Joint = joints[i];
+				list.push(j.opposite(this));
 			}
-			joints.forEach(func);
 			return list;
 		}
 

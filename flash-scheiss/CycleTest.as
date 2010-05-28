@@ -24,7 +24,7 @@ package {
 		
 		public static function cycleTest(balls:Array):Array {
 			//return new CycleTest(balls).cycleTest();
-			return null;
+			return [];
 		}
 
 		/*
