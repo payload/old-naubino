@@ -2,13 +2,13 @@ import mx.data.encoders.Num;
 
 class Physics {
 
-	var game: Game;
+	var game : Game;
 	var friction:Number = 0.3;
 	var gravity:Number = 0.3;
 
-	public Physics(game : Game) {
-		//this.game = game;
-	}
+/*	public Physics(game : Game) {
+		this.game = game;
+	}*/
 
 	function indirectGravity(b : Ball) {
 		// Vektor v = new Vektor(b.position, getCenter(),
@@ -49,8 +49,8 @@ class Physics {
 	}
 	
 	function physik(){
-
-		for (b : Ball in game.balls) {
+		
+		for (var b : Ball in game.balls) {
 			var v : Vektor = b.acceleration;
 			indirectGravity(b);
 			friction(b);
@@ -58,14 +58,15 @@ class Physics {
 		
 		if (game.active != null)
 			moveActiveBall();
-			
-		for(int i = 0; i < 3; i++)
+		
+		var i : Number;
+		for (i = 0; i < 3; i++)
 			collision();
 			
-		for (j: Joint in game.joints)
+		for (var j: Joint in game.joints)
 			j.spring();
 			
-		for (b : Ball in game.balls)
+		for (var b : Ball in game.balls)
 			moveBall(b);
 	}
 }
