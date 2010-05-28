@@ -3,8 +3,8 @@ import mx.data.encoders.Num;
 class Physics {
 
 	var game : Game;
-	var friction:Number = 0.3;
-	var gravity:Number = 0.3;
+	const defaultFriction:Number = 0.3;
+	const defaultGravity:Number = 0.3;
 
 /*	public Physics(game : Game) {
 		this.game = game;
@@ -24,8 +24,8 @@ class Physics {
 		b.position = b.position.add(b.speed);
 	}
 
-	function friction(b : Ball){
-		b.accelerate(b.speed.mul(-friction));
+	function friction(b : Ball) {
+		b.accelerate(b.speed.mul(-defaultFriction));
 	}
 
 	function moveActiveBall(){
