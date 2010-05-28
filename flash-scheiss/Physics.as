@@ -8,9 +8,9 @@ package{
 		
 		var gravity:Number = defaultGravity;
 
-	/*	public Physics(game : Game) {
+		public function Physics(game : Game) {
 			this.game = game;
-		}*/
+		}
 
 		function indirectGravity(b : Ball) {
 			// Vektor v = new Vektor(b.position, getCenter(),
@@ -36,7 +36,7 @@ package{
 		}
 
 		function collision(){
-			if (game.balls.size() > 1) {
+			if (game.balls.length > 1) {
 				for (var i = 0; i < game.balls.length - 1; i++) {
 					for (var j = i + 1; j < game.balls.length; j++) {
 						var c:Collision = Collision.test(game.balls[i], game.balls[j]);

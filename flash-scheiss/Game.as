@@ -29,31 +29,36 @@
 			balls = [];
 			joints = [];
 			pointer = center;
-			spammer   = new Spammer(this);
+			spammer = new Spammer(this);
+			physics = new Physics(this);
+		}
+		
+		function testSituation() {
+			createPair(center.add(new Vektor(100,100)));
 		}
 		
 		function Game() {
 			initFields();
-			//createPair();
+			testSituation();
 		}
 		
-		function createBall(v:Vektor) {
+		function createBall(v:Vektor):Ball {
 			var r = 20;
 			var b : Ball = new Ball(v, r);
 			b.color = Color.random();
 			balls.push(b);
+			return b;
 		}
 		
 		// balls below here
 
-		public function createPair(v:Vektor) {
+		public function createPair(v:Vektor):void {
 			var pair:Vektor = Vektor.polar(Math.random() * Math.PI * 2, Joint.defaultLength * 0.6);
 			var pos1:Vektor = v.add(pair);
 			var pos2:Vektor = v.sub(pair);
 			var ball2:Ball = createBall(pos2);
 			var ball1:Ball = createBall(pos1);
-			if (balls.size() % 4 == 0)
-				joints.add(join(ball1, ball2));
+			joints.push(join(ball1, ball2));
 		}
 
 		/* nur benutzen wenn zwei neue Baelle gejoint werden */
@@ -187,12 +192,14 @@
 		}
 	}
 
-	//private Ball collidingBall(Vektor v) {
-		//for (Ball b : balls)
-			//if (b.isHit(v))
-				//return b; // TODO more than one ball is clicked?
-		//return null;
-	//}
+	private function collidingBall(v:Vektor):Ball  {
+		for (var i = 0; i < balls.length; i++) {
+			var b:Ball = balls[i];
+			if (b.isHit(v))
+				return b;
+		}
+		return null;
+	}
 
 	private function removeBall(b:Ball):void {
 		joints.removeAll(b.joints);
@@ -223,28 +230,28 @@
 		//}
 	//}
 //
-	//public void mouseMoved(Vektor v) {
-		//setPointer(v);
-	//}
-//
-	//public void mousePressedLeft(Vektor v) {
-		//Ball b = collidingBall(v);
-		//if (b != null) {
-			//active = b;
-		//}
-	//}
-//
-	//public void mousePressedRight(Vektor v) {
-		//createPair(v);
-	//}
-//
-	//public void mouseReleasedLeft(Vektor v) {
-		//active = null;
-	//}
-//
-	//public void mouseReleasedRight(Vektor v) {
-	//}
-//
+	public function pointerMoved(v:Vektor) {
+		pointer = v;
+	}
+
+	public function pointerPressedLeft(v:Vektor) {
+		var b:Ball = collidingBall(v);
+		if (b != null) {
+			active = b;
+		}
+	}
+
+	public function pointerPressedRight(v:Vektor) {
+		createPair(v);
+	}
+
+	public function pointerReleasedLeft(v:Vektor) {
+		active = null;
+	}
+
+	public function pointerReleasedRight(v:Vektor):void {
+	}
+
 	///* getter/setter below here */
 	//public List<Ball> getBalls() {
 		//return balls;

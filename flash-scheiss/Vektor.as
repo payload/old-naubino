@@ -48,5 +48,9 @@
 		public function get norm() : Vektor {
 			return Vektor.polar(angle, 1);
 		}
+		
+		public function toString():String {
+			return "[" + x +", " + y +"]";
+		}
 	}
 }

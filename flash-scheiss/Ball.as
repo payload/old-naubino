@@ -21,7 +21,7 @@
 		private function initFields(position:Vektor, radius:Number) {
 			this.position = position;
 			this.physicalRadius = radius;
-			this.visibleRadius = radius - 2;
+			this.visibleRadius = radius - 4;
 			this.mass = 1;
 			speed = new Vektor();
 			acceleration = new Vektor();
