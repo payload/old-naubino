@@ -1,3 +1,4 @@
+import mx.data.encoders.Num;
 
 class Physics {
 
@@ -9,7 +10,7 @@ class Physics {
 		//this.game = game;
 	}
 
-	function indirectGravity(b : Ball) : void {
+	function indirectGravity(b : Ball) {
 		// Vektor v = new Vektor(b.position, getCenter(),
 		// b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2);
 		difference:Vektor = game.getCenter().sub(b.position);
@@ -18,26 +19,26 @@ class Physics {
 		b.accelerate(difference);
 	}
 
-	function moveBall(Ball b) : void {
+	function moveBall(b : Ball){
 		b.speed = b.speed.add(b.acceleration);
 		b.position = b.position.add(b.speed);
 	}
 
-	function friction(b:Ball) : void {
+	function friction(b : Ball){
 		b.accelerate(b.speed.mul(-friction));
 	}
 
-	function moveActiveBall() : Void {
-		Vektor accel = game.getPointer().sub(game.active.position);
+	function moveActiveBall(){
+		accel : Vektor = game.getPointer().sub(game.active.position);
 		game.active.accelerate(accel.mul(0.2));
 	}
 
-	function collision() : void {
+	function collision(){
 		if (game.balls.size() > 1) {
-			for (int i = 0; i < game.balls.size() - 1; i++) {
-				for (int j = i + 1; j < game.balls.size(); j++) {
-
-					Collision c = Collision.test(game.balls.get(i), game.balls.get(j));
+			var balllist:Array = game.balls.length() - 1;
+			 for each (var i:Number in balllist){
+				for each (var j:Number in balllist) {
+					c:Collision = Collision.test(game.balls[i], game.balls[j]);
 					if (c != null) {
 						game.attachBalls(c);
 						c.collide();
@@ -47,9 +48,9 @@ class Physics {
 		}
 	}
 	
-	function physik() : void {
+	function physik(){
 
-		for (Ball b : game.balls) {
+		for (b : Ball : game.balls) {
 			b.acceleration = new Vektor();
 			indirectGravity(b);
 			friction(b);
