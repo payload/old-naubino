@@ -100,6 +100,7 @@
 			drawField();
 			drawJoints();
 			drawBalls();
+			drawMenu();
 		}
 		
 		private function drawCircle(x:Number, y:Number, r:Number) {
@@ -147,7 +148,7 @@
 			game.balls.forEach(drawBall);
 		}
 
-		private function drawBall(b:Ball, i, _):void {
+		private function drawBall(b:Ball, i=0, _=0):void {
 			var bs:Sprite = new Sprite();
 			
 			if (game.active == b) {
@@ -171,6 +172,12 @@
 			js.graphics.moveTo(j.a.position.x, j.a.position.y);
 			js.graphics.lineTo(j.b.position.x, j.b.position.y);
 			addChild(js);
+		}
+		
+		private function drawMenu() {
+			var menu:Menu = game.menu;
+			for (var i = 0; i < menu.buttons.length; i++)
+				drawBall(menu.buttons[i]);
 		}
 	}
 }

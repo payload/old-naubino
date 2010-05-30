@@ -10,7 +10,7 @@
 		public var balls : Array;
 		public var joints : Array;
 		public var pointer : Vektor;
-		public var active : Ball;
+		public var menu : Menu;
 
 		private var refreshInterval:Number = 50;
 		private var spammer:Spammer;
@@ -32,6 +32,7 @@
 			pointer = center;
 			spammer = new Spammer(this);
 			physics = new Physics(this);
+			menu = new Menu();
 		}
 		
 		function Game() {
@@ -106,9 +107,9 @@
 		}
 
 		public function attachBalls(c:Collision):void {
-			var a:Ball = c.a;
-			var b:Ball = c.b;
-			if ((a == active || b == active) && c.overlap > 4) {
+			var a:GameBall = c.a;
+			var b:GameBall = c.b;
+			if ((a.active || b.active) && c.overlap > 4) {
 				if (a.joints.length > 0 && b.joints.length > 0) {
 					if (a.match(b)) {
 						replaceBall(a, b);
@@ -136,7 +137,6 @@
 				}
 				b.jointBalls().forEach(forfunc2);
 				removeBall(b);
-				active = null;
 			}
 		}
 
@@ -206,9 +206,8 @@
 
 		public function pointerPressedLeft(v:Vektor) {
 			var b:Ball = collidingBall(v);
-			if (b != null) {
-				active = b;
-			}
+			if (b != null)
+				b.action();
 		}
 
 		public function pointerPressedRight(v:Vektor) {
@@ -216,7 +215,8 @@
 		}
 
 		public function pointerReleasedLeft(v:Vektor) {
-			active = null;
+			for (var i = 0; i < balls.length; i++)
+				balls[i].active = false;
 		}
 
 		public function pointerReleasedRight(v:Vektor):void {

@@ -94,6 +94,10 @@
 		public function match(o:Ball):Boolean {
 			return color == o.color;
 		}
+		
+		public function action():void {
+			
+		}
 	}
 }
 	
