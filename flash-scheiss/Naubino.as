@@ -32,22 +32,21 @@
 			enableDrawDirection = false;
 			enableDrawNumber = true;
 		}
+		
+		private function startTimer(delay:int, callback:Function):void {
+			var timer:Timer = new Timer(delay);
+			timer.addEventListener(TimerEvent.TIMER, function(e) { callback() } );
+			timer.start();
+		}
 
 		public function Naubino() {
 			initFields();
 			addEventListener(Event.ENTER_FRAME, function(e) { draw() } );
-			var timer:Timer = new Timer(50);
-			timer.addEventListener(TimerEvent.TIMER, function(e) { game.refresh() } );
-			timer.start();
+			startTimer(50, game.refresh);
 			addEventListener(MouseEvent.MOUSE_DOWN, mousePressed);
 			addEventListener(MouseEvent.MOUSE_UP, mouseReleased);
 			addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved);
 			addEventListener(MouseEvent.ROLL_OUT, mouseReleased);
-		}
-		
-		private function enterFrame(e:Event):void {
-			draw();
-			//game.refresh();
 		}
 
 		/* user control */
