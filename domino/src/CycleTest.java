@@ -40,7 +40,7 @@ class CycleTest {
 
 	private List<List<Ball>> cycleTest(Vertex v, Vertex pre) {
 		List<List<Ball>> l = new LinkedList<List<Ball>>();
-		
+
 		v.number = ctprogress;
 		ctprogress++;
 		v.check = 1;
@@ -48,7 +48,7 @@ class CycleTest {
 		List<Vertex> post = getVertices(v.ball.jointBalls());
 		if (pre != null)
 			post.remove(pre);
-		post.remove(v);
+		//post.remove(v);
 
 		for (Vertex w : post) {
 			if (w.number == 0)
@@ -57,7 +57,7 @@ class CycleTest {
 				l.add(cycleList(v, w));
 		}
 		v.check = 2;
-		
+
 		return l;
 	}
 
@@ -68,7 +68,7 @@ class CycleTest {
 				cycle.add(vertex.ball);
 		return cycle;
 	}
-	
+
 	private List<Vertex> getVertices(List<Ball> balls) {
 		List<Vertex> r = new ArrayList<Vertex>(balls.size());
 		for (Ball b : balls)
