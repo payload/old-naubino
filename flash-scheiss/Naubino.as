@@ -4,7 +4,9 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
 	import flash.text.Font;
+	import flash.utils.Timer;
 	
 	public class Naubino extends Sprite
 	{
@@ -33,7 +35,10 @@
 
 		public function Naubino() {
 			initFields();
-			addEventListener(Event.ENTER_FRAME, enterFrame);
+			addEventListener(Event.ENTER_FRAME, function(e) { draw() } );
+			var timer:Timer = new Timer(50);
+			timer.addEventListener(TimerEvent.TIMER, function(e) { game.refresh() } );
+			timer.start();
 			addEventListener(MouseEvent.MOUSE_DOWN, mousePressed);
 			addEventListener(MouseEvent.MOUSE_UP, mouseReleased);
 			addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved);
@@ -42,7 +47,7 @@
 		
 		private function enterFrame(e:Event):void {
 			draw();
-			game.refresh();
+			//game.refresh();
 		}
 
 		/* user control */
