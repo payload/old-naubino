@@ -178,6 +178,9 @@
 			var menu:Menu = game.menu;
 			for (var i = 0; i < menu.buttons.length; i++)
 				drawBall(menu.buttons[i]);
+				
+			for (var i = 0; i < menu.joints.length; i++)
+				drawJoint(menu.joints[i]);
 		}
 	}
 }
