@@ -10,6 +10,7 @@
 		public var color : Color;
 		private var _joints : Array;
 		public var attracted:Boolean;
+		public var attractedTo:Vektor;
 		
 		protected const defaultRadius = 15;
 
@@ -23,6 +24,7 @@
 		
 		private function initFields(position:Vektor, radius:Number) {
 			this.position = position;
+			this.attractedTo = position;
 			this.physicalRadius = radius;
 			this.visibleRadius = radius - 2;
 			this.mass = 1;

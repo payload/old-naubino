@@ -1,4 +1,4 @@
-package{
+﻿package{
 
 	class Physics {
 
@@ -14,7 +14,7 @@ package{
 
 		function indirectGravity(b : Ball) {
 			if(b.attracted){
-				var difference:Vektor = game.center.sub(b.position);
+				var difference:Vektor = b.attractedTo.sub(b.position);
 				difference = difference.mul(0.0001);
 				difference = difference.add(difference.norm.mul(gravity));
 				b.accelerate(difference);
