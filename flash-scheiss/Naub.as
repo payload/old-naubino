@@ -32,7 +32,7 @@
 			_joints = [];
 		}
 		
-				/* position and movement below here */
+		/* position and movement below here */
 		
 		public function accelerate(v:Vektor) {
 			acceleration = acceleration.add(v);

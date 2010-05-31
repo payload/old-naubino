@@ -32,6 +32,8 @@
 			spammer = new Spammer(this);
 			physics = new Physics(this);
 			menu = new Menu();
+			
+			utils.addAll(balls, menu.buttons);
 		}
 		
 		function Game() {
@@ -110,7 +112,7 @@
 			var b:Ball= c.b;
 			if ((a.active || b.active) && c.overlap > 4) {
 				if (a.joints.length > 0 && b.joints.length > 0) {
-					if (a.matches(b)) {
+					if ((a instanceof Ball) && (b instanceof Ball) && (a.matches(b))) {
 						replaceBall(a, b);
 						handleCycles();
 					}
@@ -153,11 +155,16 @@
 			}
 		}
 
-		private function collidingBall(v:Vektor):Ball  {
+		private function collidingBall(v:Vektor):Naub  {
 			for (var i = 0; i < balls.length; i++) {
-				var b:Ball = balls[i];
-				if (b.isHit(v))
-					return b;
+				var ball:Ball = balls[i];
+				if (ball.isHit(v))
+					return ball;
+			}
+			for (var i = 0; i < menu.buttons.length; i++) {
+				var button:Button = menu.buttons[i];
+				if (button.isHit(v))
+					return button;
 			}
 			return null;
 		}
@@ -186,7 +193,7 @@
 		}
 
 		public function pointerPressedLeft(v:Vektor) {
-			var b:Ball = collidingBall(v);
+			var b:Naub = collidingBall(v);
 			if (b != null)
 				b.action();
 		}

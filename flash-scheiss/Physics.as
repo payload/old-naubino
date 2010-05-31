@@ -13,12 +13,12 @@ package{
 		}
 
 		function indirectGravity(b : Ball) {
-			// Vektor v = new Vektor(b.position, getCenter(),
-			// b.distanceTo(getCenter()).getLength() * 0.0001 + 0.2);
-			var difference:Vektor = game.center.sub(b.position);
-			difference = difference.mul(0.0001);
-			difference = difference.add(difference.norm.mul(gravity));
-			b.accelerate(difference);
+			if(b.attracted){
+				var difference:Vektor = game.center.sub(b.position);
+				difference = difference.mul(0.0001);
+				difference = difference.add(difference.norm.mul(gravity));
+				b.accelerate(difference);
+			}
 		}
 
 		function moveBall(b : Ball){

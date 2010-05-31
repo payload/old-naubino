@@ -18,11 +18,6 @@
 			return new CycleTest(balls).cycleTest1();
 		}
 		
-		private function addAll(a:Array, b:Array):void {
-			for (var i = 0; i < b.length; i++)
-				a.push(b[i]);
-		}
-
 		private function cycleTest1():Array {
 			var cycles:Array = [];
 			ctprogress = 1;
@@ -30,7 +25,7 @@
 			for (var i = 0; i < vertices.keys.length;i++ ) {
 				v = vertices.values[i];
 				if (v.number == 0){
-					addAll(cycles, cycleTest2(v, null));				
+					utils.addAll(cycles, cycleTest2(v, null));				
 				}
 			}
 			return cycles;
@@ -52,7 +47,7 @@
 			for (var i = 0; i < post.length;i++){
 				var w:Vertex = post[i];
 				if (w.number == 0)
-					addAll(l,cycleTest2(w, v));
+					utils.addAll(l,cycleTest2(w, v));
 				if (w.check == 1)
 					l.push(cycleList(v, w));
 			}
