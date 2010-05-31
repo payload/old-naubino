@@ -6,10 +6,10 @@
 		
 		public override function action():void {
 			active = true;
-			trace(color.name);
 		}
 		public function Ball(pos:Vektor, r:Number=defaultRadius) {
 			super(pos, r);
+			attracted = true;
 		}
 		
 		
