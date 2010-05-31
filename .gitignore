@@ -6,3 +6,4 @@ system_catalog.xml
 .metadata*
 
 *.class
+\#*\#

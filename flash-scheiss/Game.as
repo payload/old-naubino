@@ -225,6 +225,12 @@
 			points++;
 		}
 
+		public function userAction(action:uint):void {
+			var foo = {};
+			foo.a = 5;
+			restart();
+		}
+
 	}
 	
 }

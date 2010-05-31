@@ -5,8 +5,11 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.events.KeyboardEvent;
 	import flash.text.Font;
 	import flash.utils.Timer;
+	import flash.utils.Dictionary;
+	import flash.system.System;
 	
 	public class Naubino extends Sprite
 	{
@@ -47,6 +50,7 @@
 			addEventListener(MouseEvent.MOUSE_UP, mouseReleased);
 			addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved);
 			addEventListener(MouseEvent.ROLL_OUT, mouseReleased);
+			addEventListener(KeyboardEvent.KEY_DOWN, keyPressed);
 		}
 
 		/* user control */
@@ -67,24 +71,37 @@
 		}
 
 		private function mouseReleased(e:MouseEvent) {
+			game.restart();
 			var v:Vektor = new Vektor(e.stageX, e.stageY);
 				game.pointerReleasedLeft(v);
 		}
 
-		// TODO key bindings in an extra class
-		private function keyPressed() {
-			/*if (keyCode == ESC)
-				exit();
-			if (keyCode == ENTER)
-				game.keyPressed(0);
-			if (keyCode == KeyEvent.VK_SPACE)
-				game.keyPressed(1);
-			if (keyCode == CONTROL)
-				game.keyPressed(2);
-			if (keyCode == KeyEvent.VK_Q)
-				game.keyPressed(3);
-			if (keyCode == KeyEvent.VK_W)
-				game.keyPressed(4);*/
+		private function keyPressed(e:KeyboardEvent) {
+			game.restart();
+			const key:Dictionary = new Dictionary();
+			const keys:Array = 
+				[['ESC', 27],
+				 ['Enter', 13],
+				 ['Space', 32],
+				 ['Ctrl', 17],
+				 ['Q', 81],
+				 ['W', 87]];
+			for (var i:uint = 0; i < keys.length; i++)
+				key[keys[i][0]] = keys[i][1];
+
+			var keyCode = e.keyCode;
+			if (keyCode == key['ESC'])
+				System.exit(0);
+			if (keyCode == key['Enter'])
+				game.userAction(0);
+			if (keyCode == key['Space'])
+				game.userAction(1);
+			if (keyCode == key['Ctrl'])
+				game.userAction(2);
+			if (keyCode == key['Q'])
+				game.userAction(3);
+			if (keyCode == key['W'])
+				game.userAction(4);
 		}
 
 		/* drawing */
