@@ -21,7 +21,6 @@
 
 		private var points:Number = 0;
 		private var antipoints:Number = 0;
-
 	
 		function initFields() {
 			width = 600;
@@ -107,11 +106,11 @@
 		}
 
 		public function attachBalls(c:Collision):void {
-			var a:GameBall = c.a;
-			var b:GameBall = c.b;
+			var a:Ball = c.a;
+			var b:Ball= c.b;
 			if ((a.active || b.active) && c.overlap > 4) {
 				if (a.joints.length > 0 && b.joints.length > 0) {
-					if (a.match(b)) {
+					if (a.matches(b)) {
 						replaceBall(a, b);
 						handleCycles();
 					}
@@ -127,7 +126,7 @@
 				if (jp.isJointWith(b))
 					shareJointBall = true;
 			}
-			a.jointBalls().forEach(forfunc);
+			a.jointNaubs().forEach(forfunc);
 			
 			if (!shareJointBall && !a.isJointWith(b)) {
 				var forfunc2 = function (jb:Ball, i, _) {
@@ -135,7 +134,7 @@
 						joints.push(join(a, jb));
 					}
 				}
-				b.jointBalls().forEach(forfunc2);
+				b.jointNaubs().forEach(forfunc2);
 				removeBall(b);
 			}
 		}
@@ -172,7 +171,7 @@
 		
 		private function removeBall(b:Ball):void {
 			removeAll(joints, b.joints);
-			var jointballs = b.jointBalls();
+			var jointballs = b.jointNaubs();
 			for (var i = 0; i < jointballs.length; i++) {
 				var jp:Ball = jointballs[i];
 				removeAll(jp.joints, jp.jointsWith(b));
@@ -181,25 +180,7 @@
 		}
 
 		///* interaction below here */
-		//public void keyPressed(int key) {
-			//switch (key) {
-			//case 0:
-				//spammer.randomPair();
-				//break;
-			//case 1:
-				//restart();
-				//break;
-			//case 2:
-				//
-			//case 3:
-				//enablePhysics = !enablePhysics;
-				//break;
-			//case 4:
-				//useGenerateTimer = !useGenerateTimer;
-				//break;
-			//}
-		//}
-	//
+
 		public function pointerMoved(v:Vektor) {
 			pointer = v;
 		}
@@ -224,6 +205,13 @@
 
 		public function get center():Vektor {
 			return new Vektor(width / 2, height / 2);
+		}
+		
+		public function get active():Ball {
+			for (var i = 0; i < balls.length; i++)
+				if (balls[i].active)
+					return balls[i];
+			return null;
 		}
 		
 		public function incPoints():void {

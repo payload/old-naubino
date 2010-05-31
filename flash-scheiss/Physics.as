@@ -30,7 +30,7 @@ package{
 			b.accelerate(b.speed.mul(-defaultFriction));
 		}
 
-		function moveActiveBall(){
+		function moveActiveBall() {
 			var accel : Vektor = game.pointer.sub(game.active.position);
 			game.active.accelerate(accel.mul(0.2));
 		}

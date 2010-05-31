@@ -44,7 +44,7 @@
 			v.check = 1;
 
 			var post:Array = [];
-			post = getVertices(v.ball.jointBalls());
+			post = getVertices(v.ball.jointNaubs());
 			
 			if (pre != null)
 				post.splice(post.indexOf(pre),1);
