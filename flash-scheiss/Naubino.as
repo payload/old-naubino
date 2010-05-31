@@ -19,7 +19,10 @@
 		private var center : Vektor;
 		private var enableDrawDirection : Boolean;
 		private var enableDrawNumber : Boolean;
-		private var myFont : Font;
+		private var myFont : Font; 
+		private var refreshTimer: Timer;
+		private var spamTimer: Timer;
+		
 		
 		private function initFields() {
 			frameRate = 40;
@@ -33,16 +36,18 @@
 			enableDrawNumber = true;
 		}
 		
-		private function startTimer(delay:int, callback:Function):void {
+		private function startTimer(delay:int, callback:Function):Timer {
 			var timer:Timer = new Timer(delay);
 			timer.addEventListener(TimerEvent.TIMER, function(e) { callback() } );
 			timer.start();
+			return timer;
 		}
 
 		public function Naubino() {
 			initFields();
 			addEventListener(Event.ENTER_FRAME, function(e) { draw() } );
 			startTimer(50, game.refresh);
+			startTimer(3500, game.spammer.randomPair);
 			addEventListener(MouseEvent.MOUSE_DOWN, mousePressed);
 			addEventListener(MouseEvent.MOUSE_UP, mouseReleased);
 			addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved);

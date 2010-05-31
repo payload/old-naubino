@@ -13,7 +13,7 @@
 		public var menu : Menu;
 
 		private var refreshInterval:Number = 50;
-		private var spammer:Spammer;
+		public var spammer:Spammer;
 
 		private var physics : Physics;
 		var enablePhysics:Boolean = true;
