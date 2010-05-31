@@ -166,7 +166,7 @@
 			game.joints.forEach(drawJoint);
 		}
 
-		private function drawJoint(j:Joint, i, _) {
+		private function drawJoint(j:Joint, i = 0, _ =0) {
 			var js:Sprite = new Sprite();
 			js.graphics.lineStyle(2, colorToUInt(lineColor));
 			js.graphics.moveTo(j.a.position.x, j.a.position.y);
@@ -176,6 +176,8 @@
 		
 		private function drawMenu() {
 			var menu:Menu = game.menu;
+			for (var i = 0; i < menu.joints.length; i++)
+				drawJoint(menu.joints[i]);
 			for (var i = 0; i < menu.buttons.length; i++)
 				drawBall(menu.buttons[i]);
 		}
