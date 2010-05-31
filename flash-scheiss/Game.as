@@ -1,6 +1,7 @@
 ﻿package 
 {
 	import flash.display.JointStyle;
+	import flash.utils.Timer;
 	public class Game
 	{
 		public var width : Number;
@@ -9,9 +10,8 @@
 		public var balls : Array;
 		public var joints : Array;
 		public var pointer : Vektor;
-		public var active : Ball;
+		public var menu : Menu;
 
-		private var ballsize:Number = 15;
 		private var refreshInterval:Number = 50;
 		private var spammer:Spammer;
 
@@ -32,20 +32,15 @@
 			pointer = center;
 			spammer = new Spammer(this);
 			physics = new Physics(this);
-		}
-		
-		function testSituation() {
-			createPair(center.add(new Vektor(100, 100)));
+			menu = new Menu();
 		}
 		
 		function Game() {
 			initFields();
-			testSituation();
 		}
 		
 		function createBall(v:Vektor):Ball {
-			var r = 20;
-			var b : Ball = new Ball(v, r);
+			var b : Ball = new Ball(v);
 			b.color = Color.random();
 			balls.push(b);
 			return b;
@@ -70,240 +65,170 @@
 			return joint;
 		}
 	
-
-	/* game settings and magic numbers below here */
-
-
-	//private Timer calcTimer;
-	//private TimerTask calculate = new TimerTask() {
-		//public void run() {
-			//refresh();
-		//}
-	//};
-//
-	//private Timer generateTimer;
-	//private TimerTask generatePairs = new TimerTask() {
-		//public void run() {
-			//if (useGenerateTimer)
-				//spammer.randomPair();
-		//}
-	//};
-//
-//	private Game() {
-		//balls = new CopyOnWriteArrayList<Ball>();
-		//joints = new CopyOnWriteArrayList<Joint>();
-		//pointer = getCenter();
-		//physics = new Physics(this);
-
-		//calcTimer = new Timer();
-		//calcTimer.schedule(calculate, 0, refreshInterval);
-
-		//generateTimer = new Timer();
-		//generateTimer.schedule(generatePairs, 1000, 3 * 1000);
-	//}
-	
-	/* game logic below here */
-	public function refresh() {
-		if (enablePhysics)
-			physics.physik();
-		antipoints = countingJoints();
-		if (antipoints > 30) {
-			restart();
-			useGenerateTimer = false;
-		}
-	}
-
-	public function restart() {
-		balls.clear();
-		joints.clear();
-
-	}
-
-	private function countingJoints():Number {
-		var adistance:Number;
-		var bdistance:Number;
-		var count:Number = 0;
-		var fieldRadius:Number = fieldSize / 2;
-		var forfunc = function (j:Joint, i, _) {
-			adistance = j.a.position.sub(center).length;
-			bdistance = j.b.position.sub(center).length;
-			if (adistance < fieldRadius || bdistance < fieldRadius)
-				count++;
-		}
-		joints.forEach(forfunc);
-		return count;
-	}
-
-	/* balls below here */
-	protected function unJoin(a:Ball, b:Ball):void {
-		var forfunc = function (j:Joint, i, _){
-			joints.remove(j);
-			a.removeJoint(j);
-			b.removeJoint(j);
-		}
-		a.jointsWith(b).forEach(forfunc);
-	}
-
-	public function attachBalls(c:Collision):void {
-		var a:Ball = c.a;
-		var b:Ball = c.b;
-		if ((a == active || b == active) && c.overlap > 4) {
-			if (a.joints.length > 0 && b.joints.length > 0) {
-				if (a.match(b)) {
-					replaceBall(a, b);
-					handleCycles();
-				}
-			} else {
-				joints.push(join(a, b));
+		/* game logic below here */
+		public function refresh() {
+			if (enablePhysics)
+				physics.physik();
+			antipoints = countingJoints();
+			if (antipoints > 30) {
+				restart();
+				useGenerateTimer = false;
 			}
 		}
-	}
 
-	private function replaceBall(a:Ball, b:Ball) {
-		var shareJointBall:Boolean = false;
-		var forfunc = function (jp:Ball, i, _) {
-			if (jp.isJointWith(b))
-				shareJointBall = true;
+		public function restart() {
+			balls.clear();
+			joints.clear();
 		}
-		a.jointBalls().forEach(forfunc);
-		
-		if (!shareJointBall && !a.isJointWith(b)) {
-			var forfunc2 = function (jb:Ball, i, _) {
-				if (!a.isJointWith(jb)) {
-					joints.push(join(a, jb));
+
+		private function countingJoints():Number {
+			var adistance:Number;
+			var bdistance:Number;
+			var count:Number = 0;
+			var fieldRadius:Number = fieldSize / 2;
+			var forfunc = function (j:Joint, i, _) {
+				adistance = j.a.position.sub(center).length;
+				bdistance = j.b.position.sub(center).length;
+				if (adistance < fieldRadius || bdistance < fieldRadius)
+					count++;
+			}
+			joints.forEach(forfunc);
+			return count;
+		}
+
+		/* balls below here */
+		protected function unJoin(a:Ball, b:Ball):void {
+			var forfunc = function (j:Joint, i, _){
+				joints.remove(j);
+				a.removeJoint(j);
+				b.removeJoint(j);
+			}
+			a.jointsWith(b).forEach(forfunc);
+		}
+
+		public function attachBalls(c:Collision):void {
+			var a:GameBall = c.a;
+			var b:GameBall = c.b;
+			if ((a.active || b.active) && c.overlap > 4) {
+				if (a.joints.length > 0 && b.joints.length > 0) {
+					if (a.match(b)) {
+						replaceBall(a, b);
+						handleCycles();
+					}
+				} else {
+					joints.push(join(a, b));
 				}
 			}
-			b.jointBalls().forEach(forfunc2);
-			removeBall(b);
-			active = null;
 		}
-	}
 
-	private function handleCycles():void {
-		var b:Ball;
-		var cycle:Array;
-		var cycles:Array = CycleTest.cycleTest(balls);
-		for (var i = 0; i < cycles.length; i++) {
-			cycle = cycles[i];
-			for (var j = 0; j > cycle.length; j++) {
-				b = cycle[j];
+		private function replaceBall(a:Ball, b:Ball) {
+			var shareJointBall:Boolean = false;
+			var forfunc = function (jp:Ball, i, _) {
+				if (jp.isJointWith(b))
+					shareJointBall = true;
+			}
+			a.jointBalls().forEach(forfunc);
+			
+			if (!shareJointBall && !a.isJointWith(b)) {
+				var forfunc2 = function (jb:Ball, i, _) {
+					if (!a.isJointWith(jb)) {
+						joints.push(join(a, jb));
+					}
+				}
+				b.jointBalls().forEach(forfunc2);
 				removeBall(b);
-				incPoints();
 			}
 		}
-	}
 
-	private function collidingBall(v:Vektor):Ball  {
-		for (var i = 0; i < balls.length; i++) {
-			var b:Ball = balls[i];
-			if (b.isHit(v))
-				return b;
+		private function handleCycles():void {
+			var b:Ball;
+			var cycle:Array;
+			var cycles:Array = CycleTest.cycleTest(balls);
+			for (var i = 0; i < cycles.length; i++) {
+				cycle = cycles[i];
+				for (var j = 0; j < cycle.length; j++) {
+					b = cycle[j];
+					removeBall(b);
+					incPoints();
+				}
+			}
 		}
-		return null;
-	}
 
-	private function removeAll(a:Array, b:Array):void {
-		for (var i = 0; i < b.length; i++) {
-			var j:Joint = b[i];
-			a.splice(a.indexOf(j),1);
+		private function collidingBall(v:Vektor):Ball  {
+			for (var i = 0; i < balls.length; i++) {
+				var b:Ball = balls[i];
+				if (b.isHit(v))
+					return b;
+			}
+			return null;
 		}
-	}
-	
-	private function removeBall(b:Ball):void {
-		removeAll(joints, b.joints);
-		var jointballs = b.jointBalls();
-		for (var i = 0; i < jointballs.length; i++) {
-			var jp:Ball = jointballs[i];
-			removeAll(jp.joints, jp.jointsWith(b));
-		}
-		balls.splice(balls.indexOf(b), 1);
-	}
 
-	///* interaction below here */
-	//public void keyPressed(int key) {
-		//switch (key) {
-		//case 0:
-			//spammer.randomPair();
-			//break;
-		//case 1:
-			//restart();
-			//break;
-		//case 2:
-			//
-		//case 3:
-			//enablePhysics = !enablePhysics;
-			//break;
-		//case 4:
-			//useGenerateTimer = !useGenerateTimer;
-			//break;
+		private function removeAll(a:Array, b:Array):void {
+			for (var i = 0; i < b.length; i++) {
+				var j:Joint = b[i];
+				a.splice(a.indexOf(j),1);
+			}
+		}
+		
+		private function removeBall(b:Ball):void {
+			removeAll(joints, b.joints);
+			var jointballs = b.jointBalls();
+			for (var i = 0; i < jointballs.length; i++) {
+				var jp:Ball = jointballs[i];
+				removeAll(jp.joints, jp.jointsWith(b));
+			}
+			balls.splice(balls.indexOf(b), 1);
+		}
+
+		///* interaction below here */
+		//public void keyPressed(int key) {
+			//switch (key) {
+			//case 0:
+				//spammer.randomPair();
+				//break;
+			//case 1:
+				//restart();
+				//break;
+			//case 2:
+				//
+			//case 3:
+				//enablePhysics = !enablePhysics;
+				//break;
+			//case 4:
+				//useGenerateTimer = !useGenerateTimer;
+				//break;
+			//}
 		//}
-	//}
-//
-	public function pointerMoved(v:Vektor) {
-		pointer = v;
-	}
-
-	public function pointerPressedLeft(v:Vektor) {
-		var b:Ball = collidingBall(v);
-		if (b != null) {
-			active = b;
+	//
+		public function pointerMoved(v:Vektor) {
+			pointer = v;
 		}
-	}
 
-	public function pointerPressedRight(v:Vektor) {
-		createPair(v);
-	}
+		public function pointerPressedLeft(v:Vektor) {
+			var b:Ball = collidingBall(v);
+			if (b != null)
+				b.action();
+		}
 
-	public function pointerReleasedLeft(v:Vektor) {
-		active = null;
-	}
+		public function pointerPressedRight(v:Vektor) {
+			createPair(v);
+		}
 
-	public function pointerReleasedRight(v:Vektor):void {
-	}
+		public function pointerReleasedLeft(v:Vektor) {
+			for (var i = 0; i < balls.length; i++)
+				balls[i].active = false;
+		}
 
-	///* getter/setter below here */
-	//public List<Ball> getBalls() {
-		//return balls;
-	//}
-//
-	//public List<Joint> getJoints() {
-		//return joints;
-	//}
-//
-	//public double getFieldSize() {
-		//return fieldSize;
-	//}
-//
-	//public int getNumberOfJoints() {
-		//return joints.size();
-	//}
+		public function pointerReleasedRight(v:Vektor):void {
+		}
 
-	public function get center():Vektor {
-		return new Vektor(width / 2, height / 2);
-	}
-	
-	//protected Vektor getPointer() {
-		//return pointer;
-	//}
-//
-
-//
-	//public void setPointer(Vektor pointer) {
-		//this.pointer = pointer;
-	//}
-
-	public function incPoints():void {
-		points++;
-	}
-
-	//public int getPoints() {
-		//return points;
-	//}
-//
-	//public int getAntiPoints() {
-		//return antipoints;
-	//}
-//}
+		public function get center():Vektor {
+			return new Vektor(width / 2, height / 2);
+		}
+		
+		public function incPoints():void {
+			points++;
+		}
 
 	}
 	

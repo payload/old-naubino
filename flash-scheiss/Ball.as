@@ -9,19 +9,21 @@
 		public var mass : Number;
 		public var color : Color;
 		private var _joints : Array;
+		
+		private const defaultRadius = 15;
 
 		public function get joints() : Array {
 			return _joints;
 		}
 		
-		public function Ball(position:Vektor, radius:Number) {
+		public function Ball(position:Vektor, radius:Number = defaultRadius) {
 			initFields(position, radius);
 		}
 		
 		private function initFields(position:Vektor, radius:Number) {
 			this.position = position;
 			this.physicalRadius = radius;
-			this.visibleRadius = radius - 4;
+			this.visibleRadius = radius - 2;
 			this.mass = 1;
 			speed = new Vektor();
 			acceleration = new Vektor();
@@ -91,6 +93,10 @@
 
 		public function match(o:Ball):Boolean {
 			return color == o.color;
+		}
+		
+		public function action():void {
+			
 		}
 	}
 }

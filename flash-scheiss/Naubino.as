@@ -4,7 +4,9 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
 	import flash.text.Font;
+	import flash.utils.Timer;
 	
 	public class Naubino extends Sprite
 	{
@@ -30,19 +32,21 @@
 			enableDrawDirection = false;
 			enableDrawNumber = true;
 		}
+		
+		private function startTimer(delay:int, callback:Function):void {
+			var timer:Timer = new Timer(delay);
+			timer.addEventListener(TimerEvent.TIMER, function(e) { callback() } );
+			timer.start();
+		}
 
 		public function Naubino() {
 			initFields();
-			addEventListener(Event.ENTER_FRAME, enterFrame);
+			addEventListener(Event.ENTER_FRAME, function(e) { draw() } );
+			startTimer(50, game.refresh);
 			addEventListener(MouseEvent.MOUSE_DOWN, mousePressed);
 			addEventListener(MouseEvent.MOUSE_UP, mouseReleased);
 			addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved);
 			addEventListener(MouseEvent.ROLL_OUT, mouseReleased);
-		}
-		
-		private function enterFrame(e:Event):void {
-			draw();
-			game.refresh();
 		}
 
 		/* user control */
@@ -96,6 +100,7 @@
 			drawField();
 			drawJoints();
 			drawBalls();
+			drawMenu();
 		}
 		
 		private function drawCircle(x:Number, y:Number, r:Number) {
@@ -143,7 +148,7 @@
 			game.balls.forEach(drawBall);
 		}
 
-		private function drawBall(b:Ball, i, _):void {
+		private function drawBall(b:Ball, i=0, _=0):void {
 			var bs:Sprite = new Sprite();
 			
 			if (game.active == b) {
@@ -167,6 +172,12 @@
 			js.graphics.moveTo(j.a.position.x, j.a.position.y);
 			js.graphics.lineTo(j.b.position.x, j.b.position.y);
 			addChild(js);
+		}
+		
+		private function drawMenu() {
+			var menu:Menu = game.menu;
+			for (var i = 0; i < menu.buttons.length; i++)
+				drawBall(menu.buttons[i]);
 		}
 	}
 }

@@ -1,11 +1,9 @@
-package {
+﻿package {
 	public class CycleTest {
 
 		
 		private var ctprogress:int;
 		private var vertices:Map; //hashmap<Ball, Vertx> hack
-
-		
 
 		public function CycleTest(balls:Array):void {
 			vertices = new Map();
@@ -29,11 +27,11 @@ package {
 			var cycles:Array = [];
 			ctprogress = 1;
 			var v:Vertex;
-			trace("cycleTest1");
 			for (var i = 0; i < vertices.keys.length;i++ ) {
 				v = vertices.values[i];
-				if (v.number == 0)
-					addAll(cycles, cycleTest2(v, null));
+				if (v.number == 0){
+					addAll(cycles, cycleTest2(v, null));				
+				}
 			}
 			return cycles;
 		}
@@ -50,7 +48,6 @@ package {
 			
 			if (pre != null)
 				post.splice(post.indexOf(pre),1);
-			post.splice(post.indexOf(v),1);
 
 			for (var i = 0; i < post.length;i++){
 				var w:Vertex = post[i];
@@ -60,17 +57,17 @@ package {
 					l.push(cycleList(v, w));
 			}
 			v.check = 2;
-			trace(l);
 			return l;
 		}
 
 		private function cycleList(v:Vertex, w:Vertex):Array {
 			var cycle:Array = [];
 			var vertex:Vertex;
-			for each (var i in vertices){
-				vertex = vertices[i];
-				if (vertex.number >= w.number && vertex.check == 1)
+			for (var i = 0; i < vertices.values.length; i++) {
+				vertex = vertices.values[i];
+				if (vertex.number >= w.number && vertex.check == 1) {
 					cycle.push(vertex.ball);
+				}
 			}
 			return cycle;
 		}
