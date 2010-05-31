@@ -16,13 +16,13 @@
 		public var spammer:Spammer;
 
 		private var physics : Physics;
-		var enablePhysics:Boolean = true;
-		var useGenerateTimer:Boolean  = false;
+		public var enablePhysics:Boolean = true;
+		public var useGenerateTimer:Boolean  = false;
 
 		private var points:Number = 0;
 		private var antipoints:Number = 0;
 	
-		function initFields() {
+		private function initFields():void {
 			//width = 600;
 			//height = 400;
 			fieldSize = 160;
@@ -36,11 +36,11 @@
 			utils.addAll(balls, menu.buttons);
 		}
 		
-		function Game() {
+		public function Game() {
 			initFields();
 		}
 		
-		function createBall(v:Vektor):Ball {
+		public function createBall(v:Vektor):Ball {
 			var b : Ball = new Ball(v);
 			b.attractedTo = center;
 			balls.push(b);
@@ -59,7 +59,7 @@
 		}
 
 		/* nur benutzen wenn zwei neue Baelle gejoint werden */
-		public function join(a:Ball, b:Ball):Joint {
+		public function join(a:Naub, b:Naub):Joint {
 			var joint:Joint  = new Joint(a, b);
 			a.addJoint(joint);
 			b.addJoint(joint);
@@ -67,7 +67,7 @@
 		}
 	
 		/* game logic below here */
-		public function refresh() {
+		public function refresh():void {
 			if (enablePhysics)
 				physics.physik();
 			antipoints = countingJoints();
@@ -77,9 +77,9 @@
 			}
 		}
 
-		public function restart() {
-			balls.clear();
-			joints.clear();
+		public function restart():void {
+			balls.splice(0, balls.length);
+			joints.splice(0, joints.length);
 		}
 
 		private function countingJoints():Number {
@@ -87,24 +87,25 @@
 			var bdistance:Number;
 			var count:Number = 0;
 			var fieldRadius:Number = fieldSize / 2;
-			var forfunc = function (j:Joint, i, _) {
+			for (var i:uint = 0; i < joints.length; i++) {
+				var j:Joint = joints[i];
 				adistance = j.a.position.sub(center).length;
 				bdistance = j.b.position.sub(center).length;
 				if (adistance < fieldRadius || bdistance < fieldRadius)
 					count++;
 			}
-			joints.forEach(forfunc);
 			return count;
 		}
 
 		/* balls below here */
 		protected function unJoin(a:Ball, b:Ball):void {
-			var forfunc = function (j:Joint, i, _){
+			var joints:Array = a.jointsWith(b);
+			for(var i:uint = 0; i < joints.length; i++) {
+				var j:Joint = joints[i];
 				joints.remove(j);
 				a.removeJoint(j);
 				b.removeJoint(j);
 			}
-			a.jointsWith(b).forEach(forfunc);
 		}
 
 		public function attachBalls(c:Collision):void {
@@ -112,7 +113,7 @@
 			var b:Ball= c.b;
 			if ((a.active || b.active) && c.overlap > 4) {
 				if (a.joints.length > 0 && b.joints.length > 0) {
-					if ((a instanceof Ball) && (b instanceof Ball) && (a.matches(b))) {
+					if ((a is Ball) && (b is Ball) && (a.matches(b))) {
 						replaceBall(a, b);
 						handleCycles();
 					}
@@ -122,21 +123,23 @@
 			}
 		}
 
-		private function replaceBall(a:Ball, b:Ball) {
+		private function replaceBall(a:Ball, b:Ball):void {
 			var shareJointBall:Boolean = false;
-			var forfunc = function (jp:Ball, i, _) {
-				if (jp.isJointWith(b))
+			var naubs:Array = a.jointNaubs();
+			var i:uint;
+			var naub:Naub = naub[i];
+			for (i = 0; i < naubs.length; i++) {
+				if (naub.isJointWith(b))
 					shareJointBall = true;
 			}
-			a.jointNaubs().forEach(forfunc);
 			
 			if (!shareJointBall && !a.isJointWith(b)) {
-				var forfunc2 = function (jb:Ball, i, _) {
-					if (!a.isJointWith(jb)) {
-						joints.push(join(a, jb));
+				naubs = b.jointNaubs();
+				for (i = 0; i < naubs.length; i++) {
+					if (!a.isJointWith(naub)) {
+						joints.push(join(a, naub));
 					}
 				}
-				b.jointNaubs().forEach(forfunc2);
 				removeBall(b);
 			}
 		}
@@ -145,9 +148,9 @@
 			var b:Ball;
 			var cycle:Array;
 			var cycles:Array = CycleTest.cycleTest(balls);
-			for (var i = 0; i < cycles.length; i++) {
+			for (var i:uint = 0; i < cycles.length; i++) {
 				cycle = cycles[i];
-				for (var j = 0; j < cycle.length; j++) {
+				for (var j:uint = 0; j < cycle.length; j++) {
 					b = cycle[j];
 					removeBall(b);
 					incPoints();
@@ -156,12 +159,13 @@
 		}
 
 		private function collidingBall(v:Vektor):Naub  {
-			for (var i = 0; i < balls.length; i++) {
+			var i:uint;
+			for (i = 0; i < balls.length; i++) {
 				var ball:Ball = balls[i];
 				if (ball.isHit(v))
 					return ball;
 			}
-			for (var i = 0; i < menu.buttons.length; i++) {
+			for (i = 0; i < menu.buttons.length; i++) {
 				var button:Button = menu.buttons[i];
 				if (button.isHit(v))
 					return button;
@@ -170,7 +174,7 @@
 		}
 
 		private function removeAll(a:Array, b:Array):void {
-			for (var i = 0; i < b.length; i++) {
+			for (var i:uint = 0; i < b.length; i++) {
 				var j:Joint = b[i];
 				a.splice(a.indexOf(j),1);
 			}
@@ -178,8 +182,8 @@
 		
 		private function removeBall(b:Ball):void {
 			removeAll(joints, b.joints);
-			var jointballs = b.jointNaubs();
-			for (var i = 0; i < jointballs.length; i++) {
+			var jointballs:Array = b.jointNaubs();
+			for (var i:uint = 0; i < jointballs.length; i++) {
 				var jp:Ball = jointballs[i];
 				removeAll(jp.joints, jp.jointsWith(b));
 			}
@@ -188,22 +192,22 @@
 
 		/* interaction below here */
 
-		public function pointerMoved(v:Vektor) {
+		public function pointerMoved(v:Vektor):void {
 			pointer = v;
 		}
 
-		public function pointerPressedLeft(v:Vektor) {
+		public function pointerPressedLeft(v:Vektor):void {
 			var b:Naub = collidingBall(v);
 			if (b != null)
 				b.action();
 		}
 
-		public function pointerPressedRight(v:Vektor) {
+		public function pointerPressedRight(v:Vektor):void {
 			createPair(v);
 		}
 
-		public function pointerReleasedLeft(v:Vektor) {
-			for (var i = 0; i < balls.length; i++)
+		public function pointerReleasedLeft(v:Vektor):void {
+			for (var i:uint = 0; i < balls.length; i++)
 				balls[i].active = false;
 		}
 
@@ -215,7 +219,7 @@
 		}
 		
 		public function get active():Ball {
-			for (var i = 0; i < balls.length; i++)
+			for (var i:uint = 0; i < balls.length; i++)
 				if (balls[i].active)
 					return balls[i];
 			return null;
@@ -226,7 +230,7 @@
 		}
 
 		public function userAction(action:uint):void {
-			var foo = {};
+			var foo:Object = {};
 			foo.a = 5;
 			restart();
 		}

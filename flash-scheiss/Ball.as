@@ -2,7 +2,7 @@
 {
 	public class Ball extends Naub
 	{
-		var active:Boolean = false;
+		public var active:Boolean = false;
 		
 		public override function action():void {
 			active = true;
@@ -11,9 +11,5 @@
 			super(pos, r);
 			attracted = true;
 		}
-		
-		
-		
 	}
-	
 }

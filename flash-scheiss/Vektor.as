@@ -17,8 +17,8 @@
 		}
 
 		public static function polar(a:Number, l:Number) : Vektor {
-			var x = Math.cos(a) * l;
-			var y = Math.sin(a) * l;
+			var x:Number = Math.cos(a) * l;
+			var y:Number = Math.sin(a) * l;
 			return new Vektor(x, y);
 		}
 		
@@ -40,8 +40,8 @@
 		}
 
 		public function mul(n:Number):Vektor {
-			var x = this.x * n;
-			var y = this.y * n;
+			var x:Number = this.x * n;
+			var y:Number = this.y * n;
 			return new Vektor(x, y);
 		}
 		

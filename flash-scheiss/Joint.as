@@ -19,7 +19,7 @@ package{
 			friction = 0.1;
 		}
 
-		public function spring() {
+		public function spring():void {
 			var springVector:Vektor = a.position.sub(b.position);
 			var force:Vektor = new Vektor();
 			var r:Number = springVector.length;
@@ -32,7 +32,7 @@ package{
 			b.accelerate(force.mul(-1));
 		}
 		
-		function opposite(b:Naub):Naub {
+		public function opposite(b:Naub):Naub {
 			if (a == b)
 				return this.b;
 			else
@@ -55,7 +55,7 @@ package{
 			return _strength;
 		}
 
-		function equals(o:Joint):Boolean {
+		public function equals(o:Joint):Boolean {
 			if(this.a == o.a && this.b == o.b) return true;
 			if(this.a == o.b && this.b == o.a) return true;
 			return false;

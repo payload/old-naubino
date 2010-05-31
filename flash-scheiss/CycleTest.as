@@ -7,7 +7,7 @@
 
 		public function CycleTest(balls:Array):void {
 			vertices = new Map();
-			for (var i = 0; i < balls.length; i++) {
+			for (var i:uint = 0; i < balls.length; i++) {
 				var b:Ball = balls[i];
 				vertices.put(b,new Vertex(b));
 			}
@@ -22,7 +22,7 @@
 			var cycles:Array = [];
 			ctprogress = 1;
 			var v:Vertex;
-			for (var i = 0; i < vertices.keys.length;i++ ) {
+			for (var i:uint = 0; i < vertices.keys.length;i++ ) {
 				v = vertices.values[i];
 				if (v.number == 0){
 					utils.addAll(cycles, cycleTest2(v, null));				
@@ -44,7 +44,7 @@
 			if (pre != null)
 				post.splice(post.indexOf(pre),1);
 
-			for (var i = 0; i < post.length;i++){
+			for (var i:uint = 0; i < post.length;i++){
 				var w:Vertex = post[i];
 				if (w.number == 0)
 					utils.addAll(l,cycleTest2(w, v));
@@ -58,7 +58,7 @@
 		private function cycleList(v:Vertex, w:Vertex):Array {
 			var cycle:Array = [];
 			var vertex:Vertex;
-			for (var i = 0; i < vertices.values.length; i++) {
+			for (var i:uint = 0; i < vertices.values.length; i++) {
 				vertex = vertices.values[i];
 				if (vertex.number >= w.number && vertex.check == 1) {
 					cycle.push(vertex.ball);
@@ -70,7 +70,7 @@
 		private function getVertices(balls:Array):Array {
 			var r:Array = [];
 			var b:Ball ;
-			for (var i = 0; i < balls.length; i++){
+			for (var i:uint = 0; i < balls.length; i++){
 				b = balls[i];
 				r.push(vertices.take(b));
 			}

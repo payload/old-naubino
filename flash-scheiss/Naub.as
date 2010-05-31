@@ -12,7 +12,7 @@
 		public var attracted:Boolean;
 		public var attractedTo:Vektor;
 		
-		protected const defaultRadius = 15;
+		protected const defaultRadius:Number = 15;
 
 		public function get joints() : Array {
 			return _joints;
@@ -22,7 +22,7 @@
 			initFields(position, radius);
 		}
 		
-		private function initFields(position:Vektor, radius:Number) {
+		private function initFields(position:Vektor, radius:Number):void {
 			this.position = position;
 			this.attractedTo = position;
 			this.physicalRadius = radius;
@@ -36,12 +36,12 @@
 		
 		/* position and movement below here */
 		
-		public function accelerate(v:Vektor) {
+		public function accelerate(v:Vektor):void {
 			acceleration = acceleration.add(v);
 		}
 
 		public function isHit(v:Vektor) : Boolean {
-			var distance = v.sub(position).length;
+			var distance:Number = v.sub(position).length;
 			return distance <= physicalRadius;
 		}
 
@@ -51,18 +51,18 @@
 		
 		/* joint stuff below here */
 
-		public function addJoint(joint:Joint) {
+		public function addJoint(joint:Joint):void {
 			joints.push(joint);
 		}
 
-		public function removeJoint(j:Joint) {
-			var i = joints.indexOf(j);
+		public function removeJoint(j:Joint):void {
+			var i:int = joints.indexOf(j);
 			joints.splice(i, 1);
 		}
 
 		public function isJointWith(b:Naub) : Boolean {
-			var result = false;
-			for (var i = 0; i < joints.length; i++) {
+			var result:Boolean = false;
+			for (var i:uint = 0; i < joints.length; i++) {
 				var j:Joint = joints[i];
 				if (j.opposite(this) == b)
 					result = true;
@@ -72,21 +72,21 @@
 		
 		public function jointsWith(b:Naub) : Array {
 			var withB : Array = [];
-			var func = function (j:Joint, i, _) {
+			for(var i:uint = 0; i < joints.length; i++) {
+				var j:Joint = joints[i];
 				if (j.a == b || j.b == b)
 					withB.push(j);
 			};
-			joints.forEach(func);
 			return withB;
 		}
 
-		public function resetJoints() {
+		public function resetJoints():void {
 			joints.splice(0, joints.length);
 		}
 
 		public function jointNaubs() : Array {
-			var list = [];
-			for (var i = 0; i < joints.length; i++) {
+			var list:Array = [];
+			for (var i:uint = 0; i < joints.length; i++) {
 				var j:Joint = joints[i];
 				list.push(j.opposite(this));
 			}

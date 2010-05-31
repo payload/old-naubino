@@ -7,7 +7,7 @@
 		public function Button(position:Vektor, action:Function) {
 			super(position);
 			_action = action;
-			attracted =  0;
+			attracted = false;
 		}
 		
 		public override function action():void {

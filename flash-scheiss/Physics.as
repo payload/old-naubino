@@ -1,18 +1,18 @@
 ﻿package{
 
-	class Physics {
+	public class Physics {
 
-		var game : Game;
-		const defaultFriction:Number = 0.3;
-		const defaultGravity:Number = 0.3;
+		private var game : Game;
+		private const defaultFriction:Number = 0.3;
+		private const defaultGravity:Number = 0.3;
 		
-		var gravity:Number = defaultGravity;
+		public var gravity:Number = defaultGravity;
 
 		public function Physics(game : Game) {
 			this.game = game;
 		}
 
-		function indirectGravity(b : Ball) {
+		private function indirectGravity(b : Ball):void {
 			if(b.attracted){
 				var difference:Vektor = b.attractedTo.sub(b.position);
 				difference = difference.mul(0.0001);
@@ -21,24 +21,24 @@
 			}
 		}
 
-		function moveBall(b : Ball){
+		private function moveBall(b : Ball):void {
 			b.speed = b.speed.add(b.acceleration);
 			b.position = b.position.add(b.speed);
 		}
 
-		function friction(b : Ball) {
+		private function friction(b : Ball):void {
 			b.accelerate(b.speed.mul(-defaultFriction));
 		}
 
-		function moveActiveBall() {
+		private function moveActiveBall():void {
 			var accel : Vektor = game.pointer.sub(game.active.position);
 			game.active.accelerate(accel.mul(0.2));
 		}
 
-		function collision(){
+		private function collision():void {
 			if (game.balls.length > 1) {
-				for (var i = 0; i < game.balls.length - 1; i++) {
-					for (var j = i + 1; j < game.balls.length; j++) {
+				for (var i:uint = 0; i < game.balls.length - 1; i++) {
+					for (var j:uint = i + 1; j < game.balls.length; j++) {
 						var c:Collision = Collision.test(game.balls[i], game.balls[j]);
 						if (c != null) {
 							game.attachBalls(c);
@@ -49,8 +49,8 @@
 			}
 		}
 		
-		function physik(){
-			var i:Number;
+		public function physik():void {
+			var i:uint;
 			for (i = 0; i < game.balls.length; i++) {
 				var b:Ball = game.balls[i];
 				b.acceleration = new Vektor();

@@ -2,13 +2,13 @@
 {
 	public class Menu
 	{
-		var buttons:Array = [];
-		var menubutton:Button;
-		var play:Button ;
-		var pause:Button;
-		var mute:Button;
-		var highscore:Button;
-		var joints:Array = [];
+		public var buttons:Array = [];
+		public var menubutton:Button;
+		public var play:Button ;
+		public var pause:Button;
+		public var mute:Button;
+		public var highscore:Button;
+		public var joints:Array = [];
 		
 		public function Menu() {
 			initButtons();
@@ -26,12 +26,12 @@
 		}
 		
 		
-		private function initButtons() {
-			menubutton = new Button(new Vektor(35, 30), function () { trace("hallo"); } );
-			play = new Button(new Vektor(70, 30), function () { trace("play"); } );
-			pause = new Button(new Vektor(35, 60), function() { trace("pause"); } );
-			mute = new Button(new Vektor(95, 30), function() { trace("mute"); } );
-			highscore = new Button(new Vektor(55, 55), function() { trace("highscore"); } );
+		private function initButtons():void {
+			menubutton = new Button(new Vektor(35, 30), function ():void { trace("hallo"); } );
+			play = new Button(new Vektor(70, 30), function ():void { trace("play"); } );
+			pause = new Button(new Vektor(35, 60), function ():void { trace("pause"); } );
+			mute = new Button(new Vektor(95, 30), function ():void { trace("mute"); } );
+			highscore = new Button(new Vektor(55, 55), function ():void { trace("highscore"); } );
 		}
 		
 		public function join(a:Button, b:Button):Joint {

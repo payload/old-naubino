@@ -2,9 +2,9 @@
 {
 	public class Vertex
 	{
-		var ball:Ball;
-		var check:int = 0;
-		var number:int = 0;
+		public var ball:Ball;
+		public var check:int = 0;
+		public var number:int = 0;
 		
 		public function Vertex(ball:Ball) 
 		{
