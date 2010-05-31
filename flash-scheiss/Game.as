@@ -4,8 +4,8 @@
 	import flash.utils.Timer;
 	public class Game
 	{
-		public var width : Number;
-		public var height : Number;
+		public const width : Number = 600;
+		public const height : Number = 400;
 		public var fieldSize : Number;
 		public var balls : Array;
 		public var joints : Array;
@@ -13,7 +13,7 @@
 		public var menu : Menu;
 
 		private var refreshInterval:Number = 50;
-		private var spammer:Spammer;
+		public var spammer:Spammer;
 
 		private var physics : Physics;
 		var enablePhysics:Boolean = true;
@@ -23,8 +23,8 @@
 		private var antipoints:Number = 0;
 	
 		function initFields() {
-			width = 600;
-			height = 400;
+			//width = 600;
+			//height = 400;
 			fieldSize = 160;
 			balls = [];
 			joints = [];
@@ -42,7 +42,7 @@
 		
 		function createBall(v:Vektor):Ball {
 			var b : Ball = new Ball(v);
-			b.color = Color.random();
+			b.attractedTo = center;
 			balls.push(b);
 			return b;
 		}
@@ -186,7 +186,7 @@
 			balls.splice(balls.indexOf(b), 1);
 		}
 
-		///* interaction below here */
+		/* interaction below here */
 
 		public function pointerMoved(v:Vektor) {
 			pointer = v;
