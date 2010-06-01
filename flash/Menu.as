@@ -5,6 +5,7 @@
 		public var buttons:Array = [];
 		public var joints:Array = [];
 		public var mainbtn:Button;
+		public var playbtn:Button;
 		
 		public function Menu() {
 			initButtons();
@@ -16,16 +17,29 @@
 		
 		private function newMainButton():Button {
 			var btn : Button = new Button();
-			btn.position = new Vektor(35, 30);
-			btn.attractedTo = btn.position;
 			btn.color = Color.yellow;
 			btn.setAction(tracer("main"));
+			buttons.push(btn);
+			return btn;
+		}
+
+		private function newPlayButton():Button {
+			var btn : Button = new Button();
+			btn.color = Color.blue;
+			btn.setAction(tracer("play"));
 			buttons.push(btn);
 			return btn;
 		}
 		
 		private function initButtons():void {
 			mainbtn = newMainButton();
+			playbtn = newPlayButton();
+
+			mainbtn.position = new Vektor(35, 30);
+			playbtn.position = mainbtn.position.add(new Vektor(30, 5));
+
+			for (var i:* in buttons)
+				buttons[i].attractedTo = buttons[i].position;
 		}
 		
 		public function join(a:Button, b:Button):Joint {

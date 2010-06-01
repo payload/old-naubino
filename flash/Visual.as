@@ -108,12 +108,22 @@ package {
 		}
 
 		private function updateSprite(obj:*):void {
-			//if (obj is Button);
+			if (obj is Button) updateButton(getSprite(obj, layers.foreground), obj);
 			if (obj is Ball) updateBall(getSprite(obj, layers.balls), obj);
 			//if (obj is Naub);
 			if (obj is Joint) updateJoint(getSprite(obj, layers.joints), obj);
 		}
 		
+		private function updateButton(bs:Sprite, b:Button):void {
+			bs.graphics.clear();
+			bs.graphics.lineStyle(2, colorToUInt(Color.black));
+			bs.graphics.beginFill(colorToUInt(b.color));
+			bs.graphics.drawCircle(0, 0, b.visibleRadius);
+			bs.graphics.endFill();
+			bs.x = b.position.x;
+			bs.y = b.position.y;
+		}
+
 		private function updateBall(bs:Sprite, b:Ball):void {
 			bs.graphics.clear();
 			if (game.active == b) {

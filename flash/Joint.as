@@ -25,7 +25,7 @@ package{
 			var r:Number = springVector.length;
 			
 			if(r != 0)
-				force = force.add(springVector.norm.mul(-(r-defaultLength)*defaultStrength));
+				force = force.add(springVector.norm.mul(-(r-length)*strength));
 			
 			force = force.add(a.speed.sub(b.speed).mul(-friction));
 			a.accelerate(force);

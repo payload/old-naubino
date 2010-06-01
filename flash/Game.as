@@ -163,11 +163,11 @@
 			}
 		}
 
-		private function get balls():Array {
+		public function get balls():Array {
 			return filter(objs, isFilter(Ball));
 		}
 
-		private function get joints():Array {
+		public function get joints():Array {
 			return filter(objs, isFilter(Joint));
 		}
 

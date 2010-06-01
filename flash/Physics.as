@@ -86,7 +86,7 @@
 			
 			for (i = 0; i < 3; i++)
 				collision();
-				
+
 			for (i = 0; i < game.objs.length; i++) {
 				obj = game.objs[i];
 				if (moveable(obj))

@@ -1,6 +1,6 @@
 ﻿package 
 {
-	public class Button extends Ball
+	public class Button extends Naub
 	{
 		public var _action:Function = function():void{};
 		
