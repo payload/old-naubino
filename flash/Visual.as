@@ -57,42 +57,40 @@ package {
 		
 		private function update():void {
 			usedSprites = new Dictionary();
+			updateSprites();
 			updateField();
-			updateJoints();
-			updateBalls();
-			updateMenu();
 			removeUnusedSprites();
 		}
 				
 		private function colorToUInt(color:Color):uint {
 			return 0x010000 * color.r + 0x000100 * color.g + 0x000001 * color.b;
 		}
-		
-		private function updateField():void {
-			var sprite : Sprite = getSprite("field");
-			if (sprite == null) {
-				sprite = newSprite("field", layers.background);
-				drawField(sprite);
-			}
-			sprite.x = game.center.x;
-			sprite.y = game.center.y;
+
+		private function getSprite(link:*, layer:DisplayObjectContainer):Sprite {
+			var sprite : Sprite = getExistingSprite(link);
+			if (sprite == null)
+				sprite = newSprite(link, layer);
+			return sprite;
 		}
 
-		private function drawField(field:Sprite):void {
+		private function updateField():void {
+			var field:Sprite = getSprite("field", layers.background);
 			field.graphics.clear();
 			field.graphics.lineStyle(3,colorToUInt(lineColor));
 			field.graphics.drawCircle(0, 0, game.fieldSize);
+			field.x = game.center.x;
+			field.y = game.center.y;
 		}
 
 		private function newSprite(link:*, layer:DisplayObjectContainer):Sprite {
 			var sprite : Sprite = new Sprite();
 			sprites[link] = sprite;
 			usedSprites[link] = sprite;
-				layer.addChild(sprite);
+			layer.addChild(sprite);
 			return sprite;
 		}
 
-		private function getSprite(link:*):Sprite {
+		private function getExistingSprite(link:*):Sprite {
 			var newSprite : Boolean = false;
 			var sprite : Sprite = sprites[link];
 			if (sprite == null)
@@ -100,26 +98,23 @@ package {
 			usedSprites[link] = sprite;
 			return sprite;
 		}
-		
-		private function updateBalls():void {
-			var balls:Array = game.balls;
-			for (var i:uint = 0; i < balls.length; i++) {
-				var ball:Ball = balls[i];
-				updateBall(ball);
+
+		private function updateSprites():void {
+			var objs:Array = game.objs;
+			for (var i:* in objs) {
+				var obj:* = objs[i];
+				updateSprite(obj);
 			}
 		}
 
-		private function updateBall(b:Ball):void {
-			var sprite : Sprite = getSprite(b);
-			if (sprite == null) {
-				sprite = newSprite(b, layers.balls);
-		 	}
-			drawBall(sprite, b);
-			sprite.x = b.position.x;
-			sprite.y = b.position.y;
+		private function updateSprite(obj:*):void {
+			//if (obj is Button);
+			if (obj is Ball) updateBall(getSprite(obj, layers.balls), obj);
+			//if (obj is Naub);
+			if (obj is Joint) updateJoint(getSprite(obj, layers.joints), obj);
 		}
-
-		private function drawBall(bs:Sprite, b:Ball):void {
+		
+		private function updateBall(bs:Sprite, b:Ball):void {
 			bs.graphics.clear();
 			if (game.active == b) {
 				bs.graphics.lineStyle(2, colorToUInt(Color.black));
@@ -129,25 +124,11 @@ package {
 			bs.graphics.beginFill(colorToUInt(b.color));
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			bs.graphics.endFill();
+			bs.x = b.position.x;
+			bs.y = b.position.y;
 		}
 
-		private function updateJoints():void {
-			var joints:Array = game.joints;
-			for (var i:uint = 0; i < joints.length; i++) {
-				var joint:Joint = joints[i];
-				updateJoint(joint);
-			}
-		}
-
-		private function updateJoint(j:Joint):void {
-			var sprite : Sprite = getSprite(j);
-			if (sprite == null) {
-				sprite = newSprite(j, layers.joints);
-		 	}
-			drawJoint(sprite, j);
-		}
-
-		private function drawJoint(js:Sprite, j:Joint):void {
+		private function updateJoint(js:Sprite, j:Joint):void {
 			js.graphics.clear();
 			js.graphics.lineStyle(4, colorToUInt(lineColor));
 			js.graphics.moveTo(j.a.position.x, j.a.position.y);
@@ -158,9 +139,9 @@ package {
 			var menu:Menu = game.menu;
 			var i:uint;
 			for (i = 0; i < menu.joints.length; i++)
-				updateJoint(menu.joints[i]);
+				updateSprite(menu.joints[i]);
 			for (i = 0; i < menu.buttons.length; i++)
-				updateBall(menu.buttons[i]);
+				updateSprite(menu.buttons[i]);
 		}
 	}
 }

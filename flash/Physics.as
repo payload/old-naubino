@@ -30,45 +30,68 @@
 			b.accelerate(b.speed.mul(-defaultFriction));
 		}
 
-		private function moveActiveBall():void {
-			var accel : Vektor = game.pointer.sub(game.active.position);
-			game.active.accelerate(accel.mul(0.2));
+		private function moveActiveBall(ball:Ball):void {
+			var accel : Vektor = game.pointer.sub(ball.position);
+			ball.accelerate(accel.mul(0.2));
+		}
+
+		private function collidable(obj:*):Boolean {
+			return obj is Ball;
+		}
+
+		private function collide(c:Collision):void {
+			game.attachBalls(c);
+			c.collide();
 		}
 
 		private function collision():void {
-			if (game.balls.length > 1) {
-				for (var i:uint = 0; i < (game.balls.length - 1); i++) {
-					for (var j:uint = i + 1; j < game.balls.length; j++) {
-						var c:Collision = Collision.test(game.balls[i], game.balls[j]);
-						if (c != null) {
-							game.attachBalls(c);
-							c.collide();
+			if (game.objs.length > 1) {
+				var a:Ball, b:Ball;
+				for (var i:int = 0; i < (game.objs.length - 1); i++) {
+					if (collidable(game.objs[i])) {
+						for (var j:int = i + 1; j < game.objs.length; j++) {
+							if (collidable(game.objs[j])) {
+								var c:Collision = Collision.test(game.objs[i], game.objs[j]);
+								if (c != null) {
+									collide(c);
+								}
+							}
 						}
 					}
 				}
 			}
 		}
+
+		private function moveable(obj:*):Boolean {
+			return obj is Ball;
+		}
+
+		private function handleMoveable(b:Ball):void {
+			b.acceleration = new Vektor();
+			indirectGravity(b);
+			friction(b);
+			if (b.active)
+				moveActiveBall(b);
+		}
 		
 		public function physik():void {
-			var i:uint;
-			for (i = 0; i < game.balls.length; i++) {
-				var b:Ball = game.balls[i];
-				b.acceleration = new Vektor();
-				indirectGravity(b);
-				friction(b);
+			var i:int, obj:*;
+			for (i = 0; i < game.objs.length; i++) {
+				obj = game.objs[i];
+				if (moveable(obj))
+					handleMoveable(obj);
+				if (obj is Joint)
+					obj.spring();
 			}
-			
-			if (game.active != null)
-				moveActiveBall();
 			
 			for (i = 0; i < 3; i++)
 				collision();
 				
-			for (i = 0; i < game.joints.length; i++) 
-				game.joints[i].spring();
-				
-			for (i = 0; i < game.balls.length; i++) 
-				moveBall(game.balls[i]);
+			for (i = 0; i < game.objs.length; i++) {
+				obj = game.objs[i];
+				if (moveable(obj))
+					moveBall(game.objs[i]);
+			}
 		}
 	}
 }

@@ -7,8 +7,7 @@
 		public const width : Number = 600;
 		public const height : Number = 400;
 		public var fieldSize : Number;
-		public var balls : Array;
-		public var joints : Array;
+		public var objs : Array;
 		public var pointer : Vektor;
 		public var menu : Menu;
 
@@ -24,14 +23,13 @@
 
 		private function initFields():void {
 			fieldSize = 160;
-			balls = [];
-			joints = [];
+			objs = [];
 			pointer = center;
 			spammer = new Spammer(this);
 			physics = new Physics(this);
 			menu = new Menu();
 			
-			utils.addAll(balls, menu.buttons);
+			utils.addAll(objs, menu.buttons);
 		}
 		
 		public function Game() {
@@ -42,30 +40,31 @@
 			if (v == null) v = Vektor.O;
 			var b : Ball = new Ball(v);
 			b.attractedTo = center;
-			balls.push(b);
+			objs.push(b);
+			//objs.push(b);
 			return b;
 		}
 		
-		// balls below here
+		// objs below here
 
 		public function createPair(v:Vektor):void {
-			var ball1:Ball = createBall();
-			var ball2:Ball = createBall();
-			var joint : Joint = join(ball1, ball2);
-			var pair:Vektor = Vektor.polar(Math.random() * Math.PI * 2, joint.length * 0.6);
+			var obj1:Ball = createBall();
+			var obj2:Ball = createBall();
+			var obj : Joint = join(obj1, obj2);
+			var pair:Vektor = Vektor.polar(Math.random() * Math.PI * 2, obj.length * 0.6);
 			var pos1:Vektor = v.add(pair);
 			var pos2:Vektor = v.sub(pair);
-			ball1.position = pos1;
-			ball2.position = pos2;
-		  joints.push(joint);
+			obj1.position = pos1;
+			obj2.position = pos2;
+		  objs.push(obj);
 		}
 
-		/* nur benutzen wenn zwei neue Baelle gejoint werden */
+		/* nur benutzen wenn zwei neue Baelle geobj werden */
 		public function join(a:Naub, b:Naub):Joint {
-			var joint:Joint  = new Joint(a, b);
-			a.addJoint(joint);
-			b.addJoint(joint);
-			return joint;
+			var obj:Joint  = new Joint(a, b);
+			a.addJoint(obj);
+			b.addJoint(obj);
+			return obj;
 		}
 	
 		/* game logic below here */
@@ -80,8 +79,8 @@
 		}
 
 		public function restart():void {
-			balls.splice(0, balls.length);
-			joints.splice(0, joints.length);
+			objs.splice(0, objs.length);
+			objs.splice(0, objs.length);
 		}
 
 		private function countingJoints():Number {
@@ -89,22 +88,24 @@
 			var bdistance:Number;
 			var count:Number = 0;
 			var fieldRadius:Number = fieldSize / 2;
-			for (var i:uint = 0; i < joints.length; i++) {
-				var j:Joint = joints[i];
-				adistance = j.a.position.sub(center).length;
-				bdistance = j.b.position.sub(center).length;
-				if (adistance < fieldRadius || bdistance < fieldRadius)
-					count++;
+			for (var i:uint = 0; i < objs.length; i++) {
+				if (objs[i] is Joint) {
+					var j:Joint = objs[i];
+					adistance = j.a.position.sub(center).length;
+					bdistance = j.b.position.sub(center).length;
+					if (adistance < fieldRadius || bdistance < fieldRadius)
+						count++;
+				}
 			}
 			return count;
 		}
 
-		/* balls below here */
+		/* objs below here */
 		protected function unJoin(a:Ball, b:Ball):void {
-			var joints:Array = a.jointsWith(b);
-			for(var i:uint = 0; i < joints.length; i++) {
-				var j:Joint = joints[i];
-				joints.remove(j);
+			var objs:Array = a.jointsWith(b);
+			for(var i:uint = 0; i < objs.length; i++) {
+				var j:Joint = objs[i];
+				objs.remove(j);
 				a.removeJoint(j);
 				b.removeJoint(j);
 			}
@@ -120,7 +121,7 @@
 						handleCycles();
 					}
 				} else {
-					joints.push(join(a, b));
+					objs.push(join(a, b));
 				}
 			}
 		}
@@ -141,11 +142,33 @@
 				for (i = 0; i < naubs.length; i++) {
 					naub = naubs[i];
 					if (!a.isJointWith(naub)) {
-						joints.push(join(a, naub));
+						objs.push(join(a, naub));
 					}
 				}
 				removeBall(b);
 			}
+		}
+
+		private function filter(array:Array, predicate:Function):Array {
+			var result : Array = [];
+			for (var i:* in array)
+				if (predicate(array[i]))
+					result.push(array[i]);
+			return result;
+		}
+
+		private function isFilter(cls:Class):Function {
+			return function(x:*):Boolean {
+				return x is cls;
+			}
+		}
+
+		private function get balls():Array {
+			return filter(objs, isFilter(Ball));
+		}
+
+		private function get joints():Array {
+			return filter(objs, isFilter(Joint));
 		}
 
 		private function handleCycles():void {
@@ -164,10 +187,12 @@
 
 		private function collidingBall(v:Vektor):Naub  {
 			var i:uint;
-			for (i = 0; i < balls.length; i++) {
-				var ball:Ball = balls[i];
-				if (ball.isHit(v))
-					return ball;
+			for (i = 0; i < objs.length; i++) {
+				if (objs[i] is Ball) {
+					var obj:Ball = objs[i];
+					if (obj.isHit(v))
+						return obj;
+				}
 			}
 			for (i = 0; i < menu.buttons.length; i++) {
 				var button:Button = menu.buttons[i];
@@ -185,13 +210,13 @@
 		}
 		
 		private function removeBall(b:Ball):void {
-			removeAll(joints, b.joints);
-			var jointballs:Array = b.jointNaubs();
-			for (var i:uint = 0; i < jointballs.length; i++) {
-				var jp:Ball = jointballs[i];
+			removeAll(objs, b.joints);
+			var objobjs:Array = b.jointNaubs();
+			for (var i:uint = 0; i < objobjs.length; i++) {
+				var jp:Ball = objobjs[i];
 				removeAll(jp.joints, jp.jointsWith(b));
 			}
-			balls.splice(balls.indexOf(b), 1);
+			objs.splice(objs.indexOf(b), 1);
 		}
 
 		/* interaction below here */
@@ -211,8 +236,9 @@
 		}
 
 		public function pointerReleasedLeft(v:Vektor):void {
-			for (var i:uint = 0; i < balls.length; i++)
-				balls[i].active = false;
+			for (var i:uint = 0; i < objs.length; i++)
+				if (objs[i] is Ball)
+					objs[i].active = false;
 		}
 
 		public function pointerReleasedRight(v:Vektor):void {
@@ -223,9 +249,9 @@
 		}
 		
 		public function get active():Ball {
-			for (var i:uint = 0; i < balls.length; i++)
-				if (balls[i].active)
-					return balls[i];
+			for (var i:uint = 0; i < objs.length; i++)
+				if (objs[i] is Ball && objs[i].active)
+					return objs[i];
 			return null;
 		}
 		
