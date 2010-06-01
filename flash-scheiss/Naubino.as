@@ -1,11 +1,7 @@
 ﻿package 
 {
-	import flash.display.SpreadMethod;
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.events.TimerEvent;
-	import flash.events.KeyboardEvent;
+	import flash.display.*;
+	import flash.events.*;
 	import flash.text.Font;
 	import flash.utils.Timer;
 	import flash.utils.Dictionary;
@@ -24,8 +20,16 @@
 		private var enableDrawDirection : Boolean;
 		private var enableDrawNumber : Boolean;
 		private var myFont : Font; 
-		private var refreshTimer: Timer;
-		private var spamTimer: Timer;
+		private var refreshTimer : Timer;
+		private var spamTimer : Timer;
+		private var sprites : Dictionary;
+		private var usedSprites : Dictionary;
+		private var layers : Object = {
+			background: new Sprite(),
+			foreground: new Sprite(),
+			balls: new Sprite(),
+			joints: new Sprite()
+		};
 
 		private var onKeyDown:Object = {};
 		private var onKeyUp:Object = {};
@@ -54,6 +58,15 @@
 			enableDrawDirection = false;
 			enableDrawNumber = true;
 			mouseChildren = false;
+			sprites = new Dictionary();
+			initLayers();
+		}
+
+		private function initLayers():void {
+			for (var i:* in layers) {
+				var layer:Sprite = layers[i];
+				addChild(layer);
+			}
 		}
 		
 		private function startTimer(delay:int, callback:Function):Timer {
@@ -65,7 +78,7 @@
 
 		public function Naubino() {
 			initFields();
-			addEventListener(Event.ENTER_FRAME, function(e:Event):void { draw() } );
+			addEventListener(Event.ENTER_FRAME, function(e:Event):void { update() } );
 			startTimer(50, game.refresh);
 			startTimer(3500, game.spammer.randomPair);
 			addEventListener(MouseEvent.MOUSE_DOWN, mousePressed);
@@ -74,6 +87,11 @@
 			addEventListener(MouseEvent.ROLL_OUT, mouseReleased);
 			addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
 			addEventListener(KeyboardEvent.KEY_UP, keyUp);
+
+			graphics.beginFill(colorToUInt(backgroundColor));
+			graphics.drawRect(0, 0, game.width, game.height);
+			graphics.endFill();
+
 		}
 
 		/* user control */
@@ -128,13 +146,26 @@
 				removeChildAt(i);
 			}
 		}
+
+		private function removeChildFromLayer(child:DisplayObject):void {
+			child.parent.removeChild(child);
+		}
+
+		private function removeUnusedSprites():void {
+			for (var link:* in sprites)
+				if (usedSprites[link] == undefined) {
+					removeChildFromLayer(sprites[link]);
+					delete sprites[link];
+				}
+		}
 		
-		private function draw():void {
-			clear();
-			drawField();
-			drawJoints();
-			drawBalls();
-			drawMenu();
+		private function update():void {
+			usedSprites = new Dictionary();
+			updateField();
+			updateJoints();
+			updateBalls();
+			updateMenu();
+			removeUnusedSprites();
 		}
 				
 		private function colorToUInt(color:Color):uint {
@@ -145,62 +176,102 @@
 	
 		}
 
-		private function drawField():void {
-			var fs:Sprite = new Sprite();
-			graphics.beginFill(colorToUInt(backgroundColor));
-			graphics.drawRect(0, 0, game.width, game.height);
-			graphics.endFill();
-			fs.graphics.lineStyle(3,colorToUInt(lineColor));
-			fs.graphics.drawCircle(game.center.x, game.center.y, game.fieldSize);
-			//addChild(background);
-		 	addChild(fs);
+		private function updateField():void {
+			var sprite : Sprite = getSprite("field");
+			if (sprite == null) {
+				sprite = newSprite("field", layers.background);
+				drawField(sprite);
+			}
+			sprite.x = game.center.x;
+			sprite.y = game.center.y;y
+		}
+
+		private function drawField(field:Sprite):void {
+			field.graphics.clear();
+			field.graphics.lineStyle(3,colorToUInt(lineColor));
+			field.graphics.drawCircle(0, 0, game.fieldSize);
+		}
+
+		private function newSprite(link:*, layer:DisplayObjectContainer = null):Sprite {
+			var sprite : Sprite = new Sprite();
+			sprites[link] = sprite;
+			usedSprites[link] = sprite;
+			if (layer == null)
+				addChild(sprite);
+			else
+				layer.addChild(sprite);
+			return sprite;
+		}
+
+		private function getSprite(link:*):Sprite {
+			var newSprite : Boolean = false;
+			var sprite : Sprite = sprites[link];
+			if (sprite == undefined)
+				return null;
+			usedSprites[link] = sprite;
+			return sprite;
 		}
 		
-		private function drawBalls():void {
+		private function updateBalls():void {
 			var balls:Array = game.balls;
 			for (var i:uint = 0; i < balls.length; i++) {
 				var ball:Ball = balls[i];
-				drawBall(ball);
+				updateBall(ball);
 			}
 		}
 
-		private function drawBall(b:Ball):void {
-			var bs:Sprite = new Sprite();
-			
+		private function updateBall(b:Ball):void {
+			var sprite : Sprite = getSprite(b);
+			if (sprite == null) {
+				sprite = newSprite(b, layers.balls);
+				drawBall(sprite, b);
+		 	}
+			sprite.x = b.position.x;
+			sprite.y = b.position.y;
+		}
+
+		private function drawBall(bs:Sprite, b:Ball):void {
+			bs.graphics.clear();
 			if (game.active == b) {
 				bs.graphics.lineStyle(2, colorToUInt(Color.black));
 			} else {
 				bs.graphics.lineStyle();
 			}
 			bs.graphics.beginFill(colorToUInt(b.color));
-			bs.graphics.drawCircle(b.position.x, b.position.y, b.visibleRadius);
+			bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			bs.graphics.endFill();
-			addChild(bs);
 		}
 
-		private function drawJoints():void {
+		private function updateJoints():void {
 			var joints:Array = game.joints;
 			for (var i:uint = 0; i < joints.length; i++) {
 				var joint:Joint = joints[i];
-				drawJoint(joint);
+				updateJoint(joint);
 			}
 		}
 
-		private function drawJoint(j:Joint):void {
-			var js:Sprite = new Sprite();
+		private function updateJoint(j:Joint):void {
+			var sprite : Sprite = getSprite(j);
+			if (sprite == null) {
+				sprite = newSprite(j, layers.joints);
+		 	}
+			drawJoint(sprite, j);
+		}
+
+		private function drawJoint(js:Sprite, j:Joint):void {
+			js.graphics.clear();
 			js.graphics.lineStyle(2, colorToUInt(lineColor));
 			js.graphics.moveTo(j.a.position.x, j.a.position.y);
 			js.graphics.lineTo(j.b.position.x, j.b.position.y);
-			addChild(js);
 		}
 		
-		private function drawMenu():void {
+		private function updateMenu():void {
 			var menu:Menu = game.menu;
 			var i:uint;
 			for (i = 0; i < menu.joints.length; i++)
-				drawJoint(menu.joints[i]);
+				updateJoint(menu.joints[i]);
 			for (i = 0; i < menu.buttons.length; i++)
-				drawBall(menu.buttons[i]);
+				updateBall(menu.buttons[i]);
 		}
 	}
 }

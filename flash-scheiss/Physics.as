@@ -37,7 +37,7 @@
 
 		private function collision():void {
 			if (game.balls.length > 1) {
-				for (var i:uint = 0; i < game.balls.length - 1; i++) {
+				for (var i:uint = 0; i < (game.balls.length - 1); i++) {
 					for (var j:uint = i + 1; j < game.balls.length; j++) {
 						var c:Collision = Collision.test(game.balls[i], game.balls[j]);
 						if (c != null) {

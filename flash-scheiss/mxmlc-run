@@ -1,3 +1,8 @@
 #!/bin/sh
-mxmlc -static-link-runtime-shared-libraries -compiler.debug -warnings=false $1.as &&
+mxmlc \
+  -static-link-runtime-shared-libraries \
+  -compiler.debug \
+  -warnings=false \
+	-incremental \
+  $1.as && \
 flashplayer-debugger-standalone $1.swf
