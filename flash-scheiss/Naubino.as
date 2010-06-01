@@ -2,11 +2,7 @@
 {
 	import flash.display.*;
 	import flash.events.*;
-	import flash.text.Font;
 	import flash.utils.Timer;
-	import flash.utils.Dictionary;
-	import flash.system.System;
-	import flash.ui.Keyboard;
 	
 	public class Naubino extends Sprite
 	{
