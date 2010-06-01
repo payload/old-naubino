@@ -5,7 +5,7 @@
 		public var speed : Vektor;
 		public var acceleration : Vektor;
 		public var physicalRadius : Number;
-		public var visibleRadius : Number;
+		public var visibleRadius : Number = physicalRadius-4;
 		public var mass : Number;
 		public var color : Color;
 		private var _joints : Array;

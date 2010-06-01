@@ -149,7 +149,7 @@ package {
 
 		private function drawJoint(js:Sprite, j:Joint):void {
 			js.graphics.clear();
-			js.graphics.lineStyle(2, colorToUInt(lineColor));
+			js.graphics.lineStyle(4, colorToUInt(lineColor));
 			js.graphics.moveTo(j.a.position.x, j.a.position.y);
 			js.graphics.lineTo(j.b.position.x, j.b.position.y);
 		}
