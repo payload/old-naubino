@@ -4,6 +4,7 @@
 *swf
 system_catalog.xml
 .metadata*
+.directory
 
 *.class
 \#*\#
