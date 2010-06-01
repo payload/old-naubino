@@ -21,7 +21,7 @@
 
 		private var points:Number = 0;
 		private var antipoints:Number = 0;
-	
+
 		private function initFields():void {
 			//width = 600;
 			//height = 400;
@@ -127,8 +127,9 @@
 			var shareJointBall:Boolean = false;
 			var naubs:Array = a.jointNaubs();
 			var i:uint;
-			var naub:Naub = naub[i];
+			var naub:Naub;
 			for (i = 0; i < naubs.length; i++) {
+				naub = naubs[i];
 				if (naub.isJointWith(b))
 					shareJointBall = true;
 			}
@@ -136,6 +137,7 @@
 			if (!shareJointBall && !a.isJointWith(b)) {
 				naubs = b.jointNaubs();
 				for (i = 0; i < naubs.length; i++) {
+					naub = naubs[i];
 					if (!a.isJointWith(naub)) {
 						joints.push(join(a, naub));
 					}
@@ -227,12 +229,6 @@
 		
 		public function incPoints():void {
 			points++;
-		}
-
-		public function userAction(action:uint):void {
-			var foo:Object = {};
-			foo.a = 5;
-			restart();
 		}
 
 	}

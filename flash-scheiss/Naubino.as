@@ -10,6 +10,7 @@
 	import flash.utils.Timer;
 	import flash.utils.Dictionary;
 	import flash.system.System;
+	import flash.ui.Keyboard;
 	
 	public class Naubino extends Sprite
 	{
@@ -25,18 +26,34 @@
 		private var myFont : Font; 
 		private var refreshTimer: Timer;
 		private var spamTimer: Timer;
-		
+
+		private var onKeyDown:Object = {};
+		private var onKeyUp:Object = {};
+
+		private function initKeys() {
+			onKeyDown = {
+			};
+			onKeyUp = { 
+				'ESC': close,
+				'ENTER': function(){},
+				'SPACE': game.restart,
+				'CONTROL': function(){},
+				'Q': function(){},
+				'W': function(){}
+			};		
+		}
 		
 		private function initFields():void {
 			frameRate = 40;
 			game = new Game();
-			
+			initKeys();
 			resolutionX = game.width;
 			resolutionY = game.height;
 			lineColor = Color.black;
 			backgroundColor = Color.white;
 			enableDrawDirection = false;
 			enableDrawNumber = true;
+			mouseChildren = false;
 		}
 		
 		private function startTimer(delay:int, callback:Function):Timer {
@@ -51,7 +68,6 @@
 			addEventListener(Event.ENTER_FRAME, function(e:Event):void { draw() } );
 			startTimer(50, game.refresh);
 			startTimer(3500, game.spammer.randomPair);
-			addEventListener(MouseEvent.CLICK, mousePressed);
 			addEventListener(MouseEvent.MOUSE_DOWN, mousePressed);
 			addEventListener(MouseEvent.MOUSE_UP, mouseReleased);
 			addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved);
@@ -82,43 +98,28 @@
 				game.pointerReleasedLeft(v);
 		}
 
-		public function keyDown(e:KeyboardEvent):void {
-			trace("keyDown "+e.keyCode);
-			// const key:Dictionary = new Dictionary();
-			// const keys:Array = 
-			// 	[['ESC', 27],
-			// 	 ['Enter', 13],
-			// 	 ['Space', 32],
-			// 	 ['Ctrl', 17],
-			// 	 ['Q', 81],
-			// 	 ['W', 87]];
-			// for (var i:uint  = 0; i < keys.length; i++)
-			// 	key[keys[i][0]] = keys[i][1];
+		private function close():void {
+			System.exit(0);
+		}
 
-			// var keyCode = e.keyCode;
-			// if (keyCode == key['ESC'])
-			// 	System.exit(0);
-			// if (keyCode == key['Enter'])
-			// 	game.userAction(0);
-			// if (keyCode == key['Space'])
-			// 	game.userAction(1);
-			// if (keyCode == key['Ctrl'])
-			// 	game.userAction(2);
-			// if (keyCode == key['Q'])
-			// 	game.userAction(3);
-			// if (keyCode == key['W'])
-			// 	game.userAction(4);
+		private function nothing(down:Boolean):void {
+		}
+
+		public function keyDown(e:KeyboardEvent):void {
+			for (var key:String in onKeyDown) {
+				var keyCode = Keyboard[key];
+				if (keyCode == e.keyCode)
+					onKeyDown[key]();
+			}
 		}
 
 		public function keyUp(e:KeyboardEvent):void {
-			trace("keyUp "+e.keyCode);
+			for (var key:String in onKeyUp) {
+				var keyCode = Keyboard[key];
+				if (keyCode == e.keyCode)
+					onKeyUp[key]();
+			}
 		}
-
-		private function clickHandler(event:MouseEvent):void {
-			trace("Click");
-			stage.focus = this;
-		}
-
 
 		/* drawing */
 
@@ -145,17 +146,13 @@
 		}
 
 		private function drawField():void {
-			graphics.beginFill(colorToUInt(Color.red));
-			graphics.drawRect(1, 1, 190, 100);
-			graphics.endFill();
-			var background:Sprite = new Sprite();
 			var fs:Sprite = new Sprite();
-			background.graphics.beginFill(colorToUInt(backgroundColor));
-			background.graphics.drawRect(0, 0, game.width, game.height);
-			background.graphics.endFill();
+			graphics.beginFill(colorToUInt(backgroundColor));
+			graphics.drawRect(0, 0, game.width, game.height);
+			graphics.endFill();
 			fs.graphics.lineStyle(3,colorToUInt(lineColor));
 			fs.graphics.drawCircle(game.center.x, game.center.y, game.fieldSize);
-			addChild(background);
+			//addChild(background);
 		 	addChild(fs);
 		}
 		
