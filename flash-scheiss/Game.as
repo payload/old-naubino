@@ -23,8 +23,6 @@
 		private var antipoints:Number = 0;
 
 		private function initFields():void {
-			//width = 600;
-			//height = 400;
 			fieldSize = 160;
 			balls = [];
 			joints = [];
@@ -178,7 +176,6 @@
 		private function removeAll(a:Array, b:Array):void {
 			for (var i:uint = 0; i < b.length; i++) {
 				var j:Joint = b[i];
-				//delete a[a.indexOf(j)];
 				a.splice(a.indexOf(j), 1);
 			}
 		}
@@ -190,7 +187,6 @@
 				var jp:Ball = jointballs[i];
 				removeAll(jp.joints, jp.jointsWith(b));
 			}
-			//delete balls[balls.indexOf(b)];
 			balls.splice(balls.indexOf(b), 1);
 		}
 

@@ -57,7 +57,6 @@
 
 		public function removeJoint(j:Joint):void {
 			var i:int = joints.indexOf(j);
-			//delete joints[i];
 			joints.splice(i, 1);
 		}
 
