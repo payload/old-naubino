@@ -159,23 +159,6 @@
 		 	addChild(fs);
 		}
 		
-		private function drawPointer():void {
-			/*
-			Vektor v = game.getPointer();
-			ellipse((float) v.getX(), (float) v.getY(), 5, 5);
-			*/
-		}
-
-		private function drawDirection(/*Ball b*/):void {
-			/*
-			stroke(lineColor);
-			strokeWeight(1);
-			line((float) b.position.getX(), (float) b.position.getY(),
-					(float) b.position.getX() + (float) b.speed.getX(),
-					(float) b.position.getY() + (float) b.speed.getY());
-			*/
-		}
-
 		private function drawBalls():void {
 			var balls:Array = game.balls;
 			for (var i:uint = 0; i < balls.length; i++) {
