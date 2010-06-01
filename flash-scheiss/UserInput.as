@@ -37,7 +37,7 @@ package {
 			addEventListeners(root);
 		}
 
-		private function addEventListeners(root):void {
+		private function addEventListeners(root:Naubino):void {
 			root.addEventListener(MouseEvent.MOUSE_DOWN, mousePressed);
 			root.addEventListener(MouseEvent.MOUSE_UP, mouseReleased);
 			root.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved);
@@ -68,7 +68,7 @@ package {
 
 		public function keyDown(e:KeyboardEvent):void {
 			for (var key:String in onKeyDown) {
-				var keyCode = Keyboard[key];
+				var keyCode:uint = Keyboard[key];
 				if (keyCode == e.keyCode)
 					onKeyDown[key]();
 			}
@@ -76,7 +76,7 @@ package {
 
 		public function keyUp(e:KeyboardEvent):void {
 			for (var key:String in onKeyUp) {
-				var keyCode = Keyboard[key];
+				var keyCode:uint = Keyboard[key];
 				if (keyCode == e.keyCode)
 					onKeyUp[key]();
 			}

@@ -22,7 +22,7 @@ package {
 			backgroundColor = Color.white;
 			sprites = new Dictionary();
 			initLayers();
-			root.addEventListener(Event.ENTER_FRAME, function(e:Event){ update(); });
+			root.addEventListener(Event.ENTER_FRAME, function(e:Event):void{ update(); });
 			drawBackground();
 		}
 
@@ -95,7 +95,7 @@ package {
 		private function getSprite(link:*):Sprite {
 			var newSprite : Boolean = false;
 			var sprite : Sprite = sprites[link];
-			if (sprite == undefined)
+			if (sprite == null)
 				return null;
 			usedSprites[link] = sprite;
 			return sprite;

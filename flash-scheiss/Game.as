@@ -38,7 +38,8 @@
 			initFields();
 		}
 		
-		public function createBall(v:Vektor):Ball {
+		public function createBall(v:Vektor = null):Ball {
+			if (v == null) v = Vektor.O;
 			var b : Ball = new Ball(v);
 			b.attractedTo = center;
 			balls.push(b);
@@ -48,12 +49,15 @@
 		// balls below here
 
 		public function createPair(v:Vektor):void {
-			var pair:Vektor = Vektor.polar(Math.random() * Math.PI * 2, Joint.defaultLength * 0.6);
+			var ball1:Ball = createBall();
+			var ball2:Ball = createBall();
+			var joint : Joint = join(ball1, ball2);
+			var pair:Vektor = Vektor.polar(Math.random() * Math.PI * 2, joint.length * 0.6);
 			var pos1:Vektor = v.add(pair);
 			var pos2:Vektor = v.sub(pair);
-			var ball2:Ball = createBall(pos2);
-			var ball1:Ball = createBall(pos1);
-			joints.push(join(ball1, ball2));
+			ball1.position = pos1;
+			ball2.position = pos2;
+		  joints.push(joint);
 		}
 
 		/* nur benutzen wenn zwei neue Baelle gejoint werden */

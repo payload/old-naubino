@@ -8,8 +8,8 @@ package{
 		private var _strength:Number;
 		public var friction:Number;
 		
-		static const defaultLength:Number = 40;
-		static const defaultStrength:Number = .3;
+		public static const defaultLength:Number = 40;
+		public static const defaultStrength:Number = .3;
 		
 		public function Joint(a:Naub, b:Naub) {
 			this.a = a;

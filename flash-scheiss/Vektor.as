@@ -4,6 +4,8 @@
 		private var _x:Number;
 		private var _y:Number;
 
+		public static const O : Vektor = new Vektor(0, 0);
+
 		public function get x():Number {
 			return _x;
 		}
