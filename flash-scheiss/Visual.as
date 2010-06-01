@@ -113,8 +113,8 @@ package {
 			var sprite : Sprite = getSprite(b);
 			if (sprite == null) {
 				sprite = newSprite(b, layers.balls);
-				drawBall(sprite, b);
 		 	}
+			drawBall(sprite, b);
 			sprite.x = b.position.x;
 			sprite.y = b.position.y;
 		}
