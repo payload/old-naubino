@@ -1,8 +1,8 @@
 package {
 	public class Moveable {
-		public var position : Vektor;
-		public var speed : Vektor;
-		public var acceleration : Vektor;
+		public var position : Vektor = new Vektor();
+		public var speed : Vektor = new Vektor();
+		public var acceleration : Vektor = new Vektor();;
 		public var attracted:Boolean;
 		public var attractedTo:Vektor;
 

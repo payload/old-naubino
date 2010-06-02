@@ -36,7 +36,7 @@
 		}
 
 		private function collidable(obj:*):Boolean {
-			return obj is Moveable;
+			return obj is Physical && obj.collidable;
 		}
 
 		private function collide(c:Collision):void {
@@ -59,7 +59,7 @@
 		}
 
 		private function moveable(obj:*):Boolean {
-			return obj is Ball;
+			return obj is Moveable;
 		}
 
 		private function handleMoveable(b:Moveable):void {

@@ -1,8 +1,8 @@
 package{
 	public class Joint{
 		
-		public var a:Naub;
-		public var b:Naub;
+		public var a:Moveable;
+		public var b:Moveable;
 		
 		private var _length:Number;
 		private var _strength:Number;
@@ -11,7 +11,7 @@ package{
 		public static const defaultLength:Number = 40;
 		public static const defaultStrength:Number = .3;
 		
-		public function Joint(a:Naub, b:Naub) {
+		public function Joint(a:Moveable, b:Moveable) {
 			this.a = a;
 			this.b = b;
 			length = defaultLength;
@@ -32,7 +32,7 @@ package{
 			b.accelerate(force.mul(-1));
 		}
 		
-		public function opposite(b:Naub):Naub {
+		public function opposite(b:Moveable):Moveable {
 			if (a == b)
 				return this.b;
 			else

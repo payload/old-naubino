@@ -185,11 +185,11 @@
 			}
 		}
 
-		private function collidingBall(v:Vektor):Naub  {
+		private function collidingBall(v:Vektor):Circle  {
 			var i:int;
 			for (i = 0; i < objs.length; i++) {
-				if (objs[i] is Ball) {
-					var obj:Ball = objs[i];
+				if (objs[i] is Circle) {
+					var obj:Circle = objs[i];
 					if (obj.isHit(v))
 						return obj;
 				}
@@ -221,9 +221,9 @@
 		}
 
 		public function pointerPressedLeft(v:Vektor):void {
-			var b:Naub = collidingBall(v);
-			if (b != null)
-				b.action();
+			var b:Circle = collidingBall(v);
+			if (b != null && b is Action)
+				Action(b).action();
 		}
 
 		public function pointerPressedRight(v:Vektor):void {

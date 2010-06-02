@@ -1,8 +1,6 @@
 ﻿package 
 {
-	public class Naub extends Physical {
-		public var visibleRadius : Number;
-		public var color : Color;
+	public class Naub extends Circle {
 		private var _joints : Array;
 
 		protected const defaultRadius:Number = 15;
@@ -23,17 +21,11 @@
 			this.mass = 1;
 			speed = new Vektor();
 			acceleration = new Vektor();
-			color = Color.random();
 			_joints = [];
 		}
 		
 		/* position and movement below here */
 		
-		public function isHit(v:Vektor) : Boolean {
-			var distance:Number = v.sub(position).length;
-			return distance <= radius;
-		}
-
 		public function distanceTo(v:Vektor) : Vektor {
 			return v.sub(position);
 		}
@@ -84,10 +76,6 @@
 
 		public function matches(o:Naub):Boolean {
 			return color == o.color;
-		}
-		
-		public function action():void {
-			
 		}
 	}
 }
