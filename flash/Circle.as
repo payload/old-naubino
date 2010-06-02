@@ -1,7 +1,6 @@
 package {
 	import caurina.transitions.Tweener;
 	public class Circle extends Physical implements Action {
-		public var visibleRadius:Number = 15.0;
 		public var color:Color = Color.random();
 
 		private var _action:Function = function():void{};
@@ -18,6 +17,7 @@ package {
 		public function action():void {
 			_action();
 		}
+<<<<<<< HEAD
 		public function disappear():void{
 			var tween:Object = {
 				radius: 0,
@@ -25,6 +25,15 @@ package {
 				time:0.5
 			};
 			Tweener.addTween(this,tween);
+=======
+
+		public function get visibleRadius():Number {
+			return radius - 2;
+		}
+
+		public function set visibleRadius(r:Number):void  {
+			radius = r + 2;
+>>>>>>> 0ae295b033caaa7ec00eee26d8e24c079a0890bd
 		}
 	}
 }
