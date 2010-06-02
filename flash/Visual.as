@@ -33,14 +33,16 @@ package {
 		}
 
 		private function initLayers():void {
-			layers.background = new Sprite(),
-			layers.foreground = new Sprite(),
-			layers.balls      = new Sprite(),
-			layers.joints     = new Sprite()
+			layers.background  = new Sprite();
+			layers.foreground  = new Sprite();
+			layers.foreground1 = new Sprite();
+			layers.balls       = new Sprite();
+			layers.joints      = new Sprite();
 			root.addChild(layers.background);
 			root.addChild(layers.joints);
 			root.addChild(layers.balls);
 			root.addChild(layers.foreground);
+			root.addChild(layers.foreground1);
 		}
 
 		private function removeChildFromLayer(child:DisplayObject):void {
@@ -108,13 +110,17 @@ package {
 		}
 
 		private function updateSprite(obj:*):void {
-			if (obj is Button) updateButton(getSprite(obj, layers.foreground), obj);
-			if (obj is Ball) updateBall(getSprite(obj, layers.balls), obj);
+			if (obj is Button) updateButton(obj);
+			if (obj is Ball) updateBall(obj);
 			//if (obj is Naub);
-			if (obj is Joint) updateJoint(getSprite(obj, layers.joints), obj);
+			if (obj is Joint) updateJoint(obj);
 		}
 		
-		private function updateButton(bs:Sprite, b:Button):void {
+		private function updateButton(b:Button):void {
+			var layer:* = layers.foreground;
+			if (b === game.menu.mainbtn)
+				layer = layers.foreground1;
+		  var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
 			bs.graphics.lineStyle(2, colorToUInt(Color.black));
 			bs.graphics.beginFill(colorToUInt(b.color));
@@ -124,7 +130,8 @@ package {
 			bs.y = b.position.y;
 		}
 
-		private function updateBall(bs:Sprite, b:Ball):void {
+		private function updateBall(b:Ball):void {
+			var bs:Sprite = getSprite(b, layers.balls);
 			bs.graphics.clear();
 			if (game.active == b) {
 				bs.graphics.lineStyle(2, colorToUInt(Color.black));
@@ -138,7 +145,8 @@ package {
 			bs.y = b.position.y;
 		}
 
-		private function updateJoint(js:Sprite, j:Joint):void {
+		private function updateJoint(j:Joint):void {
+			var js:Sprite = getSprite(j, layers.joints);
 			js.graphics.clear();
 			js.graphics.lineStyle(4, colorToUInt(lineColor));
 			js.graphics.moveTo(j.a.position.x, j.a.position.y);
