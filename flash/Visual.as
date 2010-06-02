@@ -144,14 +144,5 @@ package {
 			js.graphics.moveTo(j.a.position.x, j.a.position.y);
 			js.graphics.lineTo(j.b.position.x, j.b.position.y);
 		}
-		
-		private function updateMenu():void {
-			var menu:Menu = game.menu;
-			var i:uint;
-			for (i = 0; i < menu.joints.length; i++)
-				updateSprite(menu.joints[i]);
-			for (i = 0; i < menu.buttons.length; i++)
-				updateSprite(menu.buttons[i]);
-		}
 	}
 }

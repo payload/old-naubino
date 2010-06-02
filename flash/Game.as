@@ -27,9 +27,7 @@
 			pointer = center;
 			spammer = new Spammer(this);
 			physics = new Physics(this);
-			menu = new Menu();
-			
-			utils.addAll(objs, menu.buttons);
+			menu = new Menu(this);
 		}
 		
 		public function Game() {
@@ -186,18 +184,13 @@
 		}
 
 		private function collidingBall(v:Vektor):Naub  {
-			var i:uint;
+			var i:int;
 			for (i = 0; i < objs.length; i++) {
 				if (objs[i] is Ball) {
 					var obj:Ball = objs[i];
 					if (obj.isHit(v))
 						return obj;
 				}
-			}
-			for (i = 0; i < menu.buttons.length; i++) {
-				var button:Button = menu.buttons[i];
-				if (button.isHit(v))
-					return button;
 			}
 			return null;
 		}
