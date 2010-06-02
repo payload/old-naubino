@@ -117,9 +117,31 @@ package {
 		}
 		
 		private function updateButton(b:Button):void {
-			var layer:* = layers.foreground;
 			if (b === game.menu.mainbtn)
-				layer = layers.foreground1;
+				updateMainButton(b);
+			else
+				updateSecondaryButton(b);
+		}
+
+		private function updateMainButton(b:Button):void {
+			var layer:* = layers.foreground1;
+		  var bs:Sprite = getSprite(b, layer);
+			bs.graphics.clear();
+			//bs.graphics.lineStyle(2, colorToUInt(Color.black));
+			bs.graphics.lineStyle();
+			bs.graphics.beginFill(colorToUInt(b.color));
+			//bs.graphics.drawCircle(0, 0, b.visibleRadius);
+			var r:Number = b.visibleRadius;
+			bs.graphics.drawRect(-r, -r, r*2, r*2);
+			bs.graphics.endFill();
+			bs.x = b.position.x;
+			bs.y = b.position.y;
+			bs.rotation = 10;
+			bs.alpha = b.alpha;
+		}
+
+		private function updateSecondaryButton(b:Button):void {
+			var layer:* = layers.foreground;
 		  var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
 			bs.graphics.lineStyle(2, colorToUInt(Color.black));
@@ -128,6 +150,7 @@ package {
 			bs.graphics.endFill();
 			bs.x = b.position.x;
 			bs.y = b.position.y;
+			bs.alpha = b.alpha;
 		}
 
 		private function updateBall(b:Ball):void {

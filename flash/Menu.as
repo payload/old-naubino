@@ -35,12 +35,11 @@
 			var tween:Object = {
 				x: mainbtn.x,
 				y: mainbtn.y,
+				alpha: 0,
 				time: 0.6
 			};
 			for (var i:* in secondaryBtns) {
 				var btn:Button = secondaryBtns[i];
-				btn.popUpX = btn.x;
-				btn.popUpY = btn.y;
 				Tweener.addTween(btn, tween);
 			}
 			mainbtn.setAction(popUp);
@@ -48,6 +47,7 @@
 
 		private function popUp():void {
 			var tween:Object = {
+				alpha: 1,
 				time: 0.6
 			};
 			for (var i:* in secondaryBtns) {
@@ -68,7 +68,7 @@
 		}
 
 		private function newPlayButton():Button {
-			return newTestButton(Color.blue, "play");
+			return newTestButton(Color.green, "play");
 		}
 
 		private function newMuteButton():Button {
@@ -76,11 +76,11 @@
 		}
 
 		private function newHighButton():Button {
-			return newTestButton(Color.blue, "high");
+			return newTestButton(Color.purple, "high");
 		}
 
 		private function newExitButton():Button {
-			return newTestButton(Color.blue, "exit");
+			return newTestButton(Color.red, "exit");
 		}
 		
 		private function initButtons():void {
@@ -105,6 +105,8 @@
 			for (var i:* in secondaryBtns) {
 				var btn:Button = secondaryBtns[i];
 				btn.position = btn.position.add(mainbtn.position);
+				btn.popUpX = btn.x;
+				btn.popUpY = btn.y;
 				join(mainbtn, btn);
 			}
 		}
