@@ -110,16 +110,18 @@
 		}
 
 		public function attachBalls(c:Collision):void {
-			var a:Ball = c.a;
-			var b:Ball= c.b;
-			if ((a.active || b.active) && c.overlap > 4) {
-				if (a.joints.length > 0 && b.joints.length > 0) {
-					if ((a is Ball) && (b is Ball) && (a.matches(b))) {
-						replaceBall(a, b);
-						handleCycles();
+			if (c.a is Ball && c.b is Ball) {
+				var a:Ball = Ball(c.a);
+				var b:Ball = Ball(c.b);
+				if ((a.active || b.active) && c.overlap > 4) {
+					if (a.joints.length > 0 && b.joints.length > 0) {
+						if ((a is Ball) && (b is Ball) && (a.matches(b))) {
+							replaceBall(a, b);
+							handleCycles();
+						}
+					} else {
+						objs.push(join(a, b));
 					}
-				} else {
-					objs.push(join(a, b));
 				}
 			}
 		}

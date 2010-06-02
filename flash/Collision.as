@@ -2,15 +2,14 @@ package {
 	
 	public class Collision {
 
-		public var a : Ball;
-		public var b : Ball;
+		public var a : Physical;
+		public var b : Physical;
 		public var diff : Vektor;
 		public var overlap : Number;
 		private const defaultFriction : Number = 0.1;
 		public var friction : Number = defaultFriction;
 
-		
-		public function Collision(a : Ball, b : Ball, diff : Vektor, overlap : Number) {
+		public function Collision(a : Physical, b : Physical, diff : Vektor, overlap : Number) {
 			this.a = a;
 			this.b = b;
 			this.diff = diff;
@@ -18,9 +17,9 @@ package {
 		}
 
 		/* Kollisions Test */
-		public static function test(a : Ball, b : Ball) : Collision  {
+		public static function test(a : Physical, b : Physical) : Collision  {
 			var diff : Vektor = b.position.sub(a.position);
-			var overlap : Number = a.physicalRadius + b.physicalRadius - diff.length;
+			var overlap : Number = a.radius + b.radius - diff.length;
 			if (overlap > 0)
 				return new Collision(a, b, diff, overlap);
 			else

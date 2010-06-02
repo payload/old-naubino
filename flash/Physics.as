@@ -12,7 +12,7 @@
 			this.game = game;
 		}
 
-		private function indirectGravity(b : Ball):void {
+		private function indirectGravity(b : Moveable):void {
 			if(b.attracted){
 				var difference:Vektor = b.attractedTo.sub(b.position);
 				difference = difference.mul(0.0001);
@@ -21,12 +21,12 @@
 			}
 		}
 
-		private function moveBall(b : Ball):void {
+		private function moveBall(b : Moveable):void {
 			b.speed = b.speed.add(b.acceleration);
 			b.position = b.position.add(b.speed);
 		}
 
-		private function friction(b : Ball):void {
+		private function friction(b : Moveable):void {
 			b.accelerate(b.speed.mul(-defaultFriction));
 		}
 
@@ -36,7 +36,7 @@
 		}
 
 		private function collidable(obj:*):Boolean {
-			return obj is Ball;
+			return obj is Moveable;
 		}
 
 		private function collide(c:Collision):void {
@@ -45,7 +45,7 @@
 		}
 
 		private function collision():void {
-			var a:Ball, b:Ball;
+			var a:Moveable, b:Moveable;
 			for (var i:int = 0; i < (game.objs.length - 1); i++)
 			if (collidable(game.objs[i])) {
 				for (var j:int = i + 1; j < game.objs.length; j++)
@@ -62,11 +62,16 @@
 			return obj is Ball;
 		}
 
-		private function handleMoveable(b:Ball):void {
+		private function handleMoveable(b:Moveable):void {
 			b.acceleration = new Vektor();
 			indirectGravity(b);
 			friction(b);
-			if (b.active)
+			if (b is Ball)
+				handleBall(b);
+		}
+
+		private function handleBall(b:*):void {
+			if(b.active)
 				moveActiveBall(b);
 		}
 		

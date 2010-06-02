@@ -1,19 +1,12 @@
 ﻿package 
 {
-	public class Naub {
-		public var position : Vektor;
-		public var speed : Vektor;
-		public var acceleration : Vektor;
-		public var physicalRadius : Number;
-		public var visibleRadius : Number = physicalRadius-4;
-		public var mass : Number;
+	public class Naub extends Physical {
+		public var visibleRadius : Number;
 		public var color : Color;
 		private var _joints : Array;
-		public var attracted:Boolean;
-		public var attractedTo:Vektor;
-		
-		protected const defaultRadius:Number = 15;
 
+		protected const defaultRadius:Number = 15;
+	
 		public function get joints() : Array {
 			return _joints;
 		}
@@ -25,7 +18,7 @@
 		private function initFields(position:Vektor, radius:Number):void {
 			this.position = position;
 			this.attractedTo = position;
-			this.physicalRadius = radius;
+			this.radius = radius;
 			this.visibleRadius = radius - 2;
 			this.mass = 1;
 			speed = new Vektor();
@@ -36,13 +29,9 @@
 		
 		/* position and movement below here */
 		
-		public function accelerate(v:Vektor):void {
-			acceleration = acceleration.add(v);
-		}
-
 		public function isHit(v:Vektor) : Boolean {
 			var distance:Number = v.sub(position).length;
-			return distance <= physicalRadius;
+			return distance <= radius;
 		}
 
 		public function distanceTo(v:Vektor) : Vektor {

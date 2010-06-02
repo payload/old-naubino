@@ -38,7 +38,7 @@
 			playbtn = newPlayButton();
 
 			mainbtn.position = new Vektor(35, 30);
-			playbtn.position = mainbtn.position.add(new Vektor(30, 5));
+			playbtn.position = mainbtn.position.add(new Vektor(50, 5));
 
 			join(mainbtn, playbtn);
 		}
