@@ -1,5 +1,6 @@
 ﻿package 
 {
+	import caurina.transitions.Tweener;
 	import flash.display.JointStyle;
 	import flash.utils.Timer;
 	public class Game
@@ -211,8 +212,12 @@
 				var jp:Ball = objobjs[i];
 				removeAll(jp.joints, jp.jointsWith(b));
 			}
-			b.disappear();
-			objs.splice(objs.indexOf(b), 1);
+			var tween:Object = {
+				radius: 4,
+				time: 1
+			};
+			tween.onComplete = function():void {objs.splice(objs.indexOf(b), 1)};
+			Tweener.addTween(b,tween);
 		}
 
 		/* interaction below here */
