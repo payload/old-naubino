@@ -45,18 +45,14 @@
 		}
 
 		private function collision():void {
-			if (game.objs.length > 1) {
-				var a:Ball, b:Ball;
-				for (var i:int = 0; i < (game.objs.length - 1); i++) {
-					if (collidable(game.objs[i])) {
-						for (var j:int = i + 1; j < game.objs.length; j++) {
-							if (collidable(game.objs[j])) {
-								var c:Collision = Collision.test(game.objs[i], game.objs[j]);
-								if (c != null) {
-									collide(c);
-								}
-							}
-						}
+			var a:Ball, b:Ball;
+			for (var i:int = 0; i < (game.objs.length - 1); i++)
+			if (collidable(game.objs[i])) {
+				for (var j:int = i + 1; j < game.objs.length; j++)
+				if (collidable(game.objs[j])) {
+					var c:Collision = Collision.test(game.objs[i], game.objs[j]);
+					if (c != null) {
+						collide(c);
 					}
 				}
 			}
