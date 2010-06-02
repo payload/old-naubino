@@ -180,7 +180,14 @@
 				cycle = cycles[i];
 				for (var j:uint = 0; j < cycle.length; j++) {
 					b = cycle[j];
-					removeBall(b);
+					var tween:Object = {
+						radius: 4,
+						time: .5
+					};
+					tween.onComplete = function():void {removeBall(b);};
+					Tweener.addTween(b,tween);
+					
+					//removeBall(b);
 					incPoints();
 				}
 			}
@@ -212,12 +219,7 @@
 				var jp:Ball = objobjs[i];
 				removeAll(jp.joints, jp.jointsWith(b));
 			}
-			var tween:Object = {
-				radius: 4,
-				time: 1
-			};
-			tween.onComplete = function():void {objs.splice(objs.indexOf(b), 1)};
-			Tweener.addTween(b,tween);
+			objs.splice(objs.indexOf(b), 1);
 		}
 
 		/* interaction below here */
