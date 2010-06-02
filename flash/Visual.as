@@ -144,7 +144,8 @@ package {
 			var layer:* = layers.foreground;
 		  var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
-			bs.graphics.lineStyle(2, colorToUInt(Color.black));
+			//bs.graphics.lineStyle(2, colorToUInt(Color.black));
+			bs.graphics.lineStyle();
 			bs.graphics.beginFill(colorToUInt(b.color));
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			bs.graphics.endFill();

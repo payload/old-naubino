@@ -26,6 +26,7 @@
 		private function newMainButton():Button {
 			var btn : Button = new Button();
 			btn.color = Color.yellow;
+			btn.visibleRadius = 15;
 			btn.setAction(popDown);
 			objs.push(btn);
 			return btn;
@@ -40,20 +41,22 @@
 			};
 			for (var i:* in secondaryBtns) {
 				var btn:Button = secondaryBtns[i];
+				btn.collidable = false;
 				Tweener.addTween(btn, tween);
 			}
 			mainbtn.setAction(popUp);
 		}
 
 		private function popUp():void {
-			var tween:Object = {
-				alpha: 1,
-				time: 0.6
-			};
+			var tween:Object;
 			for (var i:* in secondaryBtns) {
 				var btn:Button = secondaryBtns[i];
+				tween = {};
+				tween.alpha = 1;
 				tween.x = btn.popUpX;
 				tween.y = btn.popUpY;
+				tween.time = 0.6;
+				tween.onComplete = function():void { btn.collidable = true; };
 				Tweener.addTween(btn, tween);
 			}
 			mainbtn.setAction(popDown);
@@ -97,22 +100,27 @@
 
 			const pi:Number = 3.14159;
 			mainbtn.position = new Vektor(35, 30);
-			playbtn.position = Vektor.polar(-0.05 * pi, 60);
-			mutebtn.position = Vektor.polar(0.15 * pi, 55);
-			highbtn.position = Vektor.polar(0.35 * pi, 52);
-			exitbtn.position = Vektor.polar(0.58 * pi, 50);
+			var x:Number = -0.1;
+			var step:Number = 0.24;
+			playbtn.position = Vektor.polar(x * pi, 70); x += step;
+			mutebtn.position = Vektor.polar(x * pi, 60); x += step;
+			highbtn.position = Vektor.polar(x * pi, 55); x += step;
+			exitbtn.position = Vektor.polar(x * pi, 50);
 
 			for (var i:* in secondaryBtns) {
 				var btn:Button = secondaryBtns[i];
-				btn.position = btn.position.add(mainbtn.position);
+				btn.position = btn.position.mul(0.7).add(mainbtn.position);
 				btn.popUpX = btn.x;
 				btn.popUpY = btn.y;
+				btn.visibleRadius = 12;
 				join(mainbtn, btn);
 			}
 		}
 		
 		public function join(a:Button, b:Button):Joint {
 			var joint:Joint  = new Joint(a, b);
+			//joint.length = b.position.sub(a.position).length * 1.1;
+			//joint.strength = Joint.defaultStrength;
 			joint.strength = 0;
 			objs.push(joint);
 			return joint;
