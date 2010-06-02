@@ -23,13 +23,7 @@
 			acceleration = new Vektor();
 			_joints = [];
 		}
-		
-		/* position and movement below here */
-		
-		public function distanceTo(v:Vektor) : Vektor {
-			return v.sub(position);
-		}
-		
+	
 		/* joint stuff below here */
 
 		public function addJoint(joint:Joint):void {
