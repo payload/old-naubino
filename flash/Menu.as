@@ -18,7 +18,7 @@
 			initButtons();
 			utils.addAll(game.objs, objs);
 		}
-
+		
 		private function tracer(str:String):Function {
 			return function():void { trace(str); };
 		}

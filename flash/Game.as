@@ -211,6 +211,7 @@
 				var jp:Ball = objobjs[i];
 				removeAll(jp.joints, jp.jointsWith(b));
 			}
+			b.disappear();
 			objs.splice(objs.indexOf(b), 1);
 		}
 
