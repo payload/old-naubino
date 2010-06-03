@@ -1,4 +1,4 @@
-package {
+﻿package {
 	
 	import flash.events.*;
 	import flash.system.System;
@@ -16,7 +16,7 @@ package {
 			};
 			onKeyUp = { 
 				'ESC': close,
-				'ENTER': nothing,
+				'ENTER': game.spammer.randomPair,
 				'SPACE': game.restart,
 				'CONTROL': nothing,
 				'Q': nothing,
@@ -25,7 +25,7 @@ package {
 		}
 
 		public function close():void {
-			System.exit(0);
+			//System.exit(0);
 		}
 
 		public function nothing():void {

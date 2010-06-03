@@ -29,7 +29,7 @@
 		public function Naubino() {
 			initFields();
 			startTimer(50, game.refresh);
-			startTimer(3500, game.spammer.randomPair);
+			startTimer(2500, game.spammer.randomPair);
 		}
 	}
 }

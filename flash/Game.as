@@ -2,6 +2,7 @@
 {
 	import caurina.transitions.Tweener;
 	import flash.display.JointStyle;
+	import flash.events.*;
 	import flash.utils.Timer;
 	public class Game
 	{
@@ -178,19 +179,44 @@
 			var cycles:Array = CycleTest.cycleTest(balls);
 			for (var i:uint = 0; i < cycles.length; i++) {
 				cycle = cycles[i];
-				for (var j:uint = 0; j < cycle.length; j++) {
+				handleCycle(cycle);
+				/*for (var j:uint = 0; j < cycle.length; j++) {
 					b = cycle[j];
-					var tween:Object = {
-						radius: 4,
-						time: .5
-					};
-					tween.onComplete = function():void {removeBall(b);};
-					Tweener.addTween(b,tween);
-					
-					//removeBall(b);
-					incPoints();
-				}
+					shrinkBall(b);
+				}*/
 			}
+		}
+		
+		private function handleCycle(cycle:Array):void {
+			var timer:Timer = new Timer(100);
+			
+			timer.addEventListener(TimerEvent.TIMER,
+				function(e:Event):void { 
+					var b:Ball = cycle[cycle.length-1];
+					shrinkBall(b);
+					cycle.splice(cycle.indexOf(b), 1);
+				}
+			);
+			
+			timer.start();
+		}
+		
+		private function fadeJoints(b:Ball):void {
+			for (var i:uint = 0; i < b.joints.length; i++) {
+				
+			}
+		}
+		
+		private function shrinkBall(b:Ball):void {
+			var tween:Object = {
+				radius: 4,
+				time: .2
+			};
+			tween.onComplete = function():void {removeBall(b);};
+			Tweener.addTween(b,tween);
+			
+			//removeBall(b);
+			incPoints();
 		}
 
 		private function collidingBall(v:Vektor):Circle  {
