@@ -14,7 +14,7 @@ package{
 		
 		public static const defaultLength:Number = 40;
 		public static const defaultStrength:Number = .3;
-		public static const defaultFriction:Number = 0.001;
+		public static const defaultFriction:Number = 0.999;
 		
 		public function Joint(a:Moveable, b:Moveable) {
 			this.a = a;
@@ -38,9 +38,9 @@ package{
 			var r:Number = springVector.length;
 			
 			if(r != 0)
-				force = force.add(springVector.norm.mul(-(r-length)*strength));
+				force = force.add(springVector.norm.mul((length-r)*strength));
 			
-			force = force.add(a.speed.sub(b.speed).mul(-friction));
+			force = force.add(a.speed.sub(b.speed).mul(-1+friction));
 			a.accelerate(force);
 			b.accelerate(force.mul(-1));
 		}
