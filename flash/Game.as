@@ -41,7 +41,6 @@
 			var b : Ball = new Ball(v);
 			b.attractedTo = center;
 			objs.push(b);
-			//objs.push(b);
 			return b;
 		}
 		
@@ -174,49 +173,44 @@
 		}
 
 		private function handleCycles():void {
-			var b:Ball;
-			var cycle:Array;
 			var cycles:Array = CycleTest.cycleTest(balls);
-			for (var i:uint = 0; i < cycles.length; i++) {
-				cycle = cycles[i];
-				handleCycle(cycle);
-				/*for (var j:uint = 0; j < cycle.length; j++) {
-					b = cycle[j];
-					shrinkBall(b);
-				}*/
+			for (var i:* in cycles) {
+				handleCycle(cycles[i]);
 			}
 		}
 		
 		private function handleCycle(cycle:Array):void {
-			var timer:Timer = new Timer(100);
-			
-			timer.addEventListener(TimerEvent.TIMER,
-				function(e:Event):void { 
-					var b:Ball = cycle[cycle.length-1];
-					shrinkBall(b);
-					cycle.splice(cycle.indexOf(b), 1);
-				}
-			);
-			
-			timer.start();
+			removeCycle(cycle);
 		}
-		
-		private function fadeJoints(b:Ball):void {
-			for (var i:uint = 0; i < b.joints.length; i++) {
-				
+
+		private function removeCycle(cycle:Array):void {
+			var start:Number = 0;
+			var step:Number = 0.5;
+			for (var i:int = 0; i < cycle.length; i++) {
+				shrinkBall(cycle[i], start);
+				start += step;
 			}
 		}
 		
-		private function shrinkBall(b:Ball):void {
+		private function fadeJoints(joints:Array):void {
 			var tween:Object = {
-				radius: 4,
+				size: 0,
 				time: .2
 			};
-			tween.onComplete = function():void {removeBall(b);};
-			Tweener.addTween(b,tween);
-			
-			//removeBall(b);
-			incPoints();
+			for (var i:int = 0; i < joints.length; i++) {
+				Tweener.addTween(joints[i], tween);
+			}
+		}
+		
+		private function shrinkBall(b:Ball, start:Number = 0):void {
+			var tween:Object = {
+				radius: 4,
+				time: .2,
+				delay: start,
+				onStart: function():void { fadeJoints(b.joints); },
+				onComplete: function():void { removeBall(b); }
+			};
+			Tweener.addTween(b, tween);
 		}
 
 		private function collidingBall(v:Vektor):Circle  {

@@ -3,6 +3,8 @@ package{
 		
 		public var a:Moveable;
 		public var b:Moveable;
+
+		public var size:Number = 4;
 		
 		private var _length:Number;
 		private var _strength:Number;

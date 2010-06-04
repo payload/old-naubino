@@ -172,7 +172,10 @@ package {
 		private function updateJoint(j:Joint):void {
 			var js:Sprite = getSprite(j, layers.joints);
 			js.graphics.clear();
-			js.graphics.lineStyle(4, colorToUInt(lineColor));
+			if (j.size > 0)
+				js.graphics.lineStyle(j.size, colorToUInt(lineColor));
+			else
+				js.graphics.lineStyle();
 			js.graphics.moveTo(j.a.position.x, j.a.position.y);
 			js.graphics.lineTo(j.b.position.x, j.b.position.y);
 		}
