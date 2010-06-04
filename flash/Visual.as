@@ -3,6 +3,8 @@ package {
 	import flash.display.*;
 	import flash.utils.*;
 	import flash.events.Event;
+	import flash.text.TextField;
+
 
 	public class Visual {
 
@@ -68,10 +70,29 @@ package {
 			return 0x010000 * color.r + 0x000100 * color.g + 0x000001 * color.b;
 		}
 
-		private function getSprite(link:*, layer:DisplayObjectContainer):Sprite {
-			var sprite : Sprite = getExistingSprite(link);
+		private function getSprite(link:*, layer:DisplayObjectContainer, cls:Class = null):* {
+			if(cls == null)
+				cls = Sprite;			
+			var sprite : DisplayObject = getExistingSprite(link);
 			if (sprite == null)
-				sprite = newSprite(link, layer);
+				sprite = newSprite(link, layer, cls);
+			return sprite;
+		}
+
+		private function newSprite(link:*, layer:DisplayObjectContainer, cls:Class):DisplayObject {
+			var sprite : DisplayObject = new cls();
+			sprites[link] = sprite;
+			usedSprites[link] = sprite;
+			layer.addChild(sprite);
+			return sprite;
+		}
+
+		private function getExistingSprite(link:*):DisplayObject {
+			var newSprite : Boolean = false;
+			var sprite : DisplayObject = sprites[link];
+			if (sprite == null)
+				return null;
+			usedSprites[link] = sprite;
 			return sprite;
 		}
 
@@ -82,23 +103,6 @@ package {
 			field.graphics.drawCircle(0, 0, game.fieldSize);
 			field.x = game.center.x;
 			field.y = game.center.y;
-		}
-
-		private function newSprite(link:*, layer:DisplayObjectContainer):Sprite {
-			var sprite : Sprite = new Sprite();
-			sprites[link] = sprite;
-			usedSprites[link] = sprite;
-			layer.addChild(sprite);
-			return sprite;
-		}
-
-		private function getExistingSprite(link:*):Sprite {
-			var newSprite : Boolean = false;
-			var sprite : Sprite = sprites[link];
-			if (sprite == null)
-				return null;
-			usedSprites[link] = sprite;
-			return sprite;
 		}
 
 		private function updateSprites():void {
@@ -125,7 +129,7 @@ package {
 
 		private function updateMainButton(b:Button):void {
 			var layer:* = layers.foreground1;
-		  var bs:Sprite = getSprite(b, layer);
+			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
 			//bs.graphics.lineStyle(2, colorToUInt(Color.black));
 			bs.graphics.lineStyle();
@@ -134,10 +138,21 @@ package {
 			var r:Number = b.visibleRadius;
 			bs.graphics.drawRect(-r, -r, r*2, r*2);
 			bs.graphics.endFill();
+
 			bs.x = b.position.x;
 			bs.y = b.position.y;
 			bs.rotation = 10;
 			bs.alpha = b.alpha;
+
+			var points:TextField = getSprite("Points", layer, TextField);			
+			points.textColor = 0x000000;			
+			layer.addChild(points); 
+			//points.width = 60;
+			//points.height = 90;
+			points.x = bs.x;
+			points.y = bs.y;
+			points.text = game.points.toString();
+			
 		}
 
 		private function updateSecondaryButton(b:Button):void {

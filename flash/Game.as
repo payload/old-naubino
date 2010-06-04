@@ -20,7 +20,7 @@
 		public var enablePhysics:Boolean = true;
 		public var useGenerateTimer:Boolean  = false;
 
-		private var points:Number = 0;
+		public var points:Number = 0;
 		private var antipoints:Number = 0;
 
 		private function initFields():void {
