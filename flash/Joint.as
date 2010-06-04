@@ -12,13 +12,14 @@ package{
 		
 		public static const defaultLength:Number = 40;
 		public static const defaultStrength:Number = .3;
+		public static const defaultFriction:Number = 0.01;
 		
 		public function Joint(a:Moveable, b:Moveable) {
 			this.a = a;
 			this.b = b;
 			length = defaultLength;
 			strength = defaultStrength;
-			friction = 0.1;
+			friction = defaultFriction;
 		}
 
 		public function spring():void {
