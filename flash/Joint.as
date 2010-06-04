@@ -12,7 +12,7 @@ package{
 		
 		public static const defaultLength:Number = 40;
 		public static const defaultStrength:Number = .3;
-		public static const defaultFriction:Number = 0.01;
+		public static const defaultFriction:Number = 0.001;
 		
 		public function Joint(a:Moveable, b:Moveable) {
 			this.a = a;

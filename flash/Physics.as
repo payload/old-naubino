@@ -32,7 +32,7 @@
 
 		private function moveActiveBall(ball:Ball):void {
 			var accel : Vektor = game.pointer.sub(ball.position);
-			ball.accelerate(accel.mul(0.2));
+			ball.accelerate(accel.mul(0.35));
 		}
 
 		private function collidable(obj:*):Boolean {
