@@ -180,6 +180,7 @@
 		}
 		
 		private function handleCycle(cycle:Array):void {
+			updatePoints(cycle);
 			removeCycle(cycle);
 		}
 
@@ -278,10 +279,10 @@
 			return null;
 		}
 		
-		public function incPoints():void {
-			points++;
+		public function updatePoints(cycle:Array):void {
+			for (var i:int = 0; i < cycle.length; i++) {
+				points++;
+			}
 		}
-
-	}
-	
+	}	
 }
