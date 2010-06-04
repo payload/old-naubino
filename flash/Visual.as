@@ -134,10 +134,17 @@ package {
 			var r:Number = b.visibleRadius;
 			bs.graphics.drawRect(-r, -r, r*2, r*2);
 			bs.graphics.endFill();
+
 			bs.x = b.position.x;
 			bs.y = b.position.y;
 			bs.rotation = 10;
 			bs.alpha = b.alpha;
+
+			var points:TextField = new TextField();			
+			points.textColor = 0xFFFFFF;			
+			bs.addChild(points);
+			points.text = Game.points;
+			
 		}
 
 		private function updateSecondaryButton(b:Button):void {
