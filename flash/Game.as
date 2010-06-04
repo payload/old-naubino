@@ -194,12 +194,8 @@
 		}
 		
 		private function fadeJoints(joints:Array):void {
-			var tween:Object = {
-				size: 0,
-				time: .2
-			};
 			for (var i:int = 0; i < joints.length; i++) {
-				Tweener.addTween(joints[i], tween);
+				joints[i].fadeOut();
 			}
 		}
 		

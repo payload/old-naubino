@@ -1,4 +1,6 @@
 package{
+	import caurina.transitions.Tweener;
+
 	public class Joint{
 		
 		public var a:Moveable;
@@ -20,6 +22,14 @@ package{
 			length = defaultLength;
 			strength = defaultStrength;
 			friction = defaultFriction;
+		}
+
+		public function fadeOut():void {
+			var tween:Object = {
+				size: 0,
+				time: .2
+			};
+			Tweener.addTween(this, tween);
 		}
 
 		public function spring():void {
