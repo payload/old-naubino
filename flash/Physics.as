@@ -85,7 +85,7 @@
 					obj.spring();
 			}
 			
-			for (i = 0; i < 3; i++)
+			for (i = 0; i < 1; i++)
 				collision();
 
 			for (i = 0; i < game.objs.length; i++) {

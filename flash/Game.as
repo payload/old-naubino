@@ -186,7 +186,7 @@
 
 		private function removeCycle(cycle:Array):void {
 			var start:Number = 0;
-			var step:Number = 0.5;
+			var step:Number = 0.07;
 			for (var i:int = 0; i < cycle.length; i++) {
 				shrinkBall(cycle[i], start);
 				start += step;
@@ -202,7 +202,7 @@
 		private function shrinkBall(b:Ball, start:Number = 0):void {
 			var tween:Object = {
 				radius: 4,
-				time: .2,
+				time: .06,
 				delay: start,
 				onStart: function():void { fadeJoints(b.joints); },
 				onComplete: function():void { removeBall(b); }
