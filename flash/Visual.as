@@ -193,6 +193,7 @@ package {
 				js.graphics.lineStyle();
 			js.graphics.moveTo(j.a.position.x, j.a.position.y);
 			js.graphics.lineTo(j.b.position.x, j.b.position.y);
+			js.alpha = j.alpha;
 		}
 	}
 }

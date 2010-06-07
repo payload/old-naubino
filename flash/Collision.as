@@ -48,7 +48,7 @@ package {
 		public function collide():void {
 			positionBalls();
 			//momentumConservation();
-			//applyFriction();
+			applyFriction();
 		}
 	}
 }
