@@ -18,11 +18,18 @@ package {
 		}
 
 		public function get visibleRadius():Number {
-			return radius - 2;
+			return max(radius - 2, 0);
 		}
 
 		public function set visibleRadius(r:Number):void  {
 			radius = r + 2;
+		}
+
+		private function max(a:*, b:*):* {
+			if (a < b)
+				return b;
+			else
+				return a;
 		}
 	}
 }

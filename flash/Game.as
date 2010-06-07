@@ -186,23 +186,34 @@
 
 		private function removeCycle(cycle:Array):void {
 			var start:Number = 0;
-			var step:Number = 0.5;
+			var step:Number = 0.07;
 			for (var i:int = 0; i < cycle.length; i++) {
 				shrinkBall(cycle[i], start);
 				start += step;
 			}
 		}
+
+		var ani_t:Number = 0.5;
 		
 		private function fadeJoints(joints:Array):void {
 			for (var i:int = 0; i < joints.length; i++) {
-				joints[i].fadeOut();
+				fadeOut(joints[i]);
 			}
+		}
+
+		public function fadeOut(j:Joint):void {
+			var tween:Object = {
+				size: 0,
+				alpha: 0,
+				time: ani_t*1.2
+			};
+			Tweener.addTween(j, tween);
 		}
 		
 		private function shrinkBall(b:Ball, start:Number = 0):void {
 			var tween:Object = {
-				radius: 4,
-				time: .2,
+				radius: 0,
+				time: ani_t,
 				delay: start,
 				onStart: function():void { fadeJoints(b.joints); },
 				onComplete: function():void { removeBall(b); }

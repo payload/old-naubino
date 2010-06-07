@@ -7,6 +7,7 @@ package{
 		public var b:Moveable;
 
 		public var size:Number = 4;
+		public var alpha:Number = 1;
 		
 		private var _length:Number;
 		private var _strength:Number;
@@ -22,14 +23,6 @@ package{
 			length = defaultLength;
 			strength = defaultStrength;
 			friction = defaultFriction;
-		}
-
-		public function fadeOut():void {
-			var tween:Object = {
-				size: 0,
-				time: .2
-			};
-			Tweener.addTween(this, tween);
 		}
 
 		public function spring():void {
