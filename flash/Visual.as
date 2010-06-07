@@ -3,7 +3,7 @@ package {
 	import flash.display.*;
 	import flash.utils.*;
 	import flash.events.Event;
-	import flash.text.TextField;
+	import flash.text.*;
 
 
 	public class Visual {
@@ -145,13 +145,18 @@ package {
 			bs.alpha = b.alpha;
 
 			var points:TextField = getSprite("Points", layer, TextField);			
-			points.textColor = 0x000000;			
+			var format:TextFormat = new TextFormat();
+			format.bold = true;
+			format.size = 23;
+			points.textColor = 0xffffff;
 			layer.addChild(points); 
+			
 			//points.width = 60;
 			//points.height = 90;
 			points.x = bs.x;
 			points.y = bs.y;
 			points.text = game.points.toString();
+			points.setTextFormat(format);	
 			
 		}
 
