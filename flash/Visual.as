@@ -174,52 +174,81 @@ package {
 
 		private function updateSecondaryButton(b:Button):void {
 			var layer:* = layers.foreground;
-		  var bs:Sprite = getSprite(b, layer);
+			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
 			//bs.graphics.lineStyle(2, colorToUInt(Color.black));
 			bs.graphics.lineStyle();
 			bs.graphics.beginFill(colorToUInt(b.color));
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			bs.graphics.endFill();
-			bs.graphics.beginFill(colorToUInt(Color.white));
+			
+			var fillcolor:uint = colorToUInt(Color.white)
+
+			bs.graphics.beginFill(fillcolor);
 		switch (b.type){
 
 		case "pause":
-			bs.graphics.drawRect(-b.visibleRadius/3,-b.visibleRadius/3,b.visibleRadius*0.3,b.visibleRadius*0.7);
-		bs.graphics.drawRect(-b.visibleRadius/3+b.visibleRadius*0.4,-b.visibleRadius/3,b.visibleRadius*0.3,b.visibleRadius*0.7);
+			bs.graphics.drawRect(-b.visibleRadius*0.4, -b.visibleRadius*0.4, b.visibleRadius*0.3, b.visibleRadius*0.8);
+			bs.graphics.drawRect( b.visibleRadius*0.4, -b.visibleRadius*0.4,-b.visibleRadius*0.3, b.visibleRadius*0.8);
 		break;
 			
 		case "play":
-			bs.graphics.moveTo(-b.visibleRadius/3, -b.visibleRadius/3);
-			bs.graphics.lineTo(-b.visibleRadius/3,  b.visibleRadius/3);
-			bs.graphics.lineTo(b.visibleRadius/3, 0);
-			bs.graphics.lineTo(-b.visibleRadius/3, -b.visibleRadius/3);
+			bs.graphics.moveTo(-b.visibleRadius*0.35, -b.visibleRadius*0.4);
+			bs.graphics.lineTo(-b.visibleRadius*0.35,  b.visibleRadius*0.4);
+			bs.graphics.lineTo( b.visibleRadius*0.45,  0);
+			bs.graphics.lineTo(-b.visibleRadius*0.35, -b.visibleRadius*0.4);
+		break;
+
+		case "muteoff":
+			bs.graphics.drawRect(-b.visibleRadius*0.5,-b.visibleRadius*0.3,b.visibleRadius*0.3,b.visibleRadius*0.6);
+			
+			bs.graphics.moveTo( b.visibleRadius*0.3,  b.visibleRadius*0.5);
+			bs.graphics.lineTo( b.visibleRadius*0.3, -b.visibleRadius*0.5);
+			bs.graphics.lineTo(-b.visibleRadius*0.25, -b.visibleRadius*0.2);
+			bs.graphics.lineTo(-b.visibleRadius*0.25,  b.visibleRadius*0.2);
+			bs.graphics.lineTo( b.visibleRadius*0.3,  b.visibleRadius*0.5);
+			bs.graphics.endFill();
 		break;
 
 		case "mute":
-			bs.graphics.drawRect(-b.visibleRadius*0.5,-b.visibleRadius*0.3,b.visibleRadius*0.3,b.visibleRadius*0.6);
+			bs.graphics.drawRect(-b.visibleRadius*0.6,-b.visibleRadius*0.3,b.visibleRadius*0.4,b.visibleRadius*0.6);
 			
-			bs.graphics.moveTo( b.visibleRadius*0.35,  b.visibleRadius*0.5);
-			bs.graphics.lineTo( b.visibleRadius*0.35, -b.visibleRadius*0.5);
-			bs.graphics.lineTo(-b.visibleRadius*0.25, -b.visibleRadius*0.2);
-			bs.graphics.lineTo(-b.visibleRadius*0.25,  b.visibleRadius*0.2);
-			bs.graphics.lineTo( b.visibleRadius*0.35,  b.visibleRadius*0.5);
-		break;
-		case "exit":
-			
-			bs.graphics.moveTo( b.visibleRadius/3+b.visibleRadius*0.2, b.visibleRadius/3);
-			bs.graphics.lineTo(-b.visibleRadius/3+b.visibleRadius*0.2,-b.visibleRadius/3);
-			bs.graphics.lineTo(-b.visibleRadius/3  ,-b.visibleRadius/3);
-			bs.graphics.lineTo( b.visibleRadius/3  , b.visibleRadius/3);
-			bs.graphics.lineTo( b.visibleRadius/3+b.visibleRadius*0.2, b.visibleRadius/3);
+			bs.graphics.moveTo( b.visibleRadius*0.4,  b.visibleRadius*0.5);
+			bs.graphics.lineTo( b.visibleRadius*0.4, -b.visibleRadius*0.5);
+			bs.graphics.lineTo(-b.visibleRadius*0.35, -b.visibleRadius*0.2);
+			bs.graphics.lineTo(-b.visibleRadius*0.35,  b.visibleRadius*0.2);
+			bs.graphics.lineTo( b.visibleRadius*0.4,  b.visibleRadius*0.5);
 			bs.graphics.endFill();
 
-			bs.graphics.beginFill(colorToUInt(Color.white));
-			bs.graphics.lineTo( b.visibleRadius/3+b.visibleRadius*0.2,-b.visibleRadius/3);
-			bs.graphics.lineTo(-b.visibleRadius/3+b.visibleRadius*0.2, b.visibleRadius/3);
-			bs.graphics.lineTo(-b.visibleRadius/3  , b.visibleRadius/3);
-			bs.graphics.lineTo( b.visibleRadius/3  ,-b.visibleRadius/3);
-			bs.graphics.lineTo( b.visibleRadius/3+b.visibleRadius*0.2,-b.visibleRadius/3);
+			bs.graphics.beginFill(fillcolor);			
+			bs.graphics.moveTo( b.visibleRadius*0.4,  b.visibleRadius*0.6);
+			bs.graphics.lineTo( b.visibleRadius*0.2,  b.visibleRadius*0.6);
+			bs.graphics.lineTo(-b.visibleRadius*0.5, -b.visibleRadius*0.6);
+			bs.graphics.lineTo(-b.visibleRadius*0.2, -b.visibleRadius*0.6);
+			bs.graphics.lineTo( b.visibleRadius*0.4,  b.visibleRadius*0.6);
+			bs.graphics.endFill();
+
+			bs.graphics.beginFill(fillcolor);			
+			bs.graphics.moveTo(-b.visibleRadius*0.5,  b.visibleRadius*0.6);
+			bs.graphics.lineTo(-b.visibleRadius*0.2,  b.visibleRadius*0.6);
+			bs.graphics.lineTo( b.visibleRadius*0.4, -b.visibleRadius*0.6);
+			bs.graphics.lineTo( b.visibleRadius*0.2, -b.visibleRadius*0.6);
+			bs.graphics.lineTo(-b.visibleRadius*0.5,  b.visibleRadius*0.6);
+		break;
+		case "exit":	
+			bs.graphics.moveTo( b.visibleRadius*0.5,  b.visibleRadius*0.4);
+			bs.graphics.lineTo( b.visibleRadius*0.2,  b.visibleRadius*0.4);
+			bs.graphics.lineTo(-b.visibleRadius*0.5, -b.visibleRadius*0.4);
+			bs.graphics.lineTo(-b.visibleRadius*0.2, -b.visibleRadius*0.4);
+			bs.graphics.lineTo( b.visibleRadius*0.5,  b.visibleRadius*0.4);
+			bs.graphics.endFill();
+
+			bs.graphics.beginFill(fillcolor);			
+			bs.graphics.moveTo(-b.visibleRadius*0.5,  b.visibleRadius*0.4);
+			bs.graphics.lineTo(-b.visibleRadius*0.2,  b.visibleRadius*0.4);
+			bs.graphics.lineTo( b.visibleRadius*0.5, -b.visibleRadius*0.4);
+			bs.graphics.lineTo( b.visibleRadius*0.2, -b.visibleRadius*0.4);
+			bs.graphics.lineTo(-b.visibleRadius*0.5,  b.visibleRadius*0.4);
 		break;
 			}
 			bs.graphics.endFill();
