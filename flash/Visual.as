@@ -65,7 +65,7 @@ package {
 			updateField();
 			removeUnusedSprites();
 		}
-				
+
 		private function colorToUInt(color:Color):uint {
 			return 0x010000 * color.r + 0x000100 * color.g + 0x000001 * color.b;
 		}
@@ -119,7 +119,7 @@ package {
 			//if (obj is Naub);
 			if (obj is Joint) updateJoint(obj);
 		}
-		
+
 		private function updateButton(b:Button):void {
 			if (b === game.menu.mainbtn)
 				updateMainButton(b);
@@ -147,17 +147,29 @@ package {
 			var points:TextField = getSprite("Points", layer, TextField);			
 			var format:TextFormat = new TextFormat();
 			format.bold = true;
-			format.size = 23;
+			format.font = "Verdana";
 			points.textColor = 0xffffff;
 			layer.addChild(points); 
-			
-			//points.width = 60;
-			//points.height = 90;
-			points.x = bs.x-14;
-			points.y = bs.y-14;
+
+			if(game.points < 10){
+				format.size = 36;
+				points.x = bs.x-15;
+				points.y = bs.y-25;
+			}
+			else if(game.points < 100){
+				format.size = 26;
+				points.x = bs.x-21;
+				points.y = bs.y-19;
+			}
+			else{
+				format.size = 20;
+				format.letterSpacing = -3.0;
+				points.x = bs.x-21;
+				points.y = bs.y-16;
+			}
 			points.text = game.points.toString();
 			points.setTextFormat(format);	
-			
+
 		}
 
 		private function updateSecondaryButton(b:Button):void {
@@ -169,8 +181,6 @@ package {
 			bs.graphics.beginFill(colorToUInt(b.color));
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			bs.graphics.endFill();
-			
-			
 			bs.graphics.beginFill(colorToUInt(Color.white));
 		switch (b.type){
 
