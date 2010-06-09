@@ -112,7 +112,19 @@
 		}
 
 		private function newExitButton():Button {
-			return newTestButton(Color.red, "exit");
+			var btn : Button = new Button();
+			btn.color = Color.random();
+			btn.setAction(exitAction);
+			btn.type = "exit";
+			objs.push(btn);
+			return btn;
+		}
+
+		private function exitAction():void{
+			game.restart();
+			naubino.pause(); // this needs mending
+			playbtn.setAction(playAction);
+			playbtn.type = "play";
 		}
 		
 		private function initButtons():void {
