@@ -80,8 +80,14 @@
 		}
 
 		public function restart():void {
-			objs.splice(0, objs.length);
-			objs.splice(0, objs.length);
+			var killlist:Array =[];
+			for(var i:uint=0; i<objs.length; i++){
+				if(objs[i] is Ball)
+					killlist.push(objs[i]);
+			}
+			for(i=0; i<killlist.length; i++){
+				removeBall(killlist[i]);
+			}
 		}
 
 		private function countingJoints():Number {
