@@ -6,7 +6,7 @@ package {
 		public var b : Physical;
 		public var diff : Vektor;
 		public var overlap : Number;
-		private const defaultFriction : Number = 0.9;
+		private const defaultFriction : Number = 0.7;
 		public var friction : Number = defaultFriction;
 
 		public function Collision(a : Physical, b : Physical, diff : Vektor, overlap : Number) {
@@ -35,9 +35,13 @@ package {
 		private function momentumConservation():void {
 			var aforce : Vektor = a.speed.mul(a.mass);
 			var bforce : Vektor = b.speed.mul(b.mass);
-			var foo : Vektor  = (aforce.add(bforce)).mul(2).mul(1/(a.mass+b.mass));
-			a.speed = foo.sub(a.speed);
-			b.speed = foo.sub(b.speed);
+			//var foo : Vektor  = (aforce.add(bforce)).mul(2).mul(1/(a.mass+b.mass));
+			//foo = foo.mul(0.5);	
+			//a.speed = foo.sub(a.speed);
+			//b.speed = foo.sub(b.speed);
+
+			a.speed = (aforce.add(bforce)).sub((a.speed.sub(b.speed)).mul(0.85));
+			b.speed = (aforce.add(bforce)).sub((b.speed.sub(a.speed)).mul(0.85));
 		}
 		
 		private function applyFriction():void {

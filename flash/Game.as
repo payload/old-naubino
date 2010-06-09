@@ -12,6 +12,7 @@
 		public var objs : Array;
 		public var pointer : Vektor;
 		public var menu : Menu;
+		public var naubino : Naubino;
 
 		private var refreshInterval:Number = 50;
 		public var spammer:Spammer;
@@ -32,7 +33,8 @@
 			menu = new Menu(this);
 		}
 		
-		public function Game() {
+		public function Game(n:Naubino) {
+			naubino = n;
 			initFields();
 		}
 		
@@ -193,7 +195,7 @@
 			}
 		}
 
-		var ani_t:Number = 0.5;
+		public var ani_t:Number = 0.5;
 		
 		private function fadeJoints(joints:Array):void {
 			for (var i:int = 0; i < joints.length; i++) {

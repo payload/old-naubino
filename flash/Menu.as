@@ -5,6 +5,7 @@
 	public class Menu
 	{
 		public var game:Game;
+		public var naubino:Naubino; //argh
 		public var objs:Array = [];
 		public var mainbtn:Button;
 		public var secondaryBtns:Array = [];
@@ -15,6 +16,7 @@
 		
 		public function Menu(game : Game) {
 			this.game = game;
+			naubino = game.naubino;
 			initButtons();
 			utils.addAll(game.objs, objs);
 		}
@@ -66,12 +68,39 @@
 			var btn : Button = new Button();
 			btn.color = color;
 			btn.setAction(tracer(str));
+			btn.type = str;
 			objs.push(btn);
 			return btn;
 		}
 
 		private function newPlayButton():Button {
-			return newTestButton(Color.green, "play");
+			var btn : Button = new Button();
+			btn.color = Color.random();
+			btn.setAction(playAction);
+			btn.type = "play";
+			objs.push(btn);
+			return btn;
+		}
+
+		private function playAction():void{
+			naubino.unpause();
+			playbtn.setAction(pauseAction);
+			playbtn.type = "pause";
+		}
+		
+		private function newPauseButton():Button {
+			var btn : Button = new Button();
+			btn.color = Color.random();
+			btn.setAction(pauseAction);
+			btn.type = "pause";
+			objs.push(btn);
+			return btn;
+		}
+
+		private function pauseAction():void{
+			naubino.pause();
+			playbtn.setAction(playAction);
+			playbtn.type = "play";
 		}
 
 		private function newMuteButton():Button {
@@ -88,7 +117,7 @@
 		
 		private function initButtons():void {
 			mainbtn = newMainButton();
-			playbtn = newPlayButton();
+			playbtn = newPauseButton();
 			mutebtn = newMuteButton();
 			highbtn = newHighButton();
 			exitbtn = newExitButton();

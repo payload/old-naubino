@@ -33,7 +33,7 @@ package{
 			if(r != 0)
 				force = force.add(springVector.mul((1 / r) * (length - r) * strength));
 
-			force = force.add(a.speed.sub(b.speed).mul(friction-1));
+			//force = force.add(a.speed.sub(b.speed).mul(friction-1));
 			a.accelerate(force);
 			b.accelerate(force.mul(-1));
 		}

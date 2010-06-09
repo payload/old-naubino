@@ -13,7 +13,7 @@
 		private var visual : Visual;
 
 		private function initFields():void {
-			game = new Game();
+			game = new Game(this);
 			mouseChildren = false;
 			userInput = new UserInput(this);
 			visual = new Visual(this);
@@ -28,8 +28,18 @@
 
 		public function Naubino() {
 			initFields();
-			startTimer(50, game.refresh);
-			startTimer(2500, game.spammer.randomPair);
+	
+			refreshTimer = startTimer(50, game.refresh);
+			spamTimer = startTimer(2500, game.spammer.randomPair);
+		}
+		public function pause():void{
+			spamTimer.stop();
+			refreshTimer.stop();
+		}
+		public function unpause():void
+		{
+			spamTimer.start();
+			refreshTimer.start();
 		}
 	}
 }
