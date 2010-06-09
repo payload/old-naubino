@@ -197,13 +197,13 @@ package {
 		break;
 
 		case "mute":
-			bs.graphics.drawRect(-b.visibleRadius/3,-b.visibleRadius/3,b.visibleRadius*0.3,b.visibleRadius*0.7);
+			bs.graphics.drawRect(-b.visibleRadius*0.5,-b.visibleRadius*0.3,b.visibleRadius*0.3,b.visibleRadius*0.6);
 			
-			bs.graphics.moveTo( b.visibleRadius/3,  b.visibleRadius/3);
-			bs.graphics.lineTo( b.visibleRadius/3, -b.visibleRadius/3);
-			bs.graphics.lineTo(-b.visibleRadius/3+b.visibleRadius*0.3, -b.visibleRadius*0.1);
-			bs.graphics.lineTo(-b.visibleRadius/3+b.visibleRadius*0.3, b.visibleRadius*0.1);
-			bs.graphics.lineTo( b.visibleRadius/3,  b.visibleRadius/3);
+			bs.graphics.moveTo( b.visibleRadius*0.35,  b.visibleRadius*0.5);
+			bs.graphics.lineTo( b.visibleRadius*0.35, -b.visibleRadius*0.5);
+			bs.graphics.lineTo(-b.visibleRadius*0.25, -b.visibleRadius*0.2);
+			bs.graphics.lineTo(-b.visibleRadius*0.25,  b.visibleRadius*0.2);
+			bs.graphics.lineTo( b.visibleRadius*0.35,  b.visibleRadius*0.5);
 		break;
 		case "exit":
 			
