@@ -3,10 +3,9 @@
 * draggin as a "behaviour" which can be add to a ball
 
 === Hendrik ===
-* breadth first search fix
 
 === unassigned ===
 * put Balls physical and visible size into two different variables
 * friction relative to distance from center -> fix shivering
-* fix ball swing
+* fix ball behavior (swingfriction, momentumconversation) 
 * implement loosing, highscore, menus
