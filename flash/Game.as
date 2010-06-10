@@ -19,7 +19,7 @@
 
 		private var physics : Physics;
 		public var enablePhysics:Boolean = true;
-		public var useGenerateTimer:Boolean  = false;
+		public var useGenerateTimer:Boolean  = true;
 
 		public var points:Number = 0;
 		private var antipoints:Number = 0;
@@ -77,6 +77,21 @@
 				restart();
 				useGenerateTimer = false;
 			}
+		}
+
+		public function spam():void{
+			if(useGenerateTimer)
+				spammer.randomPair();
+		}
+
+		public function pause():void{
+			useGenerateTimer = false;
+			enablePhysics = false;
+		}
+
+		public function unpause():void{
+			useGenerateTimer = true;
+			enablePhysics = true;
 		}
 
 		public function restart():void {

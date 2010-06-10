@@ -83,7 +83,7 @@
 		}
 
 		private function playAction():void{
-			naubino.unpause();
+			game.unpause();
 			playbtn.setAction(pauseAction);
 			playbtn.type = "pause";
 		}
@@ -98,7 +98,7 @@
 		}
 
 		private function pauseAction():void{
-			naubino.pause();
+			game.pause();
 			playbtn.setAction(playAction);
 			playbtn.type = "play";
 		}
@@ -122,7 +122,7 @@
 
 		private function exitAction():void{
 			game.restart();
-			naubino.pause(); // this needs mending
+			game.pause(); // this needs mending
 			playbtn.setAction(playAction);
 			playbtn.type = "play";
 		}

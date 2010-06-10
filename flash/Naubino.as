@@ -30,16 +30,7 @@
 			initFields();
 	
 			refreshTimer = startTimer(50, game.refresh);
-			spamTimer = startTimer(2500, game.spammer.randomPair);
-		}
-		public function pause():void{
-			spamTimer.stop();
-			refreshTimer.stop();
-		}
-		public function unpause():void
-		{
-			spamTimer.start();
-			refreshTimer.start();
+			spamTimer = startTimer(2500, game.spam);
 		}
 	}
 }
