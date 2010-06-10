@@ -76,8 +76,14 @@
 		private function newPlayButton():Button {
 			var btn : Button = new Button();
 			btn.color = Color.random();
-			btn.setAction(playAction);
-			btn.type = "play";
+			if(game.paused){
+				btn.setAction(playAction);
+				btn.type = "play";
+			}
+			else{
+				btn.setAction(pauseAction);
+				btn.type = "pause";
+			}
 			objs.push(btn);
 			return btn;
 		}
@@ -89,14 +95,6 @@
 			game.lost = false;
 		}
 		
-		private function newPauseButton():Button {
-			var btn : Button = new Button();
-			btn.color = Color.random();
-			btn.setAction(pauseAction);
-			btn.type = "pause";
-			objs.push(btn);
-			return btn;
-		}
 
 		private function pauseAction():void{
 			game.pause();
@@ -130,7 +128,7 @@
 		
 		private function initButtons():void {
 			mainbtn = newMainButton();
-			playbtn = newPauseButton();
+			playbtn = newPlayButton();
 			mutebtn = newMuteButton();
 			highbtn = newHighButton();
 			exitbtn = newExitButton();

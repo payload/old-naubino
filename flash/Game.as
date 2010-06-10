@@ -21,6 +21,9 @@
 		public var enablePhysics:Boolean = true;
 		public var useGenerateTimer:Boolean  = true;
 		public var lost:Boolean = false;
+		public function get paused():Boolean{
+			return (!enablePhysics && !useGenerateTimer);
+		}
 
 		public var points:int = 0;
 		private var antipoints:int= 0;
