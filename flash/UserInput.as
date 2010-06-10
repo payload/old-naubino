@@ -16,8 +16,8 @@
 			};
 			onKeyUp = { 
 				'ESC': close,
-				'ENTER': game.spammer.randomPair,
-				'SPACE': game.restart,
+				'ENTER': game.spam,
+				'SPACE': game.clear,
 				'CONTROL': nothing,
 				'Q': nothing,
 				'W': nothing

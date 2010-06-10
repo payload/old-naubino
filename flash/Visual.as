@@ -64,6 +64,8 @@ package {
 			updateSprites();
 			updateField();
 			removeUnusedSprites();
+			if(game.lost)
+				gameOverMessage();
 		}
 
 		private function colorToUInt(color:Color):uint {
@@ -169,7 +171,26 @@ package {
 			}
 			points.text = game.points.toString();
 			points.setTextFormat(format);	
+		}
 
+		private function gameOverMessage():void{
+			var message:String = "Game Over";
+			var layer:* = layers.foreground1;
+			var bs:Sprite = getSprite(message, layer);
+			var lostMessage:TextField = getSprite("Points", layer, TextField);			
+			var lostFormat:TextFormat = new TextFormat();
+			lostFormat.bold = true;
+			lostFormat.font = "Verdana";
+			lostFormat.size = 45;
+			lostMessage.width = 350;
+			lostMessage.height = 100;
+			lostFormat.align = TextFormatAlign.CENTER ;
+			lostMessage.textColor = 0xff0000;
+			lostMessage.x = game.center.x-lostMessage.width/2;
+			lostMessage.y = game.center.y-lostMessage.height/2;
+			lostMessage.text = message;
+			lostMessage.setTextFormat(lostFormat);
+			layer.addChild(lostMessage); 
 		}
 
 		private function updateSecondaryButton(b:Button):void {

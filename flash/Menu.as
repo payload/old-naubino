@@ -86,6 +86,7 @@
 			game.unpause();
 			playbtn.setAction(pauseAction);
 			playbtn.type = "pause";
+			game.lost = false;
 		}
 		
 		private function newPauseButton():Button {
@@ -121,7 +122,7 @@
 		}
 
 		private function exitAction():void{
-			game.restart();
+			game.clear();
 			game.pause(); // this needs mending
 			playbtn.setAction(playAction);
 			playbtn.type = "play";

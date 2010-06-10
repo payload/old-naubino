@@ -20,9 +20,11 @@
 		private var physics : Physics;
 		public var enablePhysics:Boolean = true;
 		public var useGenerateTimer:Boolean  = true;
+		public var lost:Boolean = false;
 
-		public var points:Number = 0;
-		private var antipoints:Number = 0;
+		public var points:int = 0;
+		private var antipoints:int= 0;
+		private var ballsTillLost:int = 20;
 
 		private function initFields():void {
 			fieldSize = 160;
@@ -73,8 +75,9 @@
 			if (enablePhysics)
 				physics.physik();
 			antipoints = countingJoints();
-			if (antipoints > 30) {
-				restart();
+			if (antipoints > ballsTillLost) {
+				lost = true;
+				clear();
 				useGenerateTimer = false;
 			}
 		}
@@ -94,7 +97,8 @@
 			enablePhysics = true;
 		}
 
-		public function restart():void {
+		public function clear():void {
+			//lost = false;
 			var killlist:Array =[];
 			for(var i:uint=0; i<objs.length; i++){
 				if(objs[i] is Ball)
@@ -109,7 +113,7 @@
 			var adistance:Number;
 			var bdistance:Number;
 			var count:Number = 0;
-			var fieldRadius:Number = fieldSize / 2;
+			var fieldRadius:Number = fieldSize ;
 			for (var i:uint = 0; i < objs.length; i++) {
 				if (objs[i] is Joint) {
 					var j:Joint = objs[i];
