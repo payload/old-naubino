@@ -280,22 +280,25 @@ package {
 		}
 
 		private function gameOverMessage():void{
-			var message:String = "Naub Overflow";
+			var text:String = "Naub Overflow";
 			var layer:* = layers.messages;
-			var lostMessage:TextField = getSprite("gameover", layer, TextField);			
-			var lostFormat:TextFormat = new TextFormat();
-			lostFormat.bold = true;
-			lostFormat.font = "Verdana";
-			lostFormat.size = 45;
-			lostMessage.width = 400;
-			lostMessage.height = 100;
-			lostFormat.align = TextFormatAlign.CENTER ;
-			lostMessage.textColor = colorToUInt(Color.red);
-			lostMessage.x = game.center.x-lostMessage.width/2;
-			lostMessage.y = game.center.y-lostMessage.height/2;
-			lostMessage.text = message;
-			lostMessage.setTextFormat(lostFormat);
-			layer.addChild(lostMessage); 
+			var message:TextField = getSprite("gameover", layer, TextField);			
+			var format:TextFormat = new TextFormat();
+			
+			format.bold = true;
+			format.font = "Verdana";
+			format.size = 45;
+			format.align = TextFormatAlign.CENTER ;
+			
+			message.width = 400;
+			message.height = 100;
+			message.textColor = colorToUInt(Color.red);
+			message.x = game.center.x-message.width/2;
+			message.y = game.center.y-message.height/2;
+			message.text = text;
+			message.setTextFormat(format);
+			
+			layer.addChild(message); 
 		}
 		
 		private function updateBall(b:Ball):void {
