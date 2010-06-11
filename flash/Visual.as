@@ -2,7 +2,7 @@ package {
 
 	import flash.display.*;
 	import flash.utils.*;
-	import flash.events.Event;
+	import flash.events.*;
 	import flash.text.*;
 
 
@@ -26,6 +26,13 @@ package {
 			initLayers();
 			root.addEventListener(Event.ENTER_FRAME, function(e:Event):void{ update(); });
 			drawBackground();
+			drawMenu();
+		}
+		
+		private function drawMenu():void {
+			layers.menu.graphics.beginFill(0, 0);
+			layers.menu.graphics.drawCircle(game.menu.mainbtn.x, game.menu.mainbtn.y, 65);
+			layers.menu.graphics.endFill();
 		}
 
 		private function drawBackground():void {
@@ -37,14 +44,23 @@ package {
 		private function initLayers():void {
 			layers.background  = new Sprite();
 			layers.foreground  = new Sprite();
-			layers.foreground1 = new Sprite();
+			layers.messages = new Sprite();
 			layers.balls       = new Sprite();
 			layers.joints      = new Sprite();
+			layers.menu  = new Sprite();
 			root.addChild(layers.background);
 			root.addChild(layers.joints);
 			root.addChild(layers.balls);
 			root.addChild(layers.foreground);
-			root.addChild(layers.foreground1);
+			root.addChild(layers.menu);
+			root.addChild(layers.messages);
+			
+			layers.menu.addEventListener(
+				MouseEvent.MOUSE_OVER,
+				function(e:*) { game.menu.popUp() } );
+			layers.menu.addEventListener(
+				MouseEvent.MOUSE_OUT, 
+				function(e:*) { game.menu.popDown() });
 		}
 
 		private function removeChildFromLayer(child:DisplayObject):void {
@@ -80,7 +96,6 @@ package {
 				sprite = newSprite(link, layer, cls);
 			return sprite;
 		}
-
 		private function newSprite(link:*, layer:DisplayObjectContainer, cls:Class):DisplayObject {
 			var sprite : DisplayObject = new cls();
 			sprites[link] = sprite;
@@ -130,7 +145,7 @@ package {
 		}
 
 		private function updateMainButton(b:Button):void {
-			var layer:* = layers.foreground1;
+			var layer:* = layers.menu;
 			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
 			//bs.graphics.lineStyle(2, colorToUInt(Color.black));
@@ -174,15 +189,15 @@ package {
 		}
 
 		private function gameOverMessage():void{
-			var message:String = "Game Over";
-			var layer:* = layers.foreground1;
+			var message:String = "Naub Overflow";
+			var layer:* = layers.messages;
 			var bs:Sprite = getSprite(message, layer);
 			var lostMessage:TextField = getSprite("Points", layer, TextField);			
 			var lostFormat:TextFormat = new TextFormat();
 			lostFormat.bold = true;
 			lostFormat.font = "Verdana";
 			lostFormat.size = 45;
-			lostMessage.width = 350;
+			lostMessage.width = 400;
 			lostMessage.height = 100;
 			lostFormat.align = TextFormatAlign.CENTER ;
 			lostMessage.textColor = 0xff0000;
@@ -194,7 +209,7 @@ package {
 		}
 
 		private function updateSecondaryButton(b:Button):void {
-			var layer:* = layers.foreground;
+			var layer:* = layers.menu;
 			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
 			//bs.graphics.lineStyle(2, colorToUInt(Color.black));

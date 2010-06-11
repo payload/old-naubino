@@ -28,8 +28,8 @@ package {
 		
 		private function positionBalls():void {
 			var overlapV : Vektor = diff.norm.mul(overlap * 0.5);
-			a.position = a.position.add(overlapV.mul( -1));
-			b.position = b.position.add(overlapV);
+				a.position = a.position.add(overlapV.mul( -1));
+				b.position = b.position.add(overlapV);
 		}
 		
 		private function momentumConservation():void {
