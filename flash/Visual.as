@@ -168,6 +168,7 @@ package {
 			format.bold = true;
 			format.font = "Verdana";
 			points.textColor = 0xffffff;
+			points.mouseEnabled = false;
 			layer.addChild(points); 
 
 			if(game.points < 10){
