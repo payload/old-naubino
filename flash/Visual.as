@@ -300,7 +300,7 @@ package {
 			var bs:Sprite = getSprite(b, layers.balls);
 			bs.graphics.clear();
 			if (game.active == b) {
-				bs.graphics.lineStyle(2, colorToUInt(Color.black));
+				bs.graphics.lineStyle(2, colorToUInt(b.color));
 			} else {
 				bs.graphics.lineStyle();
 			}
