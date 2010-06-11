@@ -283,7 +283,7 @@ package {
 			var message:String = "Naub Overflow";
 			var layer:* = layers.messages;
 			var bs:Sprite = getSprite(message, layer);
-			var lostMessage:TextField = getSprite("Points", layer, TextField);			
+			var lostMessage:TextField = getSprite("gameover", layer, TextField);			
 			var lostFormat:TextFormat = new TextFormat();
 			lostFormat.bold = true;
 			lostFormat.font = "Verdana";
