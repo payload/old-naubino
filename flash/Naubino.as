@@ -14,7 +14,7 @@
 
 		private function initFields():void {
 			game = new Game(this);
-			mouseChildren = false;
+			mouseChildren = true;
 			userInput = new UserInput(this);
 			visual = new Visual(this);
 		}

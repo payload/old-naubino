@@ -1,5 +1,6 @@
 ﻿package 
 {
+	import caurina.transitions.AuxFunctions;
 	import caurina.transitions.Tweener;
 
 	public class Menu
@@ -34,7 +35,7 @@
 			return btn;
 		}
 
-		private function popDown():void {
+		public function popDown():void {
 			var tween:Object = {
 				x: mainbtn.x,
 				y: mainbtn.y,
@@ -49,7 +50,7 @@
 			mainbtn.setAction(popUp);
 		}
 
-		private function popUp():void {
+		public function popUp():void {
 			var tween:Object;
 			for (var i:* in secondaryBtns) {
 				var btn:Button = secondaryBtns[i];
@@ -58,7 +59,7 @@
 				tween.x = btn.popUpX;
 				tween.y = btn.popUpY;
 				tween.time = 0.6;
-				tween.onComplete = function():void { btn.collidable = true; };
+				tween.onComplete = function():void { for (var i:* in secondaryBtns) secondaryBtns[i].collidable = true; };
 				Tweener.addTween(btn, tween);
 			}
 			mainbtn.setAction(popDown);
@@ -128,14 +129,15 @@
 		
 		private function initButtons():void {
 			mainbtn = newMainButton();
+			mainbtn.collidable = false;
 			playbtn = newPlayButton();
 			mutebtn = newMuteButton();
-			highbtn = newHighButton();
+			//highbtn = newHighButton();
 			exitbtn = newExitButton();
 
 			secondaryBtns.push(playbtn);
 			secondaryBtns.push(mutebtn);
-			secondaryBtns.push(highbtn);
+			//secondaryBtns.push(highbtn);
 			secondaryBtns.push(exitbtn);
 
 			const pi:Number = 3.14159;
@@ -144,7 +146,7 @@
 			var step:Number = 0.24;
 			playbtn.position = Vektor.polar(x * pi, 70); x += step;
 			mutebtn.position = Vektor.polar(x * pi, 60); x += step;
-			highbtn.position = Vektor.polar(x * pi, 55); x += step;
+			//highbtn.position = Vektor.polar(x * pi, 55); x += step;
 			exitbtn.position = Vektor.polar(x * pi, 50);
 
 			for (var i:* in secondaryBtns) {

@@ -27,7 +27,7 @@
 
 		public var points:int = 0;
 		private var antipoints:int= 0;
-		private var ballsTillLost:int = 20;
+		private var ballsTillLost:int = 30;
 
 		private function initFields():void {
 			fieldSize = 160;
