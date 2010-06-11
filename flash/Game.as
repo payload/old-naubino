@@ -4,6 +4,7 @@
 	import flash.display.JointStyle;
 	import flash.events.*;
 	import flash.utils.Timer;
+	import stat.es.*;
 
 	public class Game
 	{
@@ -38,7 +39,7 @@
 			spammer = new Spammer(this);
 			physics = new Physics(this);
 			menu = new Menu(this);
-			state = new Start(this);
+			state = new Play(this);
 		}
 		
 		public function Game(n:Naubino) {
@@ -82,18 +83,15 @@
 		}
 
 		public function spam():void{
-			if(useGenerateTimer)
-				spammer.randomPair();
+			state.spam();
 		}
 
-		public function pause():void{
-			useGenerateTimer = false;
-			enablePhysics = false;
+		public function pause():void {
+			state = new Pause(this);
 		}
 
-		public function unpause():void{
-			useGenerateTimer = true;
-			enablePhysics = true;
+		public function unpause():void {
+			state = new Play(this);
 		}
 
 		public function clear():void {
