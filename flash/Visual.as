@@ -202,23 +202,12 @@ package {
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			bs.graphics.endFill();
 			
-			var fillcolor:uint = colorToUInt(Color.white)
-
-			bs.graphics.beginFill(fillcolor);
+			if (b === game.menu.playbtn)
+				drawPlayButton(b, bs);
+				
+		var fillcolor:uint = colorToUInt(Color.white);
+		bs.graphics.beginFill(fillcolor);
 		switch (b.type){
-
-		case "pause":
-			bs.graphics.drawRect(-b.visibleRadius*0.4, -b.visibleRadius*0.4, b.visibleRadius*0.3, b.visibleRadius*0.8);
-			bs.graphics.drawRect( b.visibleRadius*0.4, -b.visibleRadius*0.4,-b.visibleRadius*0.3, b.visibleRadius*0.8);
-		break;
-			
-		case "play":
-			bs.graphics.moveTo(-b.visibleRadius*0.35, -b.visibleRadius*0.4);
-			bs.graphics.lineTo(-b.visibleRadius*0.35,  b.visibleRadius*0.4);
-			bs.graphics.lineTo( b.visibleRadius*0.45,  0);
-			bs.graphics.lineTo(-b.visibleRadius*0.35, -b.visibleRadius*0.4);
-		break;
-
 		case "muteoff":
 			bs.graphics.drawRect(-b.visibleRadius*0.5,-b.visibleRadius*0.3,b.visibleRadius*0.3,b.visibleRadius*0.6);
 			
@@ -277,6 +266,24 @@ package {
 			bs.x = b.position.x;
 			bs.y = b.position.y;
 			bs.alpha = b.alpha;
+		}
+		
+		private function drawPlayButton(b:Button, bs:Sprite):void {
+			var fillcolor:uint = colorToUInt(Color.white);
+			if (b.type == "pause") {
+				bs.graphics.beginFill(fillcolor);
+				bs.graphics.drawRect(-b.visibleRadius*0.4, -b.visibleRadius*0.4, b.visibleRadius*0.3, b.visibleRadius*0.8);
+				bs.graphics.drawRect( b.visibleRadius * 0.4, -b.visibleRadius * 0.4, -b.visibleRadius * 0.3, b.visibleRadius * 0.8);
+				bs.graphics.endFill();
+			} else
+			if (b.type == "play") {
+				bs.graphics.beginFill(fillcolor);
+				bs.graphics.moveTo(-b.visibleRadius*0.35, -b.visibleRadius*0.4);
+				bs.graphics.lineTo(-b.visibleRadius*0.35,  b.visibleRadius*0.4);
+				bs.graphics.lineTo( b.visibleRadius*0.45,  0);
+				bs.graphics.lineTo( -b.visibleRadius * 0.35, -b.visibleRadius * 0.4);
+				bs.graphics.endFill();
+			}
 		}
 
 		private function gameOverMessage():void{
