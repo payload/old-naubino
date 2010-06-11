@@ -282,7 +282,6 @@ package {
 		private function gameOverMessage():void{
 			var message:String = "Naub Overflow";
 			var layer:* = layers.messages;
-			var bs:Sprite = getSprite(message, layer);
 			var lostMessage:TextField = getSprite("gameover", layer, TextField);			
 			var lostFormat:TextFormat = new TextFormat();
 			lostFormat.bold = true;
@@ -291,7 +290,7 @@ package {
 			lostMessage.width = 400;
 			lostMessage.height = 100;
 			lostFormat.align = TextFormatAlign.CENTER ;
-			lostMessage.textColor = 0xff0000;
+			lostMessage.textColor = colorToUInt(Color.red);
 			lostMessage.x = game.center.x-lostMessage.width/2;
 			lostMessage.y = game.center.y-lostMessage.height/2;
 			lostMessage.text = message;
