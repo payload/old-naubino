@@ -49,6 +49,17 @@
 			}
 			mainbtn.setAction(popUp);
 		}
+		
+		public function popDownNow():void {
+			for (var i:* in secondaryBtns) {
+				var btn:Button = secondaryBtns[i];
+				btn.collidable = false;
+				btn.x = mainbtn.x;
+				btn.y = mainbtn.y;
+				btn.alpha = 0;
+			}
+			mainbtn.setAction(popUp);
+		}
 
 		public function popUp():void {
 			var tween:Object;
@@ -157,6 +168,8 @@
 				btn.visibleRadius = 12;
 				join(mainbtn, btn);
 			}
+			
+			popDownNow();
 		}
 		
 		public function join(a:Button, b:Button):Joint {
