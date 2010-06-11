@@ -4,6 +4,7 @@
 	import flash.display.JointStyle;
 	import flash.events.*;
 	import flash.utils.Timer;
+
 	public class Game
 	{
 		public const width : Number = 600;
@@ -13,11 +14,12 @@
 		public var pointer : Vektor;
 		public var menu : Menu;
 		public var naubino : Naubino;
+		public var state : GameState;
 
-		private var refreshInterval:Number = 50;
+		public var refreshInterval:Number = 50;
 		public var spammer:Spammer;
 
-		private var physics : Physics;
+		public var physics : Physics;
 		public var enablePhysics:Boolean = true;
 		public var useGenerateTimer:Boolean  = true;
 		public var lost:Boolean = false;
@@ -26,8 +28,8 @@
 		}
 
 		public var points:int = 0;
-		private var antipoints:int= 0;
-		private var ballsTillLost:int = 30;
+		public var antipoints:int= 0;
+		public var ballsTillLost:int = 30;
 
 		private function initFields():void {
 			fieldSize = 160;
@@ -36,6 +38,7 @@
 			spammer = new Spammer(this);
 			physics = new Physics(this);
 			menu = new Menu(this);
+			state = new Start(this);
 		}
 		
 		public function Game(n:Naubino) {
@@ -75,14 +78,7 @@
 	
 		/* game logic below here */
 		public function refresh():void {
-			if (enablePhysics)
-				physics.physik();
-			antipoints = countingJoints();
-			if (antipoints > ballsTillLost) {
-				lost = true;
-				clear();
-				useGenerateTimer = false;
-			}
+			state.refresh();
 		}
 
 		public function spam():void{
@@ -112,7 +108,7 @@
 			}
 		}
 
-		private function countingJoints():Number {
+		public function countingJoints():Number {
 			var adistance:Number;
 			var bdistance:Number;
 			var count:Number = 0;
