@@ -160,11 +160,12 @@ package {
 			}
 			else if(game.points < 100){
 				format.size = 26;
+				format.letterSpacing = -3.0;
 				points.x = bs.x-21;
 				points.y = bs.y-19;
 			}
 			else{
-				format.size = 20;
+				format.size = 22;
 				format.letterSpacing = -3.0;
 				points.x = bs.x-21;
 				points.y = bs.y-16;
