@@ -189,26 +189,6 @@ package {
 			points.setTextFormat(format);	
 		}
 
-		private function gameOverMessage():void{
-			var message:String = "Naub Overflow";
-			var layer:* = layers.messages;
-			var bs:Sprite = getSprite(message, layer);
-			var lostMessage:TextField = getSprite("Points", layer, TextField);			
-			var lostFormat:TextFormat = new TextFormat();
-			lostFormat.bold = true;
-			lostFormat.font = "Verdana";
-			lostFormat.size = 45;
-			lostMessage.width = 400;
-			lostMessage.height = 100;
-			lostFormat.align = TextFormatAlign.CENTER ;
-			lostMessage.textColor = 0xff0000;
-			lostMessage.x = game.center.x-lostMessage.width/2;
-			lostMessage.y = game.center.y-lostMessage.height/2;
-			lostMessage.text = message;
-			lostMessage.setTextFormat(lostFormat);
-			layer.addChild(lostMessage); 
-		}
-
 		private function updateSecondaryButton(b:Button):void {
 			var layer:* = layers.menu;
 			var bs:Sprite = getSprite(b, layer);
@@ -296,6 +276,26 @@ package {
 			bs.alpha = b.alpha;
 		}
 
+		private function gameOverMessage():void{
+			var message:String = "Naub Overflow";
+			var layer:* = layers.messages;
+			var bs:Sprite = getSprite(message, layer);
+			var lostMessage:TextField = getSprite("Points", layer, TextField);			
+			var lostFormat:TextFormat = new TextFormat();
+			lostFormat.bold = true;
+			lostFormat.font = "Verdana";
+			lostFormat.size = 45;
+			lostMessage.width = 400;
+			lostMessage.height = 100;
+			lostFormat.align = TextFormatAlign.CENTER ;
+			lostMessage.textColor = 0xff0000;
+			lostMessage.x = game.center.x-lostMessage.width/2;
+			lostMessage.y = game.center.y-lostMessage.height/2;
+			lostMessage.text = message;
+			lostMessage.setTextFormat(lostFormat);
+			layer.addChild(lostMessage); 
+		}
+		
 		private function updateBall(b:Ball):void {
 			var bs:Sprite = getSprite(b, layers.balls);
 			bs.graphics.clear();
