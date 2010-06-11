@@ -30,9 +30,9 @@ package {
 		}
 		
 		private function drawMenu():void {
-			layers.menu.graphics.beginFill(0, 0);
-			layers.menu.graphics.drawCircle(game.menu.mainbtn.x, game.menu.mainbtn.y, 65);
-			layers.menu.graphics.endFill();
+			layers.menu0.graphics.beginFill(0, 0);
+			layers.menu0.graphics.drawCircle(game.menu.mainbtn.x, game.menu.mainbtn.y, 65);
+			layers.menu0.graphics.endFill();
 		}
 
 		private function drawBackground():void {
@@ -43,22 +43,24 @@ package {
 
 		private function initLayers():void {
 			layers.background  = new Sprite();
-			layers.foreground  = new Sprite();
-			layers.messages = new Sprite();
 			layers.balls       = new Sprite();
 			layers.joints      = new Sprite();
-			layers.menu  = new Sprite();
+			layers.menu0 	   = new Sprite(); // menu mouse over field (also menu joints, but we can't :-/)
+			layers.menu1       = new Sprite(); // main menu button // XXX not a ordering I understand ??
+			layers.menu2       = new Sprite(); // menu buttons
+			layers.messages    = new Sprite();
 			root.addChild(layers.background);
 			root.addChild(layers.joints);
 			root.addChild(layers.balls);
-			root.addChild(layers.foreground);
-			root.addChild(layers.menu);
+			root.addChild(layers.menu0);
+			layers.menu0.addChild(layers.menu1);
+			layers.menu1.addChild(layers.menu2);
 			root.addChild(layers.messages);
 			
-			layers.menu.addEventListener(
+			layers.menu0.addEventListener(
 				MouseEvent.MOUSE_OVER,
 				function(e:*) { game.menu.popUp() } );
-			layers.menu.addEventListener(
+			layers.menu0.addEventListener(
 				MouseEvent.MOUSE_OUT, 
 				function(e:*) { game.menu.popDown() });
 		}
@@ -145,7 +147,7 @@ package {
 		}
 
 		private function updateMainButton(b:Button):void {
-			var layer:* = layers.menu;
+			var layer:* = layers.menu1;
 			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
 			//bs.graphics.lineStyle(2, colorToUInt(Color.black));
@@ -190,7 +192,7 @@ package {
 		}
 
 		private function updateSecondaryButton(b:Button):void {
-			var layer:* = layers.menu;
+			var layer:* = layers.menu2;
 			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
 			//bs.graphics.lineStyle(2, colorToUInt(Color.black));
