@@ -57,10 +57,10 @@ package {
 			
 			layers.menu.addEventListener(
 				MouseEvent.MOUSE_OVER,
-				function(e:*) { game.menu.popUp() } );
+				function(e:*):void { game.menu.popUp() } );
 			layers.menu.addEventListener(
 				MouseEvent.MOUSE_OUT, 
-				function(e:*) { game.menu.popDown() });
+				function(e:*):void { game.menu.popDown() });
 		}
 
 		private function removeChildFromLayer(child:DisplayObject):void {
@@ -300,7 +300,7 @@ package {
 			var bs:Sprite = getSprite(b, layers.balls);
 			bs.graphics.clear();
 			if (game.active == b) {
-				bs.graphics.lineStyle(2, colorToUInt(Color.black));
+				bs.graphics.lineStyle(2, colorToUInt(b.color));
 			} else {
 				bs.graphics.lineStyle();
 			}
