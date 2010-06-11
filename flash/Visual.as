@@ -59,10 +59,10 @@ package {
 			
 			layers.menu0.addEventListener(
 				MouseEvent.MOUSE_OVER,
-				function(e:*) { game.menu.popUp() } );
+				function(e:*):void { game.menu.popUp() } );
 			layers.menu0.addEventListener(
 				MouseEvent.MOUSE_OUT, 
-				function(e:*) { game.menu.popDown() });
+				function(e:*):void { game.menu.popDown() });
 		}
 
 		private function removeChildFromLayer(child:DisplayObject):void {
