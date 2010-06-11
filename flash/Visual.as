@@ -240,7 +240,7 @@ package {
 			bs.graphics.lineTo( b.visibleRadius*0.4,  b.visibleRadius*0.5);
 			bs.graphics.endFill();
 
-			bs.graphics.beginFill(fillcolor);			
+			bs.graphics.beginFill(colorToUInt(Color.red));			
 			bs.graphics.moveTo( b.visibleRadius*0.4,  b.visibleRadius*0.6);
 			bs.graphics.lineTo( b.visibleRadius*0.2,  b.visibleRadius*0.6);
 			bs.graphics.lineTo(-b.visibleRadius*0.5, -b.visibleRadius*0.6);
@@ -248,7 +248,7 @@ package {
 			bs.graphics.lineTo( b.visibleRadius*0.4,  b.visibleRadius*0.6);
 			bs.graphics.endFill();
 
-			bs.graphics.beginFill(fillcolor);			
+			bs.graphics.beginFill(colorToUInt(Color.red));			
 			bs.graphics.moveTo(-b.visibleRadius*0.5,  b.visibleRadius*0.6);
 			bs.graphics.lineTo(-b.visibleRadius*0.2,  b.visibleRadius*0.6);
 			bs.graphics.lineTo( b.visibleRadius*0.4, -b.visibleRadius*0.6);
