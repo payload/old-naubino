@@ -30,9 +30,9 @@ package {
 		}
 		
 		private function drawMenu():void {
-			layers.menu.graphics.beginFill(0, 0);
-			layers.menu.graphics.drawCircle(game.menu.mainbtn.x, game.menu.mainbtn.y, 65);
-			layers.menu.graphics.endFill();
+			layers.menu0.graphics.beginFill(0, 0);
+			layers.menu0.graphics.drawCircle(game.menu.mainbtn.x, game.menu.mainbtn.y, 65);
+			layers.menu0.graphics.endFill();
 		}
 
 		private function drawBackground():void {
@@ -43,22 +43,24 @@ package {
 
 		private function initLayers():void {
 			layers.background  = new Sprite();
-			layers.foreground  = new Sprite();
-			layers.messages = new Sprite();
 			layers.balls       = new Sprite();
 			layers.joints      = new Sprite();
-			layers.menu  = new Sprite();
+			layers.menu0 	   = new Sprite(); // menu mouse over field (also menu joints, but we can't :-/)
+			layers.menu1       = new Sprite(); // main menu button // XXX not a ordering I understand ??
+			layers.menu2       = new Sprite(); // menu buttons
+			layers.messages    = new Sprite();
 			root.addChild(layers.background);
 			root.addChild(layers.joints);
 			root.addChild(layers.balls);
-			root.addChild(layers.foreground);
-			root.addChild(layers.menu);
+			root.addChild(layers.menu0);
+			layers.menu0.addChild(layers.menu1);
+			layers.menu1.addChild(layers.menu2);
 			root.addChild(layers.messages);
 			
-			layers.menu.addEventListener(
+			layers.menu0.addEventListener(
 				MouseEvent.MOUSE_OVER,
 				function(e:*):void { game.menu.popUp() } );
-			layers.menu.addEventListener(
+			layers.menu0.addEventListener(
 				MouseEvent.MOUSE_OUT, 
 				function(e:*):void { game.menu.popDown() });
 		}
@@ -145,7 +147,7 @@ package {
 		}
 
 		private function updateMainButton(b:Button):void {
-			var layer:* = layers.menu;
+			var layer:* = layers.menu1;
 			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
 			//bs.graphics.lineStyle(2, colorToUInt(Color.black));
@@ -166,6 +168,7 @@ package {
 			format.bold = true;
 			format.font = "Verdana";
 			points.textColor = 0xffffff;
+			points.mouseEnabled = false;
 			layer.addChild(points); 
 
 			if(game.points < 10){
@@ -189,28 +192,8 @@ package {
 			points.setTextFormat(format);	
 		}
 
-		private function gameOverMessage():void{
-			var message:String = "Naub Overflow";
-			var layer:* = layers.messages;
-			var bs:Sprite = getSprite(message, layer);
-			var lostMessage:TextField = getSprite("Points", layer, TextField);			
-			var lostFormat:TextFormat = new TextFormat();
-			lostFormat.bold = true;
-			lostFormat.font = "Verdana";
-			lostFormat.size = 45;
-			lostMessage.width = 400;
-			lostMessage.height = 100;
-			lostFormat.align = TextFormatAlign.CENTER ;
-			lostMessage.textColor = 0xff0000;
-			lostMessage.x = game.center.x-lostMessage.width/2;
-			lostMessage.y = game.center.y-lostMessage.height/2;
-			lostMessage.text = message;
-			lostMessage.setTextFormat(lostFormat);
-			layer.addChild(lostMessage); 
-		}
-
 		private function updateSecondaryButton(b:Button):void {
-			var layer:* = layers.menu;
+			var layer:* = layers.menu2;
 			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
 			//bs.graphics.lineStyle(2, colorToUInt(Color.black));
@@ -219,23 +202,12 @@ package {
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			bs.graphics.endFill();
 			
-			var fillcolor:uint = colorToUInt(Color.white)
-
-			bs.graphics.beginFill(fillcolor);
+			if (b === game.menu.playbtn)
+				drawPlayButton(b, bs);
+				
+		var fillcolor:uint = colorToUInt(Color.white);
+		bs.graphics.beginFill(fillcolor);
 		switch (b.type){
-
-		case "pause":
-			bs.graphics.drawRect(-b.visibleRadius*0.4, -b.visibleRadius*0.4, b.visibleRadius*0.3, b.visibleRadius*0.8);
-			bs.graphics.drawRect( b.visibleRadius*0.4, -b.visibleRadius*0.4,-b.visibleRadius*0.3, b.visibleRadius*0.8);
-		break;
-			
-		case "play":
-			bs.graphics.moveTo(-b.visibleRadius*0.35, -b.visibleRadius*0.4);
-			bs.graphics.lineTo(-b.visibleRadius*0.35,  b.visibleRadius*0.4);
-			bs.graphics.lineTo( b.visibleRadius*0.45,  0);
-			bs.graphics.lineTo(-b.visibleRadius*0.35, -b.visibleRadius*0.4);
-		break;
-
 		case "muteoff":
 			bs.graphics.drawRect(-b.visibleRadius*0.5,-b.visibleRadius*0.3,b.visibleRadius*0.3,b.visibleRadius*0.6);
 			
@@ -257,7 +229,7 @@ package {
 			bs.graphics.lineTo( b.visibleRadius*0.4,  b.visibleRadius*0.5);
 			bs.graphics.endFill();
 
-			bs.graphics.beginFill(fillcolor);			
+			bs.graphics.beginFill(colorToUInt(Color.red));			
 			bs.graphics.moveTo( b.visibleRadius*0.4,  b.visibleRadius*0.6);
 			bs.graphics.lineTo( b.visibleRadius*0.2,  b.visibleRadius*0.6);
 			bs.graphics.lineTo(-b.visibleRadius*0.5, -b.visibleRadius*0.6);
@@ -265,7 +237,7 @@ package {
 			bs.graphics.lineTo( b.visibleRadius*0.4,  b.visibleRadius*0.6);
 			bs.graphics.endFill();
 
-			bs.graphics.beginFill(fillcolor);			
+			bs.graphics.beginFill(colorToUInt(Color.red));			
 			bs.graphics.moveTo(-b.visibleRadius*0.5,  b.visibleRadius*0.6);
 			bs.graphics.lineTo(-b.visibleRadius*0.2,  b.visibleRadius*0.6);
 			bs.graphics.lineTo( b.visibleRadius*0.4, -b.visibleRadius*0.6);
@@ -295,7 +267,47 @@ package {
 			bs.y = b.position.y;
 			bs.alpha = b.alpha;
 		}
+		
+		private function drawPlayButton(b:Button, bs:Sprite):void {
+			var fillcolor:uint = colorToUInt(Color.white);
+			if (b.type == "pause") {
+				bs.graphics.beginFill(fillcolor);
+				bs.graphics.drawRect(-b.visibleRadius*0.4, -b.visibleRadius*0.4, b.visibleRadius*0.3, b.visibleRadius*0.8);
+				bs.graphics.drawRect( b.visibleRadius * 0.4, -b.visibleRadius * 0.4, -b.visibleRadius * 0.3, b.visibleRadius * 0.8);
+				bs.graphics.endFill();
+			} else
+			if (b.type == "play") {
+				bs.graphics.beginFill(fillcolor);
+				bs.graphics.moveTo(-b.visibleRadius*0.35, -b.visibleRadius*0.4);
+				bs.graphics.lineTo(-b.visibleRadius*0.35,  b.visibleRadius*0.4);
+				bs.graphics.lineTo( b.visibleRadius*0.45,  0);
+				bs.graphics.lineTo( -b.visibleRadius * 0.35, -b.visibleRadius * 0.4);
+				bs.graphics.endFill();
+			}
+		}
 
+		private function gameOverMessage():void{
+			var text:String = "Naub Overflow";
+			var layer:* = layers.messages;
+			var message:TextField = getSprite("gameover", layer, TextField);			
+			var format:TextFormat = new TextFormat();
+			
+			format.bold = true;
+			format.font = "Verdana";
+			format.size = 45;
+			format.align = TextFormatAlign.CENTER ;
+			
+			message.width = 400;
+			message.height = 100;
+			message.textColor = colorToUInt(Color.red);
+			message.x = game.center.x-message.width/2;
+			message.y = game.center.y-message.height/2;
+			message.text = text;
+			message.setTextFormat(format);
+			
+			layer.addChild(message); 
+		}
+		
 		private function updateBall(b:Ball):void {
 			var bs:Sprite = getSprite(b, layers.balls);
 			bs.graphics.clear();
