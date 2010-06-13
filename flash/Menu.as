@@ -124,6 +124,7 @@
 			game.pause(); // this needs mending
 			playbtn.setAction(playAction);
 			playbtn.type = "play";
+			game.points = 0;
 		}
 		
 		private function initButtons():void {
