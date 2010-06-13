@@ -120,10 +120,10 @@
 		private function initButtons():void {
 			mainbtn = newMainButton();
 			mainbtn.collidable = false;
-			playbtn = newButton(Color.blue, "pause",pauseAction);
-			mutebtn = newButton(Color.blue, "mute");
+			playbtn = newButton(Color.random, "pause",pauseAction);
+			mutebtn = newButton(Color.random, "mute");
 			//highbtn = newButton(Color.purple, "high");
-			exitbtn = newButton(Color.random(),"exit",exitAction);
+			exitbtn = newButton(Color.random,"exit",exitAction);
 			setPlayButton();
 			
 			secondaryBtns.push(playbtn);

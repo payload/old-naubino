@@ -25,7 +25,7 @@
 		public var useGenerateTimer:Boolean  = true;
 		public var lost:Boolean = false;
 		public function get paused():Boolean{
-			return (!enablePhysics && !useGenerateTimer);
+			return (state is Pause);
 		}
 
 		public var points:int = 0;
