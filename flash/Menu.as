@@ -2,6 +2,7 @@
 {
 	import caurina.transitions.AuxFunctions;
 	import caurina.transitions.Tweener;
+	import stat.es.*;
 
 	public class Menu
 	{
@@ -21,11 +22,7 @@
 			initButtons();
 			utils.addAll(game.objs, objs);
 		}
-		
-		private function tracer(str:String):Function {
-			return function():void { trace(str); };
-		}
-		
+
 		private function newMainButton():Button {
 			var btn : Button = new Button();
 			btn.color = Color.yellow;
@@ -34,7 +31,10 @@
 			objs.push(btn);
 			return btn;
 		}
-
+		private function tracer(str:String):Function {
+			return function():void { trace(str); };
+		}
+		
 		public function popDown():void {
 			var tween:Object = {
 				x: mainbtn.x,
@@ -88,30 +88,31 @@
 		private function newPlayButton():Button {
 			var btn : Button = new Button();
 			btn.color = Color.random();
-			if(game.paused){
-				btn.setAction(playAction);
-				btn.type = "play";
-			}
-			else{
-				btn.setAction(pauseAction);
-				btn.type = "pause";
-			}
 			objs.push(btn);
+			setPlayButton();			
 			return btn;
+		}
+
+		public function setPlayButton():void{
+			if(game.state is Pause){
+				playbtn.setAction(playAction);
+				playbtn.type = "play";
+			}
+			if(game.state is Play){
+				playbtn.setAction(pauseAction);
+				playbtn.type = "pause";
+			}
 		}
 
 		private function playAction():void{
 			game.unpause();
-			playbtn.setAction(pauseAction);
-			playbtn.type = "pause";
-			game.lost = false;
+			setPlayButton();
+			//game.lost = false;
 		}
-		
 
 		private function pauseAction():void{
 			game.pause();
-			playbtn.setAction(playAction);
-			playbtn.type = "play";
+			setPlayButton();
 		}
 
 		private function newMuteButton():Button {
