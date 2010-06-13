@@ -134,7 +134,7 @@
 			mainbtn = newMainButton();
 			mainbtn.collidable = false;
 			playbtn = newButton(Color.random, "pause",pauseAction);
-			mutebtn = newButton(Color.random, "unmute",muteAction);
+			mutebtn = newButton(Color.random, "unmute",unMuteAction);
 			//highbtn = newButton(Color.purple, "high");
 			exitbtn = newButton(Color.random,"exit",exitAction);
 			
