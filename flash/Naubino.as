@@ -29,8 +29,11 @@
 		public function Naubino() {
 			initFields();
 	
-			refreshTimer = startTimer(50, game.refresh);
-			spamTimer = startTimer(2500, game.spam);
+			refreshTimer = startTimer(game.refreshInterval, game.refresh);
+			setSpammer();
+		}
+		public function setSpammer():void{
+			spamTimer = startTimer(game.spammerInterval, game.spam);
 		}
 	}
 }

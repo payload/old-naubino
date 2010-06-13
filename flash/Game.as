@@ -10,27 +10,34 @@
 	{
 		public const width : Number = 600;
 		public const height : Number = 400;
+		public var points:int = 0;
+		public var antipoints:int= 0;
+		public var ballsTillLost:int = 40;
+		public var difficulties:Array = new Array(2500, 2000, 1700, 1300, 1000, 800);
+		public var refreshInterval:uint = 50;
+		private var _spammerInterval:uint = difficulties[0];
+
+
+
+		public function get spammerInterval():uint{
+			return _spammerInterval;
+		}
+		public function set spammerInterval(si:uint):void{
+			_spammerInterval = si;
+			naubino.setSpammer();
+		}
 		public var fieldSize : Number;
 		public var objs : Array;
 		public var pointer : Vektor;
 		public var menu : Menu;
 		public var naubino : Naubino;
 		public var state : GameState;
-
-		public var refreshInterval:Number = 50;
 		public var spammer:Spammer;
-
 		public var physics : Physics;
+
 		public var enablePhysics:Boolean = true;
 		public var useGenerateTimer:Boolean  = true;
 		public var lost:Boolean = false;
-		public function get paused():Boolean{
-			return (state is Pause);
-		}
-
-		public var points:int = 0;
-		public var antipoints:int= 0;
-		public var ballsTillLost:int = 30;
 
 		private function initFields():void {
 			fieldSize = 160;
@@ -101,6 +108,11 @@
 				removeBall(killlist[i]);
 			}
 		}
+
+		public function get paused():Boolean{
+			return (state is Pause);
+		}
+
 
 		public function countingJoints():Number {
 			var adistance:Number;

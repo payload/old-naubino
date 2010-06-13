@@ -66,6 +66,7 @@
 			var tween:Object;
 			for (var i:* in secondaryBtns) {
 				var btn:Button = secondaryBtns[i];
+				btn.color = Color.random;
 				tween = {};
 				tween.alpha = 1;
 				tween.x = btn.popUpX;
@@ -142,12 +143,12 @@
 
 			const pi:Number = 3.14159;
 			mainbtn.position = new Vektor(35, 30);
-			var x:Number = -0.1;
+			var x:Number = -0.0;
 			var step:Number = 0.24;
-			playbtn.position = Vektor.polar(x * pi, 70); x += step;
+			playbtn.position = Vektor.polar(x * pi, 60); x += step;
 			mutebtn.position = Vektor.polar(x * pi, 60); x += step;
 			//highbtn.position = Vektor.polar(x * pi, 55); x += step;
-			exitbtn.position = Vektor.polar(x * pi, 50);
+			exitbtn.position = Vektor.polar(x * pi, 60);
 
 			for (var i:* in secondaryBtns) {
 				var btn:Button = secondaryBtns[i];
