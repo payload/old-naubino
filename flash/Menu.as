@@ -2,6 +2,7 @@
 {
 	import caurina.transitions.AuxFunctions;
 	import caurina.transitions.Tweener;
+	import stat.es.*;
 
 	public class Menu
 	{
@@ -76,7 +77,7 @@
 			mainbtn.setAction(popDown);
 		}
 
-		private function newTestButton(color:Color, str:String):Button {
+		private function newButton(color:Color, str:String, action:Function=null):Button {
 			var btn : Button = new Button();
 			btn.color = color;
 			btn.setAction(tracer(str));
@@ -85,19 +86,15 @@
 			return btn;
 		}
 
-		private function newPlayButton():Button {
-			var btn : Button = new Button();
-			btn.color = Color.random();
-			if(game.paused){
-				btn.setAction(playAction);
-				btn.type = "play";
+		private function setPlayButton():void{
+			if(game.state is Pause){
+				playbtn.setAction(playAction);
+				playbtn.type = "play";
 			}
 			else{
-				btn.setAction(pauseAction);
-				btn.type = "pause";
+				playbtn.setAction(pauseAction);
+				playbtn.type = "pause";
 			}
-			objs.push(btn);
-			return btn;
 		}
 
 		private function playAction():void{
@@ -107,28 +104,10 @@
 			game.lost = false;
 		}
 		
-
 		private function pauseAction():void{
 			game.pause();
 			playbtn.setAction(playAction);
 			playbtn.type = "play";
-		}
-
-		private function newMuteButton():Button {
-			return newTestButton(Color.blue, "mute");
-		}
-
-		private function newHighButton():Button {
-			return newTestButton(Color.purple, "high");
-		}
-
-		private function newExitButton():Button {
-			var btn : Button = new Button();
-			btn.color = Color.random();
-			btn.setAction(exitAction);
-			btn.type = "exit";
-			objs.push(btn);
-			return btn;
 		}
 
 		private function exitAction():void{
@@ -141,11 +120,12 @@
 		private function initButtons():void {
 			mainbtn = newMainButton();
 			mainbtn.collidable = false;
-			playbtn = newPlayButton();
-			mutebtn = newMuteButton();
-			//highbtn = newHighButton();
-			exitbtn = newExitButton();
-
+			playbtn = newButton(Color.blue, "pause",pauseAction);
+			mutebtn = newButton(Color.blue, "mute");
+			//highbtn = newButton(Color.purple, "high");
+			exitbtn = newButton(Color.random(),"exit",exitAction);
+			setPlayButton();
+			
 			secondaryBtns.push(playbtn);
 			secondaryBtns.push(mutebtn);
 			//secondaryBtns.push(highbtn);
