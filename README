@@ -1,21 +1,19 @@
 == TODO ==
-=== gilbert ===
-* draggin as a "behaviour" which can be add to a ball
 
-=== Hendrik ===
-
-=== unassigned ===
-* p:ut Balls physical and visible size into two different variables
+=== known issues ===
+* game.spam() creates pairs along a circle -> pairs don't appear regularly
 * friction relative to distance from center -> fix shivering
 * fix ball behavior (swingfriction, momentumconversation) 
-* implement loosing, highscore, menus
 
+
+=== overall features ===
 * impressum
  * namensfindung
-* * rechte
-* menu
- * mouseover
- * clickeffect
-	
-* GamePlay
- * schneller werden
+ * rechte
+* schneller werden
+* highscore
+
+=== under the hood improvements ===
+* draggin as a "behaviour" which can be add to a ball
+* put Balls physical and visible size into two different variables
+
