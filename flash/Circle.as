@@ -1,6 +1,6 @@
 package {
 	public class Circle extends Physical implements Action {
-		public var color:Color = Color.random();
+		public var color:Color = Color.random;
 
 		private var _action:Function = function():void{};
 

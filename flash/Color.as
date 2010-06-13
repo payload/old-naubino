@@ -19,7 +19,7 @@ package {
 		/* gibt eine zufällige Farbe aus dem OUTPUT farbschema zurück */
 		private static var colors:Array;
 
-		public static function random():Color {
+		public static function get random():Color {
 			if (colors == null) {
 				colors = [red, green, pink, blue, yellow, purple];
 			}
