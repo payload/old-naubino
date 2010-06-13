@@ -15,7 +15,7 @@
 			if (game.enablePhysics)
 				game.physics.physik();
 			game.antipoints = game.countingJoints();
-			if (game.antipoints > game.ballsTillLost) {
+			if (false && game.antipoints > game.ballsTillLost) {
 				game.lost = true;
 				game.clear();
 				game.useGenerateTimer = false;
