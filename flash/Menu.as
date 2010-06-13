@@ -89,7 +89,7 @@
 			return btn;
 		}
 
-		private function setPlayButton():void{
+		public function setPlayButton():void{
 			if(game.state is Pause){
 				playbtn.setAction(playAction);
 				playbtn.type = "play";
@@ -101,16 +101,12 @@
 		}
 
 		private function playAction():void{
-			game.unpause();
-			playbtn.setAction(pauseAction);
-			playbtn.type = "pause";
-			game.lost = false;
+			game.pause();
+			//game.lost = false;
 		}
 		
 		private function pauseAction():void{
 			game.pause();
-			playbtn.setAction(playAction);
-			playbtn.type = "play";
 		}
 		
 		private function muteAction():void{

@@ -10,9 +10,9 @@
 		
 		public function spam():void{}
 		
-		public function refresh():void {
-			
-		}
+		public function refresh():void {}
+
+		public function pause():void {}
 
 	}
 	

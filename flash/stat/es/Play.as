@@ -22,6 +22,11 @@
 			}
 		}
 		
+		public override function pause():void {
+			game.state = new Pause(game);
+			game.menu.setPlayButton();
+		}
+		
 	}
 
 }

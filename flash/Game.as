@@ -87,11 +87,7 @@
 		}
 
 		public function pause():void {
-			state = new Pause(this);
-		}
-
-		public function unpause():void {
-			state = new Play(this);
+			state.pause();
 		}
 
 		public function clear():void {
