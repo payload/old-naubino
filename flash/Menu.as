@@ -80,7 +80,10 @@
 		private function newButton(color:Color, str:String, action:Function=null):Button {
 			var btn : Button = new Button();
 			btn.color = color;
-			btn.setAction(tracer(str));
+			if(action == null)
+				btn.setAction(tracer(str));
+			else
+				btn.setAction(action);	
 			btn.type = str;
 			objs.push(btn);
 			return btn;
@@ -109,6 +112,16 @@
 			playbtn.setAction(playAction);
 			playbtn.type = "play";
 		}
+		
+		private function muteAction():void{
+			mutebtn.setAction(unMuteAction);
+			mutebtn.type = "unmute";
+		}
+
+		private function unMuteAction():void{
+			mutebtn.setAction(muteAction);
+			mutebtn.type = "mute";
+		}
 
 		private function exitAction():void{
 			game.clear();
@@ -121,10 +134,9 @@
 			mainbtn = newMainButton();
 			mainbtn.collidable = false;
 			playbtn = newButton(Color.random, "pause",pauseAction);
-			mutebtn = newButton(Color.random, "mute");
+			mutebtn = newButton(Color.random, "unmute",muteAction);
 			//highbtn = newButton(Color.purple, "high");
 			exitbtn = newButton(Color.random,"exit",exitAction);
-			setPlayButton();
 			
 			secondaryBtns.push(playbtn);
 			secondaryBtns.push(mutebtn);

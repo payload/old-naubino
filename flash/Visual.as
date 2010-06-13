@@ -208,7 +208,7 @@ package {
 		var fillcolor:uint = colorToUInt(Color.white);
 		bs.graphics.beginFill(fillcolor);
 		switch (b.type){
-		case "muteoff":
+		case "unmute":
 			bs.graphics.drawRect(-b.visibleRadius*0.5,-b.visibleRadius*0.3,b.visibleRadius*0.3,b.visibleRadius*0.6);
 			
 			bs.graphics.moveTo( b.visibleRadius*0.3,  b.visibleRadius*0.5);
