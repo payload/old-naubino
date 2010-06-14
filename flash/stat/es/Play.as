@@ -15,10 +15,11 @@
 			if (game.enablePhysics)
 				game.physics.physik();
 			game.antipoints = game.countingJoints();
-			if (false && game.antipoints > game.ballsTillLost) {
+			if (game.antipoints > game.ballsTillLost) {
+				game.state = new Lost(game);
 				game.lost = true;
-				game.clear();
-				game.useGenerateTimer = false;
+				game.menu.setPlayButton();
+				game.spammer.stop();
 			}
 		}
 		

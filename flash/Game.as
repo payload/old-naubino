@@ -12,7 +12,7 @@
 		public const height : Number = 400;
 		public var points:int = 0;
 		public var antipoints:int= 0;
-		public var ballsTillLost:int = 40;
+		public var ballsTillLost:int = 30;
 		public var refreshInterval:uint = 50;
 
 		public var fieldSize : Number;
