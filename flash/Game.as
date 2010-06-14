@@ -13,19 +13,8 @@
 		public var points:int = 0;
 		public var antipoints:int= 0;
 		public var ballsTillLost:int = 40;
-		public var difficulties:Array = new Array(2500, 2000, 1700, 1300, 1000, 800);
 		public var refreshInterval:uint = 50;
-		private var _spammerInterval:uint = difficulties[0];
 
-
-
-		public function get spammerInterval():uint{
-			return _spammerInterval;
-		}
-		public function set spammerInterval(si:uint):void{
-			_spammerInterval = si;
-			naubino.setSpammer();
-		}
 		public var fieldSize : Number;
 		public var objs : Array;
 		public var pointer : Vektor;
@@ -54,8 +43,7 @@
 
 		}
 		
-		public function Game(n:Naubino) {
-			naubino = n;
+		public function Game() {
 			initFields();
 		}
 		
@@ -92,10 +80,6 @@
 		/* game logic below here */
 		public function refresh():void {
 			state.refresh();
-		}
-
-		public function spam():void{
-			state.spam();
 		}
 
 		public function pause():void {

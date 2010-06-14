@@ -7,7 +7,6 @@
 	public class Menu
 	{
 		public var game:Game;
-		public var naubino:Naubino; //argh
 		public var objs:Array = [];
 		public var folded:Boolean = true;
 		public var mainbtn:Button;
@@ -19,7 +18,6 @@
 		
 		public function Menu(game : Game) {
 			this.game = game;
-			naubino = game.naubino;
 			initButtons();
 			utils.addAll(game.objs, objs);
 		}

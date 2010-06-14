@@ -7,8 +7,8 @@
 		{
 			super(game);
 		}
+
 		public override function spam():void{
-			game.spammer.randomPair();
 		}
 		
 		public override function refresh():void {
@@ -25,6 +25,7 @@
 		public override function pause():void {
 			game.state = game.paused;
 			game.menu.setPlayButton();
+			game.spammer.stop();
 		}
 		
 	}
