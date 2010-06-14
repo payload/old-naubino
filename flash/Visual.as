@@ -5,6 +5,7 @@ package {
 	import flash.events.*;
 	import flash.text.*;
 
+	import stat.es.*;
 
 	public class Visual {
 
@@ -84,6 +85,8 @@ package {
 			removeUnusedSprites();
 			if(game.lost)
 				gameOverMessage();
+			if(game.state is Highscore)
+				updateHighscore();
 		}
 
 		private function colorToUInt(color:Color):uint {
@@ -284,6 +287,31 @@ package {
 				bs.graphics.lineTo( -b.visibleRadius * 0.35, -b.visibleRadius * 0.4);
 				bs.graphics.endFill();
 			}
+		}
+
+		private function updateHighscore():void {
+			var text:String = "";
+			text += "===============================\n";
+			for (var i:* in game.highscore) {
+				var name:String = i;
+				var points:String = game.highscore[i];
+				text += name + "\t" + points + "\n";
+			}
+			text += "===============================\n";
+
+			var layer:* = layers.messages;
+			var table:TextField = getSprite("highscore", layer, TextField);
+			var format:TextFormat = new TextFormat();
+
+			table.width = 400;
+			table.height = 300;
+			table.textColor = colorToUInt(Color.black);
+			table.x = game.center.x - table.width/2;
+			table.y = game.center.y - table.height/2;
+			table.text = text;
+			table.setTextFormat(format);
+
+			layer.addChild(table);
 		}
 
 		private function gameOverMessage():void{

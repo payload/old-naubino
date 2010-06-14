@@ -26,6 +26,8 @@
 		public var spammer:Spammer;
 		public var physics : Physics;
 
+		public var highscore:Object; // used in Highscore and Visual
+
 		public var enablePhysics:Boolean = true;
 		public var useGenerateTimer:Boolean  = true;
 		public var lost:Boolean = false;
@@ -39,8 +41,8 @@
 			menu = new Menu(this);
 			playing = new Play(this);
 			paused = new Pause(this);
-			state = playing;
-
+			state = new Start(this);
+			state.play();
 		}
 		
 		public function Game() {
@@ -54,7 +56,7 @@
 			objs.push(b);
 			return b;
 		}
-		
+
 		// objs below here
 
 		public function createPair(v:Vektor):void {

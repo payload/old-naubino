@@ -28,6 +28,11 @@
 			game.menu.setPlayButton();
 			game.spammer.stop();
 		}
+
+		public override function highscore():void {
+			pause();
+			game.state = new Highscore(game);
+		}
 		
 	}
 

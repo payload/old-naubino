@@ -39,7 +39,6 @@ package
 			if (_difficulty != x) {
 				_difficulty = x;
 				timer.delay = difficulties[difficulty];
-				trace("diffi "+difficulty.toString());
 			}
 		}
 

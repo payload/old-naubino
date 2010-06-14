@@ -15,7 +15,7 @@
 		public override function pause():void {
 			game.state = game.playing;
 			game.menu.setPlayButton();
-			game.spammer.stop();
+			game.spammer.start();
 		}
 		
 	}

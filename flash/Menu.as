@@ -109,6 +109,7 @@
 		}
 		
 		private function muteAction():void{
+			game.state.highscore();
 			mutebtn.setAction(unMuteAction);
 			mutebtn.type = "unmute";
 		}
