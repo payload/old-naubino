@@ -8,6 +8,7 @@
 	{
 		public var game:Game;
 		public var objs:Array = [];
+		public var folded:Boolean = true;
 		public var mainbtn:Button;
 		public var secondaryBtns:Array = [];
 		public var playbtn:Button;
@@ -64,7 +65,6 @@
 			var tween:Object;
 			for (var i:* in secondaryBtns) {
 				var btn:Button = secondaryBtns[i];
-				btn.color = Color.random;
 				tween = {};
 				tween.alpha = 1;
 				tween.x = btn.popUpX;
@@ -89,11 +89,11 @@
 		}
 
 		public function setPlayButton():void{
-			if(game.state is Pause){
+			if(game.state === game.paused){
 				playbtn.setAction(playAction);
 				playbtn.type = "play";
 			}
-			else{
+			else if (game.state === game.playing){
 				playbtn.setAction(pauseAction);
 				playbtn.type = "pause";
 			}
@@ -120,7 +120,7 @@
 
 		private function exitAction():void{
 			game.clear();
-			game.pause(); // this needs mending
+			game.state = game.paused;
 			playbtn.setAction(playAction);
 			playbtn.type = "play";
 			game.points = 0;
