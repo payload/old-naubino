@@ -9,6 +9,7 @@
 		public var game:Game;
 		public var naubino:Naubino; //argh
 		public var objs:Array = [];
+		public var folded:Boolean = true;
 		public var mainbtn:Button;
 		public var secondaryBtns:Array = [];
 		public var playbtn:Button;
@@ -66,7 +67,6 @@
 			var tween:Object;
 			for (var i:* in secondaryBtns) {
 				var btn:Button = secondaryBtns[i];
-				btn.color = Color.random;
 				tween = {};
 				tween.alpha = 1;
 				tween.x = btn.popUpX;
