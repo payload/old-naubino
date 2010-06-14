@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="744.09003"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="schach.svg">
+  <defs
+     id="defs4">
+    <pattern
+       inkscape:stockid="Checkerboard"
+       id="Checkerboard"
+       patternTransform="matrix(10,0,0,10,-2,0.821413)"
+       height="2"
+       width="2"
+       patternUnits="userSpaceOnUse"
+       inkscape:collect="always">
+      <rect
+         id="rect6607"
+         height="1"
+         width="1"
+         y="0"
+         x="0"
+         style="fill:black;stroke:none" />
+      <rect
+         id="rect6609"
+         height="1"
+         width="1"
+         y="1"
+         x="1"
+         style="fill:black;stroke:none" />
+    </pattern>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       id="perspective4898"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4987"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <filter
+       inkscape:collect="always"
+       id="filter7296">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.9883126"
+         id="feGaussianBlur7298" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.61670783"
+     inkscape:cx="398.08153"
+     inkscape:cy="372.04501"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1024"
+     inkscape:window-height="600"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-308.27218)">
+    <rect
+       style="opacity:0.26645155;fill:url(#Checkerboard);fill-opacity:1;fill-rule:nonzero;stroke:none;filter:url(#filter7296)"
+       id="rect5037"
+       width="381.83051"
+       height="754.34814"
+       x="676.11438"
+       y="305.04413" />
+    <image
+       y="579.36218"
+       x="0"
+       id="image4989"
+       height="473"
+       width="680"
+       xlink:href="file:///home/payload/projects/schach2010/foo.png" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="869.53766"
+       y="910.97827"
+       id="text4993"><tspan
+         sodipodi:role="line"
+         x="869.53766"
+         y="910.97827"
+         id="tspan4997">Anmeldung über</tspan><tspan
+         sodipodi:role="line"
+         x="869.53766"
+         y="960.97827"
+         id="tspan5015">florian@myfsr.de</tspan><tspan
+         sodipodi:role="line"
+         x="869.53766"
+         y="1010.9783"
+         id="tspan5013">bis 22.06.10</tspan></text>
+    <path
+       sodipodi:type="star"
+       style="opacity:0.98999999;fill:#f44800;fill-opacity:1;stroke:none"
+       id="path5025"
+       sodipodi:sides="35"
+       sodipodi:cx="309.30292"
+       sodipodi:cy="419.42438"
+       sodipodi:r1="112.55986"
+       sodipodi:r2="160.7998"
+       sodipodi:arg1="-0.0063693406"
+       sodipodi:arg2="0.083390449"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 421.86049,418.70745 47.68346,14.11056 -49.36429,5.99889 44.39762,22.39801 -49.64212,-2.91185 39.68481,29.96557 -48.32442,-11.729 33.6965,36.57 -45.45354,-20.16916 26.62517,41.99905 -41.12174,-27.96108 18.69806,46.07821 -35.46825,-34.8543 10.17,48.67639 -28.67479,-40.62729 1.31506,49.71006 -20.95969,-45.09446 -7.58215,49.14601 -12.57093,-48.11228 -16.23566,47.00237 -3.77814,-49.58372 -24.36734,43.34804 5.1361,-49.4615 -31.71585,38.30045 13.88526,-47.74955 -38.04497,32.02187 22.18812,-44.50288 -43.15129,24.71407 29.77784,-39.82586 -46.8707,16.61195 36.41049,-33.86881 -49.08365,7.9759 41.87286,-26.82318 -49.719,-0.9165 45.98941,-18.91543 -48.75636,-9.77944 48.62783,-10.39972 -46.22663,-18.32807 49.70329,-1.54976 -42.21114,-26.28761 49.18126,7.35 -36.83896,-33.40225 47.07851,16.01355 -30.28275,-39.44331 43.46261,24.16239 -22.75321,-44.21664 38.44978,31.53465 -14.49238,-47.5688 32.20116,37.89334 -5.76574,-49.39206 24.91755,43.03412 3.14621,-49.62783 16.83308,46.79174 11.95704,-48.2685 8.20757,49.04544 20.38356,-45.3578 -0.68173,49.72278 28.15494,-40.98926 -9.54912,48.80199 35.02139,-35.30329 -18.10959,46.31266 40.76223,-28.48263 -26.08801,42.3348 45.19293,-20.74653 -33.22793,36.99627 48.1711,-12.34361 -39.29988,30.46865 49.601,-3.54397 -44.1087,22.96174 49.43669,5.36959 -47.49984,14.71682 z"
+       transform="matrix(1.7911756,0,0,1,-195.39452,60.553001)" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:DejaVu Sans"
+       x="200.72147"
+       y="509.75568"
+       id="text5027"><tspan
+         sodipodi:role="line"
+         id="tspan5029"
+         x="200.72147"
+         y="509.75568"
+         style="font-size:80px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans">Schach!</tspan></text>
+    <g
+       id="g7306"
+       transform="translate(-4.5975294,-21.730193)">
+      <text
+         id="text2834"
+         y="434.35526"
+         x="758.7533"
+         style="font-size:39.29214478px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+         xml:space="preserve"><tspan
+           y="434.35526"
+           x="758.7533"
+           id="tspan2836"
+           sodipodi:role="line">Donnerstag</tspan></text>
+      <text
+         id="text2838"
+         y="479.92346"
+         x="784.35956"
+         style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+         xml:space="preserve"><tspan
+           y="479.92346"
+           x="784.35956"
+           id="tspan2840"
+           sodipodi:role="line">24.06.10</tspan></text>
+      <text
+         id="text2846"
+         y="526.58813"
+         x="771.80096"
+         style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+         xml:space="preserve"><tspan
+           y="526.58813"
+           x="771.80096"
+           id="tspan2848"
+           sodipodi:role="line">17:00 Uhr</tspan></text>
+      <g
+         transform="translate(1.7042189,-6.2792969e-6)"
+         id="g7300">
+        <text
+           xml:space="preserve"
+           style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+           x="794.75073"
+           y="652.33105"
+           id="text2842"><tspan
+             sodipodi:role="line"
+             id="tspan2844"
+             x="794.75073"
+             y="652.33105">WIL/C203</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+           x="758.58734"
+           y="607.54968"
+           id="text5033"><tspan
+             sodipodi:role="line"
+             id="tspan5035"
+             x="758.58734"
+             y="607.54968">Ort:</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>
