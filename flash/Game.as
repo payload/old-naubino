@@ -32,6 +32,8 @@
 		public var menu : Menu;
 		public var naubino : Naubino;
 		public var state : GameState;
+		public var paused : Pause;
+		public var playing : Play;
 		public var spammer:Spammer;
 		public var physics : Physics;
 
@@ -46,7 +48,10 @@
 			spammer = new Spammer(this);
 			physics = new Physics(this);
 			menu = new Menu(this);
-			state = new Play(this);
+			playing = new Play(this);
+			paused = new Pause(this);
+			state = playing;
+
 		}
 		
 		public function Game(n:Naubino) {
@@ -98,7 +103,8 @@
 		}
 
 		public function clear():void {
-			//lost = false;
+			lost = false;
+			state = paused;
 			var killlist:Array =[];
 			for(var i:uint=0; i<objs.length; i++){
 				if(objs[i] is Ball)
@@ -108,11 +114,6 @@
 				removeBall(killlist[i]);
 			}
 		}
-
-		public function get paused():Boolean{
-			return (state is Pause);
-		}
-
 
 		public function countingJoints():Number {
 			var adistance:Number;

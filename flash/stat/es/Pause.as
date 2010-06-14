@@ -13,7 +13,7 @@
 		public override function refresh():void {}
 		
 		public override function pause():void {
-			game.state = new Play(game);
+			game.state = game.playing;
 			game.menu.setPlayButton();
 		}
 		

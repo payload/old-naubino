@@ -91,11 +91,11 @@
 		}
 
 		public function setPlayButton():void{
-			if(game.state is Pause){
+			if(game.state === game.paused){
 				playbtn.setAction(playAction);
 				playbtn.type = "play";
 			}
-			else{
+			else if (game.state === game.playing){
 				playbtn.setAction(pauseAction);
 				playbtn.type = "pause";
 			}
@@ -122,7 +122,7 @@
 
 		private function exitAction():void{
 			game.clear();
-			game.pause(); // this needs mending
+			game.state = game.paused;
 			playbtn.setAction(playAction);
 			playbtn.type = "play";
 			game.points = 0;
