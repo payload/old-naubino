@@ -2,7 +2,7 @@ package {
 	import flash.display.Sprite;
 	import flash.events.*;
 
-	public class Main extends Sprite {
+	public class Main extends Sprite { // TODO Perhaps one day this might extend stage
 
 		public var child:Sprite;
 
@@ -13,7 +13,7 @@ package {
 		}
 
 		public function click(e:MouseEvent):void {
-			stage.focus = child;
+			//stage.focus = child; // XXX brakes highscore namefield focus
 		}
 
 	}

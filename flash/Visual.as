@@ -227,54 +227,58 @@ package {
 		private function overlayHighscore():void {
 			overlayed = true;
 			var text:String = "";
-//			var table:TextField = new TextField();
-			var format:TextFormat = new TextFormat();
+			var table:TextField = new TextField();
 			var inputName:TextField = new TextField();
-			inputName.setSelection(0,0);
+			var format:TextFormat = new TextFormat();
+			var submit:Button = new Button();
 
-			format.size = 14;
+			inputName.maxChars = 15;
+
+			format.size = 20;
 			format.bold = false;
 			format.font = "Verdana";
-//			table.setTextFormat(format);
+			format.align = TextFormatAlign.CENTER ;
 
 
 			inputName.type = TextFieldType.INPUT;
 			inputName.border = true;
 			inputName.width = 150;
-			inputName.height = 50;
+			inputName.height = 26;
 			inputName.x = game.center.x-inputName.width/2;
-			inputName.y = game.center.y-inputName.height/2;
-			inputName.setSelection(54, 70);
-			
-			overlays.addChild(inputName);
-
+			inputName.y = game.center.y-inputName.height;
 			
 			
-			text += "===================\n";
+			submit.color = Color.random;
+			submit.setAction(function():void{ trace(inputName.text);});
+			submit.x = inputName.x + inputName.width + 30;
+			submit.y = inputName.y;
+			updateSecondaryButton(submit);
+			
 			for (var i:* in game.highscore) {
-				text += i + "\t\t" + game.highscore[i] + "\n";
+				text += i + "\t" + game.highscore[i] + "\n";
 			}
-			text += "===================\n";
 			
-/*			table.width = 400;
-			table.height = 300;
+			table.width = 200;
+			table.height = 150;
 			table.mouseEnabled = false;
 			table.textColor = utils.colorToUInt(Color.black);
 			table.x = game.center.x - table.width/2;
-			table.y = game.center.y - table.height/2;
-			table.text = text;*/
+			table.y = game.center.y;
+			table.text = text;
 			
-			
-
-//			overlays.addChild(table);
+			inputName.setTextFormat(format);
+			overlays.addChild(inputName);
+			table.setTextFormat(format);
+			overlays.addChild(table);
 		}
 
 		private function overlayLost():void{
 			overlayed = true;
 			var text:String = "Naub Overflow";
 			var layer:* = overlays;
-			var message:TextField = new Sprite();			
+			var message:TextField = new TextField();			
 			var format:TextFormat = new TextFormat();
+			
 			
 			format.bold = true;
 			format.font = "Verdana";
