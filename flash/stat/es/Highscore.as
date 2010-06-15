@@ -20,10 +20,16 @@
 				trace("existing highscore");
 			}
 			game.highscore = highscore;
+			game.menu.mainbtn.setAction(playAction);
+			game.state = game.playing;
 		}
 
 		public override function pause():void {
 			new Pause(game).pause();
+		}
+		
+		public function playAction():void{
+			game.pause();
 		}
 	}
 }

@@ -47,7 +47,8 @@
 				btn.collidable = false;
 				Tweener.addTween(btn, tween);
 			}
-			mainbtn.setAction(popUp);
+			//mainbtn.setAction(popUp);
+			mainbtn.setAction(highscoreAction);
 		}
 		
 		public function popDownNow():void {
@@ -58,7 +59,8 @@
 				btn.y = mainbtn.y;
 				btn.alpha = 0;
 			}
-			mainbtn.setAction(popUp);
+			//mainbtn.setAction(popUp);
+			
 		}
 
 		public function popUp():void {
@@ -73,7 +75,8 @@
 				tween.onComplete = function():void { for (var i:* in secondaryBtns) secondaryBtns[i].collidable = true; };
 				Tweener.addTween(btn, tween);
 			}
-			mainbtn.setAction(popDown);
+			//mainbtn.setAction(popDown);
+			
 		}
 
 		private function newButton(color:Color, str:String, action:Function=null):Button {
@@ -109,7 +112,6 @@
 		}
 		
 		private function muteAction():void{
-			game.state.highscore();
 			mutebtn.setAction(unMuteAction);
 			mutebtn.type = "unmute";
 		}
@@ -118,6 +120,11 @@
 			mutebtn.setAction(muteAction);
 			mutebtn.type = "mute";
 		}
+
+		private function highscoreAction():void{		
+			game.state.highscore();
+		}
+			
 
 		private function exitAction():void{
 			game.clear();
