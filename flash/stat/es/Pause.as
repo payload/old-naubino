@@ -8,8 +8,6 @@
 			super(game);
 		}
 		
-		public override function spam():void{}
-
 		public override function refresh():void {}
 		
 		public override function pause():void {

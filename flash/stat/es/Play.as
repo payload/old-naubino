@@ -8,9 +8,6 @@
 			super(game);
 		}
 
-		public override function spam():void{
-		}
-		
 		public override function refresh():void {
 			if (game.enablePhysics)
 				game.physics.physik();
