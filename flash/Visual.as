@@ -37,7 +37,7 @@ package {
 		}
 
 		private function drawBackground():void {
-			root.graphics.beginFill(colorToUInt(backgroundColor));
+			root.graphics.beginFill(utils.colorToUInt(backgroundColor));
 			root.graphics.drawRect(0, 0, game.width, game.height);
 			root.graphics.endFill();
 		}
@@ -89,10 +89,6 @@ package {
 				updateHighscore();
 		}
 
-		private function colorToUInt(color:Color):uint {
-			return 0x010000 * color.r + 0x000100 * color.g + 0x000001 * color.b;
-		}
-
 		private function getSprite(link:*, layer:DisplayObjectContainer, cls:Class = null):* {
 			if(cls == null)
 				cls = Sprite;			
@@ -121,7 +117,7 @@ package {
 		private function updateField():void {
 			var field:Sprite = getSprite("field", layers.background);
 			field.graphics.clear();
-			field.graphics.lineStyle(3,colorToUInt(lineColor));
+			field.graphics.lineStyle(3,utils.colorToUInt(lineColor));
 			field.graphics.drawCircle(0, 0, game.fieldSize);
 			field.x = game.center.x;
 			field.y = game.center.y;
@@ -153,9 +149,9 @@ package {
 			var layer:* = layers.menu1;
 			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
-			//bs.graphics.lineStyle(2, colorToUInt(Color.black));
+			//bs.graphics.lineStyle(2, utils.colorToUInt(Color.black));
 			bs.graphics.lineStyle();
-			bs.graphics.beginFill(colorToUInt(b.color));
+			bs.graphics.beginFill(utils.colorToUInt(b.color));
 			//bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			var r:Number = b.visibleRadius;
 			bs.graphics.drawRect(-r, -r, r*2, r*2);
@@ -199,69 +195,26 @@ package {
 			var layer:* = layers.menu2;
 			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
-			//bs.graphics.lineStyle(2, colorToUInt(Color.black));
+			//bs.graphics.lineStyle(2, utils.colorToUInt(Color.black));
 			bs.graphics.lineStyle();
-			bs.graphics.beginFill(colorToUInt(b.color));
+			bs.graphics.beginFill(utils.colorToUInt(b.color));
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			bs.graphics.endFill();
 			
 			if (b === game.menu.playbtn)
-				drawPlayButton(b, bs);
-				
-		var fillcolor:uint = colorToUInt(Color.white);
-		bs.graphics.beginFill(fillcolor);
-		switch (b.type){
-		case "unmute":
-			bs.graphics.drawRect(-b.visibleRadius*0.5,-b.visibleRadius*0.3,b.visibleRadius*0.3,b.visibleRadius*0.6);
-			
-			bs.graphics.moveTo( b.visibleRadius*0.3,  b.visibleRadius*0.5);
-			bs.graphics.lineTo( b.visibleRadius*0.3, -b.visibleRadius*0.5);
-			bs.graphics.lineTo(-b.visibleRadius*0.25, -b.visibleRadius*0.2);
-			bs.graphics.lineTo(-b.visibleRadius*0.25,  b.visibleRadius*0.2);
-			bs.graphics.lineTo( b.visibleRadius*0.3,  b.visibleRadius*0.5);
-			bs.graphics.endFill();
-		break;
+				bs = Icons.play(b, bs);
 
-		case "mute":
-			bs.graphics.drawRect(-b.visibleRadius*0.6,-b.visibleRadius*0.3,b.visibleRadius*0.4,b.visibleRadius*0.6);
-			
-			bs.graphics.moveTo( b.visibleRadius*0.4,  b.visibleRadius*0.5);
-			bs.graphics.lineTo( b.visibleRadius*0.4, -b.visibleRadius*0.5);
-			bs.graphics.lineTo(-b.visibleRadius*0.35, -b.visibleRadius*0.2);
-			bs.graphics.lineTo(-b.visibleRadius*0.35,  b.visibleRadius*0.2);
-			bs.graphics.lineTo( b.visibleRadius*0.4,  b.visibleRadius*0.5);
-			bs.graphics.endFill();
+			switch (b.type){
+				case "unmute":
+					bs = Icons.unMute(b,bs);
+				break;
 
-			bs.graphics.beginFill(colorToUInt(Color.red));			
-			bs.graphics.moveTo( b.visibleRadius*0.4,  b.visibleRadius*0.6);
-			bs.graphics.lineTo( b.visibleRadius*0.2,  b.visibleRadius*0.6);
-			bs.graphics.lineTo(-b.visibleRadius*0.5, -b.visibleRadius*0.6);
-			bs.graphics.lineTo(-b.visibleRadius*0.2, -b.visibleRadius*0.6);
-			bs.graphics.lineTo( b.visibleRadius*0.4,  b.visibleRadius*0.6);
-			bs.graphics.endFill();
-
-			bs.graphics.beginFill(colorToUInt(Color.red));			
-			bs.graphics.moveTo(-b.visibleRadius*0.5,  b.visibleRadius*0.6);
-			bs.graphics.lineTo(-b.visibleRadius*0.2,  b.visibleRadius*0.6);
-			bs.graphics.lineTo( b.visibleRadius*0.4, -b.visibleRadius*0.6);
-			bs.graphics.lineTo( b.visibleRadius*0.2, -b.visibleRadius*0.6);
-			bs.graphics.lineTo(-b.visibleRadius*0.5,  b.visibleRadius*0.6);
-		break;
-		case "exit":	
-			bs.graphics.moveTo( b.visibleRadius*0.5,  b.visibleRadius*0.4);
-			bs.graphics.lineTo( b.visibleRadius*0.2,  b.visibleRadius*0.4);
-			bs.graphics.lineTo(-b.visibleRadius*0.5, -b.visibleRadius*0.4);
-			bs.graphics.lineTo(-b.visibleRadius*0.2, -b.visibleRadius*0.4);
-			bs.graphics.lineTo( b.visibleRadius*0.5,  b.visibleRadius*0.4);
-			bs.graphics.endFill();
-
-			bs.graphics.beginFill(fillcolor);			
-			bs.graphics.moveTo(-b.visibleRadius*0.5,  b.visibleRadius*0.4);
-			bs.graphics.lineTo(-b.visibleRadius*0.2,  b.visibleRadius*0.4);
-			bs.graphics.lineTo( b.visibleRadius*0.5, -b.visibleRadius*0.4);
-			bs.graphics.lineTo( b.visibleRadius*0.2, -b.visibleRadius*0.4);
-			bs.graphics.lineTo(-b.visibleRadius*0.5,  b.visibleRadius*0.4);
-		break;
+				case "mute":
+					bs = Icons.mute(b,bs);
+				break;
+				case "exit":	
+					bs = Icons.exit(b,bs);
+				break;
 			}
 			bs.graphics.endFill();
 			
@@ -271,23 +224,6 @@ package {
 			bs.alpha = b.alpha;
 		}
 		
-		private function drawPlayButton(b:Button, bs:Sprite):void {
-			var fillcolor:uint = colorToUInt(Color.white);
-			if (b.type == "pause") {
-				bs.graphics.beginFill(fillcolor);
-				bs.graphics.drawRect(-b.visibleRadius*0.4, -b.visibleRadius*0.4, b.visibleRadius*0.3, b.visibleRadius*0.8);
-				bs.graphics.drawRect( b.visibleRadius * 0.4, -b.visibleRadius * 0.4, -b.visibleRadius * 0.3, b.visibleRadius * 0.8);
-				bs.graphics.endFill();
-			} else
-			if (b.type == "play") {
-				bs.graphics.beginFill(fillcolor);
-				bs.graphics.moveTo(-b.visibleRadius*0.35, -b.visibleRadius*0.4);
-				bs.graphics.lineTo(-b.visibleRadius*0.35,  b.visibleRadius*0.4);
-				bs.graphics.lineTo( b.visibleRadius*0.45,  0);
-				bs.graphics.lineTo( -b.visibleRadius * 0.35, -b.visibleRadius * 0.4);
-				bs.graphics.endFill();
-			}
-		}
 
 		private function updateHighscore():void {
 			var text:String = "";
@@ -305,7 +241,7 @@ package {
 
 			table.width = 400;
 			table.height = 300;
-			table.textColor = colorToUInt(Color.black);
+			table.textColor = utils.colorToUInt(Color.black);
 			table.x = game.center.x - table.width/2;
 			table.y = game.center.y - table.height/2;
 			table.text = text;
@@ -327,7 +263,7 @@ package {
 			
 			message.width = 400;
 			message.height = 100;
-			message.textColor = colorToUInt(Color.red);
+			message.textColor = utils.colorToUInt(Color.red);
 			message.x = game.center.x-message.width/2;
 			message.y = game.center.y-message.height/2;
 			message.text = text;
@@ -340,11 +276,11 @@ package {
 			var bs:Sprite = getSprite(b, layers.balls);
 			bs.graphics.clear();
 			if (game.active == b) {
-				bs.graphics.lineStyle(2, colorToUInt(b.color));
+				bs.graphics.lineStyle(2, utils.colorToUInt(b.color));
 			} else {
 				bs.graphics.lineStyle();
 			}
-			bs.graphics.beginFill(colorToUInt(b.color));
+			bs.graphics.beginFill(utils.colorToUInt(b.color));
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			bs.graphics.endFill();
 			bs.x = b.position.x;
@@ -355,7 +291,7 @@ package {
 			var js:Sprite = getSprite(j, layers.joints);
 			js.graphics.clear();
 			if (j.size > 0)
-				js.graphics.lineStyle(j.size, colorToUInt(lineColor));
+				js.graphics.lineStyle(j.size, utils.colorToUInt(lineColor));
 			else
 				js.graphics.lineStyle();
 			js.graphics.moveTo(j.a.position.x, j.a.position.y);
