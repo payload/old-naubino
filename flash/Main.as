@@ -13,7 +13,7 @@ package {
 		}
 
 		public function click(e:MouseEvent):void {
-			stage.focus = child;
+//			stage.focus = child;
 		}
 	}
 }
