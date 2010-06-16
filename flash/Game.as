@@ -85,7 +85,7 @@
 		}
 
 		public function pause():void {
-			state.pause();
+			state.changeState(Pause);
 		}
 
 		public function clear():void {
