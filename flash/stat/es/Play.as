@@ -18,13 +18,23 @@
 
 		public override function enter():void {
 			trace("play");
-			game.menu.showPause();
 			game.spammer.start();
+			showPauseButton();
 		}
 
 		public override function leave():void {
 			game.spammer.stop();
-			game.menu.showPlay();
+			showPlayButton();
+		}
+		
+		public function showPlayButton():void {
+			game.menu.playbtn.type = "play";
+			game.menu.playbtn.setAction(function():void { changeState(Play);});
+		}
+		
+		public function showPauseButton(): void{
+			game.menu.playbtn.type = "pause";
+			game.menu.playbtn.setAction(function():void { changeState(Pause); });
 		}
 	}
 }

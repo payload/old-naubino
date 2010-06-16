@@ -15,7 +15,8 @@
 		}
 
 		public override function leave():void {}
+			
+		}
 		
-	}
-
+		
 }
