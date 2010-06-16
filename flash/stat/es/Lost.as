@@ -3,8 +3,7 @@ package stat.es
 	public class Lost extends GameState
 	{
 		
-		public function Lost(game:Game) 
-		{
+		public function Lost(game:Game) {
 			super(game);
 		}
 
