@@ -7,15 +7,14 @@ package stat.es
 		{
 			super(game);
 		}
-		
-		public override function refresh():void {}
-		
-		public override function pause():void {
-			game.state = new Play(game);
-			game.menu.setPlayButton();
-			game.spammer.stop();
-		}
-		
-	}
 
+		public override function enter():void {
+			trace("lost");
+			game.lost = true;
+		}
+
+		public override function leave():void {
+			game.lost = false;
+		}
+	}
 }

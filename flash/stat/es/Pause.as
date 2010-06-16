@@ -10,11 +10,11 @@
 		
 		public override function refresh():void {}
 		
-		public override function pause():void {
-			game.state = game.playing;
-			game.menu.setPlayButton();
-			game.spammer.start();
+		public override function enter():void {
+			trace("pause");
 		}
+
+		public override function leave():void {}
 		
 	}
 

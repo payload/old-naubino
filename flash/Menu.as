@@ -30,7 +30,7 @@
 			var btn : Button = new Button();
 			btn.color = Color.yellow;
 			btn.visibleRadius = 15;
-			btn.setAction(popDown);
+			btn.setAction(highscoreAction);
 			objs.push(btn);
 			return btn;
 		}
@@ -91,15 +91,12 @@
 			return btn;
 		}
 
-		public function setPlayButton():void{
-			if(game.state === game.paused){
-				playbtn.setAction(playAction);
-				playbtn.type = "play";
-			}
-			else if (game.state === game.playing){
-				playbtn.setAction(pauseAction);
-				playbtn.type = "pause";
-			}
+		public function showPlay():void {
+			playbtn.type = "play";
+		}
+
+		public function showPause():void {
+			playbtn.type = "pause";
 		}
 
 		private function playAction():void{
@@ -122,9 +119,8 @@
 		}
 
 		private function highscoreAction():void{		
-			game.state.highscore();
-		}
-			
+			game.state.changeState(Highscore);
+		}			
 
 		private function exitAction():void{
 			game.clear();

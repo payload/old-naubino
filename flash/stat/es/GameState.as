@@ -15,7 +15,16 @@
 		public function play():void {}
 
 		public function highscore():void {}
-	 
+
+		public function enter():void {}
+
+		public function leave():void {}
+
+		public function changeState(state:Class):void {
+			game.state.leave();
+			game.state = new state(game);
+			game.state.enter();
+		}
 	}
 	
 }

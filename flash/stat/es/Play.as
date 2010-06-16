@@ -8,29 +8,23 @@
 			super(game);
 		}
 
-		public override function refresh():void {
-			if (game.enablePhysics)
+		public override function refresh():void {			//if (game.enablePhysics)
 				game.physics.physik();
 			game.antipoints = game.countingJoints();
 			if (game.antipoints > game.ballsTillLost) {
-				game.state = new Lost(game);
-				game.lost = true;
-				game.menu.setPlayButton();
-				game.spammer.stop();
+				changeState(Lost);
 			}
 		}
-		
-		public override function pause():void {
-			game.state = game.paused;
-			game.menu.setPlayButton();
+
+		public override function enter():void {
+			trace("play");
+			game.menu.showPause();
+			game.spammer.start();
+		}
+
+		public override function leave():void {
 			game.spammer.stop();
+			game.menu.showPlay();
 		}
-
-		public override function highscore():void {
-			pause();
-			game.state = new Highscore(game);
-		}
-		
 	}
-
 }

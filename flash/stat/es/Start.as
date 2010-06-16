@@ -8,8 +8,11 @@ package stat.es
 			super(game);
 		}
 		
-		public override function play():void {
-			game.state = new Play(game);
+		public override function enter():void {
+			trace("start");
+			game.menu.mainbtn.setAction(function():void{ changeState(Highscore); });
+
+			changeState(Play);
 		}
 	}
 }

@@ -42,7 +42,7 @@
 			playing = new Play(this);
 			paused = new Pause(this);
 			state = new Start(this);
-			state.play();
+			state.enter();
 		}
 		
 		public function Game() {

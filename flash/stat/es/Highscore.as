@@ -7,6 +7,11 @@
 		public function Highscore(game:Game) 
 		{
 			super(game);
+		}
+
+		public override function enter():void {
+			trace("highscore");
+
 			var obj:SharedObject = SharedObject.getLocal("highscore");
 			var highscore:Object = obj.data;
 			if (obj.size == 0) {
@@ -20,16 +25,12 @@
 				trace("existing highscore");
 			}
 			game.highscore = highscore;
-			game.menu.mainbtn.setAction(playAction);
-			game.state = game.playing;
+
+			game.menu.mainbtn.setAction(function():void{ changeState(Play); });
 		}
 
-		public override function pause():void {
-			new Pause(game).pause();
-		}
-		
-		public function playAction():void{
-			game.pause();
+		public override function leave():void {
+			game.menu.mainbtn.setAction(function():void{ changeState(Highscore); });
 		}
 	}
 }
