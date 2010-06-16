@@ -39,8 +39,8 @@ package {
 			updateField();
 			removeUnusedSprites();
 
-			if(!overlayed && game.lost)
-				overlayLost();
+/*			if(!overlayed && game.lost)
+				overlayLost();*/
 			/*if(!overlayed && game.state is Highscore)
 				overlayHighscore();*/
 		}
@@ -223,54 +223,47 @@ package {
 			bs.alpha = b.alpha;
 		}
 		
-
-		public function overlayNameField(btn:Button):void {
+		private function drawOverlay(sprite:DisplayObject):void{
 			overlayed = true;
+			var fog:Sprite = new Sprite();
+			fog.graphics.beginFill(0xFFFFFF);
+			fog.graphics.drawRect(0,0,game.width,game.height);
+			fog.graphics.endFill();
+			fog.alpha = 0.6;
+		
 			overlays = new Sprite();
+			if(!overlayed)
+			overlays.addChild(fog);
+			overlays.addChild(sprite);
+		}
+		
+		public function clearOverlay():void{
+			overlays.parent.removeChild(overlays);
+			overlayed = false;
+		}
+
+		public function overlayNameField(inputName:TextField, btn:Button):void {
 			root.addChild(overlays);
-			var inputName:TextField = new TextField();
+//			
 			var submitSprite:Sprite = new Sprite();
-			var submit:Button = new Button();
+//			var submit:Button = new Button();
 
-			inputName.maxChars = 15;
-
-			inputName.type = TextFieldType.INPUT;
-			inputName.border = true;
-			inputName.width = 150;
-			inputName.height = 26;
-			inputName.x = game.center.x-inputName.width/2;
-			inputName.y = game.center.y-inputName.height;
-			
-			submit.setAction(function():void{trace("sent ok");});
-			submit.color = Color.random;
-			submit.x = game.center.x + inputName.width/2;
-			submit.y = inputName.y;
-			
-			
+						
 			overlays.graphics.lineStyle();
-			overlays.graphics.beginFill(utils.colorToUInt(submit.color));
-			overlays.graphics.drawCircle(0, 0, submit.visibleRadius);
+			overlays.graphics.beginFill(utils.colorToUInt(btn.color));
+			overlays.graphics.drawCircle(0, 0, btn.visibleRadius);
 			overlays.graphics.endFill();
-			overlays.x = submit.position.x;
-			overlays.y = submit.position.y;
-			overlays.alpha = submit.alpha;
+			overlays.x = btn.position.x;
+			overlays.y = btn.position.y;
+			overlays.alpha = btn.alpha;
 			game.objs.push();
 
-			overlays.addChild(inputName);
+			drawOverlay(inputName);
 
 		}
 		
 
 		public function overlayList(list:Object):void {	
-		
-			var s:Sprite = new Sprite();
-			s.graphics.beginFill(0xFFFFFF);
-			s.graphics.drawRect(0,0,game.width,game.height);
-			s.graphics.endFill();
-			s.alpha = 0.6;
-			
-			overlayed = true;
-			overlays = new Sprite();
 			root.addChild(overlays);				
 			var text:String = "";
 			var table:TextField = new TextField();
@@ -295,18 +288,10 @@ package {
 			table.text = text;
 			
 			table.setTextFormat(format);
-			overlays.addChild(s);
-			overlays.addChild(table);
-		}
-		
-		public function clearOverlay():void{
-			overlays.parent.removeChild(overlays);
-			overlayed = false;
+			drawOverlay(table);
 		}
 
 		private function overlayLost():void{
-			overlayed = true;
-			overlays = new Sprite();
 			root.addChild(overlays);
 			var text:String = "Naub Overflow";
 			var layer:* = overlays;
@@ -327,7 +312,7 @@ package {
 			message.text = text;
 			message.setTextFormat(format);
 			
-			layer.addChild(message); 
+			drawOverlay(message); 
 		}
 		
 		/* drawing balls and field */

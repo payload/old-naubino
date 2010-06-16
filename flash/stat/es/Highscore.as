@@ -1,6 +1,7 @@
 ﻿package stat.es 
 {
 	import flash.net.*;
+	import flash.text.*;
 
 	public class Highscore extends GameState
 	{
@@ -30,10 +31,27 @@
 			hallOfFame = highscore;
 
 			game.menu.mainbtn.setAction(function():void{ changeState(play); });
+			initForm();
+		}
+
+		private function initForm():void{
+			var inputName:TextField = new TextField();
+			var submit:Button = newButton(Color.random, "submit", function():void{ trace("hell yeah!"); });
+
+			inputName.maxChars = 15;
+			inputName.type = TextFieldType.INPUT;
+			inputName.border = true;
+			inputName.width = 150;
+			inputName.height = 26;
+			inputName.x = game.center.x-inputName.width/2;
+			inputName.y = game.center.y-inputName.height;
+
+			submit.setAction(function():void{trace("sent ok");});
+			submit.color = Color.random;
+			submit.x = game.center.x + inputName.width/2;
+			submit.y = inputName.y;
 			
-			//var submit:Button = newButton(Color.random, "submit", function(){ trace("hell yeah!"); });
-			
-			//game.visual.overlayNameField(submit);
+			game.visual.overlayNameField(inputName, submit);
 			game.visual.overlayList(hallOfFame);
 		}
 
