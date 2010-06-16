@@ -6,6 +6,7 @@
 	public class Highscore extends GameState
 	{
 		public var hallOfFame:Object; // used in Highscore and Visual
+		private var submit:Button;
 
 		public function Highscore(game:Game) 
 		{
@@ -36,20 +37,20 @@
 
 		private function initForm():void{
 			var inputName:TextField = new TextField();
-			var submit:Button = newButton(Color.random, "submit", function():void{ trace("hell yeah!"); });
+			submit = newButton(Color.random, "submit", function():void{ trace("hell yeah!"); });
 
 			inputName.maxChars = 15;
 			inputName.type = TextFieldType.INPUT;
 			inputName.border = true;
 			inputName.width = 150;
-			inputName.height = 26;
+			inputName.height = 20;
 			inputName.x = game.center.x-inputName.width/2;
 			inputName.y = game.center.y-inputName.height;
 
 			submit.setAction(function():void{trace(inputName.text);});
 			submit.color = Color.random;
-			submit.x = game.center.x + inputName.width/2;
-			submit.y = inputName.y;
+			submit.x = game.center.x + inputName.width/2 + 20;
+			submit.y = inputName.y + 10;
 			
 			game.visual.overlayNameField(inputName, submit);
 			game.visual.overlayList(hallOfFame);
@@ -57,6 +58,7 @@
 
 		public override function leave():void {
 			game.menu.mainbtn.setAction(function():void{ changeState(highscore); });
+			game.objs.splice(game.objs.indexOf(submit),1);
 			game.visual.clearOverlay();
 		}
 		

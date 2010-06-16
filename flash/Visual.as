@@ -68,11 +68,12 @@ package {
 			root.addChild(layers.background);
 			root.addChild(layers.joints);
 			root.addChild(layers.balls);
+			root.addChild(overlays);
 			root.addChild(layers.menu0);
 			layers.menu0.addChild(layers.menu1);
 			layers.menu1.addChild(layers.menu2);
 
-			root.addChild(overlays);
+	
 			
 			layers.menu0.addEventListener(
 				MouseEvent.MOUSE_OVER,
@@ -222,11 +223,8 @@ package {
 		}
 		
 		private function drawOverlay(sprite:DisplayObject):void{
-			overlays = new Sprite();
-			root.addChild(overlays);
 			var fog:Sprite = new Sprite();
 
-			overlayed = true;
 			fog.graphics.beginFill(0xFFFFFF);
 			fog.graphics.drawRect(0,0,game.width,game.height);
 			fog.graphics.endFill();
@@ -236,15 +234,20 @@ package {
 				overlays.addChild(fog);
 	
 			overlays.addChild(sprite);
+
+			overlayed = true;
 		}
 		
 		public function clearOverlay():void{
 			overlays.parent.removeChild(overlays);
+			overlays = new Sprite();
+			root.addChild(overlays);
 			overlayed = false;
 		}
-
+		private var foobar:int = 0;
 		public function overlayNameField(inputName:TextField, btn:Button):void {
 			var submitSprite:Sprite = new Sprite();
+			var ok:TextField = new TextField();
 						
 			submitSprite.graphics.lineStyle();
 			submitSprite.graphics.beginFill(utils.colorToUInt(btn.color));
@@ -254,7 +257,15 @@ package {
 			submitSprite.y = btn.position.y;
 			submitSprite.alpha = btn.alpha;
 			
-			drawOverlay(submitSprite);
+			ok.text = "ok";
+			ok.x = -8;
+			ok.y = -8;
+			foobar = foobar + 20;
+			ok.textColor = 0000000;
+			ok.mouseEnabled = false;
+
+			submitSprite.addChild(ok);
+			drawOverlay(submitSprite); // delete this line to find an easter egg
 			drawOverlay(inputName);
 		}
 		
