@@ -10,8 +10,9 @@
 		}
 
 		public override function enter():void {
+		
 			trace("highscore");
-
+			
 			var obj:SharedObject = SharedObject.getLocal("highscore");
 			var highscore:Object = obj.data;
 			if (obj.size == 0) {
@@ -27,6 +28,8 @@
 			game.highscore = highscore;
 
 			game.menu.mainbtn.setAction(function():void{ changeState(Play); });
+			
+			
 		}
 
 		public override function leave():void {
