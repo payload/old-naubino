@@ -10,9 +10,8 @@ package stat.es
 		
 		public override function enter():void {
 			trace("start");
-			game.menu.mainbtn.setAction(function():void{ changeState(Highscore); });
-
-			changeState(Play);
+			game.menu.mainbtn.setAction(function():void{ changeState(highscore); });
+			changeState(play);
 		}
 	}
 }

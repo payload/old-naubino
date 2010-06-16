@@ -26,11 +26,11 @@
 			}
 			game.highscore = highscore;
 
-			game.menu.mainbtn.setAction(function():void{ changeState(Play); });
+			game.menu.mainbtn.setAction(function():void{ changeState(play); });
 		}
 
 		public override function leave():void {
-			game.menu.mainbtn.setAction(function():void{ changeState(Highscore); });
+			game.menu.mainbtn.setAction(function():void{ changeState(highscore); });
 		}
 	}
 }

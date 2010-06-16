@@ -21,11 +21,9 @@
 		public var menu : Menu;
 		public var naubino : Naubino;
 		public var state : GameState;
-		public var paused : Pause;
-		public var playing : Play;
 		public var spammer:Spammer;
 		public var physics : Physics;
-
+		public var states:Object = {};
 		public var highscore:Object; // used in Highscore and Visual
 
 		public var enablePhysics:Boolean = true;
@@ -35,13 +33,17 @@
 		private function initFields():void {
 			fieldSize = 160;
 			objs = [];
-			pointer = center;
+			pointer = center; 
 			spammer = new Spammer(this);
 			physics = new Physics(this);
 			menu = new Menu(this);
-			playing = new Play(this);
-			paused = new Pause(this);
-			state = new Start(this);
+			
+			states.play = new Play(this);
+			states.pause = new Pause(this);
+			states.start = new Start(this);
+			states.lost = new Lost(this);
+			states.highscore = new Highscore(this);
+			state = states.start;
 			state.enter();
 		}
 		
@@ -85,12 +87,12 @@
 		}
 
 		public function pause():void {
-			state.changeState(Pause);
+			state.changeState(states.pause);
 		}
 
 		public function clear():void {
 			lost = false;
-			state = paused;
+			state.changeState(states.pause);
 			var killlist:Array =[];
 			for(var i:uint=0; i<objs.length; i++){
 				if(objs[i] is Ball)

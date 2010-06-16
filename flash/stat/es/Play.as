@@ -12,7 +12,7 @@
 				game.physics.physik();
 			game.antipoints = game.countingJoints();
 			if (game.antipoints > game.ballsTillLost) {
-				changeState(Lost);
+				changeState(lost);
 			}
 		}
 
@@ -29,12 +29,12 @@
 		
 		public function showPlayButton():void {
 			game.menu.playbtn.type = "play";
-			game.menu.playbtn.setAction(function():void { changeState(Play);});
+			game.menu.playbtn.setAction(function():void { changeState(play);});
 		}
 		
 		public function showPauseButton(): void{
 			game.menu.playbtn.type = "pause";
-			game.menu.playbtn.setAction(function():void { changeState(Pause); });
+			game.menu.playbtn.setAction(function():void { changeState(pause); });
 		}
 	}
 }

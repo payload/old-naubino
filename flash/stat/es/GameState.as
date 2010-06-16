@@ -14,10 +14,30 @@
 
 		public function leave():void {}
 
-		public function changeState(state:Class):void {
+		public function changeState(state:GameState):void {
 			game.state.leave();
-			game.state = new state(game);
+			game.state = state;
 			game.state.enter();
+		}
+		
+		protected function get start():Start{
+			return game.states.start;
+		}
+		
+		protected function get play():Play{
+			return game.states.play;
+		}
+		
+		protected function get pause():Pause{
+			return game.states.pause;
+		}
+		
+		protected function get lost():Lost{
+			return game.states.lost;
+		}
+		
+		protected function get highscore():Highscore{
+			return game.states.highscore;
 		}
 	}
 	
