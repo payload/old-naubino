@@ -30,7 +30,6 @@
 			var btn : Button = new Button();
 			btn.color = Color.yellow;
 			btn.visibleRadius = 15;
-			btn.setAction(highscoreAction);
 			objs.push(btn);
 			return btn;
 		}
@@ -47,8 +46,6 @@
 				btn.collidable = false;
 				Tweener.addTween(btn, tween);
 			}
-			//mainbtn.setAction(popUp);
-			mainbtn.setAction(highscoreAction);
 		}
 		
 		public function popDownNow():void {
@@ -59,8 +56,6 @@
 				btn.y = mainbtn.y;
 				btn.alpha = 0;
 			}
-			//mainbtn.setAction(popUp);
-			
 		}
 
 		public function popUp():void {
@@ -75,8 +70,6 @@
 				tween.onComplete = function():void { for (var i:* in secondaryBtns) secondaryBtns[i].collidable = true; };
 				Tweener.addTween(btn, tween);
 			}
-			//mainbtn.setAction(popDown);
-			
 		}
 
 		private function newButton(color:Color, str:String, action:Function=null):Button {
@@ -118,9 +111,9 @@
 			mutebtn.type = "mute";
 		}
 
-		private function highscoreAction():void{		
-			game.state.changeState(game.states.highscore);
-		}			
+		//		private function highscoreAction():void{		
+		//	game.state.changeState(game.states.highscore);
+		//}			
 
 		private function exitAction():void{
 			game.clear();
