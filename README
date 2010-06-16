@@ -3,7 +3,8 @@
 === known issues ===
 * game.spam() creates pairs along a circle -> pairs don\'t appear regularly
 * friction relative to distance from center -> fix shivering
-* fix ball behavior (swingfriction, momentumconversation) 
+* fix ball behavior (swingfriction, momentumconversation)
+* STATES NEED DIFFERENT USERINPUT BEHAVIOUR
 
 
 === overall features ===
