@@ -233,12 +233,13 @@ package {
 		
 			overlays = new Sprite();
 			if(!overlayed)
-			overlays.addChild(fog);
+				overlays.addChild(fog);
 			overlays.addChild(sprite);
 		}
 		
 		public function clearOverlay():void{
-			overlays.parent.removeChild(overlays);
+			if(overlayed)
+				overlays.parent.removeChild(overlays);
 			overlayed = false;
 		}
 
@@ -249,15 +250,15 @@ package {
 //			var submit:Button = new Button();
 
 						
-			overlays.graphics.lineStyle();
-			overlays.graphics.beginFill(utils.colorToUInt(btn.color));
-			overlays.graphics.drawCircle(0, 0, btn.visibleRadius);
-			overlays.graphics.endFill();
-			overlays.x = btn.position.x;
-			overlays.y = btn.position.y;
-			overlays.alpha = btn.alpha;
-			game.objs.push();
-
+			submitSprite.graphics.lineStyle();
+			submitSprite.graphics.beginFill(utils.colorToUInt(btn.color));
+			submitSprite.graphics.drawCircle(0, 0, btn.visibleRadius);
+			submitSprite.graphics.endFill();
+			submitSprite.x = btn.position.x;
+			submitSprite.y = btn.position.y;
+			submitSprite.alpha = btn.alpha;
+			
+			drawOverlay(submitSprite);
 			drawOverlay(inputName);
 
 		}

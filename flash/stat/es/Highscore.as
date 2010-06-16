@@ -46,7 +46,7 @@
 			inputName.x = game.center.x-inputName.width/2;
 			inputName.y = game.center.y-inputName.height;
 
-			submit.setAction(function():void{trace("sent ok");});
+			submit.setAction(function():void{trace(inputName.text);});
 			submit.color = Color.random;
 			submit.x = game.center.x + inputName.width/2;
 			submit.y = inputName.y;
