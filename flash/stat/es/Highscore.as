@@ -31,12 +31,27 @@
 
 			game.menu.mainbtn.setAction(function():void{ changeState(play); });
 			
+			//var submit:Button = newButton(Color.random, "submit", function(){ trace("hell yeah!"); });
+			
+			//game.visual.overlayNameField(submit);
 			game.visual.overlayList(hallOfFame);
 		}
 
 		public override function leave():void {
 			game.menu.mainbtn.setAction(function():void{ changeState(highscore); });
 			game.visual.clearOverlay();
+		}
+		
+		private function newButton(color:Color, str:String, action:Function=null):Button {
+			var btn : Button = new Button();
+			btn.color = color;
+			if(action == null)
+				btn.setAction(function():void{trace(str)});
+			else
+				btn.setAction(action);	
+			btn.type = str;
+			game.objs.push(btn);
+			return btn;
 		}
 	}
 }

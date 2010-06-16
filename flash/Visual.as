@@ -224,7 +224,7 @@ package {
 		}
 		
 
-		private function overlayNameField():void {
+		public function overlayNameField(btn:Button):void {
 			overlayed = true;
 			overlays = new Sprite();
 			root.addChild(overlays);
@@ -262,6 +262,13 @@ package {
 		
 
 		public function overlayList(list:Object):void {	
+		
+			var s:Sprite = new Sprite();
+			s.graphics.beginFill(0xFFFFFF);
+			s.graphics.drawRect(0,0,game.width,game.height);
+			s.graphics.endFill();
+			s.alpha = 0.6;
+			
 			overlayed = true;
 			overlays = new Sprite();
 			root.addChild(overlays);				
@@ -288,6 +295,7 @@ package {
 			table.text = text;
 			
 			table.setTextFormat(format);
+			overlays.addChild(s);
 			overlays.addChild(table);
 		}
 		
