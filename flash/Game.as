@@ -26,8 +26,6 @@
 		public var states:Object = {};
 		public var highscore:Object; // used in Highscore and Visual
 
-		public var enablePhysics:Boolean = true;
-		public var useGenerateTimer:Boolean  = true;
 		public var lost:Boolean = false;
 
 		private function initFields():void {
