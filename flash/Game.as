@@ -19,12 +19,13 @@
 		public var objs : Array;
 		public var pointer : Vektor;
 		public var menu : Menu;
+		public var visual : Visual;
 		public var naubino : Naubino;
+
 		public var state : GameState;
 		public var spammer:Spammer;
 		public var physics : Physics;
 		public var states:Object = {};
-		public var highscore:Object; // used in Highscore and Visual
 
 		public var lost:Boolean = false;
 

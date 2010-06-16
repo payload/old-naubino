@@ -15,6 +15,7 @@
 			mouseChildren = true;
 			userInput = new UserInput(this);
 			visual = new Visual(this);
+			game.visual = visual;
 		}
 
 		public function Naubino() {

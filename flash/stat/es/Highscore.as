@@ -4,6 +4,8 @@
 
 	public class Highscore extends GameState
 	{
+		public var hallOfFame:Object; // used in Highscore and Visual
+
 		public function Highscore(game:Game) 
 		{
 			super(game);
@@ -25,13 +27,16 @@
 			} else {
 				trace("existing highscore");
 			}
-			game.highscore = highscore;
+			hallOfFame = highscore;
 
 			game.menu.mainbtn.setAction(function():void{ changeState(play); });
+			
+			game.visual.overlayList(hallOfFame);
 		}
 
 		public override function leave():void {
 			game.menu.mainbtn.setAction(function():void{ changeState(highscore); });
+			game.visual.clearOverlay();
 		}
 	}
 }

@@ -41,8 +41,8 @@ package {
 
 			if(!overlayed && game.lost)
 				overlayLost();
-			if(!overlayed && game.state is Highscore)
-				overlayHighscore();
+			/*if(!overlayed && game.state is Highscore)
+				overlayHighscore();*/
 		}
 		
 		private function drawMenu():void {
@@ -226,6 +226,8 @@ package {
 
 		private function overlayNameField():void {
 			overlayed = true;
+			overlays = new Sprite();
+			root.addChild(overlays);
 			var inputName:TextField = new TextField();
 			var submitSprite:Sprite = new Sprite();
 			var submit:Button = new Button();
@@ -259,8 +261,10 @@ package {
 		}
 		
 
-		private function overlayHighscore():void {	
-			overlayed = true;				
+		public function overlayList(list:Object):void {	
+			overlayed = true;
+			overlays = new Sprite();
+			root.addChild(overlays);				
 			var text:String = "";
 			var table:TextField = new TextField();
 			var format:TextFormat = new TextFormat();
@@ -271,8 +275,8 @@ package {
 			format.font = "Verdana";
 			format.align = TextFormatAlign.CENTER ;			
 		
-			for (var i:* in game.highscore) {
-				text += i + "\t" + game.highscore[i] + "\n";
+			for (var i:* in list) {//i is the Name, list[i] are the points
+				text += i + "\t" + list[i] + "\n";
 			}
 			
 			table.width = 200;
@@ -287,13 +291,15 @@ package {
 			overlays.addChild(table);
 		}
 		
-		private function clearOverlay():void{
+		public function clearOverlay():void{
 			overlays.parent.removeChild(overlays);
 			overlayed = false;
 		}
 
 		private function overlayLost():void{
 			overlayed = true;
+			overlays = new Sprite();
+			root.addChild(overlays);
 			var text:String = "Naub Overflow";
 			var layer:* = overlays;
 			var message:TextField = new TextField();			
