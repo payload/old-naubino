@@ -137,6 +137,7 @@
 				if ((a.active || b.active) && c.overlap > 4) {
 					if (a.joints.length > 0 && b.joints.length > 0) {
 						if ((a is Ball) && (b is Ball) && (a.matches(b))) {
+							a.active = false;
 							replaceBall(a, b);
 							handleCycles();
 						}
