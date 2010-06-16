@@ -39,10 +39,8 @@ package {
 			updateField();
 			removeUnusedSprites();
 
-/*			if(!overlayed && game.lost)
-				overlayLost();*/
-			/*if(!overlayed && game.state is Highscore)
-				overlayHighscore();*/
+		/*	if(!overlayed && game.lost)
+				overlayLost();		*/
 		}
 		
 		private function drawMenu():void {
@@ -224,31 +222,29 @@ package {
 		}
 		
 		private function drawOverlay(sprite:DisplayObject):void{
-			overlayed = true;
+			overlays = new Sprite();
+			root.addChild(overlays);
 			var fog:Sprite = new Sprite();
+
+			overlayed = true;
 			fog.graphics.beginFill(0xFFFFFF);
 			fog.graphics.drawRect(0,0,game.width,game.height);
 			fog.graphics.endFill();
 			fog.alpha = 0.6;
-		
-			overlays = new Sprite();
+	
 			if(!overlayed)
 				overlays.addChild(fog);
+	
 			overlays.addChild(sprite);
 		}
 		
 		public function clearOverlay():void{
-			if(overlayed)
-				overlays.parent.removeChild(overlays);
+			overlays.parent.removeChild(overlays);
 			overlayed = false;
 		}
 
 		public function overlayNameField(inputName:TextField, btn:Button):void {
-			root.addChild(overlays);
-//			
 			var submitSprite:Sprite = new Sprite();
-//			var submit:Button = new Button();
-
 						
 			submitSprite.graphics.lineStyle();
 			submitSprite.graphics.beginFill(utils.colorToUInt(btn.color));
@@ -260,12 +256,10 @@ package {
 			
 			drawOverlay(submitSprite);
 			drawOverlay(inputName);
-
 		}
 		
 
 		public function overlayList(list:Object):void {	
-			root.addChild(overlays);				
 			var text:String = "";
 			var table:TextField = new TextField();
 			var format:TextFormat = new TextFormat();
@@ -293,7 +287,6 @@ package {
 		}
 
 		private function overlayLost():void{
-			root.addChild(overlays);
 			var text:String = "Naub Overflow";
 			var layer:* = overlays;
 			var message:TextField = new TextField();			
