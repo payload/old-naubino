@@ -287,7 +287,7 @@ package {
 				text += i + "\t" + list[i] + "\n";
 			}
 			
-			table.width = 200;
+			table.width = 600;
 			table.height = 150;
 			table.mouseEnabled = false;
 			table.textColor = utils.colorToUInt(Color.black);
@@ -311,6 +311,7 @@ package {
 			format.size = 45;
 			format.align = TextFormatAlign.CENTER ;
 			
+			message.mouseEnabled = false;
 			message.width = 400;
 			message.height = 100;
 			message.textColor = utils.colorToUInt(Color.red);
