@@ -297,7 +297,7 @@ package {
 			drawOverlay(table);
 		}
 
-		private function overlayLost():void{
+		public function overlayLost():void{
 			var text:String = "Naub Overflow";
 			var layer:* = overlays;
 			var message:TextField = new TextField();			

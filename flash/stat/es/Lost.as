@@ -10,6 +10,7 @@ package stat.es
 		public override function enter():void {
 			trace("lost");
 			game.lost = true;
+			game.visual.overlayLost();
 		}
 
 		public override function leave():void {
