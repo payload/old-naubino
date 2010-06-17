@@ -65,13 +65,13 @@ package {
 
 			overlays		= new Sprite();
 			
-			root.addChild(layers.background);
-			root.addChild(layers.joints);
-			root.addChild(layers.balls);
-			root.addChild(overlays);
-			root.addChild(layers.menu0);
-			layers.menu0.addChild(layers.menu1);
-			layers.menu1.addChild(layers.menu2);
+			root.addChildAt(layers.background, 0);
+			root.addChildAt(layers.joints, 1);
+			root.addChildAt(layers.balls, 2);
+			root.addChildAt(overlays, 3);
+			root.addChildAt(layers.menu0, 4);
+			layers.menu0.addChildAt(layers.menu1, 0);
+			layers.menu1.addChildAt(layers.menu2, 0);
 
 	
 			
@@ -239,9 +239,9 @@ package {
 		}
 		
 		public function clearOverlay():void{
-			overlays.parent.removeChild(overlays);
+			overlays.parent.removeChildAt(3);
 			overlays = new Sprite();
-			root.addChild(overlays);
+			root.addChildAt(overlays, 3);
 			overlayed = false;
 		}
 		private var foobar:int = 0;
