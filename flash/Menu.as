@@ -115,7 +115,7 @@
 		//	game.state.changeState(game.states.highscore);
 		//}			
 
-		private function exitAction():void{
+		public function exitAction():void{
 			game.clear();
 			game.state.changeState(game.states.pause);
 			playbtn.setAction(playAction);

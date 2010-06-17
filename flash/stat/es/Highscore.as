@@ -30,7 +30,6 @@
 				trace("existing highscore");
 			}
 			hallOfFame = highscore;
-
 			game.menu.mainbtn.setAction(function():void{ changeState(play); });
 			initForm();
 		}
