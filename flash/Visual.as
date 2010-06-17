@@ -62,6 +62,7 @@ package {
 			layers.menu0		= new Sprite(); // menu mouse over field (also menu joints, but we can't :-/)
 			layers.menu1		= new Sprite(); // main menu button // XXX not a ordering I understand ??
 			layers.menu2		= new Sprite(); // menu buttons
+			layers.menu3    = new Sprite();
 
 			overlays		= new Sprite();
 			
@@ -72,6 +73,7 @@ package {
 			root.addChildAt(layers.menu0, 4);
 			layers.menu0.addChildAt(layers.menu1, 0);
 			layers.menu1.addChildAt(layers.menu2, 0);
+			layers.menu2.addChildAt(layers.menu3, 0);
 
 	
 			
@@ -347,7 +349,11 @@ package {
 		}
 
 		private function updateJoint(j:Joint):void {
-			var js:Sprite = getSprite(j, layers.joints);
+			var layer:*;
+			if (j.menu) layer = layers.menu3;
+			else layer = layers.joints;
+
+			var js:Sprite = getSprite(j, layer);
 			js.graphics.clear();
 			if (j.size > 0)
 				js.graphics.lineStyle(j.size, utils.colorToUInt(lineColor));

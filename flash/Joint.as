@@ -8,6 +8,8 @@ package{
 
 		public var size:Number = 4;
 		public var alpha:Number = 1;
+
+		public var menu:Boolean = false;
 		
 		private var _length:Number;
 		private var _strength:Number;

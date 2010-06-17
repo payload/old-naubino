@@ -151,7 +151,7 @@
 				btn.popUpX = btn.x;
 				btn.popUpY = btn.y;
 				btn.visibleRadius = 12;
-				join(mainbtn, btn);
+				join(mainbtn, btn).menu = true;
 			}
 			
 			popDownNow();
