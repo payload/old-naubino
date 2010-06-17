@@ -5,6 +5,7 @@
 system_catalog.xml
 .metadata*
 .directory
+*.swp
 
 *.class
 \#*\#
