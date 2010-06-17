@@ -287,7 +287,7 @@ package {
 				text += i + "\t" + list[i] + "\n";
 			}
 			
-			table.width = 600;
+			table.width = game.width;
 			table.height = 150;
 			table.mouseEnabled = false;
 			table.textColor = utils.colorToUInt(Color.black);
