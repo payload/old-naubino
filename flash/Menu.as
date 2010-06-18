@@ -13,7 +13,7 @@
 		public var secondaryBtns:Array = [];
 		public var playbtn:Button;
 		public var mutebtn:Button;
-		public var highbtn:Button;
+		public var helpbtn:Button;
 		public var exitbtn:Button;
 		
 		public function Menu(game : Game) {
@@ -109,14 +109,14 @@
 		private function initButtons():void {
 			mainbtn = newMainButton();
 			mainbtn.collidable = false;
-			playbtn = newButton(Color.random, "pause");
-			mutebtn = newButton(Color.random, "unmute",unMuteAction);
-			//highbtn = newButton(Color.purple, "high");
-			exitbtn = newButton(Color.random,"exit",exitAction);
+			playbtn = newButton(Color.green, "pause");
+			mutebtn = newButton(Color.blue, "unmute",unMuteAction);
+			helpbtn = newButton(Color.yellow, "help");
+			exitbtn = newButton(Color.red,"exit",exitAction);
 			
 			secondaryBtns.push(playbtn);
 			secondaryBtns.push(mutebtn);
-			//secondaryBtns.push(highbtn);
+			secondaryBtns.push(helpbtn);
 			secondaryBtns.push(exitbtn);
 
 			const pi:Number = 3.14159;
@@ -125,7 +125,7 @@
 			var step:Number = 0.24;
 			playbtn.position = Vektor.polar(x * pi, 60); x += step;
 			mutebtn.position = Vektor.polar(x * pi, 60); x += step;
-			//highbtn.position = Vektor.polar(x * pi, 55); x += step;
+			helpbtn.position = Vektor.polar(x * pi, 55); x += step;
 			exitbtn.position = Vektor.polar(x * pi, 60);
 
 			for (var i:* in secondaryBtns) {

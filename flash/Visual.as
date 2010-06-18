@@ -225,6 +225,9 @@ package {
 				case "exit":	
 					bs = Icons.exit(b,bs);
 				break;
+			  case "help":
+					bs = Icons.help(b, bs);
+					break;
 			}
 			bs.graphics.endFill();
 			
