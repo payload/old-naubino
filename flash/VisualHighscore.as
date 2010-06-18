@@ -69,11 +69,18 @@ package {
 		public function updateHighscoreText():void {
 			var i:*;
 			var hallOfFame:Object = game.states.highscore.hallOfFame;
+
+			var table:Array = [];
+			for (i in hallOfFame) {
+				table.push({ name: i, points: hallOfFame[i] });
+			}
+			table.sortOn("points");
+		 
 			var names:String = "";
 			var points:String = "";
-			for (i in hallOfFame) {
-				names += i + "\n";
-				points += hallOfFame[i] + "\n";
+			for (i in table) {
+				names += table[i].name + "\n";
+				points += table[i].points + "\n";
 			}
 			hs_names.text = names;
 			hs_points.text = points;
