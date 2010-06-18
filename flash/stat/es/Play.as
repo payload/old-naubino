@@ -20,6 +20,7 @@
 			trace("play");
 			game.spammer.start();
 			showPauseButton();
+			game.menu.helpbtn.setAction(function():void { changeState(game.states.help) });
 		}
 
 		public override function leave():void {
