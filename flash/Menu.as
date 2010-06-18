@@ -92,15 +92,6 @@
 			playbtn.type = "pause";
 		}
 
-		private function playAction():void{
-			game.pause();
-			//game.lost = false;
-		}
-		
-		private function pauseAction():void{
-			game.pause();
-		}
-		
 		private function muteAction():void{
 			mutebtn.setAction(unMuteAction);
 			mutebtn.type = "unmute";
@@ -111,22 +102,14 @@
 			mutebtn.type = "mute";
 		}
 
-		//		private function highscoreAction():void{		
-		//	game.state.changeState(game.states.highscore);
-		//}			
-
 		public function exitAction():void{
-			game.clear();
-			game.state.changeState(game.states.pause);
-			playbtn.setAction(playAction);
-			playbtn.type = "play";
-			game.points = 0;
+			game.state.changeState(game.states.lost);
 		}
 		
 		private function initButtons():void {
 			mainbtn = newMainButton();
 			mainbtn.collidable = false;
-			playbtn = newButton(Color.random, "pause",pauseAction);
+			playbtn = newButton(Color.random, "pause");
 			mutebtn = newButton(Color.random, "unmute",unMuteAction);
 			//highbtn = newButton(Color.purple, "high");
 			exitbtn = newButton(Color.random,"exit",exitAction);

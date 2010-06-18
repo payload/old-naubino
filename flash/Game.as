@@ -90,8 +90,6 @@
 		}
 
 		public function clear():void {
-			lost = false;
-			state.changeState(states.pause);
 			var killlist:Array =[];
 			for(var i:uint=0; i<objs.length; i++){
 				if(objs[i] is Ball)
