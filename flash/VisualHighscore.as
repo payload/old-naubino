@@ -43,6 +43,21 @@ package {
 			format.font = "Verdana";
 			format.align = TextFormatAlign.LEFT;
 			points_tf = format;
+			format = new TextFormat();
+			format.size = 40;
+			format.bold = true;
+			format.font = "Verdana";
+			format.align = TextFormatAlign.CENTER;
+
+			var head:TextField;
+			head = new TextField();
+			head.autoSize = TextFieldAutoSize.CENTER;
+			head.mouseEnabled = false;
+			head.textColor = utils.colorToUInt(Color.yellow);
+			head.x = game.width/2 - head.width/2;
+			head.y = 70;
+			head.text = "Highscore";
+			head.setTextFormat(format);
 
 			names = new TextField();
 			names.autoSize = TextFieldAutoSize.RIGHT;
@@ -56,6 +71,7 @@ package {
 		  points.textColor = utils.colorToUInt(Color.black);
 			points.x = game.width/2 + 10;
 			
+			highscore.addChild(head);
 			highscore.addChild(names);
 			highscore.addChild(points);
 		}	
