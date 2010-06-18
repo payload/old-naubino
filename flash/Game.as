@@ -23,7 +23,7 @@
 		public var naubino : Naubino;
 
 		public var state : GameState;
-		public var spammer:Spammer;
+		public var spammer : Spammer;
 		public var physics : Physics;
 		public var states:Object = {};
 
@@ -41,6 +41,7 @@
 			states.pause = new Pause(this);
 			states.start = new Start(this);
 			states.lost = new Lost(this);
+			states.help = new Help(this);
 			states.highscore = new Highscore(this);
 			state = states.start;
 			state.enter();

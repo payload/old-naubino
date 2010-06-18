@@ -8,6 +8,7 @@ package {
 		public var lost:Sprite;
 		private var message:TextField;
 		private var input:TextField;
+		private var format:TextFormat;
 
 		public function VisualLost(visual:Visual) {
 			super(visual);
@@ -21,6 +22,7 @@ package {
 		}
 
 		public function show():void {
+			resetInput();
 			visual.show(visual.fog, 2);
 			visual.show(lost, 2);
 		}
@@ -30,8 +32,13 @@ package {
 			visual.hide(lost, 2);
 		}
 
+		private function resetInput():void {
+			input.text = "Anony Mous";
+			input.setTextFormat(format);
+		}
+
 		private function initForm():void{
-			var format:TextFormat = new TextFormat();
+			format = new TextFormat();
 			format.font = "Verdana";
 			format.size = 20;
 			format.align = TextFormatAlign.CENTER;
@@ -41,8 +48,7 @@ package {
 			input.type = TextFieldType.INPUT;
 			input.border = true;
 
-			input.text = "Anony Mous";
-			input.setTextFormat(format);
+			resetInput();
 			input.autoSize = TextFieldAutoSize.CENTER;
 			input.x = game.center.x - input.width/2;
 			input.y = message.y + message.height;

@@ -24,6 +24,7 @@ package {
 
 		public var highscore:VisualHighscore;
 		public var lost:VisualLost;
+		public var help:VisualHelp;
 
 		public function Visual(root:Naubino) {
 			this.root = root;
@@ -34,6 +35,7 @@ package {
 			initLayers();
 			root.addEventListener(Event.ENTER_FRAME, function(e:Event):void{ update(); });
 			initFog();
+			help = new VisualHelp(this);
 			highscore = new VisualHighscore(this);
 			lost = new VisualLost(this);
 			drawBackground();

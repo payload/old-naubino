@@ -105,14 +105,18 @@
 		public function exitAction():void{
 			game.state.changeState(game.states.lost);
 		}
+
+		public function helpAction():void {
+			game.state.changeState(game.states.help);
+		}
 		
 		private function initButtons():void {
 			mainbtn = newMainButton();
 			mainbtn.collidable = false;
 			playbtn = newButton(Color.green, "pause");
-			mutebtn = newButton(Color.blue, "unmute",unMuteAction);
-			helpbtn = newButton(Color.yellow, "help");
-			exitbtn = newButton(Color.red,"exit",exitAction);
+			mutebtn = newButton(Color.blue, "unmute", unMuteAction);
+			helpbtn = newButton(Color.yellow, "help", helpAction);
+			exitbtn = newButton(Color.red,"exit", exitAction);
 			
 			secondaryBtns.push(playbtn);
 			secondaryBtns.push(mutebtn);
