@@ -23,6 +23,7 @@ package {
 		private var backgroundColor : Color;
 
 		public var highscore:VisualHighscore;
+		public var lost:VisualLost;
 
 		public function Visual(root:Naubino) {
 			this.root = root;
@@ -34,6 +35,7 @@ package {
 			root.addEventListener(Event.ENTER_FRAME, function(e:Event):void{ update(); });
 			initFog();
 			highscore = new VisualHighscore(this);
+			lost = new VisualLost(this);
 			drawBackground();
 			drawMenu();
 		}
@@ -302,30 +304,6 @@ package {
 			drawOverlay(inputName);
 		}
 
-		public function overlayLost():void{
-			var text:String = "Naub Overflow";
-			var layer:* = overlays;
-			var message:TextField = new TextField();			
-			var format:TextFormat = new TextFormat();
-			
-			
-			format.bold = true;
-			format.font = "Verdana";
-			format.size = 45;
-			format.align = TextFormatAlign.CENTER ;
-			
-			message.mouseEnabled = false;
-			message.width = 400;
-			message.height = 100;
-			message.textColor = utils.colorToUInt(Color.red);
-			message.x = game.center.x-message.width/2;
-			message.y = game.center.y-message.height/2;
-			message.text = text;
-			message.setTextFormat(format);
-			
-			drawOverlay(message); 
-		}
-		
 		/* drawing balls and field */
 		
 		private function updateField():void {

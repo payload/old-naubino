@@ -10,13 +10,13 @@ package stat.es
 		public override function enter():void {
 			trace("lost");
 			game.lost = true;
-			game.visual.overlayLost();
+			game.visual.lost.show();
 			game.menu.playbtn.setAction(function():void{ game.menu.exitAction(); 
 				changeState(start);  });//not so nice, but works
 		}
 
 		public override function leave():void {
-			game.visual.clearOverlay();
+			game.visual.lost.hide();
 			game.lost = false;
 			
 		}
