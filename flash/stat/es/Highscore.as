@@ -39,6 +39,9 @@
 				highscore["Claire"] = 80;
 				highscore["Dave"] = 70;
 				highscore["Lasmiranda De'Sivilia"] = 60;
+				highscore["Eclaire"] = 32;
+				highscore["Fred"] = 18;
+				highscore["Gabi"] = 5;
 			} else {
 				trace("existing highscore");
 			}

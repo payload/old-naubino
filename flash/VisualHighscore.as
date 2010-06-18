@@ -6,10 +6,10 @@ package {
 	public class VisualHighscore extends VisualModule {
 
 		public var highscore:Sprite;
-		public var hs_names:TextField;
-		public var hs_points:TextField;
-		public var hs_names_tf:TextFormat;
-		public var hs_points_tf:TextFormat;
+		public var names:TextField;
+		public var points:TextField;
+		public var names_tf:TextFormat;
+		public var points_tf:TextFormat;
 
 		public function VisualHighscore(visual:Visual) {
 			super(visual);
@@ -34,33 +34,27 @@ package {
 			
 			var format:TextFormat;
 			format = new TextFormat();
-			format.size = 25;
+			format.size = 20;
 			format.font = "Verdana";
 			format.align = TextFormatAlign.RIGHT;
-			hs_names_tf = format;
+			names_tf = format;
 			format = new TextFormat();
 			format.size = 20;
 			format.font = "Verdana";
 			format.align = TextFormatAlign.LEFT;
-			hs_points_tf = format;
+			points_tf = format;
 
-			hs_names = new TextField();
-			var names:TextField = hs_names;
-			names.width = game.width/2 - 10;
-			names.height = 150;
-			names.x = 0;
-			names.y = game.center.y - names.height/2;
+			names = new TextField();
+			names.autoSize = TextFieldAutoSize.RIGHT;
 			names.mouseEnabled = false;
 			names.textColor = utils.colorToUInt(Color.black);
+			names.x = game.width/2 - 10 - names.width;
 
-			hs_points = new TextField();
-			var points:TextField = hs_points;
-			points.width = game.width/2 - 10;
-			points.height = 150;
-			points.x = game.width - points.width;
-			points.y = game.center.y - points.height/2;
+			points = new TextField();
+			points.autoSize = TextFieldAutoSize.LEFT;
 			points.mouseEnabled = false;
 		  points.textColor = utils.colorToUInt(Color.black);
+			points.x = game.width/2 + 10;
 			
 			highscore.addChild(names);
 			highscore.addChild(points);
@@ -75,17 +69,20 @@ package {
 				table.push({ name: i, points: hallOfFame[i] });
 			}
 			table.sortOn("points");
+			table.splice(5, table.length);
 		 
-			var names:String = "";
-			var points:String = "";
+			var names_text:String = "";
+			var points_text:String = "";
 			for (i in table) {
-				names += table[i].name + "\n";
-				points += table[i].points + "\n";
+				names_text += table[i].name + "\n";
+				points_text += table[i].points + "\n";
 			}
-			hs_names.text = names;
-			hs_points.text = points;
-			hs_names.setTextFormat(hs_names_tf);
-			hs_points.setTextFormat(hs_points_tf);
+			names.text = names_text;
+			names.setTextFormat(names_tf);
+			names.y = game.center.y - names.height/2;
+			points.text = points_text;
+			points.setTextFormat(points_tf);
+			points.y = game.center.y - points.height/2;
 		}
 	}
 }
