@@ -241,14 +241,22 @@ package {
 		
 		public var fog:Sprite = new Sprite();
 		public function initFog():void {
+			hide(this.fog);
+			layers.fog.addChild(this.fog);
+
 			var fog:Shape = new Shape();
 			fog.graphics.beginFill(0xFFFFFF);
 			fog.graphics.drawRect(0, 0, game.width, game.height);
 			fog.graphics.endFill();
-			fog.alpha = 0.6;
-			hide(this.fog);
+			fog.alpha = 0.8;
 			this.fog.addChild(fog);
-			layers.fog.addChild(this.fog);
+
+			var x:Shape = new Shape();
+			x.graphics.beginFill(0x0000FF);
+			x.graphics.drawCircle(200, 200, 100);
+			x.graphics.endFill();
+			x.alpha = 0.8;
+			//			this.fog.addChild(x);
 		}
 
 		public function hide(obj:DisplayObject, time:Number = 0):void {
@@ -276,45 +284,12 @@ package {
 			overlayed = true;
 		}
 		
-		public function clearOverlay():void{
-			hide(fog, 3);
-
-			overlays.parent.removeChild(overlays);
-			overlays = new Sprite();
-			root.addChild(overlays);
-			overlayed = false;
-		}
-		private var foobar:int = 0;
-		public function overlayNameField(inputName:TextField, btn:Button):void {
-			var submitSprite:Sprite = new Sprite();
-			var ok:TextField = new TextField();
-						
-			submitSprite.graphics.lineStyle();
-			submitSprite.graphics.beginFill(utils.colorToUInt(btn.color));
-			submitSprite.graphics.drawCircle(0, 0, btn.visibleRadius);
-			submitSprite.graphics.endFill();
-			submitSprite.x = btn.position.x;
-			submitSprite.y = btn.position.y;
-			submitSprite.alpha = btn.alpha;
-			
-			ok.text = "ok";
-			ok.x = -8;
-			ok.y = -8;
-			foobar = foobar + 20;
-			ok.textColor = 0000000;
-			ok.mouseEnabled = false;
-
-			submitSprite.addChild(ok);
-			drawOverlay(submitSprite); // delete this line to find an easter egg
-			drawOverlay(inputName);
-		}
-
 		/* drawing balls and field */
 		
 		private function updateField():void {
 			var field:Sprite = getSprite("field", layers.background);
 			field.graphics.clear();
-			field.graphics.lineStyle(3,utils.colorToUInt(lineColor));
+			field.graphics.lineStyle(3, 0xE0E0E0);
 			field.graphics.drawCircle(0, 0, game.fieldSize);
 			field.x = game.center.x;
 			field.y = game.center.y;
