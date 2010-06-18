@@ -7,18 +7,22 @@ package {
 
 	import stat.es.*;
 
+	import caurina.transitions.Tweener;
+
 	public class Visual {
 
-		private var game : Game;
+		public var game : Game;
 		private var root : Naubino;
 		private var sprites : Dictionary;
 		private var usedSprites : Dictionary;
 		private var layers : Object = {};
-		private var overlays:Sprite = new Sprite();
+		public var overlays:Sprite = new Sprite();
 		private var overlayed:Boolean = false;
 
 		private var lineColor : Color;
 		private var backgroundColor : Color;
+
+		public var highscore:VisualHighscore;
 
 		public function Visual(root:Naubino) {
 			this.root = root;
@@ -28,6 +32,8 @@ package {
 			sprites = new Dictionary();
 			initLayers();
 			root.addEventListener(Event.ENTER_FRAME, function(e:Event):void{ update(); });
+			initFog();
+			highscore = new VisualHighscore(this);
 			drawBackground();
 			drawMenu();
 		}
@@ -59,21 +65,23 @@ package {
 			layers.background	= new Sprite();
 			layers.balls		= new Sprite();
 			layers.joints		= new Sprite();
+			layers.fog      = new Sprite();
 			layers.menu0		= new Sprite(); // menu mouse over field (also menu joints, but we can't :-/)
 			layers.menu1		= new Sprite(); // main menu button // XXX not a ordering I understand ??
 			layers.menu2		= new Sprite(); // menu buttons
 			layers.menu3    = new Sprite();
-
+		 
 			overlays		= new Sprite();
 			
-			root.addChildAt(layers.background, 0);
-			root.addChildAt(layers.joints, 1);
-			root.addChildAt(layers.balls, 2);
-			root.addChildAt(overlays, 3);
-			root.addChildAt(layers.menu0, 4);
-			layers.menu0.addChildAt(layers.menu1, 0);
-			layers.menu1.addChildAt(layers.menu2, 0);
-			layers.menu2.addChildAt(layers.menu3, 0);
+			root.addChild(layers.background);
+			root.addChild(layers.joints);
+			root.addChild(layers.balls);
+			root.addChild(layers.fog);
+			root.addChild(overlays);
+			root.addChild(layers.menu0);
+			layers.menu0.addChild(layers.menu1);
+			layers.menu1.addChild(layers.menu2);
+			layers.menu2.addChild(layers.menu3);
 
 	
 			
@@ -224,16 +232,37 @@ package {
 			bs.alpha = b.alpha;
 		}
 		
-		private function drawOverlay(sprite:DisplayObject):void{
-			var fog:Sprite = new Sprite();
-
+		public var fog:Sprite = new Sprite();
+		public function initFog():void {
+			var fog:Shape = new Shape();
 			fog.graphics.beginFill(0xFFFFFF);
-			fog.graphics.drawRect(0,0,game.width,game.height);
+			fog.graphics.drawRect(0, 0, game.width, game.height);
 			fog.graphics.endFill();
 			fog.alpha = 0.6;
-	
-			if(!overlayed)
-				overlays.addChild(fog);
+			hide(this.fog);
+			this.fog.addChild(fog);
+			layers.fog.addChild(this.fog);
+		}
+
+		public function hide(obj:DisplayObject, time:Number = 0):void {
+			var tween:* = {
+				alpha: 0,
+				time: time,
+				onComplete: function():void { obj.visible = false; }
+			}
+			Tweener.addTween(obj, tween);
+		}
+		public function show(obj:DisplayObject, time:Number = 0):void {
+			var tween:* = {
+				alpha: 1,
+				time: time,
+				onStart: function():void { obj.visible = true; }
+			}
+			Tweener.addTween(obj, tween);
+		}
+
+		public function drawOverlay(sprite:DisplayObject):void{
+			show(fog, 3);
 	
 			overlays.addChild(sprite);
 
@@ -241,9 +270,11 @@ package {
 		}
 		
 		public function clearOverlay():void{
-			overlays.parent.removeChildAt(3);
+			hide(fog, 3);
+
+			overlays.parent.removeChild(overlays);
 			overlays = new Sprite();
-			root.addChildAt(overlays, 3);
+			root.addChild(overlays);
 			overlayed = false;
 		}
 		private var foobar:int = 0;
@@ -269,34 +300,6 @@ package {
 			submitSprite.addChild(ok);
 			drawOverlay(submitSprite); // delete this line to find an easter egg
 			drawOverlay(inputName);
-		}
-		
-
-		public function overlayList(list:Object):void {	
-			var text:String = "";
-			var table:TextField = new TextField();
-			var format:TextFormat = new TextFormat();
-			
-
-			format.size = 20;
-			format.bold = false;
-			format.font = "Verdana";
-			format.align = TextFormatAlign.CENTER ;			
-		
-			for (var i:* in list) {//i is the Name, list[i] are the points
-				text += i + "\t" + list[i] + "\n";
-			}
-			
-			table.width = game.width;
-			table.height = 150;
-			table.mouseEnabled = false;
-			table.textColor = utils.colorToUInt(Color.black);
-			table.x = game.center.x - table.width/2;
-			table.y = game.center.y;
-			table.text = text;
-			
-			table.setTextFormat(format);
-			drawOverlay(table);
 		}
 
 		public function overlayLost():void{

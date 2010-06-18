@@ -17,6 +17,19 @@
 		
 			trace("highscore");
 			
+			updateHighscore();
+			game.menu.mainbtn.setAction(function():void{ changeState(play); });
+			game.visual.highscore.show();
+			//initForm();
+		}
+
+		public override function leave():void {
+			game.menu.mainbtn.setAction(function():void{ changeState(highscore); });
+			game.visual.highscore.hide();
+			//game.visual.clearOverlay();
+		}
+
+		private function updateHighscore():void {
 			var obj:SharedObject = SharedObject.getLocal("highscore");
 			var highscore:Object = obj.data;
 			if (obj.size == 0) {
@@ -30,8 +43,6 @@
 				trace("existing highscore");
 			}
 			hallOfFame = highscore;
-			game.menu.mainbtn.setAction(function():void{ changeState(play); });
-			initForm();
 		}
 
 		private function initForm():void{
@@ -51,15 +62,10 @@
 			submit.x = game.center.x + inputName.width/2 + 20;
 			submit.y = inputName.y + 10;
 			
-			game.visual.overlayNameField(inputName, submit);
-			game.visual.overlayList(hallOfFame);
+			//game.visual.overlayNameField(inputName, submit);
+			//game.visual.overlayList(hallOfFame);
 		}
 
-		public override function leave():void {
-			game.menu.mainbtn.setAction(function():void{ changeState(highscore); });
-			game.objs.splice(game.objs.indexOf(submit),1);
-			game.visual.clearOverlay();
-		}
 		
 		private function newButton(color:Color, str:String, action:Function=null):Button {
 			var btn : Button = new Button();
