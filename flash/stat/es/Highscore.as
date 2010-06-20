@@ -11,7 +11,7 @@
 		private var submit:Button;
 		private var request:URLRequest;
 		private var heros:URLLoader;
-		private var online:Boolean = false; //solve this via catching sandbox violations
+		private var online:Boolean = true; //solve this via catching sandbox violations
 
 		public function Highscore(game:Game) 
 		{
@@ -41,13 +41,12 @@
 	            heros.addEventListener(Event.COMPLETE, heroHandler);
 				heros.dataFormat = URLLoaderDataFormat.TEXT;
 				heros.load(request);
-				return heros.data;
             }
 			catch (e:Error)	{
 				trace("caught one");
 				return "outch - Sandbox!";
 			}
-			return "I got to the end - why?";
+			return heros.data;
 		}
 		
 		private function heroHandler(e:Event):void{
