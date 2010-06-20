@@ -13,6 +13,14 @@
 			active = false;
 		}
 		
+		public function attached():void {
+			
+		}
+		
+		public function attachedButRemoved():void {
+			
+		}
+		
 		public function Ball(pos:Vektor, r:Number=defaultRadius) {
 			super(pos, r);
 			attracted = true;

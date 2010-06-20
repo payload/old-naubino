@@ -5,12 +5,10 @@
 	
 	public class Help extends GameState
 	{
-//		private var menuballs:Dictionary;
+		private var objs:Array = [];
 		
-		public function Help(game:Game) 
-		{
+		public function Help(game:Game) {
 			super(game);
-//			menuballs = new Dictionary();
 		}
 
 		public override function enter():void {
@@ -37,25 +35,57 @@
 			game.physics.physik();
 		}
 		
-		public function helpScreen1():void {
+		private function helpScreen1():void {
+			game.clear();
 			var text:String = "Willkommen bei Naubino!\n" + 
 			"Die bunten Kugeln (Naubs) fliegen zur Mitte des Spielfeldes." + 
 			"Versuche, einen Naub mit Hilfe der Maus zu verschieben.";
 			game.visual.help.setHelpText(text);
-			createPair(new Vektor(200, 200), Color.green, Color.red);
-			createPair(new Vektor(400, 100), Color.green, Color.yellow);
+			createPair(game.center, Color.green, Color.red, helpAction1);
 		}
 		
-		public function createPair(v:Vektor, color1:Color, color2:Color):void {
-			var obj1:Ball = createBall(color1);
-			var obj2:Ball = createBall(color2);
+		private function helpAction1(b:HelpBall):void {
+			var distance:Number = game.center.sub(b.position).length;
+			if (distance > 200)
+				helpScreen2();
+		}
+		
+		private function helpScreen2():void {
+			game.clear();
+			var text:String = "Deine Mutter!";
+			game.visual.help.setHelpText(text);
+			var balls:Array = [];
+			var temp:Array;
+			var i:*;
+			temp = createPair(game.center.add(new Vektor(100, 100)), Color.green, Color.red);
+			for (i in temp) balls.push(temp[i]);
+			temp = createPair(game.center.sub(new Vektor(100, 100)), Color.green, Color.blue);
+			for (i in temp) balls.push(temp[i]);
+			for (i in balls) {
+				var b:HelpBall = balls[i];
+				b.onAttached = helpAction2;
+			}
+		}
+		
+		private function helpAction2(b:HelpBall):void {
+			trace("Boah krass");
+		}
+		
+		public function createPair(v:Vektor, color1:Color, color2:Color, onRelease:Function = null):Array {
+			var obj1:HelpBall = createBall(color1);
+			var obj2:HelpBall = createBall(color2);
 			var obj : Joint = join(obj1, obj2);
 			var pair:Vektor = Vektor.polar(Math.random() * Math.PI * 2, obj.length * 0.6);
 			var pos1:Vektor = v.add(pair);
 			var pos2:Vektor = v.sub(pair);
 			obj1.position = pos1;
 			obj2.position = pos2;
+			
+			obj1.onRelease = onRelease;
+			obj2.onRelease = onRelease;
+			
 			game.objs.push(obj);
+			return [obj1, obj2];
 		}
 		
 		public function createBall(color:Color, v:Vektor = null):HelpBall {
@@ -65,7 +95,7 @@
 			b.color = color;
 			b.attractedTo = game.center;
 			game.objs.push(b);
-//			menuballs[b] = v;
+			objs.push(b);
 			return b;
 		}
 		

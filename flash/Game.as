@@ -167,6 +167,8 @@
 					}
 				}
 				removeBall(b);
+				a.attached();
+				b.attachedButRemoved();
 			}
 		}
 
