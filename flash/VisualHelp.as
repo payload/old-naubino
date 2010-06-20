@@ -1,26 +1,28 @@
 package {
 	
 	import flash.display.*;
+	import flash.utils.*;
+	import flash.events.*;
 	import flash.text.*;
 
 	public class VisualHelp extends VisualModule {
 		
-		public var help:Sprite = new Sprite();
-		public var helptext:TextField;
+		public var help1:Sprite = new Sprite();
+		public var helptext1:TextField;
 		
 		public function VisualHelp(visual:Visual) {
 			super(visual);
-			visual.overlays.addChild(help);
-			visual.hide(help);
+			visual.overlays.addChild(help1);
+			visual.hide(help1);
 			initStartText();
 		}
 
 		public function show():void {
-			visual.show(help, 2);
+			visual.show(help1, 2);
 		}
 
 		public function hide():void {
-			visual.hide(help, 2);
+			visual.hide(help1, 2);
 		}
 		
 		private function initStartText(): void {
@@ -31,20 +33,21 @@ package {
 			format.font = "Verdana";
 			format.align = TextFormatAlign.LEFT;
 
-			helptext = new TextField();
-			helptext.width = game.width/2;
-			helptext.wordWrap = true;
-			helptext.mouseEnabled = false;
-			helptext.textColor = utils.colorToUInt(Color.black);
-			helptext.x = game.width/4;// - helptext.width/2;
-			helptext.y = game.height - game.height/3;
-			helptext.text = "Willkommen bei Naubino!\n" + 
-			"Die bunten Kugeln (Naubs) fliegen zur Mitte des Spielfeldes.\n" + 
+			helptext1 = new TextField();
+			helptext1.width = game.width/3;
+			helptext1.height = game.height/2;
+			helptext1.wordWrap = true;
+			helptext1.mouseEnabled = false;
+			helptext1.textColor = utils.colorToUInt(Color.black);
+			helptext1.x = 10;
+			helptext1.y = game.height - game.height/2;
+			helptext1.text = "Willkommen bei Naubino!\n" + 
+			"Die bunten Kugeln (Naubs) fliegen zur Mitte des Spielfeldes." + 
 			"Versuche, einen Naub mit Hilfe der Maus zu verschieben.";
-			helptext.setTextFormat(format);
-			help.addChild(helptext);
+			helptext1.setTextFormat(format);
+			help1.addChild(helptext1);
 		}
+		
+		
 	}
 }
-
-/* fade effekte */

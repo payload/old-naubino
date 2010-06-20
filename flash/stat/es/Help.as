@@ -1,10 +1,16 @@
 ﻿package stat.es 
-{
+{	
+	import flash.utils.*;
+	import flash.events.*;
+	
 	public class Help extends GameState
 	{
+//		private var menuballs:Dictionary;
+		
 		public function Help(game:Game) 
 		{
 			super(game);
+//			menuballs = new Dictionary();
 		}
 
 		public override function enter():void {
@@ -14,11 +20,12 @@
 			
 			game.menu.exitbtn.setAction(function():void {} ); //we don't want to quit
 			game.menu.helpbtn.setAction(function():void {} ); //would only start help again, useless
+			game.menu.playbtn.setAction(function():void {changeState(play)});
 		}
 
 		public override function leave():void {
 			game.visual.help.hide();
-			game.clear();			
+			game.clear();	
 		}
 		
 		
@@ -35,15 +42,17 @@
 			var pos2:Vektor = v.sub(pair);
 			obj1.position = pos1;
 			obj2.position = pos2;
-		  	game.objs.push(obj);
+			game.objs.push(obj);
 		}
 		
-		public function createBall(color:Color, v:Vektor = null):Ball {
+		public function createBall(color:Color, v:Vektor = null):MenuBall {
 			if (v == null) v = Vektor.O;
-			var b : Ball = new Ball(v);
+			var b : MenuBall = new MenuBall(v);
+			b.game = game;
 			b.color = color;
 			b.attractedTo = game.center;
 			game.objs.push(b);
+//			menuballs[b] = v;
 			return b;
 		}
 		
@@ -58,18 +67,8 @@
 			game.visual.help.show();			
 			createPair(new Vektor(200, 200), Color.green, Color.red);
 			createPair(new Vektor(250, 250), Color.green, Color.yellow);
-		}	
+			
+		}
+
 	}
 }
-
-/* 
-- clear ok
-- text und hilfebälle ok
-- text dynamisch laden
-
-- buttons: ok
-	- hilfe: nix
-	- highscore: normal
-	- play: play
-	- beenden: nix 
-	*/
