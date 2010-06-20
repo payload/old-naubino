@@ -1,0 +1,4 @@
+Alex###600
+Hendrik###500
+Gilbert###500
+Hermann###400
