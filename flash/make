@@ -3,5 +3,4 @@ mxmlc \
   -static-link-runtime-shared-libraries \
   -compiler.debug \
 	-incremental \
-  Main.as && \
-flashplayer-debugger-standalone Main.swf
+  Main.as 
