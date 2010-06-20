@@ -68,7 +68,7 @@ package {
 			points = new TextField();
 			points.autoSize = TextFieldAutoSize.LEFT;
 			points.mouseEnabled = false;
-		  points.textColor = utils.colorToUInt(Color.black);
+			points.textColor = utils.colorToUInt(Color.black);
 			points.x = game.width/2 + 10;
 			
 			highscore.addChild(head);

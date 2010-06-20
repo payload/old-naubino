@@ -289,7 +289,7 @@ package {
 		private function updateField():void {
 			var field:Sprite = getSprite("field", layers.background);
 			field.graphics.clear();
-			field.graphics.lineStyle(3, 0xE0E0E0);
+			field.graphics.lineStyle(3, 0xA0A0A0);
 			field.graphics.drawCircle(0, 0, game.fieldSize);
 			field.x = game.center.x;
 			field.y = game.center.y;
