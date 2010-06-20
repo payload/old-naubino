@@ -23,8 +23,8 @@ package {
 		}
 
 		public function hide():void {
-			visual.hide(visual.fog, 1);
-			visual.hide(highscore, 1);
+			visual.hide(visual.fog, 2);
+			visual.hide(highscore, 2);
 		}
 
 		public function initHighscore():void {

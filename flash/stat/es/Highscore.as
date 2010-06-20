@@ -11,7 +11,7 @@
 		private var submit:Button;
 		private var request:URLRequest;
 		private var heros:URLLoader;
-		private var online:Boolean = true; //solve this via catching sandbox violations
+		private var online:Boolean = false; //solve this via catching sandbox violations
 
 		public function Highscore(game:Game) 
 		{

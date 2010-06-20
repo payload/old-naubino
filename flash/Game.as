@@ -289,7 +289,8 @@
 		public function pointerReleasedLeft(v:Vektor):void {
 			for (var i:uint = 0; i < objs.length; i++)
 				if (objs[i] is Ball)
-					objs[i].active = false;
+					if (objs[i].active == true)
+						objs[i].release();
 		}
 
 		public function pointerReleasedRight(v:Vektor):void {
