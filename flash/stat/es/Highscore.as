@@ -24,7 +24,6 @@
 			
 			updateHighscore();
 			game.menu.mainbtn.setAction(function():void{ changeState(play); });
-			game.visual.highscore.show();
 			//initForm();
 		}
 
@@ -36,13 +35,12 @@
 		
 		public function fetchScore():void{
 				  try{
-							 request = new URLRequest("http://www1.inf.tu-dresden.de/~s8880935/naubino/score.php");
-							 heros = new URLLoader();
-							 heros.addEventListener(Event.COMPLETE, heroHandler);
-							 heros.dataFormat = URLLoaderDataFormat.TEXT;
-							 heros.load(request);
-		//					 game.menu.playbtn.color = Color.white;
-							 hallOfFame = parseScore("Alex###500---Hendrik Sollich###666");
+					 request = new URLRequest("http://www1.inf.tu-dresden.de/~s8880935/naubino/score.php");
+					 heros = new URLLoader();
+					 heros.addEventListener(Event.COMPLETE, heroHandler);
+					 heros.dataFormat = URLLoaderDataFormat.TEXT;
+					 heros.load(request);
+					 //hallOfFame = parseScore("Alex###500---Hendrik Sollich###666");
 				  }
 				  catch (e:Error)	{
 							 trace("caught one");
@@ -51,8 +49,9 @@
 		
 		private function heroHandler(e:Event):void{
 				  try{
-							 hallOfFame = parseScore("Alex###500---Hendrik Sollich###600");
-							 game.menu.playbtn.color = Color.black;
+					game.states.highscore.hallOfFame = parseScore(heros.data);
+					game.menu.playbtn.color = Color.black;
+					game.visual.highscore.show();
 				  }
 				  catch (e:Error){
 				  }
@@ -91,7 +90,7 @@
 				} else {
 					trace("existing highscore");
 				}
-			hallOfFame = highscore;
+				hallOfFame = highscore;
 			}
 		}
 		
