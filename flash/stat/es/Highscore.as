@@ -11,7 +11,7 @@
 		private var submit:Button;
 		private var request:URLRequest;
 		private var heros:URLLoader;
-		private var online:Boolean = false; //solve this via catching sandbox violations
+		private var online:Boolean = true; //solve this via catching sandbox violations
 
 		public function Highscore(game:Game) 
 		{
@@ -34,27 +34,28 @@
 			//game.visual.clearOverlay();
 		}
 		
-		public function fetchScore():String{
-            try{
-	            request = new URLRequest("http://www1.inf.tu-dresden.de/~s8880935/naubino/score.php");
-	            heros = new URLLoader();
-	            heros.addEventListener(Event.COMPLETE, heroHandler);
-				heros.dataFormat = URLLoaderDataFormat.TEXT;
-				heros.load(request);
-            }
-			catch (e:Error)	{
-				trace("caught one");
-				return "outch - Sandbox!";
-			}
-			return heros.data;
+		public function fetchScore():void{
+				  try{
+							 request = new URLRequest("http://www1.inf.tu-dresden.de/~s8880935/naubino/score.php");
+							 heros = new URLLoader();
+							 heros.addEventListener(Event.COMPLETE, heroHandler);
+							 heros.dataFormat = URLLoaderDataFormat.TEXT;
+							 heros.load(request);
+		//					 game.menu.playbtn.color = Color.white;
+							 hallOfFame = parseScore("Alex###500---Hendrik Sollich###666");
+				  }
+				  catch (e:Error)	{
+							 trace("caught one");
+				  }
 		}
 		
 		private function heroHandler(e:Event):void{
-			try{
-				hallOfFame = parseScore(heros.data);
-				game.menu.playbtn.color = Color.black;
-			}
-			catch (e:Error){}
+				  try{
+							 hallOfFame = parseScore("Alex###500---Hendrik Sollich###600");
+							 game.menu.playbtn.color = Color.black;
+				  }
+				  catch (e:Error){
+				  }
 		}
 		
 		private function parseScore(string:String):Object{
@@ -90,8 +91,8 @@
 				} else {
 					trace("existing highscore");
 				}
-			}
 			hallOfFame = highscore;
+			}
 		}
 		
 		
