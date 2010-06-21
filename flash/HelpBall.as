@@ -9,6 +9,7 @@
 		public var onRelease:Function;
 		public var onAttached:Function;
 		public var onAttachedButRemoved:Function;
+		public var onRemoved:Function;
 		
 		private var bla:Vektor = new Vektor(250, 250);
 		public var game:Game;
@@ -22,12 +23,16 @@
 				onRelease(this);
 		}
 		
-		public override function attached():void {
+		public override function onAttach():void {
 			if (onAttached != null) onAttached(this);
 		}
 		
 		public override function attachedButRemoved():void {
-			if (onAttachedButRemoved != null) onAttachedButRemoved(this);
+			if (onAttachedButRemoved != null) onAttachedButRemoved();
+		}
+		
+		public override function onRemove():void{
+			if(onRemoved != null) onRemoved();
 		}
 		
 		public function HelpBall(pos:Vektor, r:Number=defaultRadius) {

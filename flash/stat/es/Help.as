@@ -6,6 +6,7 @@
 	public class Help extends GameState
 	{
 		private var objs:Array = [];
+		private var balls:Array = [];
 		
 		public function Help(game:Game) {
 			super(game);
@@ -27,6 +28,7 @@
 			game.menu.helpbtn.setAction(game.menu.helpAction);
 			
 			game.visual.help.hide();
+			game.points = 0;
 			game.clear();
 		}
 		
@@ -46,21 +48,23 @@
 		
 		private function helpAction1(b:HelpBall):void {
 			var distance:Number = game.center.sub(b.position).length;
-			if (distance > 200)
+			if (distance > 150)
 				helpScreen2();
 		}
 		
 		private function helpScreen2():void {
 			game.clear();
-			var text:String = "Deine Mutter!";
+			var text:String = "Schiebe die Naubs ineinander, sodass sie sich überlagern";
 			game.visual.help.setHelpText(text);
-			var balls:Array = [];
+			
 			var temp:Array;
 			var i:*;
 			temp = createPair(game.center.add(new Vektor(100, 100)), Color.green, Color.red);
 			for (i in temp) balls.push(temp[i]);
 			temp = createPair(game.center.sub(new Vektor(100, 100)), Color.green, Color.blue);
 			for (i in temp) balls.push(temp[i]);
+			temp = createPair(new Vektor(200, 200), Color.red, Color.blue, helpAction3);
+			for (i in temp) balls.push(temp[i]);					
 			for (i in balls) {
 				var b:HelpBall = balls[i];
 				b.onAttached = helpAction2;
@@ -68,7 +72,26 @@
 		}
 		
 		private function helpAction2(b:HelpBall):void {
-			trace("Boah krass");
+			helpScreen3();
+		}
+		
+		private function helpScreen3():void {
+			var text:String = "Verfahre mit den übrigen Naubs genauso, um einen Zyklus zu bilden.";
+			game.visual.help.setHelpText(text);
+			var i:*;
+			for(i in balls) {
+				var b:HelpBall = balls[i];
+				b.onRemoved = helpAction3;
+			}
+		}
+		
+		private function helpAction3():void{
+			helpScreen4();
+		}
+		
+		private function helpScreen4():void{
+			var text:String = "Glückwunsch!\nKlicke auf den Play Button, um das Spiel zu beginnen.";
+			game.visual.help.setHelpText(text);
 		}
 		
 		public function createPair(v:Vektor, color1:Color, color2:Color, onRelease:Function = null):Array {

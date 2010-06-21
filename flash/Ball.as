@@ -5,6 +5,7 @@
 	{
 		public var active:Boolean = false;
 		
+		
 		public override function action():void {
 			active = true;
 		}
@@ -13,12 +14,16 @@
 			active = false;
 		}
 		
-		public function attached():void {
+		public function onAttach():void {
 			
 		}
 		
 		public function attachedButRemoved():void {
 			
+		}
+		
+		public function onRemove():void{
+		
 		}
 		
 		public function Ball(pos:Vektor, r:Number=defaultRadius) {

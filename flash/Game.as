@@ -167,7 +167,7 @@
 					}
 				}
 				removeBall(b);
-				a.attached();
+				a.onAttach();
 				b.attachedButRemoved();
 			}
 		}
@@ -210,6 +210,7 @@
 			var start:Number = 0;
 			var step:Number = 0.07;
 			for (var i:int = 0; i < cycle.length; i++) {
+				cycle[i].onRemove(); 
 				shrinkBall(cycle[i], start);
 				start += step;
 			}
@@ -271,6 +272,7 @@
 			}
 			objs.splice(objs.indexOf(b), 1);
 		}
+		
 
 		/* interaction below here */
 
