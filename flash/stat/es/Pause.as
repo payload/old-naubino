@@ -12,11 +12,12 @@
 		
 		public override function enter():void {
 			trace("pause");
+			game.visual.pause.show();
 		}
 
-		public override function leave():void {}
-			
+		public override function leave():void {
+			game.visual.pause.hide();
 		}
 		
-		
+	}
 }

@@ -24,6 +24,7 @@ package {
 
 		public var highscore:VisualHighscore;
 		public var lost:VisualLost;
+		public var pause:VisualPause;
 		public var help:VisualHelp;
 
 		public function Visual(root:Naubino) {
@@ -38,6 +39,7 @@ package {
 			help = new VisualHelp(this);
 			highscore = new VisualHighscore(this);
 			lost = new VisualLost(this);
+			pause = new VisualPause(this);
 			drawBackground();
 			drawMenu();
 		}
