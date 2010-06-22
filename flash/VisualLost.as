@@ -8,6 +8,7 @@ package {
 		public var lost:Sprite;
 		private var message:TextField;
 		private var input:TextField;
+		private var submit:Button;
 		private var format:TextFormat;
 
 		public function VisualLost(visual:Visual) {
@@ -53,7 +54,31 @@ package {
 			input.x = game.center.x - input.width/2;
 			input.y = message.y + message.height;
 
+			submit = new Button();
+			submit.color = Color.random;
+			submit.setAction(function():void{ trace(input.text);});
+			submit.x = input.x + input.width + 20;
+			submit.y = input.y + input.height/2;
+			submit.type = "ok";
+			drawButton (submit);
+			//objs.push(submit);
+
 			lost.addChild(input);
+		}
+		
+		private function drawButton(b:Button):void{
+			var bs:Sprite = new Sprite();
+			bs.graphics.clear();
+			//bs.graphics.lineStyle(2, utils.colorToUInt(Color.black));
+			bs.graphics.lineStyle();
+			bs.graphics.beginFill(utils.colorToUInt(b.color));
+			bs.graphics.drawCircle(0, 0, b.visibleRadius);
+			bs.graphics.endFill();
+			bs.x = b.position.x;
+			bs.y = b.position.y;
+			bs = Icons.submit(b, bs);
+			lost.addChild(bs);
+			
 		}
 
 		private function initMessage():void {

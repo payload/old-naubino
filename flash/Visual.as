@@ -229,11 +229,11 @@ package {
 				case "exit":	
 					bs = Icons.exit(b,bs);
 				break;
-			  case "help":
+				case "help":
 					bs = Icons.help(b, bs);
-					break;
+				break;
 			}
-			bs.graphics.endFill();
+			//bs.graphics.endFill();
 			
 
 			bs.x = b.position.x;

@@ -25,29 +25,45 @@ package {
 		}
 
 		private static var ask:TextField;
-		public static function initHelp():void {
+		private static var ok:TextField;
+		
+		public static function initText(str:String):TextField {
 				var format:TextFormat = new TextFormat();
 				format.font = "Verdana";
 				format.size = 15;
 				format.bold = true;
 				format.align = TextFormatAlign.CENTER;
 
-				ask = new TextField();
-				ask.mouseEnabled = false;
-				ask.autoSize = TextFieldAutoSize.CENTER;
-				ask.textColor = 0xFFFFFF;
-				ask.text = "?";
-				ask.setTextFormat(format);
+				var field:TextField = new TextField();
+				field.mouseEnabled = false;
+				field.autoSize = TextFieldAutoSize.CENTER;
+				field.textColor = 0xFFFFFF;
+				field.text = str;
+				field.setTextFormat(format);
+				
+				return field;
 		}
 
 		public static function help(b:Button, bs:Sprite):Sprite {
 			if (ask == null) {
-				initHelp();
+				ask = initText("¿");
 			}
 			if (!bs.contains(ask)) {
 				bs.addChild(ask);
 				ask.x = -7;
 				ask.y = -12;
+			}
+			return bs;
+		}
+		
+		public static function submit(b:Button, bs:Sprite):Sprite {
+			if (ok == null) {
+				ok = initText("ok");
+			}
+			if (!bs.contains(ok)) {
+				bs.addChild(ok);
+				ok.x = -13;
+				ok.y = -13;
 			}
 			return bs;
 		}
