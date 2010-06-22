@@ -1,8 +1,8 @@
 <?php
 define("HIGHSCOREFILE","./score.txt");
 define("SPLITTER","###");
-define("JOINER","---");2
-define("MAX",10);
+define("JOINER","---");
+define("MAX",0);
 
 class ScoreServer {
 	public $name = "";
@@ -11,6 +11,9 @@ class ScoreServer {
 	public $newby = false;
 
 	public function ScoreServer(){
+		//check whether the file is rw
+		$this->diagnose();
+
 		//loading heros from HIGHSCOREFILE
 		$this->heros = $this->load_heros();
 		
@@ -21,18 +24,20 @@ class ScoreServer {
 			$this->points = $this->clean($_POST['points']);
 			$this->newby = array($this->name,$this->points);
 		}
-		
-		//store new file
+
+
+		//store new file (overwritting all)
 		if($this->newby){
 			$this->add_hero($this->newby);
 			$this->store_heros();
+			$this->heros = $this->load_heros();
 		}
 	}
 	
 	public function load_heros($number = MAX){
 		$fp = fopen(HIGHSCOREFILE,r);
 		$heros = array();
-		while(!feof($fp) && count($heros)<$number){
+		while(!feof($fp) && ($number == 0 || count($heros)<$number)){
 			$temp = trim(fgets($fp));
 			if($temp != "")
 				array_push($heros, explode(SPLITTER,$temp));
@@ -41,11 +46,12 @@ class ScoreServer {
 		return $heros;
 	}
 	
+	// adds hero to list without writing
 	public function add_hero($newby){
 		$notAdded = true;
 		$newheros = array();
 		if(!$this->contains($newby)){
-			for($i=0;$i< count($this->heros);$i++){
+			for($i=0;$i < count($this->heros);$i++){
 				$hero = $this->heros[$i];
 				if($notAdded && $hero[1] <= $newby[1]){
 					array_push($newheros,$newby);
@@ -58,7 +64,7 @@ class ScoreServer {
 		}
 	}
 	
-	function store_heros(){
+	public function store_heros(){
 		$fp = fopen(HIGHSCOREFILE,w);
 		for($i=0;$i < count($this->heros);$i++){
 			$hero = $this->heros[$i];
@@ -91,6 +97,14 @@ class ScoreServer {
 		}
 	}
 	
+	public function string_heros_backward(){
+		for($i=count($this->heros)-1;$i>=0 ;$i--){
+			$hero = $this->heros[$i];
+			echo $hero[0] . SPLITTER . $hero[1];
+			if($i > 0)echo JOINER;
+		}
+	}
+
 	public function contains($newby){
 			for($i = 0;$i < count($this->heros); $i++){
 				$hero = $this->heros[$i];
@@ -105,6 +119,21 @@ class ScoreServer {
 		$str = str_ireplace(JOINER,"",$str);
 		$str = str_ireplace(SPLITTER,"",$str);
 		return $str;
+	}
+
+	public function diagnose(){
+		if(!file_exists(HIGHSCOREFILE)){
+			header( 'Content-Type: text/plain' );
+			die("error###file not found");
+		}
+		if(!is_readable(HIGHSCOREFILE)){
+			header( 'Content-Type: text/plain' );
+			die("error###file not readable");
+		}
+		if(!is_writable(HIGHSCOREFILE)){
+			header( 'Content-Type: text/plain' );
+			die("error###file not writable");
+		}
 	}
 }
 ?>
