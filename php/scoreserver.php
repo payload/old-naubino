@@ -2,7 +2,7 @@
 define("HIGHSCOREFILE","./score.txt");
 define("SPLITTER","###");
 define("JOINER","---");
-define("MAX",0);
+define("MAX",10000);
 
 class ScoreServer {
 	public $name = "";
