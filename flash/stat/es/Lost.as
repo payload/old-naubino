@@ -11,7 +11,7 @@ package stat.es
 			super(game);
 		}
 
-		public function sendHighscore(name:String) {
+		public function sendHighscore(name:String):void {
 			var url:String = "http://www1.inf.tu-dresden.de/~s8880935/naubino/score.php";
 			var request:URLRequest = new URLRequest(url);
 			var variables:URLVariables = new URLVariables();

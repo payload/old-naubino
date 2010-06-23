@@ -48,7 +48,8 @@
 			
 			game.visual.help.hide();
 			game.clear();
-			utils.addAll(game.objs, backup);
+			game.points = 0;
+			restore();
 		}
 		
 		
