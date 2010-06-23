@@ -5,7 +5,7 @@
 	
 	public class Help extends GameState
 	{
-		private var objs:Array = [];
+		private var backup:Array = [];
 		private var balls:Array = [];
 		
 		public function Help(game:Game) {
@@ -13,13 +13,14 @@
 		}
 
 		public override function enter():void {
+			utils.addAll(backup, game.objs);
 			game.clear();
 			game.visual.help.show();
 			
 			helpScreen1();
 			
 			game.menu.exitbtn.setAction(function():void {} ); //we don't want to quit
-			game.menu.helpbtn.setAction(function():void {} ); //would only start help again, useless
+			game.menu.helpbtn.setAction(function():void {changeState(play)} ); //would only start help again, useless
 			game.menu.playbtn.setAction(function():void {changeState(play)});
 		}
 
@@ -29,7 +30,9 @@
 			
 			game.visual.help.hide();
 			game.points = 0;
+			
 			game.clear();
+			utils.addAll(game.objs, backup);
 		}
 		
 		
@@ -118,7 +121,6 @@
 			b.color = color;
 			b.attractedTo = game.center;
 			game.objs.push(b);
-			objs.push(b);
 			return b;
 		}
 		
