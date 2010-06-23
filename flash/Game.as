@@ -137,8 +137,8 @@
 					if (a.joints.length > 0 && b.joints.length > 0) {
 						if ((a is Ball) && (b is Ball) && (a.matches(b))) {
 							a.active = false;
-							replaceBall(a, b);
-							handleCycles();
+							if (joinAndReplaceBall(a, b) != null)
+								handleCycles();
 						}
 					} else {
 						objs.push(join(a, b));
@@ -147,29 +147,35 @@
 			}
 		}
 
-		private function replaceBall(a:Ball, b:Ball):void {
-			var shareJointBall:Boolean = false;
-			var naubs:Array = a.jointNaubs();
-			var i:uint;
+		private function shareJointNaub(a:Naub, b:Naub):Boolean {
 			var naub:Naub;
-			for (i = 0; i < naubs.length; i++) {
+			var naubs:Array = a.jointNaubs();
+			for (var i:* in naubs) {
 				naub = naubs[i];
 				if (naub.isJointWith(b))
-					shareJointBall = true;
+					return true;
 			}
-			
-			if (!shareJointBall && !a.isJointWith(b)) {
-				naubs = b.jointNaubs();
-				for (i = 0; i < naubs.length; i++) {
-					naub = naubs[i];
-					if (!a.isJointWith(naub)) {
-						objs.push(join(a, naub));
-					}
-				}
-				removeBall(b);
-				a.onAttach();
-				b.attachedButRemoved();
+			return false;
+		}
+
+		// joins two balls
+		// * if both naubs are not already joined
+		// * if both balls are not joined with the same third ball
+		// if it joins two balls
+		// * it deletes the second ball
+		// * and returns the first
+		// else it returns null
+		private function joinAndReplaceBall(a:Ball, b:Ball):Ball {
+			if (a.isJointWith(b)) return null;
+			if (shareJointNaub(a,b)) return null;
+			var naubs:Array = b.jointNaubs();
+			for (var i:* in naubs) {
+		 		objs.push(join(a, naubs[i]));
 			}
+			removeBall(b);
+			b.attachedButRemoved();
+			a.onAttach();
+			return a;
 		}
 
 		private function filter(array:Array, predicate:Function):Array {
