@@ -221,17 +221,19 @@ package {
 			switch (b.type){
 				case "unmute":
 					bs = Icons.unMute(b,bs);
-				break;
-
+					break;
+				case "submit":
+					bs = Icons.submit(b, bs);
+					break;
 				case "mute":
 					bs = Icons.mute(b,bs);
-				break;
+					break;
 				case "exit":	
 					bs = Icons.exit(b,bs);
-				break;
+					break;
 				case "help":
 					bs = Icons.help(b, bs);
-				break;
+					break;
 			}
 			//bs.graphics.endFill();
 			
