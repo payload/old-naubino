@@ -7,16 +7,27 @@
 	{
 		private var backup_points:int;
 		private var backup:Array = [];
+
 		private var balls:Array = [];
 		
 		public function Help(game:Game) {
 			super(game);
 		}
 
-		public override function enter():void {
+		private function backup():void {
 			utils.addAll(backup, game.objs);
 			backup_points = game.points;
 			game.clear();
+		}
+
+		private function restore():void {
+		  game.clear();
+			game.points = backup_points;
+			utils.addAll(game.objs, backup);
+		}
+
+		public override function enter():void {
+			backup();
 			game.visual.help.show();
 			
 			helpScreen1();
@@ -31,10 +42,7 @@
 			game.menu.helpbtn.setAction(game.menu.helpAction);
 			
 			game.visual.help.hide();
-			game.points = backup_points;
-			
-			game.clear(); 
-			utils.addAll(game.objs, backup);
+			restore();
 		}
 		
 		
