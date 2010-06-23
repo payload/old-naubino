@@ -20,11 +20,9 @@
 				utils.addAll(backup_objs, game.objs);
 				backup_points = game.points;
 			}
-			game.clear();
 		}
 
 		private function restore():void {
-		  game.clear();
 			if (really_backup) {
 				game.points = backup_points;
 				utils.addAll(game.objs, backup_objs);
@@ -33,6 +31,8 @@
 
 		public override function enter():void {
 			backup();
+			game.clear();
+			game.points = 0;
 			game.visual.help.show();
 			
 			helpScreen1();
@@ -47,6 +47,8 @@
 			game.menu.helpbtn.setAction(game.menu.helpAction);
 			
 			game.visual.help.hide();
+			game.clear();
+			game.points = 0;
 			restore();
 		}
 		
