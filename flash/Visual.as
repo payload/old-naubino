@@ -44,12 +44,21 @@ package {
 			drawMenu();
 		}
 		
-				
+
+		private var old_c:int = 0;
 		private function update():void {
 			usedSprites = new Dictionary();
 			updateSprites();
 			updateField();
 			removeUnusedSprites();
+
+			// sprites:Dictionary has no length, size or count
+			var c:int = 0;
+			for (var i:* in sprites) c++;
+			if (old_c != c) {
+				trace(c +" sprites");
+				old_c = c;
+			}
 
 		/*	if(!overlayed && game.lost)
 				overlayLost();		*/

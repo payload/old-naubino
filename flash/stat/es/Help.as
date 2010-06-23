@@ -5,17 +5,34 @@
 	
 	public class Help extends GameState
 	{
-		private var backup:Array = [];
+		private var backup_points:int;
+		private var backup_objs:Array = [];
+
 		private var balls:Array = [];
 		
 		public function Help(game:Game) {
 			super(game);
 		}
 
+		private var really_backup:Boolean = false;
+		private function backup():void {
+			if (really_backup) {
+				utils.addAll(backup_objs, game.objs);
+				backup_points = game.points;
+			}
+		}
+
+		private function restore():void {
+			if (really_backup) {
+				game.points = backup_points;
+				utils.addAll(game.objs, backup_objs);
+			}
+		}
+
 		public override function enter():void {
-			utils.addAll(backup, game.objs);
-			//game.objs = [];
+			backup();
 			game.clear();
+			game.points = 0;
 			game.visual.help.show();
 			
 			helpScreen1();
@@ -30,9 +47,6 @@
 			game.menu.helpbtn.setAction(game.menu.helpAction);
 			
 			game.visual.help.hide();
-			game.points = 0; // TODO auch noch mal überdenken
-			
-			//game.objs = [];
 			game.clear();
 			utils.addAll(game.objs, backup);
 		}
