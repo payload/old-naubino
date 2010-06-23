@@ -6,7 +6,7 @@
 	public class Help extends GameState
 	{
 		private var backup_points:int;
-		private var backup:Array = [];
+		private var backup_objs:Array = [];
 
 		private var balls:Array = [];
 		
@@ -14,16 +14,21 @@
 			super(game);
 		}
 
+		private var really_backup:Boolean = false;
 		private function backup():void {
-			utils.addAll(backup, game.objs);
-			backup_points = game.points;
+			if (really_backup) {
+				utils.addAll(backup_objs, game.objs);
+				backup_points = game.points;
+			}
 			game.clear();
 		}
 
 		private function restore():void {
 		  game.clear();
-			game.points = backup_points;
-			utils.addAll(game.objs, backup);
+			if (really_backup) {
+				game.points = backup_points;
+				utils.addAll(game.objs, backup_objs);
+			}
 		}
 
 		public override function enter():void {
