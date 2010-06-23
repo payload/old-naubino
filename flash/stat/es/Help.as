@@ -14,7 +14,7 @@
 
 		public override function enter():void {
 			utils.addAll(backup, game.objs);
-			game.clear();
+			game.objs = []; //game.clear();
 			game.visual.help.show();
 			
 			helpScreen1();
@@ -31,7 +31,7 @@
 			game.visual.help.hide();
 			game.points = 0;
 			
-			game.clear();
+			game.objs = []; 
 			utils.addAll(game.objs, backup);
 		}
 		

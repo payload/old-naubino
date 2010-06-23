@@ -35,7 +35,7 @@ package {
 		private function momentumConservation():void {
 			var aforce : Vektor = a.speed.mul(a.mass);
 			var bforce : Vektor = b.speed.mul(b.mass);
-			//var foo : Vektor  = (aforce.add(bforce)).mul(2).mul(1/(a.mass+b.mass));
+			var foo : Vektor  = (aforce.add(bforce)).mul(2).mul(1/(a.mass+b.mass));
 			var foo : Vektor = (aforce.add(bforce));
 			foo = foo.mul(0.5);	
 			a.speed = foo.sub(a.speed);
@@ -52,7 +52,7 @@ package {
 		
 		public function collide():void {
 			positionBalls();
-//			momentumConservation();
+			//momentumConservation();
 			applyFriction();
 		}
 	}
