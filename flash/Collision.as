@@ -52,7 +52,7 @@ package {
 		
 		public function collide():void {
 			positionBalls();
-//			momentumConservation();
+			//momentumConservation();
 			applyFriction();
 		}
 	}

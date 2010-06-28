@@ -4,6 +4,7 @@ package {
 	import flash.utils.*;
 	import flash.events.*;
 	import flash.text.*;
+	import caurina.transitions.Tweener;
 
 	public class VisualHelp extends VisualModule {
 		
@@ -50,8 +51,23 @@ package {
 		}
 		
 		public function setHelpText(text:String):void {
-			helptext.text = text;
-			helptext.setTextFormat(helpformat);
+			var tweenhide:* = {
+				alpha: 0,
+				time: 1,
+				onComplete: function():void { 
+				helptext.visible = false; 
+				helptext.text = text;
+				helptext.setTextFormat(helpformat); }
+			}
+			Tweener.addTween(helptext, tweenhide);
+			
+			var tweenshow:*={
+				delay: 1,
+				alpha: 1,
+				time: 1,
+				onStart: function():void {helptext.visible = true;}
+			}
+			Tweener.addTween(helptext, tweenshow);
 		}
 	}
 }

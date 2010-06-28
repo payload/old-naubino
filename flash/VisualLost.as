@@ -58,11 +58,11 @@ package {
 
 			submit = new Button();
 			submit.color = Color.random;
-			submit.setAction(function():void{ trace("button");});
+			submit.setAction(function():void { visual.game.states.lost.sendHighscore(input.text); } );
 			submit.x = input.x + input.width + 20;
 			submit.y = input.y + input.height/2;
 			submit.type = "submit";
-			drawButton (submit);
+			//drawButton (submit);
 
 			lost.addChild(input);
 		}

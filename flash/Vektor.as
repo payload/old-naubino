@@ -29,6 +29,16 @@
 			_y = y;
 		}
 
+		public static  function interception(p1:Vektor,v1:Vektor,p2:Vektor,v2:Vektor):Vektor{
+			var n2:Number = (p1.y-p2.y)*v1.x + (p2.x-p1.x)*v1.y;
+			n2 = n2/(v2.y*v1.x-v2.x*v1.y);
+			
+			if(n2 < 0) return null;
+
+			var ipoint:Vektor = p2.add(v2.mul(n2));
+			return ipoint;
+		}
+
 		public function get angle():Number {
 			return Math.atan2(y, x);
 		}

@@ -115,7 +115,7 @@
 			mainbtn.collidable = false;
 			playbtn = newButton(Color.green, "pause");
 			mutebtn = newButton(Color.blue, "unmute", unMuteAction);
-			helpbtn = newButton(Color.yellow, "help", helpAction);
+			helpbtn = newButton(Color.purple, "help", helpAction);
 			exitbtn = newButton(Color.red,"exit", exitAction);
 			
 			secondaryBtns.push(playbtn);

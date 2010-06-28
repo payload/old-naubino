@@ -5,21 +5,40 @@
 	
 	public class Help extends GameState
 	{
-		private var objs:Array = [];
+		private var backup_points:int;
+		private var backup_objs:Array = [];
+
 		private var balls:Array = [];
 		
 		public function Help(game:Game) {
 			super(game);
 		}
 
+		private var really_backup:Boolean = false;
+		private function backup():void {
+			if (really_backup) {
+				utils.addAll(backup_objs, game.objs);
+				backup_points = game.points;
+			}
+		}
+
+		private function restore():void {
+			if (really_backup) {
+				game.points = backup_points;
+				utils.addAll(game.objs, backup_objs);
+			}
+		}
+
 		public override function enter():void {
+			backup();
 			game.clear();
+			game.points = 0;
 			game.visual.help.show();
 			
 			helpScreen1();
 			
 			game.menu.exitbtn.setAction(function():void {} ); //we don't want to quit
-			game.menu.helpbtn.setAction(function():void {} ); //would only start help again, useless
+			game.menu.helpbtn.setAction(function():void {changeState(play)} ); 
 			game.menu.playbtn.setAction(function():void {changeState(play)});
 		}
 
@@ -28,8 +47,9 @@
 			game.menu.helpbtn.setAction(game.menu.helpAction);
 			
 			game.visual.help.hide();
-			game.points = 0;
 			game.clear();
+			game.points = 0;
+			restore();
 		}
 		
 		
@@ -48,15 +68,17 @@
 		
 		private function helpAction1(b:HelpBall):void {
 			var distance:Number = game.center.sub(b.position).length;
-			if (distance > 150)
+			if (distance > 30){
 				helpScreen2();
+				
+			}
 		}
 		
 		private function helpScreen2():void {
 			game.clear();
 			var text:String = "Schiebe die Naubs ineinander, sodass sie sich überlagern";
 			game.visual.help.setHelpText(text);
-			
+
 			var temp:Array;
 			var i:*;
 			temp = createPair(game.center.add(new Vektor(100, 100)), Color.green, Color.red);
@@ -73,11 +95,13 @@
 		
 		private function helpAction2(b:HelpBall):void {
 			helpScreen3();
+
 		}
 		
 		private function helpScreen3():void {
 			var text:String = "Verfahre mit den übrigen Naubs genauso, um einen Zyklus zu bilden.";
 			game.visual.help.setHelpText(text);
+
 			var i:*;
 			for(i in balls) {
 				var b:HelpBall = balls[i];
@@ -87,11 +111,13 @@
 		
 		private function helpAction3():void{
 			helpScreen4();
+
 		}
 		
 		private function helpScreen4():void{
 			var text:String = "Glückwunsch!\nKlicke auf den Play Button, um das Spiel zu beginnen.";
 			game.visual.help.setHelpText(text);
+
 		}
 		
 		public function createPair(v:Vektor, color1:Color, color2:Color, onRelease:Function = null):Array {
@@ -118,7 +144,6 @@
 			b.color = color;
 			b.attractedTo = game.center;
 			game.objs.push(b);
-			objs.push(b);
 			return b;
 		}
 		

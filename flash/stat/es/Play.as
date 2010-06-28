@@ -8,7 +8,7 @@
 			super(game);
 		}
 
-		public override function refresh():void {			//if (game.enablePhysics)
+		public override function refresh():void {		
 			game.physics.physik();
 			game.antipoints = game.countingJoints();
 			if (game.antipoints > game.ballsTillLost) {

@@ -4,6 +4,7 @@
 		public var popUpY:Number;
 		public var alpha:Number = 1;
 		public var _type:String;
+		public var visible:Boolean;
 
 		public function get type():String{
 			return _type;
