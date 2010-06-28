@@ -38,7 +38,7 @@
 			helpScreen1();
 			
 			game.menu.exitbtn.setAction(function():void {} ); //we don't want to quit
-			game.menu.helpbtn.setAction(function():void {changeState(play)} ); //would only start help again, useless
+			game.menu.helpbtn.setAction(function():void {changeState(play)} ); 
 			game.menu.playbtn.setAction(function():void {changeState(play)});
 		}
 
@@ -68,15 +68,17 @@
 		
 		private function helpAction1(b:HelpBall):void {
 			var distance:Number = game.center.sub(b.position).length;
-			if (distance > 150)
+			if (distance > 30){
 				helpScreen2();
+				
+			}
 		}
 		
 		private function helpScreen2():void {
 			game.clear();
 			var text:String = "Schiebe die Naubs ineinander, sodass sie sich überlagern";
 			game.visual.help.setHelpText(text);
-			
+
 			var temp:Array;
 			var i:*;
 			temp = createPair(game.center.add(new Vektor(100, 100)), Color.green, Color.red);
@@ -93,11 +95,13 @@
 		
 		private function helpAction2(b:HelpBall):void {
 			helpScreen3();
+
 		}
 		
 		private function helpScreen3():void {
 			var text:String = "Verfahre mit den übrigen Naubs genauso, um einen Zyklus zu bilden.";
 			game.visual.help.setHelpText(text);
+
 			var i:*;
 			for(i in balls) {
 				var b:HelpBall = balls[i];
@@ -107,11 +111,13 @@
 		
 		private function helpAction3():void{
 			helpScreen4();
+
 		}
 		
 		private function helpScreen4():void{
 			var text:String = "Glückwunsch!\nKlicke auf den Play Button, um das Spiel zu beginnen.";
 			game.visual.help.setHelpText(text);
+
 		}
 		
 		public function createPair(v:Vektor, color1:Color, color2:Color, onRelease:Function = null):Array {
