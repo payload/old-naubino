@@ -56,7 +56,7 @@ package {
 			var c:int = 0;
 			for (var i:* in sprites) c++;
 			if (old_c != c) {
-				trace(c +" sprites");
+				//trace(c +" sprites");
 				old_c = c;
 			}
 
