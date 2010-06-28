@@ -146,8 +146,8 @@ package {
 		}
 
 		private function updateSprite(obj:*):void {
-			if (obj is Button) updateButton(obj);
 			if (obj is Ball) updateBall(obj);
+			if (obj is Button) updateButton(obj);
 			//if (obj is Naub);
 			if (obj is Joint) updateJoint(obj);
 		}
@@ -220,14 +220,16 @@ package {
 
 			switch (b.type){
 				case "unmute":
-					bs = Icons.unMute(b,bs);
+					bs = Icons.unMute(b, bs);
 				break;
-
 				case "mute":
-					bs = Icons.mute(b,bs);
+					bs = Icons.mute(b, bs);
+				break;
+				case "submit":
+					bs = Icons.submit(b, bs);
 				break;
 				case "exit":	
-					bs = Icons.exit(b,bs);
+					bs = Icons.exit(b, bs);
 				break;
 				case "help":
 					bs = Icons.help(b, bs);

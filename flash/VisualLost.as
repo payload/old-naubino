@@ -26,11 +26,13 @@ package {
 			resetInput();
 			visual.show(visual.fog, 2);
 			visual.show(lost, 2);
+			visual.game.objs.push(submit);
 		}
 
 		public function hide():void {
 			visual.hide(visual.fog, 2);
 			visual.hide(lost, 2);
+			visual.game.objs.splice(visual.game.objs.indexOf(submit),1);
 		}
 
 		private function resetInput():void {
@@ -59,9 +61,8 @@ package {
 			submit.setAction(function():void{ trace("button");});
 			submit.x = input.x + input.width + 20;
 			submit.y = input.y + input.height/2;
-			submit.type = "ok";
+			submit.type = "submit";
 			drawButton (submit);
-			//visual.game.objs.push(submit);
 
 			lost.addChild(input);
 		}
@@ -76,7 +77,7 @@ package {
 			bs.graphics.endFill();
 			bs.x = b.position.x;
 			bs.y = b.position.y;
-			bs = Icons.submit(b, bs);
+			//bs = Icons.submit(b, bs);
 			lost.addChild(bs);
 			
 		}
