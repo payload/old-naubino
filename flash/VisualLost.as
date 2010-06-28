@@ -56,12 +56,12 @@ package {
 
 			submit = new Button();
 			submit.color = Color.random;
-			submit.setAction(function():void{ trace(input.text);});
+			submit.setAction(function():void{ trace("button");});
 			submit.x = input.x + input.width + 20;
 			submit.y = input.y + input.height/2;
 			submit.type = "ok";
 			drawButton (submit);
-			//objs.push(submit);
+			//visual.game.objs.push(submit);
 
 			lost.addChild(input);
 		}

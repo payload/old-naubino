@@ -75,24 +75,47 @@ package {
 			highscore.addChild(names);
 			highscore.addChild(points);
 		}	
+		
+		private function sort(hall:Array):Array{
+			if(hall.length <= 1)
+				return hall;
+				
+			var smaller:Array = [];
+			var bigger:Array = [];
+			var pi:* = Math.floor(hall.length/2);
+			var pivot:* = hall[pi];
+			var out:Array = [];
+			
+			for(var i:* in hall){
+				if (i != pi) {
+					if(hall[i].points > pivot.points)
+						bigger.push(hall[i]);
+					else
+						smaller.push(hall[i]);
+				}
+			}
+			utils.addAll(out, sort(smaller));
+			out.push(pivot);
+			utils.addAll(out, sort(bigger));
+			return out;
+		}
 
 		public function updateHighscoreText():void {
 			var i:*;
-			var hallOfFame:Object = game.states.highscore.hallOfFame;
-
-			var table:Array = [];
-			for (i in hallOfFame) {
-				table.push({ name: i, points: hallOfFame[i] });
-			}
-			table.sortOn("points");
-			table.splice(5, table.length);
+			var hallOfFame:Array = game.states.highscore.hallOfFame;
+			
+			hallOfFame = sort(hallOfFame);
+			hallOfFame.reverse();
+			hallOfFame.splice(5, hallOfFame.length);
 		 
 			var names_text:String = "";
 			var points_text:String = "";
-			for (i in table) {
-				names_text += table[i].name + "\n";
-				points_text += table[i].points + "\n";
+			
+			for (i in hallOfFame) {
+				names_text += hallOfFame[i].name + "\n";
+				points_text += hallOfFame[i].points + "\n";
 			}
+			
 			names.text = names_text;
 			names.setTextFormat(names_tf);
 			names.y = game.center.y - names.height/2;

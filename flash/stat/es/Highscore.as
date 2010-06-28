@@ -7,11 +7,11 @@
 
 	public class Highscore extends GameState
 	{
-		public var hallOfFame:Object; // used in Highscore and Visual
+		public var hallOfFame:Array; // used in Highscore and Visual
 		private var submit:Button;
 		private var request:URLRequest;
 		private var heros:URLLoader;
-		private var online:Boolean = true; //solve this via catching sandbox violations
+		private var online:Boolean = false; //solve this via catching sandbox violations
 
 		public function Highscore(game:Game) 
 		{
@@ -34,63 +34,64 @@
 		}
 		
 		public function fetchScore():void{
-				  try{
-					 request = new URLRequest("http://www1.inf.tu-dresden.de/~s8880935/naubino/score.php");
-					 heros = new URLLoader();
-					 heros.addEventListener(Event.COMPLETE, heroHandler);
-					 heros.dataFormat = URLLoaderDataFormat.TEXT;
-					 heros.load(request);
-					 //hallOfFame = parseScore("Alex###500---Hendrik Sollich###666");
-				  }
-				  catch (e:Error)	{
-							 trace("caught one");
-				  }
+		  try{
+			 request = new URLRequest("http://www1.inf.tu-dresden.de/~s8880935/naubino/score.php");
+			 heros = new URLLoader();
+			 heros.addEventListener(Event.COMPLETE, heroHandler);
+			 heros.dataFormat = URLLoaderDataFormat.TEXT;
+			 heros.load(request);
+		  }
+		  catch (e:Error)	{
+			 trace("caught one");
+		  }
 		}
 		
 		private function heroHandler(e:Event):void{
 				  try{
 					game.states.highscore.hallOfFame = parseScore(heros.data);
-					game.menu.playbtn.color = Color.black;
 					game.visual.highscore.show();
 				  }
 				  catch (e:Error){
 				  }
 		}
 		
-		private function parseScore(string:String):Object{
-			var object:Object = {};
+		private function parseScore(string:String):Array{
+			var hallOfFame:Array = [];
 			var lines:Array = string.split("---");
 			var inline:Array;
 			for(var i:uint = 0; i<lines.length; i++){
+				var object:Object = {};
 				inline = lines[i].split("###");
-				object[inline[0]] = inline[1];
+				object.name = inline[0];
+				object.points = inline[1];
+				hallOfFame.push(object)
 			}
-			return object;
+			return hallOfFame;
 		}
 
 		private function updateHighscore(insert:Object = null):void {
-			var highscore:Object;
+			var obj:SharedObject = SharedObject.getLocal("highscore");
 			if(online){
 				fetchScore();
 			}
 			else{
-				var obj:SharedObject = SharedObject.getLocal("highscore");
-				if(insert == null)highscore = obj.data;
-				else highscore = insert;
-				if (obj.size == 0) {
-					trace("new highscore");
-					highscore["Alice"] = 100;
-					highscore["Bob"] = 50;
-					highscore["Claire"] = 80;
-					highscore["Dave"] = 70;
-					highscore["Lasmiranda De'Sivilia"] = 60;
-					highscore["Eclaire"] = 32;
-					highscore["Fred"] = 18;
-					highscore["Gabi"] = 5;
-				} else {
-					trace("existing highscore");
+				if(obj.size != 0){
+					hallOfFame = obj.data.hallOfFame;
 				}
-				hallOfFame = highscore;
+				else{
+					hallOfFame = [
+						{name : "Gilbert", points : 50},
+						{name : "Hendrik", points : 55},
+						{name : "Alex", points : 30},
+						{name : "Hermann", points : 20},
+						{name : "Björn", points : 500},
+						{name : "Sven", points : 42},
+						{name : "Daniel", points : 23}
+					];
+					obj.data.hallOfFame = hallOfFame;
+					obj.flush();
+				}
+				game.visual.highscore.show();
 			}
 		}
 		
