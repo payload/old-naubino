@@ -45,6 +45,7 @@
 			states.highscore = new Highscore(this);
 			state = states.start;
 			state.enter();
+
 		}
 		
 		public function Game() {
