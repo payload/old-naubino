@@ -71,7 +71,7 @@ package {
 		}
 
 		private function drawBackground():void {
-			root.graphics.beginFill(utils.colorToUInt(backgroundColor));
+			root.graphics.beginFill(backgroundColor.toUInt());
 			root.graphics.drawRect(0, 0, game.width, game.height);
 			root.graphics.endFill();
 		}
@@ -174,7 +174,7 @@ package {
 			bs.graphics.clear();
 			//bs.graphics.lineStyle(2, Color.black.toUInt());
 			bs.graphics.lineStyle();
-			bs.graphics.beginFill(utils.colorToUInt(b.color));
+			bs.graphics.beginFill(b.color.toUInt());
 			//bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			var r:Number = b.visibleRadius;
 			bs.graphics.drawRect(-r, -r, r*2, r*2);
@@ -220,7 +220,7 @@ package {
 			bs.graphics.clear();
 			//bs.graphics.lineStyle(2, Color.black.toUInt());
 			bs.graphics.lineStyle();
-			bs.graphics.beginFill(utils.colorToUInt(b.color));
+			bs.graphics.beginFill(b.color.toUInt());
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			bs.graphics.endFill();
 			
@@ -312,11 +312,11 @@ package {
 			var bs:Sprite = getSprite(b, layers.balls);
 			bs.graphics.clear();
 			if (game.active == b) {
-				bs.graphics.lineStyle(2, utils.colorToUInt(b.color));
+				bs.graphics.lineStyle(2, b.color.toUInt());
 			} else {
 				bs.graphics.lineStyle();
 			}
-			bs.graphics.beginFill(utils.colorToUInt(b.color));
+			bs.graphics.beginFill(b.color.toUInt());
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			bs.graphics.endFill();
 			bs.x = b.position.x;
@@ -331,7 +331,7 @@ package {
 			var js:Sprite = getSprite(j, layer);
 			js.graphics.clear();
 			if (j.size > 0)
-				js.graphics.lineStyle(j.size, utils.colorToUInt(lineColor));
+				js.graphics.lineStyle(j.size, lineColor.toUInt());
 			else
 				js.graphics.lineStyle();
 			js.graphics.moveTo(j.a.position.x, j.a.position.y);

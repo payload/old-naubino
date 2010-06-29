@@ -72,7 +72,7 @@ package {
 			bs.graphics.clear();
 			//bs.graphics.lineStyle(2, Color.black.toUInt());
 			bs.graphics.lineStyle();
-			bs.graphics.beginFill(utils.colorToUInt(b.color));
+			bs.graphics.beginFill(b.color.toUInt());
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
 			bs.graphics.endFill();
 			bs.x = b.position.x;
