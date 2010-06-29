@@ -35,6 +35,7 @@
 		}
 
 		public function popDown():void {
+			game.visual.showAlert();
 			var tween:Object = {
 				x: mainbtn.x,
 				y: mainbtn.y,

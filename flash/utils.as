@@ -20,9 +20,6 @@
 				return timer;
 			}
 
-			public static function colorToUInt(color:Color):uint {
-				return 0x010000 * color.r + 0x000100 * color.g + 0x000001 * color.b;
-			}
 		}
 
 }
