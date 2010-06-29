@@ -40,5 +40,8 @@ package {
 			return name;
 		}
 
+		public function toUInt():uint {
+						return 0x010000 * r + 0x000100 * g + 0x000001 * b;
+		}
 	}
 }

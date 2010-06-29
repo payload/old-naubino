@@ -172,7 +172,7 @@ package {
 			var layer:* = layers.menu1;
 			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
-			//bs.graphics.lineStyle(2, utils.colorToUInt(Color.black));
+			//bs.graphics.lineStyle(2, Color.black.toUInt());
 			bs.graphics.lineStyle();
 			bs.graphics.beginFill(utils.colorToUInt(b.color));
 			//bs.graphics.drawCircle(0, 0, b.visibleRadius);
@@ -218,7 +218,7 @@ package {
 			var layer:* = layers.menu2;
 			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
-			//bs.graphics.lineStyle(2, utils.colorToUInt(Color.black));
+			//bs.graphics.lineStyle(2, Color.black.toUInt());
 			bs.graphics.lineStyle();
 			bs.graphics.beginFill(utils.colorToUInt(b.color));
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);

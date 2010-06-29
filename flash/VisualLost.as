@@ -70,7 +70,7 @@ package {
 		private function drawButton(b:Button):void{
 			var bs:Sprite = new Sprite();
 			bs.graphics.clear();
-			//bs.graphics.lineStyle(2, utils.colorToUInt(Color.black));
+			//bs.graphics.lineStyle(2, Color.black.toUInt());
 			bs.graphics.lineStyle();
 			bs.graphics.beginFill(utils.colorToUInt(b.color));
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
@@ -93,7 +93,7 @@ package {
 			format.align = TextFormatAlign.CENTER ;
 			
 			message.mouseEnabled = false;
-			message.textColor = utils.colorToUInt(Color.red);
+			message.textColor = Color.red.toUInt();
 			message.text = text;
 			message.setTextFormat(format);
 			message.autoSize = TextFieldAutoSize.CENTER;

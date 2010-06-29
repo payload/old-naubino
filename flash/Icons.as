@@ -6,7 +6,7 @@ package {
 	public class Icons{
 
 		public static function play(b:Button, bs:Sprite):Sprite {
-			var fillcolor:uint = utils.colorToUInt(Color.white);
+			var fillcolor:uint = Color.white.toUInt();
 			if (b.type == "pause") {
 				bs.graphics.beginFill(fillcolor);
 				bs.graphics.drawRect(-b.visibleRadius*0.4, -b.visibleRadius*0.4, b.visibleRadius*0.3, b.visibleRadius*0.8);
@@ -69,7 +69,7 @@ package {
 		}
 
 		public static function exit(b:Button, bs:Sprite):Sprite{
-			var fillcolor:uint = utils.colorToUInt(Color.white);
+			var fillcolor:uint = Color.white.toUInt();
 			bs.graphics.beginFill(fillcolor);
 			bs.graphics.moveTo( b.visibleRadius*0.5,  b.visibleRadius*0.4);
 			bs.graphics.lineTo( b.visibleRadius*0.2,  b.visibleRadius*0.4);
@@ -89,7 +89,7 @@ package {
 		}
 	
 		public static function unMute(b:Button, bs:Sprite):Sprite {
-			var fillcolor:uint = utils.colorToUInt(Color.white);
+			var fillcolor:uint = Color.white.toUInt();
 			bs.graphics.beginFill(fillcolor);
 			bs.graphics.drawRect(-b.visibleRadius*0.5,-b.visibleRadius*0.3,b.visibleRadius*0.3,b.visibleRadius*0.6);
 		
@@ -104,7 +104,7 @@ package {
 		}
 	
 		public static function mute(b:Button, bs:Sprite):Sprite {
-			var fillcolor:uint = utils.colorToUInt(Color.white);
+			var fillcolor:uint = Color.white.toUInt();
 			bs.graphics.beginFill(fillcolor);
 
 			bs.graphics.drawRect(-b.visibleRadius*0.5,-b.visibleRadius*0.3,b.visibleRadius*0.3,b.visibleRadius*0.6);
@@ -116,7 +116,7 @@ package {
 			bs.graphics.lineTo( b.visibleRadius*0.3,  b.visibleRadius*0.5);
 			bs.graphics.endFill();
 
-			bs.graphics.beginFill(utils.colorToUInt(Color.red));			
+			bs.graphics.beginFill(Color.red.toUInt());			
 			bs.graphics.moveTo( b.visibleRadius*0.4,  b.visibleRadius*0.6);
 			bs.graphics.lineTo( b.visibleRadius*0.2,  b.visibleRadius*0.6);
 			bs.graphics.lineTo(-b.visibleRadius*0.5, -b.visibleRadius*0.6);
@@ -124,7 +124,7 @@ package {
 			bs.graphics.lineTo( b.visibleRadius*0.4,  b.visibleRadius*0.6);
 			bs.graphics.endFill();
 
-			bs.graphics.beginFill(utils.colorToUInt(Color.red));			
+			bs.graphics.beginFill(Color.red.toUInt());			
 			bs.graphics.moveTo(-b.visibleRadius*0.5,  b.visibleRadius*0.6);
 			bs.graphics.lineTo(-b.visibleRadius*0.2,  b.visibleRadius*0.6);
 			bs.graphics.lineTo( b.visibleRadius*0.4, -b.visibleRadius*0.6);
