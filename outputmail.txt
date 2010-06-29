@@ -1,0 +1,11 @@
+Sehr geehrtes OUTPUT-Team,
+
+Im Zuge des Praktikums Medieninformatik dieses Semester hat unsere Gruppe ein kleines Browser-Game namens "Naubino" entwickelt. Die Spielidee ist inspiriert von den Surface Tables, wie sie auf der OUTPUT diesen April zu sehen waren und so entstand die Idee eines Werbespieles für die OUTPUT, das auf den Surface Tables spielbar sein könnte. 
+Die Spielidee ist eine Mischung aus Tetris und Domino, bei der der Spieler gleichfarbige "Naubs" zu einem Zyklus zusammenfügen muss, um Punkte zu sammeln. Wird ein Zyklus geschlossen, verschwinden die zum Zyklus verbundenen Naubs. Da fortwährend neue Naubs in das Spielfeld fliegen, steht der Spieler zusätzlich unter Zeitdruck, durch Zyklusbildung Platz auf dem Spielfeld zu schaffen, bevor es zum "Naub Overflow" kommt. 
+
+Mit der Vorstellung von "Naubino" als Werbespiel im Hinterkopf verwenden wir in unserem Spiel das Farbschema der OUTPUT und bitten hiermit um Erlaubnis, dies beibehalten zu dürfen. Eine Veröffentlichung unseres Spiels ist ausgeschlossen, sofern nicht von Seiten des OUTPUT-Teams Interesse daran besteht, es zu Werbezwecken// als Werbegag einzusetzen. 
+Gleichzeitig möchten wir wissen, ob es für uns als Studenten möglich wäre auf freiwilliger Basis oder in Form eines Praktikums//Belges dieses Spiel selbst auf die Surface Tables zu portieren. 
+Sollte Interesse an dem Spiel bestehen, bitten wir Sie, uns per e-Mail zu kontaktieren.
+
+Mit freundlichen Grüßen, 
+Gilbert Röhrbein, Hendrik Sollich, Alexandra Weiß
