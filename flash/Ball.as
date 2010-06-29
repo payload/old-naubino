@@ -15,15 +15,15 @@
 		}
 		
 		public function onAttach():void {
-			trace("onAttach");
+			//trace("onAttach");
 		}
 		
 		public function attachedButRemoved():void {
-			trace("attachedButRemoved");
+			//trace("attachedButRemoved");
 		}
 		
 		public function onRemove():void{
-			trace("onRemove");
+			//trace("onRemove");
 		}
 		
 		public function Ball(pos:Vektor, r:Number=defaultRadius) {
