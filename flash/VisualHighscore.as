@@ -53,7 +53,7 @@ package {
 			head = new TextField();
 			head.autoSize = TextFieldAutoSize.CENTER;
 			head.mouseEnabled = false;
-			head.textColor = utils.colorToUInt(Color.yellow);
+			head.textColor = Color.yellow.toUInt();
 			head.x = game.width/2 - head.width/2;
 			head.y = 70;
 			head.text = "Highscore";
@@ -62,13 +62,13 @@ package {
 			names = new TextField();
 			names.autoSize = TextFieldAutoSize.RIGHT;
 			names.mouseEnabled = false;
-			names.textColor = utils.colorToUInt(Color.black);
+			names.textColor = Color.black.toUInt();
 			names.x = game.width/2 - 10 - names.width;
 
 			points = new TextField();
 			points.autoSize = TextFieldAutoSize.LEFT;
 			points.mouseEnabled = false;
-			points.textColor = utils.colorToUInt(Color.black);
+			points.textColor = Color.black.toUInt();
 			points.x = game.width/2 + 10;
 			
 			highscore.addChild(head);

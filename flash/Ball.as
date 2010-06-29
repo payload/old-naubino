@@ -4,6 +4,8 @@
 	public class Ball extends Naub
 	{
 		public var active:Boolean = false;
+		public var attacheAction:Function;
+		public var removeAction:Function;
 		
 		
 		public override function action():void {
@@ -15,15 +17,21 @@
 		}
 		
 		public function onAttach():void {
-			trace("onAttach");
+			if(attacheAction == null)
+				trace("onAttach");
+			else
+				attacheAction();
 		}
 		
 		public function attachedButRemoved():void {
-			trace("attachedButRemoved");
+			//trace("attachedButRemoved");
 		}
 		
 		public function onRemove():void{
-			trace("onRemove");
+			if(attacheAction == null)
+				trace("onRemove");
+			else
+				removeAction();
 		}
 		
 		public function Ball(pos:Vektor, r:Number=defaultRadius) {

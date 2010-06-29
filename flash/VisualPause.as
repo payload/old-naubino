@@ -41,7 +41,7 @@ package {
 			format.align = TextFormatAlign.CENTER ;
 			
 			message.mouseEnabled = false;
-			message.textColor = utils.colorToUInt(Color.red);
+			message.textColor = Color.red.toUInt();
 			message.text = text;
 			message.setTextFormat(format);
 			message.autoSize = TextFieldAutoSize.CENTER;

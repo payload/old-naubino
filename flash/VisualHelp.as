@@ -44,7 +44,7 @@ package {
 			helptext.height = game.height/2;
 			helptext.wordWrap = true;
 			helptext.mouseEnabled = false;
-			helptext.textColor = utils.colorToUInt(Color.black);
+			helptext.textColor = Color.black.toUInt();
 			helptext.x = 10;
 			helptext.y = game.height - game.height/2;
 			help.addChild(helptext);
