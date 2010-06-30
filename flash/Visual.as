@@ -42,6 +42,7 @@ package {
 			pause = new VisualPause(this);
 			drawBackground();
 			drawMenu();
+			initAlert();
 		}
 		
 
@@ -85,6 +86,7 @@ package {
 			layers.menu1		= new Sprite(); // main menu button // XXX not a ordering I understand ??
 			layers.menu2		= new Sprite(); // menu buttons
 			layers.menu3    = new Sprite();
+			layers.alert    = new Sprite();
 		 
 			overlays		= new Sprite();
 			
@@ -97,6 +99,7 @@ package {
 			layers.menu0.addChild(layers.menu1);
 			layers.menu1.addChild(layers.menu2);
 			layers.menu2.addChild(layers.menu3);
+			root.addChild(layers.alert);
 
 	
 			
@@ -270,6 +273,38 @@ package {
 			x.graphics.endFill();
 			x.alpha = 0.8;
 			//			this.fog.addChild(x);
+		}
+		
+		public var alert:Sprite = new Sprite();
+		public function initAlert():void  {
+			//hide(this.alert);
+			var glare:Shape = new Shape();
+			glare.graphics.beginFill(Color.red.toUInt());
+			glare.graphics.drawRect(0, 0, game.width, game.height);
+			glare.graphics.endFill();
+			glare.alpha = 0.5;
+			this.alert.addChild(glare);
+			layers.alert.addChild(alert);
+		}
+		public function blinkAlert():void{
+			
+			var hide:* = {
+				alpha: 0,
+				time: 1,
+				onStart: function():void {  }
+			}
+
+			var show:* = {
+				alpha: 1,
+				time: 1,
+				onComplete: function():void {
+					Tweener.addTween(layers.alert, hide);
+				}
+			}
+			Tweener.addTween(layers.alert, show);
+		}
+		public function showAlert():void{
+			show(this.alert,3);
 		}
 
 		public function hide(obj:DisplayObject, time:Number = 0):void {
