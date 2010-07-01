@@ -37,6 +37,7 @@ package stat.es
 			trace("lost");
 			game.lost = true;
 			game.visual.lost.show();
+			game.menu.playbtn.setAction(function():void {changeState(credits)});
 		}
 
 		public override function leave():void {
@@ -44,6 +45,7 @@ package stat.es
 			game.lost = false;
 			game.clear();
 			game.points = 0;
+			game.menu.playbtn.setAction(function():void {changeState(play)});			
 		}
 	}
 }

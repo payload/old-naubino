@@ -39,6 +39,10 @@
 		protected function get highscore():Highscore{
 			return game.states.highscore;
 		}
+		
+		protected function get credits():Credits{
+			return game.states.credits;
+		}
 	}
 	
 }

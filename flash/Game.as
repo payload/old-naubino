@@ -43,6 +43,7 @@
 			states.lost = new Lost(this);
 			states.help = new Help(this);
 			states.highscore = new Highscore(this);
+			states.credits = new Credits(this);
 			state = states.start;
 			state.enter();
 
