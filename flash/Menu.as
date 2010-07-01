@@ -3,6 +3,7 @@
 	import caurina.transitions.AuxFunctions;
 	import caurina.transitions.Tweener;
 	import stat.es.*;
+	import flash.media.*;
 
 	public class Menu
 	{
@@ -93,12 +94,18 @@
 			playbtn.type = "pause";
 		}
 
-		private function muteAction():void{
+		public function muteAction():void{
+			var transform:SoundTransform = game.naubino.chan.soundTransform;
+			transform.volume = 0;
+			game.naubino.chan.soundTransform = transform;
 			mutebtn.setAction(unMuteAction);
 			mutebtn.type = "unmute";
 		}
 
-		private function unMuteAction():void{
+		public function unMuteAction():void{
+		var transform:SoundTransform = game.naubino.chan.soundTransform;
+			transform.volume = 1;
+			game.naubino.chan.soundTransform = transform;
 			mutebtn.setAction(muteAction);
 			mutebtn.type = "mute";
 		}
@@ -115,7 +122,7 @@
 			mainbtn = newMainButton();
 			mainbtn.collidable = false;
 			playbtn = newButton(Color.green, "pause");
-			mutebtn = newButton(Color.blue, "unmute", unMuteAction);
+			mutebtn = newButton(Color.blue, "mute", muteAction);
 			helpbtn = newButton(Color.purple, "help", helpAction);
 			exitbtn = newButton(Color.red,"exit", exitAction);
 			
