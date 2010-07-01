@@ -26,6 +26,7 @@ package {
 		public var lost:VisualLost;
 		public var pause:VisualPause;
 		public var help:VisualHelp;
+		public var alertTimer:Timer;
 
 		public function Visual(root:Naubino) {
 			this.root = root;
@@ -277,7 +278,7 @@ package {
 		
 		public var alert:Sprite = new Sprite();
 		public function initAlert():void  {
-			//hide(this.alert);
+			hide(this.alert);
 			var glare:Shape = new Shape();
 			glare.graphics.beginFill(Color.red.toUInt());
 			glare.graphics.drawRect(0, 0, game.width, game.height);
@@ -286,23 +287,11 @@ package {
 			this.alert.addChild(glare);
 			layers.alert.addChild(alert);
 		}
-		public function blinkAlert():void{
-			
-			var hide:* = {
-				alpha: 0,
-				time: 1,
-				onStart: function():void {  }
-			}
+	
+		public function blinkAlert(interval:int):void{
+			alertTimer= utils.newTimer(interval,function():void{ show(this.alert,interval*0.5);});
+		}	
 
-			var show:* = {
-				alpha: 1,
-				time: 1,
-				onComplete: function():void {
-					Tweener.addTween(layers.alert, hide);
-				}
-			}
-			Tweener.addTween(layers.alert, show);
-		}
 		public function showAlert():void{
 			show(this.alert,3);
 		}
