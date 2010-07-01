@@ -11,6 +11,7 @@
 		public override function refresh():void {		
 			game.physics.physik();
 			game.antipoints = game.countingJoints();
+			game.warn();
 			if (game.antipoints > game.ballsTillLost) {
 				changeState(lost);
 			}
@@ -25,6 +26,7 @@
 
 		public override function leave():void {
 			game.spammer.stop();
+			game.visual.stopAlert();
 			showPlayButton();
 		}
 		

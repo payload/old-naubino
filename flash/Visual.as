@@ -277,23 +277,45 @@ package {
 		}
 		
 		public var alert:Sprite = new Sprite();
+		private var glareOn:Boolean = false;
 		public function initAlert():void  {
 			hide(this.alert);
+			alertTimer = utils.startTimer(700,showAlert);
+			alertTimer.stop();
 			var glare:Shape = new Shape();
-			glare.graphics.beginFill(Color.red.toUInt());
+			glare.graphics.beginFill(0xcf0000);
 			glare.graphics.drawRect(0, 0, game.width, game.height);
 			glare.graphics.endFill();
-			glare.alpha = 0.5;
+			//glare.graphics.beginFill(0xffffff);
+			//glare.graphics.drawCircle(game.center.x, game.center.y,game.height*0.7);
+			//glare.graphics.endFill();
+			glare.alpha = 0.4;
 			this.alert.addChild(glare);
 			layers.alert.addChild(alert);
 		}
-	
-		public function blinkAlert(interval:int):void{
-			alertTimer= utils.newTimer(interval,function():void{ show(this.alert,interval*0.5);});
-		}	
 
 		public function showAlert():void{
-			show(this.alert,3);
+			if(glareOn){
+				hide(this.alert,alertTimer.delay/1000);
+				glareOn = false;
+			}
+			else{
+				show(this.alert,alertTimer.delay/1000);
+				glareOn = true;
+			}
+			//trace("warning");
+		}
+
+		public function startAlert():void{
+			if(!alertTimer.running){
+				alertTimer.start();
+			}
+			//alertTimer.delay = interval;
+		}
+		public function stopAlert():void{
+			hide(this.alert);
+			alertTimer.stop();
+			trace("stopTimer");
 		}
 
 		public function hide(obj:DisplayObject, time:Number = 0):void {

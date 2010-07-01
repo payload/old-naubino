@@ -3,7 +3,7 @@
 	import caurina.transitions.Tweener;
 	import flash.display.JointStyle;
 	import flash.events.*;
-	import flash.utils.Timer;
+	//	import flash.utils.Timer;
 	import stat.es.*;
 
 	public class Game
@@ -12,7 +12,7 @@
 		public const height : Number = 400;
 		public var points:int = 0;
 		public var antipoints:int= 0;
-		public var ballsTillLost:int = 30;
+		public var ballsTillLost:int = 20;
 		public var refreshInterval:uint = 50;
 
 		public var fieldSize : Number;
@@ -36,7 +36,7 @@
 			spammer = new Spammer(this);
 			physics = new Physics(this);
 			menu = new Menu(this);
-			
+
 			states.play = new Play(this);
 			states.pause = new Pause(this);
 			states.start = new Start(this);
@@ -47,11 +47,11 @@
 			state.enter();
 
 		}
-		
+
 		public function Game() {
 			initFields();
 		}
-		
+
 		public function createBall(v:Vektor = null):Ball {
 			if (v == null) v = Vektor.O;
 			var b : Ball = new Ball(v);
@@ -71,7 +71,7 @@
 			var pos2:Vektor = v.sub(pair);
 			obj1.position = pos1;
 			obj2.position = pos2;
-		  objs.push(obj);
+			objs.push(obj);
 		}
 
 		/* nur benutzen wenn zwei neue Baelle geobj werden */
@@ -81,7 +81,7 @@
 			b.addJoint(obj);
 			return obj;
 		}
-	
+
 		/* game logic below here */
 		public function refresh():void {
 			state.refresh();
@@ -101,6 +101,16 @@
 				removeBall(killlist[i]);
 			}
 		}
+
+		public function warn():void{
+			var danger:int = ballsTillLost - antipoints;
+			var lastDanger:int;
+			if(danger < 12)
+				visual.startAlert();	
+			else if(visual.alertTimer.running)
+				visual.stopAlert();
+		}
+
 
 		public function countingJoints():Number {
 			var adistance:Number;
@@ -171,7 +181,7 @@
 			if (shareJointNaub(a,b)) return null;
 			var naubs:Array = b.jointNaubs();
 			for (var i:* in naubs) {
-		 		objs.push(join(a, naubs[i]));
+				objs.push(join(a, naubs[i]));
 			}
 			removeBall(b);
 			b.attachedButRemoved();
@@ -207,7 +217,7 @@
 				handleCycle(cycles[i]);
 			}
 		}
-		
+
 		private function handleCycle(cycle:Array):void {
 			updatePoints(cycle);
 			removeCycle(cycle);
@@ -224,7 +234,7 @@
 		}
 
 		public var ani_t:Number = 0.5;
-		
+
 		private function fadeJoints(joints:Array):void {
 			for (var i:int = 0; i < joints.length; i++) {
 				fadeOut(joints[i]);
@@ -233,16 +243,16 @@
 
 		public function fadeOut(j:Joint):void {
 			var tween:Object = {
-				size: 0,
-				alpha: 0,
-				time: ani_t*1.2
+size: 0,
+			alpha: 0,
+			time: ani_t*1.2
 			};
 			Tweener.addTween(j, tween);
 		}
-		
+
 		private function shrinkBall(b:Ball, start:Number = 0):void {
 			var tween:Object = {
-				radius: 0,
+radius: 0,
 				time: ani_t,
 				delay: start,
 				onStart: function():void { fadeJoints(b.joints); },
@@ -269,7 +279,7 @@
 				a.splice(a.indexOf(j), 1);
 			}
 		}
-		
+
 		private function removeBall(b:Ball):void {
 			removeAll(objs, b.joints);
 			var objobjs:Array = b.jointNaubs();
@@ -279,7 +289,7 @@
 			}
 			objs.splice(objs.indexOf(b), 1);
 		}
-		
+
 
 		/* interaction below here */
 
@@ -310,14 +320,14 @@
 		public function get center():Vektor {
 			return new Vektor(width / 2, height / 2);
 		}
-		
+
 		public function get active():Ball {
 			for (var i:uint = 0; i < objs.length; i++)
 				if (objs[i] is Ball && objs[i].active)
 					return objs[i];
 			return null;
 		}
-		
+
 		public function updatePoints(cycle:Array):void {
 			for (var i:int = 0; i < cycle.length; i++) {
 				points++;
