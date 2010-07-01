@@ -26,6 +26,7 @@ package {
 		public var lost:VisualLost;
 		public var pause:VisualPause;
 		public var help:VisualHelp;
+		public var credits:VisualCredits;
 		public var alertTimer:Timer;
 
 		public function Visual(root:Naubino) {
@@ -41,6 +42,7 @@ package {
 			highscore = new VisualHighscore(this);
 			lost = new VisualLost(this);
 			pause = new VisualPause(this);
+			credits = new VisualCredits(this);
 			drawBackground();
 			drawMenu();
 			initAlert();
