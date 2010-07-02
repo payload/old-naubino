@@ -177,7 +177,7 @@ package {
 
 		private var game_points:int = 0;
 		private var points_update_timer:Timer;
-		private function initPointsUpdateTimer() {
+		private function initPointsUpdateTimer():void {
 			points_update_timer = utils.startTimer(150, updateGamePoints);
 		}
 		private function updateGamePoints():void {
@@ -310,9 +310,10 @@ package {
 			//layers.alert.addChild(alert);
 		}
 
-		public function showAlert():void{
-			trace ("warning");
-			alertTimer.delay = defaultAlertDelay - game.antipoints * 10;
+		public function showAlert():void {
+			const fastestFlickering:Number = 150;
+			alertTimer.delay = defaultAlertDelay - ( defaultAlertDelay - fastestFlickering )
+				*Math.pow(game.antipoints / game.ballsTillLost, 4);
 			var tweenTime:Number = alertTimer.delay / 2000;
 			var self:Visual = this;
 			var shrink:* = {
