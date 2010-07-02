@@ -95,17 +95,13 @@
 		}
 
 		public function muteAction():void{
-			var transform:SoundTransform = game.naubino.chan.soundTransform;
-			transform.volume = 0;
-			game.naubino.chan.soundTransform = transform;
+			game.jukebox.mute();
 			mutebtn.setAction(unMuteAction);
 			mutebtn.type = "unmute";
 		}
 
 		public function unMuteAction():void{
-		var transform:SoundTransform = game.naubino.chan.soundTransform;
-			transform.volume = 1;
-			game.naubino.chan.soundTransform = transform;
+			game.jukebox.unMute();
 			mutebtn.setAction(muteAction);
 			mutebtn.type = "mute";
 		}

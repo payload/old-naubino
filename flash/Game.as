@@ -21,6 +21,7 @@
 		public var menu : Menu;
 		public var visual : Visual;
 		public var naubino : Naubino;
+		public var jukebox : Jukebox;
 
 		public var state : GameState;
 		public var spammer : Spammer;
@@ -36,6 +37,7 @@
 			spammer = new Spammer(this);
 			physics = new Physics(this);
 			menu = new Menu(this);
+			jukebox = new Jukebox();
 
 			states.play = new Play(this);
 			states.pause = new Pause(this);

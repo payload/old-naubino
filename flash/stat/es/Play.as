@@ -22,12 +22,16 @@
 			game.spammer.start();
 			showPauseButton();
 			game.menu.helpbtn.setAction(function():void { changeState(game.states.help) });
+
+			game.jukebox.play();
 		}
 
 		public override function leave():void {
 			game.spammer.stop();
 			game.visual.stopAlert();
 			showPlayButton();
+
+			game.jukebox.pause();
 		}
 		
 		public function showPlayButton():void {
