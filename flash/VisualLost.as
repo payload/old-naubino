@@ -8,7 +8,7 @@ package {
 		public var lost:Sprite;
 		private var message:TextField;
 		private var input:TextField;
-		private var submit:Button;
+		public var submit:Button;
 		private var format:TextFormat;
 
 		public function VisualLost(visual:Visual) {
