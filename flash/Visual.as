@@ -46,6 +46,7 @@ package {
 			drawBackground();
 			drawMenu();
 			initAlert();
+			initPointsUpdateTimer();
 		}
 		
 
@@ -174,6 +175,16 @@ package {
 				updateSecondaryButton(b);
 		}
 
+		private var game_points:int = 0;
+		private var points_update_timer:Timer;
+		private function initPointsUpdateTimer():void {
+			points_update_timer = utils.startTimer(150, updateGamePoints);
+		}
+		private function updateGamePoints():void {
+			if (game_points < game.points) game_points++;
+			if (game_points > game.points) game_points--;
+		}
+
 		private function updateMainButton(b:Button):void {
 			var layer:* = layers.menu1;
 			var bs:Sprite = getSprite(b, layer);
@@ -198,24 +209,25 @@ package {
 			points.mouseEnabled = false;
 			layer.addChild(points); 
 
-			if(game.points < 10){
+			points.text = game_points.toString();
+			if (points.text.length < 2) {
 				format.size = 36;
 				points.x = bs.x-15;
 				points.y = bs.y-25;
 			}
-			else if(game.points < 100){
+			else if (points.text.length < 3) {
 				format.size = 26;
 				format.letterSpacing = -3.0;
 				points.x = bs.x-21;
 				points.y = bs.y-19;
 			}
-			else{
+			else {
 				format.size = 22;
 				format.letterSpacing = -3.0;
 				points.x = bs.x-21;
 				points.y = bs.y-16;
 			}
-			points.text = game.points.toString();
+			points.text = game_points.toString();
 			points.setTextFormat(format);	
 		}
 
@@ -298,9 +310,10 @@ package {
 			//layers.alert.addChild(alert);
 		}
 
-		public function showAlert():void{
-			trace ("warning");
-			alertTimer.delay = defaultAlertDelay - game.antipoints * 10;
+		public function showAlert():void {
+			const fastestFlickering:Number = 150;
+			alertTimer.delay = defaultAlertDelay - ( defaultAlertDelay - fastestFlickering )
+				*Math.pow(game.antipoints / game.ballsTillLost, 4);
 			var tweenTime:Number = alertTimer.delay / 2000;
 			var self:Visual = this;
 			var shrink:* = {
