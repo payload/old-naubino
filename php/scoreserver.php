@@ -50,7 +50,7 @@ class ScoreServer {
 	public function add_hero($newby){
 		$notAdded = true;
 		$newheros = array();
-		if(!$this->contains($newby)){
+		if(!$this->contains($newby) && $newby[1] > 0){
 			for($i=0;$i < count($this->heros);$i++){
 				$hero = $this->heros[$i];
 				if($notAdded && $hero[1] <= $newby[1]){
