@@ -190,7 +190,6 @@ package {
 			bs.y = b.position.y;
 			bs.rotation = 10;
 			bs.alpha = b.alpha;
-
 			var points:TextField = getSprite("Points", layer, TextField);			
 			var format:TextFormat = new TextFormat();
 			format.bold = true;
@@ -253,7 +252,6 @@ package {
 					bs = Icons.help(b, bs);
 					break;
 			}
-			//bs.graphics.endFill();
 			
 
 			bs.x = b.position.x;
@@ -283,32 +281,54 @@ package {
 		
 		public var alert:Sprite = new Sprite();
 		private var glareOn:Boolean = false;
+		private var defaultAlertDelay: int  = 2000;
 		public function initAlert():void  {
 			hide(this.alert);
-			alertTimer = utils.startTimer(700,showAlert);
+			alertTimer = utils.startTimer(defaultAlertDelay, showAlert);
 			alertTimer.stop();
-			var glare:Shape = new Shape();
-			glare.graphics.beginFill(0xcf0000);
-			glare.graphics.drawRect(0, 0, game.width, game.height);
-			glare.graphics.endFill();
+			//var glare:Shape = new Shape();
+			//glare.graphics.beginFill(0xcf0000);
+			//glare.graphics.drawRect(0, 0, game.width, game.height);
+			//glare.graphics.endFill();
 			//glare.graphics.beginFill(0xffffff);
 			//glare.graphics.drawCircle(game.center.x, game.center.y,game.height*0.7);
 			//glare.graphics.endFill();
-			glare.alpha = 0.4;
-			this.alert.addChild(glare);
-			layers.alert.addChild(alert);
+			//glare.alpha = 0.4;
+			//this.alert.addChild(glare);
+			//layers.alert.addChild(alert);
 		}
 
 		public function showAlert():void{
-			if(glareOn){
-				hide(this.alert,alertTimer.delay/1000);
-				glareOn = false;
+			trace ("warning");
+			alertTimer.delay = defaultAlertDelay - game.antipoints * 10;
+			var tweenTime:Number = alertTimer.delay / 2000;
+			var self:Visual = this;
+			var shrink:* = {
+				fieldLine : 3,
+				time : tweenTime,
+				delay : tweenTime
 			}
-			else{
-				show(this.alert,alertTimer.delay/1000);
-				glareOn = true;
+			var grow:* = {	
+				fieldLine: 10,
+				time: tweenTime
 			}
-			//trace("warning");
+			var lightUp:* = {
+				r : Color.red.r,
+				g : Color.red.g,
+				b : Color.red.b,
+				time : tweenTime
+			}
+			var lightDown:* = {
+				r : Color.grey.r,
+				g : Color.grey.g,
+				b : Color.grey.b,
+				time : tweenTime,
+				delay : tweenTime
+			}
+			Tweener.addTween(self, grow);
+			Tweener.addTween(self, shrink);
+			Tweener.addTween(fieldColor, lightUp);
+			Tweener.addTween(fieldColor, lightDown);
 		}
 
 		public function startAlert():void{
@@ -318,7 +338,7 @@ package {
 			//alertTimer.delay = interval;
 		}
 		public function stopAlert():void{
-			hide(this.alert);
+			fieldLine = defaultFieldLine;
 			alertTimer.stop();
 			trace("stopTimer");
 		}
@@ -349,11 +369,15 @@ package {
 		}
 		
 		/* drawing balls and field */
-		
+		private var defaultFieldLine:Number = 3
+		public var fieldLine:Number = defaultFieldLine;
+		public var fieldColor:Color = Color.grey;
 		private function updateField():void {
 			var field:Sprite = getSprite("field", layers.background);
+			if(fieldColor ==null)
+				fieldColor = Color.grey;
 			field.graphics.clear();
-			field.graphics.lineStyle(3, 0xA0A0A0);
+			field.graphics.lineStyle(fieldLine, fieldColor.toUInt());
 			field.graphics.drawCircle(0, 0, game.fieldSize);
 			field.x = game.center.x;
 			field.y = game.center.y;

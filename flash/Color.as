@@ -1,11 +1,11 @@
 package {
 	public class Color {
-		public var r : Number;
-		public var g : Number;
-		public var b : Number;
+		public var r : int;
+		public var g : int;
+		public var b : int;
 		public var name : String;
 
-		public function Color(red:Number, green:Number, blue:Number, n:String) {
+		public function Color(red:Number, green:Number, blue:Number, n:String = "unnamed") {
 			r = red;
 			g = green;
 			b = blue;
@@ -34,6 +34,7 @@ package {
 		public static const purple:Color = new Color(100,  31, 128, "purple");
 		public static const yellow:Color = new Color(255, 204,   0, "yellow");
 		public static const black :Color = new Color(  0,   0,   0, "black");
+		public static const grey  :Color = new Color(160,160,160, "grey");
 		public static const white :Color = new Color(255, 255, 255, "white");
 
 		public function toString():String {
