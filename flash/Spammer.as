@@ -16,7 +16,7 @@ package
 			this.game = game;
 			timer = utils.newTimer(difficulties[difficulty], randomPair);
 			nextDifficultyTimer = utils.newTimer(difficultyStep, nextDifficulty);
-			start();
+			//start();
 		}
 
 		private function randomAngle():Number {
