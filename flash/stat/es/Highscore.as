@@ -7,11 +7,11 @@
 
 	public class Highscore extends GameState
 	{
-		public var hallOfFame:Array; // used in Highscore and Visual
+		public	var hallOfFame:Array; // used in Highscore and Visual
 		private var submit:Button;
 		private var request:URLRequest;
 		private var heros:URLLoader;
-		private var online:Boolean = false; //solve this via catching sandbox violations
+		public	var online:Boolean = false; //solve this via catching sandbox violations
 
 		public function Highscore(game:Game) 
 		{
@@ -35,7 +35,7 @@
 		
 		public function fetchScore():void{
 		  try{
-			 request = new URLRequest("http://www1.inf.tu-dresden.de/~s8880935/naubino/score.php");
+			 request = new URLRequest("score.php");
 			 heros = new URLLoader();
 			 heros.addEventListener(Event.COMPLETE, heroHandler);
 			 heros.dataFormat = URLLoaderDataFormat.TEXT;
@@ -80,13 +80,13 @@
 				}
 				else{
 					hallOfFame = [
-						{name : "Gilbert", points : 50},
-						{name : "Hendrik", points : 55},
-						{name : "Alex", points : 30},
-						{name : "Hermann", points : 20},
-						{name : "Björn", points : 500},
-						{name : "Sven", points : 42},
-						{name : "Daniel", points : 23}
+//						{name : "Gilbert", points : 50},
+//						{name : "Hendrik", points : 55},
+//						{name : "Alex", points : 30},
+//						{name : "Hermann", points : 20},
+//						{name : "Björn", points : 500},
+//						{name : "Sven", points : 42},
+//						{name : "Daniel", points : 23}
 					];
 					obj.data.hallOfFame = hallOfFame;
 					obj.flush();
