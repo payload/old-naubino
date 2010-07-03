@@ -5,5 +5,5 @@ mxmlc \
 	-incremental \
   $1.as && \
 mv $1.swf naubino.swf && \
-#flashplayer-debugger-standalone $1.swf
-firefox naubino.swf
+flashplayer-debugger-standalone naubino.swf
+#firefox naubino.swf

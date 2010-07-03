@@ -298,20 +298,10 @@ package {
 			hide(this.alert);
 			alertTimer = utils.startTimer(defaultAlertDelay, showAlert);
 			alertTimer.stop();
-			//var glare:Shape = new Shape();
-			//glare.graphics.beginFill(0xcf0000);
-			//glare.graphics.drawRect(0, 0, game.width, game.height);
-			//glare.graphics.endFill();
-			//glare.graphics.beginFill(0xffffff);
-			//glare.graphics.drawCircle(game.center.x, game.center.y,game.height*0.7);
-			//glare.graphics.endFill();
-			//glare.alpha = 0.4;
-			//this.alert.addChild(glare);
-			//layers.alert.addChild(alert);
 		}
 
 		public function showAlert():void {
-			const fastestFlickering:Number = 150;
+			const fastestFlickering:Number = 100;
 			alertTimer.delay = defaultAlertDelay - ( defaultAlertDelay - fastestFlickering )
 				*Math.pow(game.antipoints / game.ballsTillLost, 4);
 			var tweenTime:Number = alertTimer.delay / 2000;
