@@ -68,6 +68,12 @@
 			}
 			return hallOfFame;
 		}
+		
+		public function deleteHighscore():void{
+				var obj:SharedObject = SharedObject.getLocal("highscore");
+				obj.data.hallOfFame = [];
+				obj.flush();
+		}
 
 		private function updateHighscore(insert:Object = null):void {
 			var obj:SharedObject = SharedObject.getLocal("highscore");
@@ -79,15 +85,7 @@
 					hallOfFame = obj.data.hallOfFame;
 				}
 				else{
-					hallOfFame = [
-//						{name : "Gilbert", points : 50},
-//						{name : "Hendrik", points : 55},
-//						{name : "Alex", points : 30},
-//						{name : "Hermann", points : 20},
-//						{name : "Björn", points : 500},
-//						{name : "Sven", points : 42},
-//						{name : "Daniel", points : 23}
-					];
+					hallOfFame = [];
 					obj.data.hallOfFame = hallOfFame;
 					obj.flush();
 				}

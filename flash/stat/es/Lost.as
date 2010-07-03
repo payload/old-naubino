@@ -11,7 +11,36 @@ package stat.es
 			super(game);
 		}
 
-		public function sendHighscore(name:String):void {
+		public function enterHallOfFame(name:String):void{
+			if(game.states.highscore.online)
+				sendHighscore(name);
+			else
+				storeHighscore(name);
+		}
+		private function alreadyIn(name:String):Boolean{
+			var obj:SharedObject = SharedObject.getLocal("highscore");
+			var hallOfFame:Array = obj.data.hallOfFame;
+			for(var i:* in hallOfFame){
+				if(hallOfFame[i].name == name && hallOfFame[i].points == game.points)
+					return true;
+			}
+			return false;
+		}
+
+		private function storeHighscore(name:String):void{
+			if(game.points > 0 && !alreadyIn(name)){
+				var obj:SharedObject = SharedObject.getLocal("highscore");
+				var hallOfFame:Array = obj.data.hallOfFame;
+				var newby:Object = new Object();
+				newby.name = name;
+				newby.points = game.points;
+				hallOfFame.push(newby);
+				obj.data.hallOfFame = hallOfFame;
+				obj.flush();
+			}
+		}
+
+		private function sendHighscore(name:String):void {
 			var url:String = "http://www1.inf.tu-dresden.de/~s8880935/naubino/score.php";
 			var request:URLRequest = new URLRequest(url);
 			var variables:URLVariables = new URLVariables();
@@ -38,6 +67,7 @@ package stat.es
 			game.lost = true;
 			game.visual.lost.show();
 			game.menu.playbtn.setAction(function():void {changeState(credits)});
+			//deleteHighscore();
 		}
 
 		public override function leave():void {

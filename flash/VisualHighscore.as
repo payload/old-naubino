@@ -10,14 +10,17 @@ package {
 		public var points:TextField;
 		public var names_tf:TextFormat;
 		public var points_tf:TextFormat;
+		public var submit:Button;
 
 		public function VisualHighscore(visual:Visual) {
 			super(visual);
 			initHighscore();
+			initReset();
 		}
 
 		public function show():void {
 			updateHighscoreText();
+			visual.game.objs.push(submit);
 			visual.show(visual.fog, 2);
 			visual.show(highscore, 2);
 		}
@@ -25,6 +28,7 @@ package {
 		public function hide():void {
 			visual.hide(visual.fog, 2);
 			visual.hide(highscore, 2);
+			visual.game.objs.splice(visual.game.objs.indexOf(submit),1);
 		}
 
 		public function initHighscore():void {
@@ -75,7 +79,19 @@ package {
 			highscore.addChild(names);
 			highscore.addChild(points);
 		}	
-		
+		private function initReset():void{
+				
+			submit = new Button();
+			submit.color = Color.random;
+			submit.setAction(function():void { 
+				visual.game.states.highscore.deleteHighscore();
+				game.state.changeState(game.states.highscore);
+			} );
+			submit.x = game.center.x + game.fieldSize;
+			submit.y = game.center.y + game.fieldSize;
+			submit.type = "reset";
+
+		}	
 		private function sort(hall:Array):Array{
 			if(hall.length <= 1)
 				return hall;

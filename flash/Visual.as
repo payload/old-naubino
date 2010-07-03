@@ -257,6 +257,9 @@ package {
 				case "submit":
 					bs = Icons.submit(b, bs);
 				break;
+				case "reset":	
+					bs = Icons.exit(b, bs);
+				break;
 				case "exit":	
 					bs = Icons.exit(b, bs);
 				break;

@@ -58,11 +58,13 @@ package {
 
 			submit = new Button();
 			submit.color = Color.random;
-			submit.setAction(function():void { visual.game.states.lost.sendHighscore(input.text); } );
+			submit.setAction(function():void { 
+				visual.game.states.lost.enterHallOfFame(input.text);
+				game.state.changeState(game.states.highscore);
+			} );
 			submit.x = input.x + input.width + 20;
 			submit.y = input.y + input.height/2;
 			submit.type = "submit";
-			//drawButton (submit);
 
 			lost.addChild(input);
 		}
@@ -70,7 +72,6 @@ package {
 		private function drawButton(b:Button):void{
 			var bs:Sprite = new Sprite();
 			bs.graphics.clear();
-			//bs.graphics.lineStyle(2, Color.black.toUInt());
 			bs.graphics.lineStyle();
 			bs.graphics.beginFill(b.color.toUInt());
 			bs.graphics.drawCircle(0, 0, b.visibleRadius);
