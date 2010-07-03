@@ -17,7 +17,7 @@
 			onKeyUp = { 
 				'ESC': close,
 				'ENTER': game.spammer.spam,
-				'SPACE': game.pause,
+//			'SPACE': game.pause,
 				'CONTROL': nothing,
 				'Q': nothing,
 				'W': nothing
