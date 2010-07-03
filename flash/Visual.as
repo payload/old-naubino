@@ -301,9 +301,16 @@ package {
 		}
 
 		public function showAlert():void {
-			const fastestFlickering:Number = 100;
-			alertTimer.delay = defaultAlertDelay - ( defaultAlertDelay - fastestFlickering )
+			const fastestFlickering:Number = 300;
+			var wishedAlertDelay:Number = defaultAlertDelay - ( defaultAlertDelay - fastestFlickering )
 				*Math.pow(game.antipoints / game.ballsTillLost, 4);
+			
+			if(wishedAlertDelay < alertTimer.delay)
+				alertTimer.delay -= 10
+
+			else if(wishedAlertDelay > alertTimer.delay)
+				alertTimer.delay += 10
+
 			var tweenTime:Number = alertTimer.delay / 2000;
 			var self:Visual = this;
 			var shrink:* = {
