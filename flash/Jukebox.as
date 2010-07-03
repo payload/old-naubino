@@ -54,12 +54,13 @@ package{
 		}
 
 		public function onSoundLoaded(event:Event):void { 
-  		 	globalSound = event.target as Sound; 
-  		 	if(failedToPlay)
-		 		channel = globalSound.play();
-			transform = channel.soundTransform; 
+			globalSound = event.target as Sound; 
+			if(failedToPlay){
+				channel = globalSound.play();
+				transform = channel.soundTransform; 
+			}
 		}
-		
+
 		public function onIOError(event:IOErrorEvent):void { 
 			trace("The sound could not be loaded: " + event.text); 
 		}
