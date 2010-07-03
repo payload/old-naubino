@@ -4,4 +4,6 @@ mxmlc \
   -compiler.debug \
 	-incremental \
   $1.as && \
-flashplayer-debugger-standalone $1.swf
+mv $1.swf naubino.swf && \
+#flashplayer-debugger-standalone $1.swf
+firefox naubino.swf

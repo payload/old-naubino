@@ -37,15 +37,17 @@
 
 		public function popDown():void {
 			//game.visual.showAlert();
-			var tween:Object = {
-				x: mainbtn.x,
-				y: mainbtn.y,
-				alpha: 0,
-				time: 0.6
-			};
 			for (var i:* in secondaryBtns) {
+				var tween:Object = {
+					x: mainbtn.x,
+					y: mainbtn.y,
+					alpha: 0,
+					time: 0.6
+				};
+
 				var btn:Button = secondaryBtns[i];
 				btn.collidable = false;
+				Tweener.removeTweens(btn);
 				Tweener.addTween(btn, tween);
 			}
 		}
@@ -70,6 +72,7 @@
 				tween.y = btn.popUpY;
 				tween.time = 0.6;
 				tween.onComplete = function():void { for (var i:* in secondaryBtns) secondaryBtns[i].collidable = true; };
+				Tweener.removeTweens(btn);
 				Tweener.addTween(btn, tween);
 			}
 		}
