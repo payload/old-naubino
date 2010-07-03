@@ -43,6 +43,16 @@
 		protected function get credits():Credits{
 			return game.states.credits;
 		}
+
+		public function showPlayButton():void {
+			game.menu.playbtn.type = "play";
+			game.menu.playbtn.setAction(function():void { changeState(play);});
+		}
+		
+		public function showPauseButton(): void{
+			game.menu.playbtn.type = "pause";
+			game.menu.playbtn.setAction(function():void { changeState(pause); });
+		}
 	}
 	
 }

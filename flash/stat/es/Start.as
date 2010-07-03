@@ -10,8 +10,9 @@ package stat.es
 		
 		public override function enter():void {
 			trace("start");
+			showPlayButton();
 			game.menu.mainbtn.setAction(function():void{ changeState(highscore); });
-			changeState(play);
+			changeState(credits);
 		}
 	}
 }

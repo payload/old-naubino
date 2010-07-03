@@ -8,7 +8,7 @@ package
 		private var game:Game;
 		public var difficulties : Array = [2500, 2000, 1700, 1300, 1000, 800];
 		public var _difficulty : int = 0;
-		public var difficultyStep : int = (60 * 4 * 1000) / difficulties.length;
+		public var difficultyStep : int = (60 * 6 * 1000) / difficulties.length;
 		public var timer : Timer;
 		public var nextDifficultyTimer : Timer;
 
@@ -16,7 +16,7 @@ package
 			this.game = game;
 			timer = utils.newTimer(difficulties[difficulty], randomPair);
 			nextDifficultyTimer = utils.newTimer(difficultyStep, nextDifficulty);
-			start();
+			//start();
 		}
 
 		private function randomAngle():Number {
