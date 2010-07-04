@@ -70,7 +70,6 @@ package{
 			if(failedToPlay){
 				channel = globalSound.play();
 				transform = channel.soundTransform; 
-				channel.soundTransform = transform;
 			}
 		}
 
