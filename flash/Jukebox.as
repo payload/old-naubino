@@ -24,11 +24,19 @@ package{
 		public function play():void{
 			if(globalSound != null){
 				channel = globalSound.play(needle);
+				channel.addEventListener(Event.SOUND_COMPLETE, loop);
 			}
 			else
 				failedToPlay = true;
 			if(transform != null)
 				channel.soundTransform = transform;
+		}
+
+		private function loop(e:Event):void {
+			if (channel != null) {
+				channel.removeEventListener(Event.SOUND_COMPLETE, loop);
+				play();
+			}
 		}
 
 		public function pause():void{
