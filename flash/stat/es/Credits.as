@@ -22,6 +22,7 @@
 			}
 			else
 				need_to_enter = true;
+			game.jukebox.stop();
 		}
 
 		public override function leave():void {

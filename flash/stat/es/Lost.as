@@ -71,6 +71,7 @@ package stat.es
 		public override function enter():void {
 			trace("lost");
 			game.lost = true;
+			game.jukebox.stop();
 			game.visual.lost.show();
 			game.menu.playbtn.setAction(function():void {changeState(credits)});
 			//deleteHighscore();

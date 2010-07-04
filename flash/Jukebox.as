@@ -5,7 +5,7 @@ package{
 
 	public class Jukebox{
 		private var sound:Sound;
-		private var channel:SoundChannel;
+		private var channel:SoundChannel = new SoundChannel();
 		private var needle:int = 0;
 		private var req:URLRequest;
 		private var globalSound:Sound;
