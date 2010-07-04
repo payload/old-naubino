@@ -31,7 +31,7 @@ package{
 			if(transform != null){
 				channel.soundTransform = transform;
 			}
-			unMute();
+//			unMute();
 		}
 
 		private function loop(e:Event):void {

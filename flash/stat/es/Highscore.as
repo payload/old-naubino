@@ -21,7 +21,6 @@
 		public override function enter():void {
 		
 			trace("highscore");
-			
 			updateHighscore();
 			game.menu.mainbtn.setAction(function():void{ changeState(play); });
 			//initForm();
