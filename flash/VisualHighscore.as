@@ -20,7 +20,8 @@ package {
 
 		public function show():void {
 			updateHighscoreText();
-			visual.game.objs.push(submit);
+			if(!visual.game.states.highscore.online)
+				visual.game.objs.push(submit);
 			visual.show(visual.fog, 2);
 			visual.show(highscore, 2);
 		}
@@ -28,7 +29,8 @@ package {
 		public function hide():void {
 			visual.hide(visual.fog, 2);
 			visual.hide(highscore, 2);
-			visual.game.objs.splice(visual.game.objs.indexOf(submit),1);
+			if(!visual.game.states.highscore.online)
+				visual.game.objs.splice(visual.game.objs.indexOf(submit),1);
 		}
 
 		public function initHighscore():void {
