@@ -59,9 +59,8 @@
 		
 		private function helpScreen1():void {
 			game.clear();
-			var text:String = "Willkommen bei Naubino!\n" + 
-			"Die bunten Kugeln (Naubs) fliegen zur Mitte des Spielfeldes." + 
-			"Versuche, einen Naub mit Hilfe der Maus zu verschieben.";
+			var text:String = "Willkommen!\n" + 
+			"Das hier sind 2 Naubs. Versuche, einen Naub mit Hilfe der Maus zu verschieben.";
 			game.visual.help.setHelpText(text);
 			createPair(game.center, Color.green, Color.red, helpAction1);
 		}
@@ -76,7 +75,7 @@
 		
 		private function helpScreen2():void {
 			game.clear();
-			var text:String = "Schiebe die Naubs ineinander, sodass sie sich überlagern";
+			var text:String = "Verbinde die blauen Naubs.";
 			game.visual.help.setHelpText(text);
 
 			var temp:Array;
@@ -99,7 +98,7 @@
 		}
 		
 		private function helpScreen3():void {
-			var text:String = "Verfahre mit den übrigen Naubs genauso, um einen Zyklus zu bilden.";
+			var text:String = "Verfahre mit den übrigen Naubs genauso, schließe einen Zyklus.";
 			game.visual.help.setHelpText(text);
 
 			var i:*;
@@ -115,7 +114,7 @@
 		}
 		
 		private function helpScreen4():void{
-			var text:String = "Glückwunsch!\nKlicke auf den Play Button, um das Spiel zu beginnen.";
+			var text:String = "Glückwunsch!\nKlicke auf Play, um das Spiel zu beginnen.";
 			game.visual.help.setHelpText(text);
 
 		}
