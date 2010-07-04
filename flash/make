@@ -3,4 +3,5 @@ mxmlc \
   -static-link-runtime-shared-libraries \
   -compiler.debug \
 	-incremental \
-  Main.as 
+  Main.as && \
+mv Main.swf naubino.swf

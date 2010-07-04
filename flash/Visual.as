@@ -278,10 +278,11 @@ package {
 		public function initFog():void {
 			hide(this.fog);
 			layers.fog.addChild(this.fog);
+			var oversize:int = 40;
 
 			var fog:Shape = new Shape();
 			fog.graphics.beginFill(0xFFFFFF);
-			fog.graphics.drawRect(0, 0, game.width, game.height);
+			fog.graphics.drawRect(-oversize, -oversize, game.width+oversize, game.height+oversize);
 			fog.graphics.endFill();
 			fog.alpha = 0.8;
 			this.fog.addChild(fog);
