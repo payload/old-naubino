@@ -34,7 +34,6 @@
 			game.clear();
 			game.points = 0;
 			game.visual.help.show();
-			
 			helpScreen1();
 			
 			game.menu.exitbtn.setAction(function():void {} ); //we don't want to quit
@@ -58,10 +57,9 @@
 		}
 		
 		private function helpScreen1():void {
-			game.clear();
 			var text:String = "Willkommen!\n" + 
 			"Das hier sind 2 Naubs. Versuche, einen Naub mit Hilfe der Maus zu verschieben.";
-			game.visual.help.setHelpText(text);
+			game.visual.help.setFirstHelpText(text);
 			createPair(game.center, Color.green, Color.red, helpAction1);
 		}
 		
@@ -80,11 +78,11 @@
 
 			var temp:Array;
 			var i:*;
-			temp = createPair(game.center.add(new Vektor(100, 100)), Color.green, Color.red);
+			temp = createPair(new Vektor(50, 100), Color.green, Color.red);
 			for (i in temp) balls.push(temp[i]);
-			temp = createPair(game.center.sub(new Vektor(100, 100)), Color.green, Color.blue);
+			temp = createPair(new Vektor(200, 180), Color.green, Color.blue);
 			for (i in temp) balls.push(temp[i]);
-			temp = createPair(new Vektor(200, 200), Color.red, Color.blue, helpAction3);
+			temp = createPair(new Vektor(280, 240), Color.red, Color.blue, helpAction3);
 			for (i in temp) balls.push(temp[i]);					
 			for (i in balls) {
 				var b:HelpBall = balls[i];
@@ -152,5 +150,6 @@
 			b.addJoint(obj);
 			return obj;
 		}
+		
 	}
 }

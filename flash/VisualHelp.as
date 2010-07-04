@@ -53,7 +53,7 @@ package {
 		public function setHelpText(text:String):void {
 			var tweenhide:* = {
 				alpha: 0,
-				time: 1,
+				time: 2,
 				onComplete: function():void { 
 				helptext.visible = false; 
 				helptext.text = text;
@@ -62,10 +62,23 @@ package {
 			Tweener.addTween(helptext, tweenhide);
 			
 			var tweenshow:*={
-				delay: 1,
+				delay: 2,
+				alpha: 1,
+				time: 2,
+				onStart: function():void {helptext.visible = true;}
+			}
+			Tweener.addTween(helptext, tweenshow);
+		}
+		
+		public function setFirstHelpText(text:String):void {
+		
+			var tweenshow:*={
 				alpha: 1,
 				time: 1,
-				onStart: function():void {helptext.visible = true;}
+				onStart: function():void {
+					helptext.text = text;
+					helptext.setTextFormat(helpformat);
+					helptext.visible = true;}
 			}
 			Tweener.addTween(helptext, tweenshow);
 		}
