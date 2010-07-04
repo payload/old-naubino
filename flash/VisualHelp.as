@@ -31,7 +31,7 @@ package {
 		private function initFormat():void {
 			var format:TextFormat;
 			format = new TextFormat();
-			format.size = 16;
+			format.size = 14;
 			format.bold = true;
 			format.font = "Verdana";
 			format.align = TextFormatAlign.LEFT;
@@ -41,12 +41,12 @@ package {
 		private function initText(): void {
 			helptext = new TextField();
 			helptext.width = game.width/3;
-			helptext.height = game.height/2;
+			helptext.height = game.height/3;
 			helptext.wordWrap = true;
 			helptext.mouseEnabled = false;
 			helptext.textColor = Color.black.toUInt();
 			helptext.x = 10;
-			helptext.y = game.height - game.height/2;
+			helptext.y = game.height - game.height/3;
 			help.addChild(helptext);
 		}
 		
