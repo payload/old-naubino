@@ -13,10 +13,12 @@
 		public override function enter():void {
 			trace("pause");
 			game.visual.pause.show();
+			game.jukebox.play();
 		}
 
 		public override function leave():void {
 			game.visual.pause.hide();
+			game.jukebox.pause();
 		}
 		
 	}
