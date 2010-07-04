@@ -11,6 +11,8 @@ package{
 		private var globalSound:Sound;
 		private var transform:SoundTransform;
 		private var failedToPlay:Boolean;
+
+		private var maxVolume:Number = 0.3;
 	
 		public function Jukebox():void{
 			failedToPlay = false;
@@ -31,7 +33,6 @@ package{
 			if(transform != null){
 				channel.soundTransform = transform;
 			}
-			unMute();
 		}
 
 		private function loop(e:Event):void {
@@ -60,7 +61,7 @@ package{
 		
 		public function unMute():void{
 			transform = channel.soundTransform;
-			transform.volume = 0.3;
+			transform.volume = 1;
 			channel.soundTransform = transform;
 		}
 
@@ -69,6 +70,7 @@ package{
 			if(failedToPlay){
 				channel = globalSound.play();
 				transform = channel.soundTransform; 
+				channel.soundTransform = transform;
 			}
 		}
 
