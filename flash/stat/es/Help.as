@@ -32,7 +32,6 @@
 		public override function enter():void {
 			backup();
 			game.clear();
-			game.jukebox.stop();
 			game.points = 0;
 			game.visual.help.show();
 			helpScreen1();
