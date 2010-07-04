@@ -28,8 +28,10 @@ package{
 			}
 			else
 				failedToPlay = true;
-			if(transform != null)
+			if(transform != null){
 				channel.soundTransform = transform;
+			}
+			unMute();
 		}
 
 		private function loop(e:Event):void {
@@ -57,7 +59,7 @@ package{
 		
 		public function unMute():void{
 			transform = channel.soundTransform;
-			transform.volume = 1;
+			transform.volume = 0.3;
 			channel.soundTransform = transform;
 		}
 
