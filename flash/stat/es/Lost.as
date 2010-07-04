@@ -30,8 +30,14 @@ package stat.es
 		private function storeHighscore(name:String):void{
 			if(game.points > 0 && !alreadyIn(name)){
 				var obj:SharedObject = SharedObject.getLocal("highscore");
-				var hallOfFame:Array = obj.data.hallOfFame;
+				var hallOfFame:Array;
+
+				if(obj.size != 0)
+					hallOfFame = obj.data.hallOfFame;
+				else
+					hallOfFame = [];
 				var newby:Object = new Object();
+
 				newby.name = name;
 				newby.points = game.points;
 				hallOfFame.push(newby);
