@@ -37,6 +37,7 @@ package{
 		private function loop(e:Event):void {
 			if (channel != null) {
 				channel.removeEventListener(Event.SOUND_COMPLETE, loop);
+				needle = 0;
 				play();
 			}
 		}

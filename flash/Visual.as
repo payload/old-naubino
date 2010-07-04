@@ -297,7 +297,7 @@ package {
 		
 		public var alert:Sprite = new Sprite();
 		private var glareOn:Boolean = false;
-		private var defaultAlertDelay: int  = 2000;
+		private var defaultAlertDelay: int  = 1000;
 		public function initAlert():void  {
 			hide(this.alert);
 			alertTimer = utils.startTimer(defaultAlertDelay, showAlert);
@@ -310,10 +310,10 @@ package {
 				*Math.pow(game.antipoints / game.ballsTillLost, 4);
 			
 			if(wishedAlertDelay < alertTimer.delay)
-				alertTimer.delay -= 10
+				alertTimer.delay -= 15;
 
 			else if(wishedAlertDelay > alertTimer.delay)
-				alertTimer.delay += 10
+				alertTimer.delay += 15;
 
 			var tweenTime:Number = alertTimer.delay / 2000;
 			var self:Visual = this;
@@ -374,13 +374,11 @@ package {
 			Tweener.addTween(obj, tween);
 		}
 
-		public function drawOverlay(sprite:DisplayObject):void{
-			show(fog, 3);
-	
-			overlays.addChild(sprite);
-
-			overlayed = true;
-		}
+//		public function drawOverlay(sprite:DisplayObject):void{
+//			show(fog, 3);
+//			overlays.addChild(sprite);
+//			overlayed = true;
+//		}
 		
 		/* drawing balls and field */
 		private var defaultFieldLine:Number = 3
