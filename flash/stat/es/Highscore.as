@@ -16,7 +16,7 @@
 		public function Highscore(game:Game) 
 		{
 			super(game);
-			cheatHighscore();
+			//cheatHighscore();
 		}
 
 		public override function enter():void {
