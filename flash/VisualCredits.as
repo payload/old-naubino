@@ -33,7 +33,7 @@ package {
 		private function initMessage():void {
 			var header:String = "Naubino\n"
 			var text:String = "von Gilbert Röhrbein, Hendrik Sollich, " 
-				+ "Alexandra Weiß steht unter GPL.";
+				+ "Alexandra Weiß.";
 			var format:TextFormat = new TextFormat();
 			var headformat:TextFormat = new TextFormat();
 			message = new TextField();

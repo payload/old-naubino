@@ -31,12 +31,12 @@ package stat.es
 			if(game.points > 0 && !alreadyIn(name)){
 				var obj:SharedObject = SharedObject.getLocal("highscore");
 				var hallOfFame:Array;
+				var newby:Hero = new Hero();
 
 				if(obj.size != 0)
 					hallOfFame = obj.data.hallOfFame;
 				else
 					hallOfFame = [];
-				var newby:Object = new Object();
 
 				newby.name = name;
 				newby.points = game.points;

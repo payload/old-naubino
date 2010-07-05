@@ -36,7 +36,7 @@ package {
 		}
 
 		private function resetInput():void {
-			input.text = "Anony Mous";
+			input.text = "Anonym";
 			input.setTextFormat(format);
 		}
 
