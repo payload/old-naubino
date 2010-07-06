@@ -47,7 +47,7 @@ package stat.es
 		}
 
 		private function sendHighscore(name:String):void {
-			var url:String = "http://www1.inf.tu-dresden.de/~s8880935/naubino/score.php";
+			var url:String = "score.php";
 			var request:URLRequest = new URLRequest(url);
 			var variables:URLVariables = new URLVariables();
 			
@@ -73,6 +73,7 @@ package stat.es
 			game.lost = true;
 			game.visual.lost.show();
 			game.menu.playbtn.setAction(function():void {changeState(credits)});
+			game.spammer.reset();
 			//deleteHighscore();
 		}
 

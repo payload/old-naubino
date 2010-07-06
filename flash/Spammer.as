@@ -14,7 +14,7 @@ package
 
 		public function Spammer(game:Game) {
 			this.game = game;
-			timer = utils.newTimer(difficulties[difficulty], randomPair);
+			timer = utils.newTimer(difficulties[difficulty], spam);
 			nextDifficultyTimer = utils.newTimer(difficultyStep, nextDifficulty);
 			//start();
 		}
@@ -67,6 +67,7 @@ package
 
 		public function spam():void {
 			randomPair();
+			//trace(difficulty);
 		}
 
 		public function start():void {
