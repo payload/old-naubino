@@ -233,9 +233,6 @@ package {
 
 		private function updateSecondaryButton(b:Button):void {
 			var layer:* = layers.menu2;
-			if (b === lost.submit) {
-				layer = overlays;
-			}
 			var bs:Sprite = getSprite(b, layer);
 			bs.graphics.clear();
 			//bs.graphics.lineStyle(2, Color.black.toUInt());
@@ -253,9 +250,6 @@ package {
 				break;
 				case "mute":
 					bs = Icons.mute(b, bs);
-				break;
-				case "submit":
-					bs = Icons.submit(b, bs);
 				break;
 				case "reset":	
 					bs = Icons.exit(b, bs);

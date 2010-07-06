@@ -56,7 +56,7 @@ package {
 			return bs;
 		}
 		
-		public static function submit(b:Button, bs:Sprite):Sprite {
+		public static function submit(bs:Sprite):Sprite {
 			if (ok == null) {
 				ok = initText("ok");
 			}
