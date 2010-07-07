@@ -15,17 +15,12 @@
 			onKeyDown = {
 			};
 			onKeyUp = { 
-				'ESC': close,
-				'ENTER': game.spammer.spam,
+//			'ENTER': game.spammer.spam,
 //			'SPACE': game.pause,
-				'CONTROL': nothing,
-				'Q': nothing,
-				'W': nothing
+//			'CONTROL': nothing,
+//			'Q': nothing,
+//			'W': nothing
 			};		
-		}
-
-		public function close():void {
-			//System.exit(0);
 		}
 
 		public function nothing():void {

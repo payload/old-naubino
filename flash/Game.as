@@ -307,7 +307,7 @@ radius: 0,
 		}
 
 		public function pointerPressedRight(v:Vektor):void {
-			createPair(v);
+			//createPair(v);
 		}
 
 		public function pointerReleasedLeft(v:Vektor):void {
