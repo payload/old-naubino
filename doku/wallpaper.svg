@@ -289,23 +289,23 @@
        inkscape:collect="always"
        xlink:href="#linearGradient6816"
        id="radialGradient6822"
-       cx="1193.3753"
-       cy="608.88191"
-       fx="1193.3753"
-       fy="608.88191"
+       cx="1193.3752"
+       cy="608.8819"
+       fx="1193.3752"
+       fy="608.8819"
        r="950"
-       gradientTransform="matrix(1,0,0,0.63157895,0,224.32492)"
+       gradientTransform="matrix(1.0941176,8.5155872e-8,-6.319623e-8,0.8119711,-112.31763,114.48729)"
        gradientUnits="userSpaceOnUse" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient6816"
        id="radialGradient6824"
-       cx="1193.3753"
-       cy="608.88191"
-       fx="1193.3753"
-       fy="608.88191"
+       cx="1193.3752"
+       cy="608.8819"
+       fx="1193.3752"
+       fy="608.8819"
        r="950"
-       gradientTransform="matrix(1,0,0,0.63157895,0,224.32492)"
+       gradientTransform="matrix(1.0941176,8.5155872e-8,-6.319623e-8,0.8119711,-112.31763,114.48729)"
        gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
@@ -316,7 +316,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.26842105"
-     inkscape:cx="950"
+     inkscape:cx="972.10077"
      inkscape:cy="600"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -352,7 +352,7 @@
      id="layer1"
      transform="translate(-243.37527,-8.8819122)">
     <rect
-       style="fill:url(#radialGradient6822);fill-opacity:1;stroke:none;opacity:0.70748299"
+       style="fill:url(#radialGradient6822);fill-opacity:1;stroke:none;opacity:0.81699999999999984"
        id="rect4325"
        width="1900"
        height="1200"
@@ -6106,7 +6106,7 @@
       </g>
     </g>
     <rect
-       style="fill:url(#radialGradient6824);fill-opacity:1;stroke:none;opacity:0.70748299"
+       style="fill:url(#radialGradient6824);fill-opacity:1;stroke:none;opacity:0.81699999999999984"
        id="rect4325-6"
        width="1900"
        height="1200"
