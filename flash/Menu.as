@@ -132,8 +132,8 @@
 
 			const pi:Number = 3.14159;
 			mainbtn.position = new Vektor(35, 30);
-			var x:Number = -0.0;
-			var step:Number = 0.24;
+			var step:Number = 0.22;
+			var x:Number = -step * 0.3;
 			playbtn.position = Vektor.polar(x * pi, 60); x += step;
 			mutebtn.position = Vektor.polar(x * pi, 60); x += step;
 			helpbtn.position = Vektor.polar(x * pi, 55); x += step;
