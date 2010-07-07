@@ -325,6 +325,8 @@ radius: 0,
 		}
 
 		public function get active():Ball {
+			if (!(state === states.play || state === states.help))
+				return null;
 			for (var i:uint = 0; i < objs.length; i++)
 				if (objs[i] is Ball && objs[i].active)
 					return objs[i];
