@@ -3,35 +3,52 @@ define("HIGHSCOREFILE","./score.txt");
 define("SPLITTER","###");
 define("JOINER","---");
 define("MAX",10000);
+define("LOGFILE", "./log");
 
 class ScoreServer {
 	public $name = "";
 	public $points = "";
 	public $heros = array();
 	public $newby = false;
+	private $log;
 
 	public function ScoreServer(){
+
+		$log = fopen(LOGFILE,"a+");
+		fwrite($log, "start\n");
+
 		//check whether the file is rw
 		$this->diagnose();
 
 		//loading heros from HIGHSCOREFILE
 		$this->heros = $this->load_heros();
+
+		fwrite($log, "heros: " . count($this->heros));
 		
 		//check for postdata
 		if(isset($_POST['name']) && isset($_POST['points'])
 		&& $_POST['name'] != "" && $_POST['points'] != ""){
+			
+			fwrite($log, "post: ".$_POST['name']." | ".$_POST['points']."\n");
+
 			$this->name = $this->clean($_POST['name']);
 			$this->points = $this->clean($_POST['points']);
 			$this->newby = array($this->name,$this->points);
 		}
-
 
 		//store new file (overwritting all)
 		if($this->newby){
 			$this->add_hero($this->newby);
 			$this->store_heros();
 			$this->heros = $this->load_heros();
+
+			fwrite($log, "heros: " . count($this->heros));
+
 		}
+
+		fwrite($log, "end\n");
+		fclose($log);
+
 	}
 	
 	public function load_heros($number = MAX){
