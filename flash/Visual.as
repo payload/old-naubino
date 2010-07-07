@@ -76,7 +76,9 @@ package {
 		}
 
 		private function drawBackground():void {
+			root.graphics.lineStyle(6, Color.random.toUInt());
 			root.graphics.beginFill(backgroundColor.toUInt());
+			trace("width & height: "+game.width+" "+game.height);
 			root.graphics.drawRect(0, 0, game.width, game.height);
 			root.graphics.endFill();
 		}
