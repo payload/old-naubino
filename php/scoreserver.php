@@ -124,15 +124,15 @@ class ScoreServer {
 	public function diagnose(){
 		if(!file_exists(HIGHSCOREFILE)){
 			header( 'Content-Type: text/plain' );
-			die("error###file not found");
+			die("error###0");
 		}
 		if(!is_readable(HIGHSCOREFILE)){
 			header( 'Content-Type: text/plain' );
-			die("error###file not readable");
+			die("error###1");
 		}
 		if(!is_writable(HIGHSCOREFILE)){
 			header( 'Content-Type: text/plain' );
-			die("error###file not writable");
+			die("error###2");
 		}
 	}
 }
