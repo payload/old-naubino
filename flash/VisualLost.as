@@ -2,13 +2,14 @@ package {
 
 	import flash.display.*;
 	import flash.text.*;
+	import flash.events.*;
 
 	public class VisualLost extends VisualModule {
 
 		public var lost:Sprite;
 		private var message:TextField;
 		private var input:TextField;
-		public var submit:Button;
+		public var submit:Sprite;
 		private var format:TextFormat;
 
 		public function VisualLost(visual:Visual) {
@@ -26,13 +27,11 @@ package {
 			resetInput();
 			visual.show(visual.fog, 2);
 			visual.show(lost, 2);
-			visual.game.objs.push(submit);
 		}
 
 		public function hide():void {
 			visual.hide(visual.fog, 2);
 			visual.hide(lost, 2);
-			visual.game.objs.splice(visual.game.objs.indexOf(submit),1);
 		}
 
 		private function resetInput():void {
@@ -56,31 +55,26 @@ package {
 			input.x = game.center.x - input.width/2;
 			input.y = message.y + message.height;
 
-			submit = new Button();
-			submit.color = Color.random;
-			submit.setAction(function():void { 
+			submit = new Sprite();
+			submit.addEventListener(MouseEvent.CLICK, function():void { 
 				visual.game.states.lost.enterHallOfFame(input.text);
 				game.state.changeState(game.states.highscore);
 			} );
 			submit.x = input.x + input.width + 20;
 			submit.y = input.y + input.height/2;
-			submit.type = "submit";
+			drawButton(submit);
 
+			lost.addChild(submit);
 			lost.addChild(input);
 		}
 		
-		private function drawButton(b:Button):void{
-			var bs:Sprite = new Sprite();
+		private function drawButton(bs:Sprite):void{
 			bs.graphics.clear();
 			bs.graphics.lineStyle();
-			bs.graphics.beginFill(b.color.toUInt());
-			bs.graphics.drawCircle(0, 0, b.visibleRadius);
+			bs.graphics.beginFill(Color.random.toUInt());
+			bs.graphics.drawCircle(0, 0, 13);
 			bs.graphics.endFill();
-			bs.x = b.position.x;
-			bs.y = b.position.y;
-			//bs = Icons.submit(b, bs);
-			lost.addChild(bs);
-			
+			Icons.submit(bs);
 		}
 
 		private function initMessage():void {
