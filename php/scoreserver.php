@@ -82,7 +82,7 @@ class ScoreServer {
 	}
 	
 	public function store_heros(){
-		$fp = fopen(HIGHSCOREFILE,w);
+		$fp = fopen(HIGHSCOREFILE,"w+");
 		for($i=0;$i < count($this->heros);$i++){
 			$hero = $this->heros[$i];
 			fwrite($fp,$hero[0] . SPLITTER . $hero[1]."\n");
