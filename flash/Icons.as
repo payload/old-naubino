@@ -88,7 +88,7 @@ package {
 			return bs;
 		}
 	
-		public static function unMute(b:Button, bs:Sprite):Sprite {
+		public static function mute(b:Button, bs:Sprite):Sprite {
 			var fillcolor:uint = Color.white.toUInt();
 			bs.graphics.beginFill(fillcolor);
 			bs.graphics.drawRect(-b.visibleRadius*0.5,-b.visibleRadius*0.3,b.visibleRadius*0.3,b.visibleRadius*0.6);
@@ -103,7 +103,7 @@ package {
 			return bs;
 		}
 	
-		public static function mute(b:Button, bs:Sprite):Sprite {
+		public static function unMute(b:Button, bs:Sprite):Sprite {
 			var fillcolor:uint = Color.white.toUInt();
 			bs.graphics.beginFill(fillcolor);
 
