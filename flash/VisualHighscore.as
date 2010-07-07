@@ -132,7 +132,7 @@ package {
 			
 			for (i in hallOfFame) {
 				rank = i+1;
-				names_text += rank +" "+ hallOfFame[i].name + "\n";
+				names_text += rank +". "+ hallOfFame[i].name + "\n";
 				points_text += hallOfFame[i].points + "\n";
 			}
 			
