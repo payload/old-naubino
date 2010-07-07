@@ -128,9 +128,11 @@ package {
 		 
 			var names_text:String = "";
 			var points_text:String = "";
+			var rank:int;
 			
 			for (i in hallOfFame) {
-				names_text += hallOfFame[i].name + "\n";
+				rank = i+1;
+				names_text += rank +" "+ hallOfFame[i].name + "\n";
 				points_text += hallOfFame[i].points + "\n";
 			}
 			
