@@ -3,61 +3,118 @@ define("HIGHSCOREFILE","./score.txt");
 define("SPLITTER","###");
 define("JOINER","---");
 define("MAX",10000);
+define("MAXSHOW",5);
 define("LOGFILE", "./log");
 
 class ScoreServer {
 	public $name = "";
 	public $points = "";
 	public $heros = array();
+	public $heros_exclusive = array();
 	public $newby = false;
 	private $log;
 
 	public function ScoreServer(){
 
-		$log = fopen(LOGFILE,"a+");
-		fwrite($log, "start\n");
-
 		//check whether the file is rw
 		$this->diagnose();
 
 		//loading heros from HIGHSCOREFILE
-		$this->heros = $this->load_heros();
+		$this->heros = $this->load_heros(); //used in writing
+		$this->heros_exclusive = $this->load_heros_exclusive(); //only use to display
 
-		fwrite($log, "heros: " . count($this->heros));
-		
-		//check for postdata
+	}
+	
+	public function start_log(){
+		$this->log = fopen(LOGFILE,"a+");
+		fwrite($this->log, "start\n");
+		fwrite($this->log, "heros: " . count($this->heros));
+	}
+
+	public function end_log(){
+		fwrite($this->log, "end\n");
+		fclose($this->log);
+	}
+	
+	// evaluate post data
+	public function read_post()
+	{
 		if(isset($_POST['name']) && isset($_POST['points'])
 		&& $_POST['name'] != "" && $_POST['points'] != ""){
 			
-			fwrite($log, "post: ".$_POST['name']." | ".$_POST['points']."\n");
+			fwrite($this->log, "post: ".$_POST['name']." | ".$_POST['points']."\n");
 
 			$this->name = $this->clean($_POST['name']);
 			$this->points = $this->clean($_POST['points']);
 			$this->newby = array($this->name,$this->points);
+			return true;
 		}
-
+		else
+			return false;
+	}
+	
+	// write to file
+	public function write()
+	{
 		//store new file (overwritting all)
 		if($this->newby){
 			$this->add_hero($this->newby);
 			$this->store_heros();
 			$this->heros = $this->load_heros();
 
-			fwrite($log, "heros: " . count($this->heros));
-
+			fwrite($this->log, "heros: " . count($this->heros));
+			return true;
 		}
-
-		fwrite($log, "end\n");
-		fclose($log);
-
+		else
+			return false;
 	}
 	
+	public function diagnose(){
+		if(!file_exists(HIGHSCOREFILE)){
+			header( 'Content-Type: text/plain' );
+			die("error###0");
+		}
+		if(!is_readable(HIGHSCOREFILE)){
+			header( 'Content-Type: text/plain' );
+			die("error###1");
+		}
+		if(!is_writable(HIGHSCOREFILE)){
+			header( 'Content-Type: text/plain' );
+			die("error###2");
+		}
+	}
+	
+
+
+	//loads highscorefile
 	public function load_heros($number = MAX){
 		$fp = fopen(HIGHSCOREFILE,r);
 		$heros = array();
 		while(!feof($fp) && ($number == 0 || count($heros)<$number)){
 			$temp = trim(fgets($fp));
-			if($temp != "")
-				array_push($heros, explode(SPLITTER,$temp));
+			if($temp != ""){
+				$hero = explode(SPLITTER,$temp);
+				array_push($heros, $hero);
+			}
+		}
+		fclose($fp);
+		return $heros;
+	}
+	
+	//loads highscorefile - each name only once
+	public function load_heros_exclusive($number = MAX){
+		$fp = fopen(HIGHSCOREFILE,r);
+		$heros = array();
+		$namelist = array();
+		while(!feof($fp) && ($number == 0 || count($heros)<$number)){
+			$temp = trim(fgets($fp));
+			if($temp != ""){
+				$hero = explode(SPLITTER,$temp);
+				if(!in_array($hero[0],$namelist)){
+					array_push($namelist, $hero[0]);
+					array_push($heros, $hero);
+				}
+			}
 		}
 		fclose($fp);
 		return $heros;
@@ -81,6 +138,7 @@ class ScoreServer {
 		}
 	}
 	
+	// overwrite highscorefile with new list
 	public function store_heros(){
 		$fp = fopen(HIGHSCOREFILE,"w+");
 		for($i=0;$i < count($this->heros);$i++){
@@ -88,38 +146,6 @@ class ScoreServer {
 			fwrite($fp,$hero[0] . SPLITTER . $hero[1]."\n");
 		}
 		fclose($fp);
-	}
-
-	public function formated_heros(){
-		echo "<table>\n";
-		for($i=0;$i< count($this->heros);$i++){
-			$hero = $this->heros[$i];
-			echo "<tr><td>".$hero[0] ."</td><td>".$hero[1]."</td></tr>\n";
-		}
-		echo "</table>\n";
-	}
-	
-	public function unformated_heros(){
-		for($i=0;$i< count($this->heros);$i++){
-			$hero = $this->heros[$i];
-			echo $hero[0] . SPLITTER . $hero[1]."\n";
-		}
-	}
-	
-	public function string_heros(){
-		for($i=0;$i< count($this->heros);$i++){
-			if($i > 0)echo JOINER;
-			$hero = $this->heros[$i];
-			echo $hero[0] . SPLITTER . $hero[1];
-		}
-	}
-	
-	public function string_heros_backward(){
-		for($i=count($this->heros)-1;$i>=0 ;$i--){
-			$hero = $this->heros[$i];
-			echo $hero[0] . SPLITTER . $hero[1];
-			if($i > 0)echo JOINER;
-		}
 	}
 
 	public function contains($newby){
@@ -138,19 +164,5 @@ class ScoreServer {
 		return $str;
 	}
 
-	public function diagnose(){
-		if(!file_exists(HIGHSCOREFILE)){
-			header( 'Content-Type: text/plain' );
-			die("error###0");
-		}
-		if(!is_readable(HIGHSCOREFILE)){
-			header( 'Content-Type: text/plain' );
-			die("error###1");
-		}
-		if(!is_writable(HIGHSCOREFILE)){
-			header( 'Content-Type: text/plain' );
-			die("error###2");
-		}
-	}
 }
 ?>

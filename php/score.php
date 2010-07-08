@@ -1,54 +1,43 @@
 <?php
-include("./scoreserver.php");
+include("./ScoreServer.php");
+include("./ScoreOutput.php");
+include("./utils.php");
 
-$s = new ScoreServer();
+$server = new ScoreServer();
+$server->start_log();
+if($server->read_post()){
+	$server->write();
+}
+$server->end_log();
 
+
+// select between full or exclusice highscore
+if($_GET['showall']=="true")
+	$output = new ScoreOutput($server->heros);
+else
+	$output = new ScoreOutput($server->heros_exclusive);
+
+
+// test/cheat interface
 if($_GET['hackme']=="please"){
-$s->formated_heros();
-?>
-
-<hr/>
-
-<form action="<?php echo $PHP_SELF ?>" method="post">
-<label for="name">Name</label>
-<input type="text" name="name" id="name" value="<?php echo 'hendrik'/*$_POST['name']*/ ?>" /><br/>
-<label for="points">Punkte</label>
-<input type="text" name="points" id="points" value="<?php echo $_POST['points']+1 ?>" /><br/>
-
-<input type="submit" />
-</form>
-
-<?php
+	form();
+	$output2 = new ScoreOutput($server->heros);
+	$output2->heros_formated();
 }
+
+// rss feed
 elseif($_GET['type']=="rss"){
-
-echo '<?xml version="1.0" encoding="UTF-8"?>';
- ?><rss version="2.0">
-
-<channel>
-<title>Naubino</title>
-<link><?php echo $SELF_PHP ?></link>
-<description>Highscore</description>
-<language>de</language>
-
-<?php
-	for($i=0;$i<count($s->heros);$i++){
-	?>
-	<item>
-		<title><?PHP echo $s->heros[$i][0] ." ".$s->heros[$i][1]?></title>
-	</item>
-	<?php
-	}
-?>
-</channel>
-</rss>
-
-
-<?PHP
+	$output->rss_out();
 }
+
+// string for flash
 else{
-header( 'Content-Type: text/plain' );
-$s->string_heros_backward();
-
+	header( 'Content-Type: text/plain' );
+	$output->heros_string_backward();
+//	echo "\n";
+//	$s->heros_string_backward();
 }
+
+
+
 ?>
